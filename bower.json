@@ -1,0 +1,9 @@
+{
+  "name": "require-test-project",
+  "version": "0.0.1",
+  "dependencies": {
+    "requirejs": "~2.1.8",
+    "pixi": "~1.2.0",
+    "leapjs": "https://github.com/leapmotion/leapjs.git#~0.2.0"
+  }
+}
