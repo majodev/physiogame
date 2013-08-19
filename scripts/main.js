@@ -16,6 +16,6 @@ require.config({
 });
 
 // Start the main app logic.
-require(["gameController"], function (gameController) {
-  gameController.start();
+require(["gameLogic"],
+  function (gameLogic) {
 });
