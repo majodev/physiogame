@@ -4,6 +4,7 @@
   "dependencies": {
     "requirejs": "~2.1.8",
     "pixi": "~1.2.0",
-    "leapjs": "https://github.com/leapmotion/leapjs.git#~0.2.0"
+    "leapjs": "https://github.com/leapmotion/leapjs.git#~0.2.0",
+    "keymaster": "https://github.com/madrobby/keymaster.git"
   }
 }

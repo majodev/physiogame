@@ -4,8 +4,8 @@ define(["Leap"],
     // private 
     var controller = new Leap.Controller(),
       frameCount = 0,
-      posX = 0,
-      posY = 0,
+      x = 0,
+      y = 0,
       handsAvailable = false,
       handsLength = 0;
 
@@ -29,8 +29,8 @@ define(["Leap"],
       for (handId, handCount = handsLength; handId != handCount; handId += 1) {
 
         hand = frame.hands[handId];
-        posX = parseInt(hand.palmPosition[0], 10);
-        posY = parseInt(hand.palmPosition[1], 10);
+        x = parseInt(hand.palmPosition[0], 10);
+        y = parseInt(hand.palmPosition[1], 10);
       }
 
       frameCount += 1;
@@ -40,7 +40,7 @@ define(["Leap"],
     setInterval(function() {
       var time = frameCount / 2;
       console.log("input: received " + frameCount + " frames @ " +
-        time + "fps. (x=" + posX + " y=" + posY + ")");
+        time + "fps. (x=" + x + " y=" + y + ")");
       frameCount = 0;
     }, 2000);
 
@@ -55,13 +55,16 @@ define(["Leap"],
         return controller;
       },
       getX: function getX() {
-        return posX;
+        return x;
       },
       getY: function getY() {
-        return posY;
+        return y;
       },
       getHandsAvailable: function getHandsAvailable() {
         return handsAvailable;
+      },
+      getHandsLength: function getHandsLength() {
+        return handsLength;
       }
     };
   }

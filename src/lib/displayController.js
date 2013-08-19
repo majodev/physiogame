@@ -27,12 +27,29 @@ define(["PIXI"],
       frameCount += 1;
     };
 
-    var addAnimation = function addAnimation(func) {
+    var checkAnimationExists = function checkAnimationExists(func) {
+      var i = 0;
+
       if (typeof func === "function") {
+        for (i; i < animationsLength; i += 1) {
+          if (animations[i] === func) {
+            console.log("checkAnimationExists: caught existing animation!");
+            return i;
+          }
+        }
+      } else {
+        console.log("checkAnimationExists: no valid function in parameter!");
+      }
+
+      return -1;
+    };
+
+    var addAnimation = function addAnimation(func) {
+      if (typeof func === "function" && checkAnimationExists(func) === -1) {
         animationsLength += 1;
         animations.push(func);
       } else {
-        console.log("addAnimation: no valid function in parameter!");
+        console.log("addAnimation: no valid function in parameter (type mismatch or already exists)!");
       }
     };
 
@@ -42,20 +59,16 @@ define(["PIXI"],
       if (typeof func === "function") {
         // search for animation...
         for (i; i < animationsLength; i += 1) {
-          if(animations[i] === func) {
-            
+          if (animations[i] === func) {
             // delete it.
             animations.splice(i, 1);
             animationsLength -= 1;
-            
-
             return true;
           }
         }
       } else {
         console.log("removeAnimation: no valid function in parameter!");
       }
-
       return false;
     };
 

@@ -3,7 +3,8 @@ require.config({
   baseUrl: "src/lib/",
   paths: {
     "PIXI": "../vendor/pixi/bin/pixi",
-    "Leap": "../vendor/leapjs/leap"
+    "Leap": "../vendor/leapjs/leap",
+    "key": "../vendor/keymaster/keymaster"
   },
   shim: {
     "PIXI": {
@@ -11,11 +12,14 @@ require.config({
     },
     "Leap": {
       exports: "Leap"
+    },
+    "key": {
+      exports: "key"
     }
   }
 });
 
 // Start the main app logic.
-require(["gameLogic"],
-  function (gameLogic) {
+require(["gameController"],
+  function (gameController) {
 });

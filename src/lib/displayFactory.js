@@ -14,6 +14,11 @@ define(["PIXI"],
       displayObject.anchor.y = (y === true) ? y : 0.5;
     };
 
+    var setDimensions = function setDimensions(displayObject, width, height) {
+      displayObject.width = (width === true) ? width : 800;
+      displayObject.height = (height === true) ? height : 600;
+    };
+
     var makeDisplayObject = function makeDisplayObject(texture, px, py, ax, ay) {
       var displayObject = new PIXI.Sprite(texture);
       setPosition(displayObject, px, py);
@@ -21,10 +26,22 @@ define(["PIXI"],
       return displayObject;
     };
 
+    var makeDisplayObjectContainer = function makeDisplayObjectContainer(width, height) {
+      var displayObjectContainer = new PIXI.DisplayObjectContainer();
+      setDimensions(displayObjectContainer, width, height);
+      return displayObjectContainer;
+    };
+
     // public
     return {
       makeBunny: function makeBunny(px, py, ax, ay) {
         return makeDisplayObject(bunnyTexture, px, py, ax, ay);
+      },
+      makeLayer: function makeLayer(width, height) {
+        return makeDisplayObjectContainer(width, height);
+      },
+      makeScene: function makeScene(width, height) {
+        return makeDisplayObjectContainer(width, height);
       }
     };
   }

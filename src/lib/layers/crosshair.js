@@ -1,10 +1,11 @@
-define(["display", "leapInput", "displayFactory"],
-  function(display, leapInput, displayFactory) {
+define(["displayController", "leapController", "displayFactory"],
+  function(displayController, leapController, displayFactory) {
 
-    var width = display.renderer.width,
-      height = display.renderer.height,
+    var width = displayController.renderer.width,
+      height = displayController.renderer.height,
       running = false,
-      crosshair = displayFactory.makeBunny();
+      crosshair = displayFactory.makeBunny(),
+      layer = displayFactory.makeLayer();
 
     var rotateAnimation = function rotateAnimation() {
       crosshair.rotation += 0.1;
@@ -12,12 +13,12 @@ define(["display", "leapInput", "displayFactory"],
 
     var alphaAnimation = function alphaAnimation() {
       //console.log("check hands");
-      if (leapInput.getHandsAvailable() === true) {
-        if(crosshair.alpha < 1) {
+      if (leapController.getHandsAvailable() === true) {
+        if (crosshair.alpha < 1) {
           crosshair.alpha += 0.1;
         }
       } else {
-        if(crosshair.alpha > 0.2) {
+        if (crosshair.alpha > 0.2) {
           crosshair.alpha -= 0.01;
         }
       }
@@ -25,10 +26,10 @@ define(["display", "leapInput", "displayFactory"],
 
     var init = function init() {
       if (!running) {
-        display.stage.addChild(crosshair);
-        
-        display.registerAnimation(rotateAnimation);
-        display.registerAnimation(alphaAnimation);
+        layer.addChild(crosshair);
+
+        displayController.registerAnimation(rotateAnimation);
+        displayController.registerAnimation(alphaAnimation);
 
         running = true;
       }
@@ -36,28 +37,34 @@ define(["display", "leapInput", "displayFactory"],
 
     var kill = function kill() {
       if (running) {
-        display.stage.removeChild(crosshair);
+        layer.removeChild(crosshair);
 
-        display.unregisterAnimation(rotateAnimation);
-        display.unregisterAnimation(alphaAnimation);
+        displayController.unregisterAnimation(rotateAnimation);
+        displayController.unregisterAnimation(alphaAnimation);
 
         running = false;
       }
     };
 
-    leapInput.getLeap().on("frame", function(frame) {
+    leapController.getLeap().on("frame", function(frame) {
       if (running) {
-        crosshair.position.x = width / 2 + (leapInput.getX() * 2.5);
-        crosshair.position.y = (height / 3) * 4 - (leapInput.getY() * 2);
+        crosshair.position.x = width / 2 + (leapController.getX() * 2.5);
+        crosshair.position.y = (height / 3) * 4 - (leapController.getY() * 2);
       }
     });
 
     return {
-      show: function() {
+      activate: function() {
         init();
       },
-      hide: function() {
+      deactivate: function() {
         kill();
+      },
+      getLayer: function() {
+        return layer;
+      },
+      getRunning: function() {
+        return running;
       }
     };
   }
