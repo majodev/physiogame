@@ -1,38 +1,64 @@
-define(["display", "input", "objectFactory"],
-  function (display, input, objectFactory) {
+define(["display", "leapInput", "displayFactory"],
+  function(display, leapInput, displayFactory) {
 
-  var width = display.renderer.width,
-    height = display.renderer.height,
-    running = false,
-    crosshair = objectFactory.makeBunny(400, 300);
+    var width = display.renderer.width,
+      height = display.renderer.height,
+      running = false,
+      crosshair = displayFactory.makeBunny();
 
-  var init = function init() {
-    if(!running) {
-      display.stage.addChild(crosshair);
-    }
-    running = true;
-  };
+    var rotateAnimation = function rotateAnimation() {
+      crosshair.rotation += 0.1;
+    };
 
-  var kill = function kill() {
-    if(running) {
-      display.stage.removeChild(crosshair);
-    }
-    running = false;
-  };
+    var alphaAnimation = function alphaAnimation() {
+      //console.log("check hands");
+      if (leapInput.getHandsAvailable() === true) {
+        if(crosshair.alpha < 1) {
+          crosshair.alpha += 0.1;
+        }
+      } else {
+        if(crosshair.alpha > 0.2) {
+          crosshair.alpha -= 0.01;
+        }
+      }
+    };
 
-  input.getLeap().on("frame", function(frame) {
-    if(running) {
-      crosshair.position.x = width/2 + (input.getX()*2.5);
-      crosshair.position.y = (height/3)*4 - (input.getY()*2);
-    }
-  });
+    var init = function init() {
+      if (!running) {
+        display.stage.addChild(crosshair);
+        
+        display.registerAnimation(rotateAnimation);
+        display.registerAnimation(alphaAnimation);
 
-  return {
-    show: function () {
-      init();
-    },
-    hide: function () {
-      kill();
-    }
-  };
-});
+        running = true;
+      }
+    };
+
+    var kill = function kill() {
+      if (running) {
+        display.stage.removeChild(crosshair);
+
+        display.unregisterAnimation(rotateAnimation);
+        display.unregisterAnimation(alphaAnimation);
+
+        running = false;
+      }
+    };
+
+    leapInput.getLeap().on("frame", function(frame) {
+      if (running) {
+        crosshair.position.x = width / 2 + (leapInput.getX() * 2.5);
+        crosshair.position.y = (height / 3) * 4 - (leapInput.getY() * 2);
+      }
+    });
+
+    return {
+      show: function() {
+        init();
+      },
+      hide: function() {
+        kill();
+      }
+    };
+  }
+);

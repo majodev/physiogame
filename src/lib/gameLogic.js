@@ -1,8 +1,10 @@
 define(["layers/crosshair"],
-  function (crosshair) {
-  
-  crosshair.show();
+  function(crosshair) {
 
-  // public
-  return {};
-});
+    // private
+    crosshair.show();
+
+    // public
+    return {};
+  }
+);
