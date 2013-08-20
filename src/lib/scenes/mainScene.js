@@ -5,10 +5,10 @@ define(["layers/crosshair", "displayFactory"],
     crosshair.activate();
 
     return {
-      getScene: function getScene() {
+      getScene: function() {
         return scene;
       },
-      toggleCrosshair: function toggleCrosshair() {
+      toggleCrosshair: function() {
         if(crosshair.getRunning() === true) {
           crosshair.deactivate();
         } else {

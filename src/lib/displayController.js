@@ -1,100 +1,45 @@
-define(["PIXI"],
-  function(PIXI) {
+define(["PIXI", "displayConfig", "utils/eventPublisher"],
+  function(PIXI, displayConfig, eventPublisher) {
 
     // private
-    var width = 800,
-      height = 600,
-      renderTarget = document.body,
-      background = 0x000000,
-      interactive = false,
-      stage = new PIXI.Stage(background, interactive),
-      renderer = PIXI.autoDetectRenderer(width, height),
+    var stage = new PIXI.Stage(displayConfig.background,
+      displayConfig.interactive),
+      renderer = PIXI.autoDetectRenderer(displayConfig.width,
+        displayConfig.height),
+      renderTarget = displayConfig.renderTarget,
       frameCount = 0,
-      animations = [],
-      animationsLength = 0;
-
-    var render = function render() {
-      var i = 0;
-      requestAnimFrame(render);
-
-      // call animations if any
-      for (i; i < animationsLength; i += 1) {
-        animations[i]();
-      }
-
-      // finally render the stage
-      renderer.render(stage);
-      frameCount += 1;
-    };
-
-    var checkAnimationExists = function checkAnimationExists(func) {
-      var i = 0;
-
-      if (typeof func === "function") {
-        for (i; i < animationsLength; i += 1) {
-          if (animations[i] === func) {
-            console.log("checkAnimationExists: caught existing animation!");
-            return i;
-          }
-        }
-      } else {
-        console.log("checkAnimationExists: no valid function in parameter!");
-      }
-
-      return -1;
-    };
-
-    var addAnimation = function addAnimation(func) {
-      if (typeof func === "function" && checkAnimationExists(func) === -1) {
-        animationsLength += 1;
-        animations.push(func);
-      } else {
-        console.log("addAnimation: no valid function in parameter (type mismatch or already exists)!");
-      }
-    };
-
-    var removeAnimation = function removeAnimation(func) {
-      var i = 0;
-
-      if (typeof func === "function") {
-        // search for animation...
-        for (i; i < animationsLength; i += 1) {
-          if (animations[i] === func) {
-            // delete it.
-            animations.splice(i, 1);
-            animationsLength -= 1;
-            return true;
-          }
-        }
-      } else {
-        console.log("removeAnimation: no valid function in parameter!");
-      }
-      return false;
-    };
+      events = eventPublisher(["renderFrame", "debugInfo"]);
 
     (function init() {
       console.log("init");
       renderTarget.appendChild(renderer.view);
-      requestAnimFrame(render);
+      requestAnimFrame(renderFrame);
     }());
 
     // per interval ms
     setInterval(function() {
-      var time = frameCount / 2;
-      console.log("display: received " + frameCount + " frames @ " + time + "fps.");
+      var time = frameCount / 2,
+        debugText = "display: received " + frameCount + " frames @ " + time +
+          "fps.";
+      events.fire("debugInfo", debugText);
       frameCount = 0;
     }, 2000);
+
+    function renderFrame() {
+      requestAnimFrame(renderFrame);
+
+      // publish renderFrame event to subscribers
+      events.fire("renderFrame");
+
+      // finally render the stage
+      renderer.render(stage);
+      frameCount += 1;
+    }
 
     // public
     return {
       stage: stage,
-      renderer: renderer,
-      registerAnimation: function registerAnimation(func) {
-        addAnimation(func);
-      },
-      unregisterAnimation: function unregisterAnimation(func) {
-        removeAnimation(func);
-      }
+      events: events
     };
   }
 );
