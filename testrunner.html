@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Tests RequireJS</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="node_modules/mocha/mocha.js"></script>
+    <script src="node_modules/chai/chai.js"></script>
+    <script>
+      mocha.ui('bdd');
+      mocha.reporter('html');
+
+      assert = chai.assert;
+      var should = chai.should(); // must be var, else problem!
+      expect = chai.expect;
+
+      // Mocha
+      mocha.setup("bdd");
+      
+    </script>
+    <script src="../node_modules/requirejs/require.js" data-main="scripts/testrunner"></script>
+  </body>
+</html>
