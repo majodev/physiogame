@@ -6,7 +6,10 @@
     "chai": "~1.7.2",
     "mocha": "~1.12.0",
     "phantomjs": "latest",
-    "mocha-phantomjs": "latest"
+    "mocha-phantomjs": "latest",
+    "grunt-cli": "~0.1.9",
+    "grunt-contrib-watch": "~0.5.2",
+    "grunt-shell": "~0.3.1"
   },
   "main": "index.html",
   "window": {

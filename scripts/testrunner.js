@@ -10,7 +10,7 @@ require(["spec/utils/eventPublisher", "spec/utils/mixin"],
 
     console.log("testing...");
 
-    // Start runner
+    // Start runner, conditional is needed here for phantomjs!
     if (window.mochaPhantomJS) {
       mochaPhantomJS.run();
     } else {
