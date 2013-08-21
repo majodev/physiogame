@@ -28,10 +28,10 @@ var config = {
   include: "gameController",
   insertRequire: ["gameController"],
   wrap: true,
-  out: 'build/'+pjson.name+'-'+pjson.version+'.min.js' // Where to output
+  out: 'build/' + pjson.name + '-' + pjson.version + '.min.js' // Where to output
 };
 
 // Optimize our script
-requirejs.optimize(config, function (buildResponse) {
+requirejs.optimize(config, function(buildResponse) {
   var contents = fs.readFileSync(config.out, 'utf-8');
 });

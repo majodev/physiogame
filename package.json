@@ -2,7 +2,9 @@
   "name": "require-test-project",
   "version": "0.0.1",
   "devDependencies":{
-    "requirejs": "latest"
+    "requirejs": "latest",
+    "chai": "~1.7.2",
+    "mocha": "~1.12.0"
   },
   "main": "index.html",
   "window": {
