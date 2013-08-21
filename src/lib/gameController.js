@@ -1,5 +1,5 @@
 define(["scenes/mainScene", "displayController", "leapController", "key"],
-  function(mainScene, displayController, leapController, key) {
+  function(mainScene, displayController, leapController, key, Leap) {
 
     // private
     var showDebug = false;
@@ -7,15 +7,15 @@ define(["scenes/mainScene", "displayController", "leapController", "key"],
 
     function toggleDebugInfo() {
       if (showDebug === true) {
-        displayController.events.remove("debugInfo", showDebugText);
-        leapController.events.remove("debugInfo", showDebugText);
+        displayController.events.remove("debugInfo", logDebugText);
+        leapController.events.remove("debugInfo", logDebugText);
 
         console.log("hiding debug info");
         showDebug = false;
 
       } else {
-        displayController.events.on("debugInfo", showDebugText);
-        leapController.events.on("debugInfo", showDebugText);
+        displayController.events.on("debugInfo", logDebugText);
+        leapController.events.on("debugInfo", logDebugText);
 
         console.log("showing debug info");
         showDebug = true;
@@ -26,9 +26,9 @@ define(["scenes/mainScene", "displayController", "leapController", "key"],
       toggleDebugInfo();
     });
 
-    var showDebugText = function showDebugText(debugText) {
+    function logDebugText(debugText) {
       console.log(debugText);
-    };
+    }
 
     // public
     return {};

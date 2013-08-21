@@ -1,0 +1,21 @@
+{
+  "name": "require-test-project",
+  "version": "0.0.1",
+  "devDependencies":{
+    "requirejs": "latest"
+  },
+  "main": "index.html",
+  "window": {
+    "title": "require-test-project",
+    "show": true,
+    "toolbar": true,
+    "frame": true,
+    "position": "center",
+    "width": 800,
+    "height": 600,
+    "min_width": 800,
+    "min_height": 600,
+    "kiosk": false
+    },
+    "private": true
+}

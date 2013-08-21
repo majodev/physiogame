@@ -11,7 +11,7 @@ define(["PIXI", "displayConfig", "utils/eventPublisher"],
       events = eventPublisher(["renderFrame", "debugInfo"]);
 
     (function init() {
-      console.log("init");
+      console.log("display: init");
       renderTarget.appendChild(renderer.view);
       requestAnimFrame(renderFrame);
     }());

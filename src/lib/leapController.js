@@ -48,16 +48,13 @@ define(["Leap", "utils/eventPublisher"],
       frameCount = 0;
     }, 2000);
 
-    (function init() {
-      console.log("init");
-      controller.connect();
-    }());
+    //(function init() {
+    console.log("leap: init");
+    controller.connect();
+    //}());
 
     // public
     return {
-      getLeap: function() {
-        return controller;
-      },
       getHandsAvailable: function() {
         return handsAvailable;
       },

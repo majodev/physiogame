@@ -19,7 +19,7 @@ require.config({
   }
 });
 
-// Start the main app logic.
+//Start the main app logic.
 require(["gameController"],
   function (gameController) {
 });

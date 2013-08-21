@@ -8,10 +8,7 @@ define([],
       if (Object.prototype.toString.apply(allowedEventTypes) === "[object Array]") {
         eventTypes = allowedEventTypes;
       } else {
-        throw {
-          name: "TypeError",
-          message: "EventTypes must be within a array!"
-        };
+        throw new Error("EventType argument isn't an array.");
       }
 
       function checkEventTypeValid(type) {
@@ -38,10 +35,8 @@ define([],
             if (checkEventTypeValid(type)) {
               type = type;
             } else {
-              throw {
-                name: "EventTypeNotValid",
-                message: "Unexpected eventType encountered, needs predefinition"
-              };
+              throw new Error("Encountered unexpected eventtype: " + type +
+                ". Needs predefinition in publisher object.");
             }
           } else {
             type = "any";

@@ -9,9 +9,8 @@ var config = {
   baseUrl: "src/lib/", // Base URL
   paths: {
     "PIXI": "../vendor/pixi/bin/pixi",
-    "Leap": "../vendor/leapjs/leap",
-    "key": "../vendor/keymaster/keymaster.min",
-    "requireLib": "../vendor/requirejs/require"
+    "Leap": "../vendor/leapjs/leap.min",
+    "key": "../vendor/keymaster/keymaster.min"
   },
   shim: {
     "PIXI": {
@@ -24,15 +23,15 @@ var config = {
       exports: "key"
     }
   },
-  optimize: "uglify2",
-  include: "requireLib",
-  name: "gameController", // Name of script to start building from
+  optimize: "none",
+  name: "../vendor/almond/almond", // Name of script to start building from
+  include: "gameController",
   insertRequire: ["gameController"],
-  skipSemiColonInsertion: true,
-  out: 'build/' + pjson.name + '-' + pjson.version + '.min.js' // Where to output
+  wrap: true,
+  out: 'build/'+pjson.name+'-'+pjson.version+'.min.js' // Where to output
 };
 
 // Optimize our script
-requirejs.optimize(config, function(buildResponse) {
+requirejs.optimize(config, function (buildResponse) {
   var contents = fs.readFileSync(config.out, 'utf-8');
 });
