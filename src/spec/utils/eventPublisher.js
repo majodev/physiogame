@@ -33,23 +33,32 @@ define(["lib/utils/eventPublisher"],
         invoked.should.be.equal(2);
       });
 
-      it("raises error on unexpected eventTypes", function() {
-        var events = eventPublisher([]);
+      it("raises error on unexpected eventTypes used at runtime", function() {
+        var events = eventPublisher(["notusedevent"]);
         expect(function () {
           events.on("notfoundevent", function () {});
         }).to.throw(Error);
       });
 
-      it("raises error on init with arguments that are not an array", function () {
+      it("raises TypeError on init with first argument is not an array", function () {
         expect(function () {
           eventPublisher("no array");
-        }).to.throw(Error);
+        }).to.throw(TypeError);
         expect(function () {
           eventPublisher({object: "object"});
-        }).to.throw(Error);
+        }).to.throw(TypeError);
+      });
+
+      it("raises Error on init when eventtype array is empty", function () {
         expect(function () {
           eventPublisher([]);
-        }).to.not.throw(Error);
+        }).to.throw(Error);
+      });
+
+      it("raises TypeError on init when eventtype array does not consist of strings", function () {
+        expect(function () {
+          eventPublisher([{lol: "lol"}]);
+        }).to.throw(TypeError);
       });
 
     });

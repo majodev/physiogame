@@ -3,12 +3,22 @@ define([],
     return function(allowedEventTypes) {
 
       var eventTypes = [];
+      var etCount = 0;
 
       // check if its a true array
       if (Object.prototype.toString.apply(allowedEventTypes) === "[object Array]") {
+        if(allowedEventTypes.length === 0) {
+          throw new Error("No elements within array!");
+        }
+
+        for (etCount; etCount < allowedEventTypes.length; etCount += 1) {
+          if(typeof allowedEventTypes[etCount] !== "string") {
+            throw new TypeError("EventType can only be strings within an array");
+          }
+        }
         eventTypes = allowedEventTypes;
       } else {
-        throw new Error("EventType argument isn't an array.");
+        throw new TypeError("EventTypes argument isn't an array.");
       }
 
       function checkEventTypeValid(type) {
