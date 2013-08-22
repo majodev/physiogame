@@ -1,5 +1,8 @@
-define(["display/assets", "display/factory", "config", "displayController", "leapController", "utils/hittest", "utils/mixin"],
-  function(assets, factory, config, displayController, leapController, hittest, mixin) {
+define(["display/assets", "display/factory", "config", "displayController",
+    "leapController", "utils/hittest", "utils/mixin", "layers/crosshair"
+  ],
+  function(assets, factory, config, displayController,
+    leapController, hittest, mixin, crosshair) {
 
     var width = config.width,
       height = config.height,
@@ -30,6 +33,7 @@ define(["display/assets", "display/factory", "config", "displayController", "lea
 
         displayController.events.on("renderFrame", onRenderMove);
         leapController.events.on("handFrameNormalized", onHandFrame);
+        crosshair.events.on("crosshairActive", onHandFrame);
 
         running = true;
       }
@@ -40,6 +44,7 @@ define(["display/assets", "display/factory", "config", "displayController", "lea
 
         displayController.events.remove("renderFrame", onRenderMove);
         leapController.events.remove("handFrameNormalized", onHandFrame);
+        crosshair.events.remove("newCrosshairPosition", onHandFrame);
 
         running = false;
       }
@@ -150,7 +155,6 @@ define(["display/assets", "display/factory", "config", "displayController", "lea
           aliensArray[i].hitted = hittest(aliensArray[i], hitCord);
         }
       }
-
     }
 
     return {

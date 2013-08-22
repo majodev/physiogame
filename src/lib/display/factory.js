@@ -43,9 +43,15 @@ define(["PIXI", "config"],
         return cross;
       },
       makeLayer: function(width, height) {
+        width = (width === undefined) ? config.width : width;
+        height = (height === undefined) ? config.height : height;
+
         return makeDisplayObjectContainer(width, height);
       },
       makeScene: function(width, height) {
+        width = (width === undefined) ? config.width : width;
+        height = (height === undefined) ? config.height : height;
+        
         return makeDisplayObjectContainer(width, height);
       }
     };
