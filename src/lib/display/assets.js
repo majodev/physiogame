@@ -1,5 +1,5 @@
-define(["PIXI", "utils/eventPublisher"],
-  function(PIXI, eventPublisher) {
+define(["PIXI", "utils/eventPublisher", "config"],
+  function(PIXI, eventPublisher, config) {
 
     var events = eventPublisher(["assetsLoaded"]);
 
@@ -26,7 +26,7 @@ define(["PIXI", "utils/eventPublisher"],
         alien;
 
       // add aliens...
-      for (i; i < 100; i += 1) {
+      for (i; i < 175; i += 1) {
         frameName = alienFrames[i % 4];
 
         // create an alien using the frame name..
@@ -39,10 +39,10 @@ define(["PIXI", "utils/eventPublisher"],
          * var alien = new PIXI.Sprite(texture);
          */
 
-        alien.position.x = parseInt(Math.random() * 800, 10);
-        alien.position.y = parseInt(Math.random() * 600, 10);
-        alien.targetX = parseInt(Math.random() * 800, 10);
-        alien.targetY = parseInt(Math.random() * 600, 10);
+        alien.position.x = parseInt(Math.random() * config.width, 10);
+        alien.position.y = parseInt(Math.random() * config.height, 10);
+        alien.targetX = parseInt(Math.random() * config.width, 10);
+        alien.targetY = parseInt(Math.random() * config.height, 10);
         alien.anchor.x = 0.5;
         alien.anchor.y = 0.5;
         alien.scale.x = 0.2;

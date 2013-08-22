@@ -69,10 +69,10 @@ define(["display/assets", "display/factory", "config", "displayController", "lea
             alien.position.y -= alien.speed;
           }
           if (alien.position.x === alien.targetX) {
-            alien.targetX = parseInt(Math.random() * 800, 10);
+            alien.targetX = parseInt(Math.random() * config.width, 10);
           }
           if (alien.position.y === alien.targetY) {
-            alien.targetY = parseInt(Math.random() * 600, 10);
+            alien.targetY = parseInt(Math.random() * config.height, 10);
           }
 
           if (alien.hitted === true) {

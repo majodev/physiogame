@@ -1,5 +1,5 @@
-define(["PIXI"],
-  function(PIXI) {
+define(["PIXI", "config"],
+  function(PIXI, config) {
 
     // private
     var crosshairTexture = PIXI.Texture.fromImage("assets/crosshair.png");
@@ -15,8 +15,8 @@ define(["PIXI"],
     }
 
     function setDimensions(displayObject, width, height) {
-      displayObject.width = (width === true) ? width : 800;
-      displayObject.height = (height === true) ? height : 600;
+      displayObject.width = (width === true) ? width : config.width;
+      displayObject.height = (height === true) ? height : config.height;
     }
 
     function makeDisplayObject(texture, px, py, ax, ay) {
