@@ -8,13 +8,15 @@ define(["PIXI", "config", "utils/eventPublisher"],
         config.height),
       renderTarget = config.renderTarget,
       frameCount = 0,
-      events = eventPublisher(["renderFrame", "debugInfo"]);
+      events = eventPublisher(["init", "renderFrame", "debugInfo"]);
 
-    (function init() {
-      console.log("display: init");
+    function init() {
+      console.log("displayController: init");
       renderTarget.appendChild(renderer.view);
       requestAnimFrame(renderFrame);
-    }());
+
+      events.fire("init");
+    }
 
     // per interval ms
     setInterval(function() {
@@ -38,6 +40,9 @@ define(["PIXI", "config", "utils/eventPublisher"],
 
     // public
     return {
+      init: function () {
+        init();
+      },
       stage: stage,
       events: events
     };

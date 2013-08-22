@@ -6,7 +6,7 @@ define(["lib/utils/hittest"],
       it("can test if two points hit each other", function() {
         hittest({position: {x: 40, y: 40}},
           {position: {x: 40, y: 40}}).should.equal(true);
-
+        
         hittest({position: {x: 40, y: 40}},
           {position: {x: 40, y: 41}}).should.equal(false);
         

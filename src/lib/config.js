@@ -3,11 +3,13 @@ define([],
 
     // object is wrapped in a function to be immutable.
     return {
-      width: 1024,
-      height: 768,
+      width: 640,
+      height: 480,
       interactive: true,
-      background: 0x111111,
-      renderTarget: document.body
+      background: 0xDDDDDD,
+      renderTarget: document.body,
+      spriteSheets: ["assets/SpriteSheetAliens.json",
+      "assets/SpriteSheetExplosion.json"]
     };
   }
 );

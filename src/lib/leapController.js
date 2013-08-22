@@ -36,11 +36,6 @@ define(["Leap", "config", "utils/eventPublisher"],
         x = parseInt(hand.palmPosition[0], 10);
         y = parseInt(hand.palmPosition[1], 10);
 
-        //events.fire("handFrame", {
-        //  x: x,
-        //  y: y
-        //});
-
         events.fire("handFrameNormalized", {
           position: {
             x: (displayWidth / 2 + (x * 2.5)),
@@ -62,13 +57,18 @@ define(["Leap", "config", "utils/eventPublisher"],
       frameCount = 0;
     }, 2000);
 
-    //(function init() {
-    console.log("leap: init");
-    controller.connect();
-    //}());
+    function init() {
+      console.log("leapController: init");
+      controller.connect();
+
+      events.fire("init");
+    }
 
     // public
     return {
+      init: function() {
+        init();
+      },
       getHandsAvailable: function() {
         return handsAvailable;
       },

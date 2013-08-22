@@ -60,11 +60,11 @@ define(["displayController", "config", "leapController", "display/factory"],
       deactivate: function() {
         kill();
       },
-      getLayer: function() {
-        return layer;
-      },
       getRunning: function() {
         return running;
+      },
+      getLayer: function() {
+        return layer;
       }
     };
   }

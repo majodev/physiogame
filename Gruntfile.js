@@ -1,8 +1,8 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     shell: {
-      'mocha-phantomjs': {
-        command: 'mocha-phantomjs -R dot http://localhost:8080/testrunner.html',
+      'mocha-phantomjs': { // also possible, only display dots: mocha-phantomjs -R dothttp://localhost:8080/testrunner.html
+        command: 'mocha-phantomjs http://localhost:8080/testrunner.html',
         options: {
           stdout: true,
           stderr: true
@@ -21,8 +21,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
 };
 
-// run tests once:
+// 1. make sure a http-server is running:
+// (parameter -c-1 === cache for -1 seconds === don't cache)
+// http-server -c-1
+
+// 2. optional: run tests once:
 // grunt shell:mocha-phantomjs
 
-// start watcher:
+// 3. start watcher:
 // grunt watch

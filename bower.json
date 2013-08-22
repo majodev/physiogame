@@ -2,10 +2,10 @@
   "name": "require-test-project",
   "version": "0.0.1",
   "dependencies": {
-    "requirejs": "~2.1.8",
-    "pixi": "~1.2.0",
+    "requirejs": ">=2.1.8",
+    "pixi": ">=1.3.0",
     "leapjs": "https://github.com/leapmotion/leapjs.git",
     "keymaster": "https://github.com/madrobby/keymaster.git",
-    "almond": "~0.2.6"
+    "almond": ">=0.2.6"
   }
 }

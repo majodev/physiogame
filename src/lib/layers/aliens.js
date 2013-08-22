@@ -89,10 +89,16 @@ define(["display/assets", "display/factory", "config", "displayController", "lea
 
           } else {
             if (alien.scale.x > 0.15) {
-              alien.scale.x -= 0.02;
-              alien.scale.y -= 0.02;
+              if (alien.scale.x > 0.6) {
+                alien.scale.x -= 0.02;
+                alien.scale.y -= 0.02;
+              } else {
+                alien.scale.x -= 0.003;
+                alien.scale.y -= 0.003;
+              }
+
             }
-            if (alien.alpha > 0.2) {
+            if (alien.alpha > 0.5) {
               alien.alpha -= 0.01;
             }
 
@@ -116,7 +122,7 @@ define(["display/assets", "display/factory", "config", "displayController", "lea
 
             explosion.loop = false;
             explosion.gotoAndPlay(0);
-            
+
 
             layer.addChild(explosion);
 
@@ -154,11 +160,11 @@ define(["display/assets", "display/factory", "config", "displayController", "lea
       deactivate: function() {
         kill();
       },
-      getLayer: function() {
-        return layer;
-      },
       getRunning: function() {
         return running;
+      },
+      getLayer: function() {
+        return layer;
       }
     };
   }

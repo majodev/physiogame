@@ -34,8 +34,6 @@ define(["PIXI", "config"],
       return displayObjectContainer;
     }
 
-
-
     // public
     return {
       makeCrosshair: function(px, py, ax, ay) {
