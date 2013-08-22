@@ -1,11 +1,11 @@
-define(["displayController", "displayConfig", "leapController", "displayFactory"],
-  function(displayController, displayConfig, leapController, displayFactory) {
+define(["displayController", "config", "leapController", "display/factory"],
+  function(displayController, config, leapController, factory) {
 
-    var width = displayConfig.width,
-      height = displayConfig.height,
+    var width = config.width,
+      height = config.height,
       running = false,
-      crosshair = displayFactory.makeBunny(),
-      layer = displayFactory.makeLayer();
+      crosshair = factory.makeCrosshair(),
+      layer = factory.makeLayer();
 
     function init() {
       if (!running) {
@@ -13,7 +13,7 @@ define(["displayController", "displayConfig", "leapController", "displayFactory"
 
         displayController.events.on("renderFrame", onRenderRotate);
         displayController.events.on("renderFrame", onRenderAlpha);
-        leapController.events.on("handFrame", onHandFrame);
+        leapController.events.on("handFrameNormalized", onHandFrame);
 
         running = true;
       }
@@ -25,7 +25,7 @@ define(["displayController", "displayConfig", "leapController", "displayFactory"
 
         displayController.events.remove("renderFrame", onRenderRotate);
         displayController.events.remove("renderFrame", onRenderAlpha);
-        leapController.events.remove("handFrame", onHandFrame);
+        leapController.events.remove("handFrameNormalized", onHandFrame);
 
         running = false;
       }
@@ -49,8 +49,8 @@ define(["displayController", "displayConfig", "leapController", "displayFactory"
     }
 
     function onHandFrame(coordinates) {
-      crosshair.position.x = width / 2 + (coordinates.x * 2.5);
-      crosshair.position.y = (height / 3) * 4 - (coordinates.y * 2);
+      crosshair.position.x = coordinates.position.x;
+      crosshair.position.y = coordinates.position.y;
     }
 
     return {

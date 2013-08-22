@@ -2,7 +2,7 @@ define(["PIXI"],
   function(PIXI) {
 
     // private
-    var bunnyTexture = PIXI.Texture.fromImage("assets/bunny.png");
+    var crosshairTexture = PIXI.Texture.fromImage("assets/crosshair.png");
 
     function setPosition(displayObject, x, y) {
       displayObject.position.x = (x === true) ? x : 0;
@@ -34,14 +34,15 @@ define(["PIXI"],
       return displayObjectContainer;
     }
 
-    function setDisplayObjectParameters(displayObject, parameters) {
-      
-    }
+
 
     // public
     return {
-      makeBunny: function(px, py, ax, ay) {
-        return makeDisplayObject(bunnyTexture, px, py, ax, ay);
+      makeCrosshair: function(px, py, ax, ay) {
+        var cross = makeDisplayObject(crosshairTexture, px, py, ax, ay);
+        // cross.scale.x = 1;
+        // cross.scale.y = 1;
+        return cross;
       },
       makeLayer: function(width, height) {
         return makeDisplayObjectContainer(width, height);

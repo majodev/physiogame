@@ -6,7 +6,7 @@ define([],
       width: 800,
       height: 600,
       interactive: true,
-      background: 0x000000,
+      background: 0x111111,
       renderTarget: document.body
     };
   }

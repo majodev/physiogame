@@ -33,7 +33,7 @@ define(["lib/utils/eventPublisher"],
         invoked.should.be.equal(2);
       });
 
-      it("raises error on unexpected eventTypes used at runtime", function() {
+      it("raises Error on unexpected eventTypes used at runtime", function() {
         var events = eventPublisher(["notusedevent"]);
         expect(function () {
           events.on("notfoundevent", function () {});

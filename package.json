@@ -15,7 +15,7 @@
   "window": {
     "title": "require-test-project",
     "show": true,
-    "toolbar": true,
+    "toolbar": false,
     "frame": true,
     "position": "center",
     "width": 800,

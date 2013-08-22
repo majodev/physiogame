@@ -1,17 +1,21 @@
-define(["Leap", "utils/eventPublisher"],
-  function(Leap, eventPublisher) {
+define(["Leap", "config", "utils/eventPublisher"],
+  function(Leap, config, eventPublisher) {
 
     // private 
     var controller = new Leap.Controller(),
       frameCount = 0,
       handsAvailable = false,
       handsLength = 0,
-      events = eventPublisher(["handFrame", "debugInfo"]);
+      events = eventPublisher(["handFrameNormalized", "debugInfo"]),
+      displayWidth = config.width,
+      displayHeight = config.height;
 
     // per frame from leap
     controller.on("frame", function(frame) {
 
       var handId = 0,
+        x = 0,
+        y = 0,
         hand;
 
       if (frame.hands === undefined) {
@@ -29,11 +33,21 @@ define(["Leap", "utils/eventPublisher"],
 
         hand = frame.hands[handId];
 
-        events.fire("handFrame", {
-          x: parseInt(hand.palmPosition[0], 10),
-          y: parseInt(hand.palmPosition[1], 10),
-          z: parseInt(hand.palmPosition[2], 10)
+        x = parseInt(hand.palmPosition[0], 10);
+        y = parseInt(hand.palmPosition[1], 10);
+
+        //events.fire("handFrame", {
+        //  x: x,
+        //  y: y
+        //});
+
+        events.fire("handFrameNormalized", {
+          position: {
+            x: (displayWidth / 2 + (x * 2.5)),
+            y: ((displayHeight / 3) * 4 - (y * 2))
+          }
         });
+
       }
 
       frameCount += 1;
