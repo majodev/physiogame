@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "pixi": ">=1.3.0",
-    "leapjs": "https://github.com/leapmotion/leapjs.git",
+    "leapjs": "https://github.com/leapmotion/leapjs.git#fb91a9a0d5985f4687d20d5b3d6775a3f853198d",
     "keymaster": "https://github.com/madrobby/keymaster.git"
   }
 }

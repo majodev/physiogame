@@ -9,7 +9,8 @@ var config = {
   baseUrl: "src/lib/", // Base URL
   mainConfigFile: "scripts/main.js", // include all dependencies from main
   paths: { // requireLib will be included and optimized
-    "requireLib": "../../node_modules/requirejs/require"
+    "requireLib": "../../node_modules/requirejs/require",
+    "Leap": "empty:"
   },
   optimize: "none",
   include: "requireLib",
