@@ -5,7 +5,7 @@ define(["layers/crosshair", "layers/aliens", "display/factory", "display/assets"
       alienLayer = aliens.getLayer(),
       running = false;
 
-    function init() {
+    function activate() {
       if (!running) {
         aliens.activate();
         crosshair.activate();
@@ -16,7 +16,7 @@ define(["layers/crosshair", "layers/aliens", "display/factory", "display/assets"
       }
     }
 
-    function kill() {
+    function deactivate() {
       if(running) {
         aliens.deactivate();
         crosshair.deactivate();
@@ -28,12 +28,8 @@ define(["layers/crosshair", "layers/aliens", "display/factory", "display/assets"
     }
 
     return {
-      activate: function() {
-        init();
-      },
-      deactivate: function() {
-        kill();
-      },
+      activate: activate,
+      deactivate: deactivate,
       getRunning: function () {
         return running;
       },

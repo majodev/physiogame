@@ -40,9 +40,7 @@ define(["PIXI", "config", "utils/eventPublisher"],
 
     // public
     return {
-      init: function () {
-        init();
-      },
+      init: init,
       stage: stage,
       events: events
     };

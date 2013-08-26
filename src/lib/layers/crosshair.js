@@ -9,7 +9,7 @@ define(["displayController", "config", "leapController", "display/factory", "uti
       layer = factory.makeLayer(),
       mouseCurrentlyDown = false;
 
-    function init() {
+    function activate() {
       if (!running) {
         layer.addChild(crosshair);
 
@@ -25,7 +25,7 @@ define(["displayController", "config", "leapController", "display/factory", "uti
       }
     }
 
-    function kill() {
+    function deactivate() {
       if (running) {
         layer.removeChild(crosshair);
 
@@ -88,12 +88,8 @@ define(["displayController", "config", "leapController", "display/factory", "uti
     }
 
     return {
-      activate: function() {
-        init();
-      },
-      deactivate: function() {
-        kill();
-      },
+      activate: activate,
+      deactivate: deactivate,
       getRunning: function() {
         return running;
       },

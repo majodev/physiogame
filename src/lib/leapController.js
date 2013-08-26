@@ -64,17 +64,19 @@ define(["Leap", "config", "utils/eventPublisher"],
       events.fire("init");
     }
 
+    function getHandsAvailable() {
+      return handsAvailable;
+    }
+
+    function getHandsLength() {
+      return handsLength;
+    }
+
     // public
     return {
-      init: function() {
-        init();
-      },
-      getHandsAvailable: function() {
-        return handsAvailable;
-      },
-      getHandsLength: function() {
-        return handsLength;
-      },
+      init: init,
+      getHandsAvailable: getHandsAvailable,
+      getHandsLength: getHandsLength,
       events: events
     };
   }

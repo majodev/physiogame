@@ -16,7 +16,7 @@ define(["PIXI", "utils/eventPublisher", "config", "display/loader"],
         alien;
 
       // add aliens...
-      for (i; i < 10; i += 1) {
+      for (i; i < 100; i += 1) {
         frameName = alienFrames[i % 4];
 
         // create an alien using the frame name..

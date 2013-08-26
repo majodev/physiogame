@@ -24,18 +24,8 @@ define(["scenes/mainScene", "utils/eventPublisher", "displayController"],
     }
 
     return {
-      init: function () {
-        init();
-      },
-      showMainScene: function () {
-        showMainScene();
-      },
-      pushScene: function (scene) {
-
-      },
-      popScene: function (scene) {
-
-      }
+      init: init,
+      showMainScene: showMainScene
     };
 
   }

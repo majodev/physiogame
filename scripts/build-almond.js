@@ -24,7 +24,7 @@ var config = {
     }
   },
   optimize: "none",
-  name: "../vendor/almond/almond", // Name of script to start building from
+  name: "../../node_modules/almond/almond", // Name of script to start building from
   include: "gameController",
   insertRequire: ["gameController"],
   wrap: true,

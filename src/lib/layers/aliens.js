@@ -1,8 +1,8 @@
 define(["display/assets", "display/factory", "config", "displayController",
-    "leapController", "utils/hittest", "utils/mixin", "layers/crosshair"
+    "leapController", "utils/hittest", "lodash", "layers/crosshair"
   ],
   function(assets, factory, config, displayController,
-    leapController, hittest, mixin, crosshair) {
+    leapController, hittest, _, crosshair) {
 
     var width = config.width,
       height = config.height,
@@ -28,7 +28,7 @@ define(["display/assets", "display/factory", "config", "displayController",
       }
     }
 
-    function init() {
+    function activate() {
       if (!running) {
 
         displayController.events.on("renderFrame", onRenderMove);
@@ -39,7 +39,7 @@ define(["display/assets", "display/factory", "config", "displayController",
       }
     }
 
-    function kill() {
+    function deactivate() {
       if (running) {
 
         displayController.events.remove("renderFrame", onRenderMove);
@@ -141,7 +141,7 @@ define(["display/assets", "display/factory", "config", "displayController",
     function onHandFrame(coordinates) {
       var i = 0,
         max = aliensArray.length,
-        hitCord = mixin(coordinates, {
+        hitCord = _.extend(coordinates, {
           width: 20,
           height: 20,
           anchor: {
@@ -158,12 +158,8 @@ define(["display/assets", "display/factory", "config", "displayController",
     }
 
     return {
-      activate: function() {
-        init();
-      },
-      deactivate: function() {
-        kill();
-      },
+      activate: activate,
+      deactivate: deactivate,
       getRunning: function() {
         return running;
       },

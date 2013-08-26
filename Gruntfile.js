@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     shell: {
-      'mocha-phantomjs': { // also possible, only display dots: mocha-phantomjs -R dothttp://localhost:8080/testrunner.html
+      'mocha-phantomjs': { // also possible, only display dots for test cases: mocha-phantomjs -R dothttp://localhost:8080/testrunner.html
         command: 'mocha-phantomjs http://localhost:8080/testrunner.html',
         options: {
           stdout: true,

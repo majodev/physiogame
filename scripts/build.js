@@ -11,7 +11,8 @@ var config = {
     "PIXI": "../vendor/pixi/bin/pixi",
     "Leap": "../vendor/leapjs/leap",
     "key": "../vendor/keymaster/keymaster.min",
-    "requireLib": "../vendor/requirejs/require"
+    "lodash": "../../node_modules/lodash/lodash",
+    "requireLib": "../../node_modules/requirejs/require"
   },
   shim: {
     "PIXI": {
@@ -24,7 +25,7 @@ var config = {
       exports: "key"
     }
   },
-  optimize: "uglify2",
+  optimize: "none",
   include: "requireLib",
   name: "gameController", // Name of script to start building from
   insertRequire: ["gameController"],

@@ -4,7 +4,8 @@ require.config({
   paths: {
     "PIXI": "../vendor/pixi/bin/pixi",
     "Leap": "../vendor/leapjs/leap",
-    "key": "../vendor/keymaster/keymaster"
+    "key": "../vendor/keymaster/keymaster",
+    "lodash": "../../node_modules/lodash/lodash"
   },
   shim: {
     "PIXI": {
@@ -19,6 +20,6 @@ require.config({
   }
 });
 
-//Start the main app logic.
+// Start the main app logic.
 require(["gameController"],
   function(gameController) {});

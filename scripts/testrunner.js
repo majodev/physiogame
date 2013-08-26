@@ -5,7 +5,7 @@ require.config({
 });
 
 // Require libraries
-require(["spec/utils/eventPublisher", "spec/utils/mixin", "spec/utils/hittest"],
+require(["spec/utils/eventPublisher", "spec/utils/hittest"],
   function() {
 
     console.log("testing...");

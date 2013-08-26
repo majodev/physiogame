@@ -13,8 +13,11 @@
       mocha.reporter('html');
 
       assert = chai.assert;
-      var should = chai.should(); // must be var, else problem!
       expect = chai.expect;
+
+      // should must be assigned to var to enable testing in phantomjs!
+      // else expect an error with overflow of callstack
+      var should = chai.should();
 
       // Mocha
       mocha.setup("bdd");
