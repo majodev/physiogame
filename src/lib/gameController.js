@@ -4,8 +4,6 @@ define(["displayController", "leapController", "sceneController", "key"],
     // private
     var showDebug = false;
 
-    console.log("lodash: " + _.VERSION);
-
     // immediately invoked, inits gameController and child controllers
     (function init() {
 

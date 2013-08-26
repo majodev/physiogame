@@ -5,7 +5,9 @@ define(["PIXI", "utils/eventPublisher", "config", "display/loader"],
       aliens = [],
       alienFrames = ["eggHead.png", "flowerTop.png", "helmlok.png", "skully.png"],
       explosionTextures = [],
-      assetsLoaded = false;
+      assetsLoaded = false,
+      width = config.get("width"),
+      height = config.get("height");
 
     loader.events.on("loaderComplete", onAssetsLoaded);
     loader.init();
@@ -16,17 +18,17 @@ define(["PIXI", "utils/eventPublisher", "config", "display/loader"],
         alien;
 
       // add aliens...
-      for (i; i < 100; i += 1) {
+      for (i; i < 10; i += 1) {
         frameName = alienFrames[i % 4];
 
         // create an alien using the frame name..
         alien = PIXI.Sprite.fromFrame(frameName);
 
         // set its initial values...
-        alien.position.x = parseInt(Math.random() * config.width, 10);
-        alien.position.y = parseInt(Math.random() * config.height, 10);
-        alien.targetX = parseInt(Math.random() * config.width, 10); // extra
-        alien.targetY = parseInt(Math.random() * config.height, 10); // extra
+        alien.position.x = parseInt(Math.random() * width, 10);
+        alien.position.y = parseInt(Math.random() * height, 10);
+        alien.targetX = parseInt(Math.random() * width, 10); // extra
+        alien.targetY = parseInt(Math.random() * height, 10); // extra
         alien.anchor.x = 0.5;
         alien.anchor.y = 0.5;
         alien.scale.x = 0.2;

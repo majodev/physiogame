@@ -7,8 +7,8 @@ define(["Leap", "config", "utils/eventPublisher"],
       handsAvailable = false,
       handsLength = 0,
       events = eventPublisher(["handFrameNormalized", "debugInfo"]),
-      displayWidth = config.width,
-      displayHeight = config.height;
+      displayWidth = config.get("width"),
+      displayHeight = config.get("height");
 
     // per frame from leap
     controller.on("frame", function(frame) {

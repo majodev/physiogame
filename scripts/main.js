@@ -2,12 +2,17 @@
 require.config({
   baseUrl: "src/lib/",
   paths: {
-    "PIXI": "../vendor/pixi/bin/pixi",
+    "underscore": "../../node_modules/lodash/lodash",
+    "Backbone": "../../node_modules/backbone/backbone",
+    "PIXI": "../vendor/pixi/bin/pixi.dev",
     "Leap": "../vendor/leapjs/leap",
-    "key": "../vendor/keymaster/keymaster",
-    "lodash": "../../node_modules/lodash/lodash"
+    "key": "../vendor/keymaster/keymaster"
   },
   shim: {
+    "Backbone": {
+      deps: ["underscore"],
+      exports: "Backbone"
+    },
     "PIXI": {
       exports: "PIXI"
     },

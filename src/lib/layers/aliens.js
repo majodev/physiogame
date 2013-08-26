@@ -1,11 +1,11 @@
 define(["display/assets", "display/factory", "config", "displayController",
-    "leapController", "utils/hittest", "lodash", "layers/crosshair"
+    "leapController", "utils/hittest", "underscore", "layers/crosshair"
   ],
   function(assets, factory, config, displayController,
     leapController, hittest, _, crosshair) {
 
-    var width = config.width,
-      height = config.height,
+    var width = config.get("width"),
+      height = config.get("height"),
       running = false,
       layer = factory.makeLayer(),
       aliensArray = [];
@@ -74,10 +74,10 @@ define(["display/assets", "display/factory", "config", "displayController",
             alien.position.y -= alien.speed;
           }
           if (alien.position.x === alien.targetX) {
-            alien.targetX = parseInt(Math.random() * config.width, 10);
+            alien.targetX = parseInt(Math.random() * width, 10);
           }
           if (alien.position.y === alien.targetY) {
-            alien.targetY = parseInt(Math.random() * config.height, 10);
+            alien.targetY = parseInt(Math.random() * height, 10);
           }
 
           if (alien.hitted === true) {

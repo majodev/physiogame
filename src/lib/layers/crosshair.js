@@ -2,8 +2,8 @@ define(["displayController", "config", "leapController", "display/factory", "uti
   function(displayController, config, leapController, factory, eventPublisher) {
 
     var events = eventPublisher(["crosshairActive"]),
-      width = config.width,
-      height = config.height,
+      width = config.get("width"),
+      height = config.get("height"),
       running = false,
       crosshair = factory.makeCrosshair(),
       layer = factory.makeLayer(),

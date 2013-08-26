@@ -2,7 +2,7 @@ define(["PIXI", "utils/eventPublisher", "config"],
   function(PIXI, eventPublisher, config) {
 
     var events = eventPublisher(["loaderComplete"]),
-      loader = new PIXI.AssetLoader(config.spriteSheets),
+      loader = new PIXI.AssetLoader(config.get("spriteSheets")),
       spriteSheetsLoaded = false;
 
     // set callback to fire after loader is complete

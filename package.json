@@ -5,7 +5,8 @@
     "bower": "latest",
     "requirejs": "~2.1.8",
     "almond": "~0.2.6",
-    "lodash": "~1.3.1"
+    "lodash": "~1.3.1",
+    "backbone": "~1.0.0"
   },
   "devDependencies": {
     "http-server": "~0.5.5",
@@ -24,10 +25,10 @@
     "toolbar": false,
     "frame": true,
     "position": "center",
-    "width": 800,
-    "height": 600,
-    "min_width": 800,
-    "min_height": 600,
+    "width": 640,
+    "height": 480,
+    "min_width": 640,
+    "min_height": 480,
     "kiosk": false
     },
     "private": true

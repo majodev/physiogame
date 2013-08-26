@@ -2,11 +2,11 @@ define(["PIXI", "config", "utils/eventPublisher"],
   function(PIXI, config, eventPublisher) {
 
     // private
-    var stage = new PIXI.Stage(config.background,
-      config.interactive),
-      renderer = PIXI.autoDetectRenderer(config.width,
-        config.height),
-      renderTarget = config.renderTarget,
+    var stage = new PIXI.Stage(config.get("background"),
+      config.get("interactive")),
+      renderer = PIXI.autoDetectRenderer(config.get("width"),
+        config.get("height")),
+      renderTarget = config.get("renderTarget"),
       frameCount = 0,
       events = eventPublisher(["init", "renderFrame", "debugInfo"]);
 
