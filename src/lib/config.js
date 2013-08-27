@@ -9,7 +9,7 @@ define(["Backbone"],
       spriteSheets: ["assets/SpriteSheetAliens.json",
         "assets/SpriteSheetExplosion.json"
       ],
-      aliensToSpawn: 200
+      aliensToSpawn: 10
     });
     return config;
   }
