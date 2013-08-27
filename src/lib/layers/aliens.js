@@ -1,5 +1,5 @@
 define(["display/assets", "display/factory", "config", "displayController",
-    "leapController", "utils/hittest", "underscore", "layers/crosshair", "PIXI", "score"
+    "leapController", "utils/hittest", "underscore", "layers/crosshair", "PIXI", "models/score"
   ],
   function(assets, factory, config, displayController,
     leapController, hittest, _, crosshair, PIXI, score) {
@@ -89,11 +89,16 @@ define(["display/assets", "display/factory", "config", "displayController",
 
           if (alien.hitted === true) {
             if (alien.scale.x < 2) {
-              alien.scale.x += 0.02;
-              alien.scale.y += 0.02;
+              if(alien.scale.x < 1) {
+                alien.scale.x += 0.1;
+                alien.scale.y += 0.1;
+              } else {
+                alien.scale.x += 0.02;
+                alien.scale.y += 0.02;
+              }
             }
             if (alien.alpha < 1) {
-              alien.alpha += 0.1;
+              alien.alpha += 0.2;
             }
             if (alien.speed < 6) {
               alien.speed += 1;
@@ -101,7 +106,7 @@ define(["display/assets", "display/factory", "config", "displayController",
 
           } else {
             if (alien.scale.x > 0.15) {
-              if (alien.scale.x > 0.6) {
+              if (alien.scale.x > 0.9) {
                 alien.scale.x -= 0.02;
                 alien.scale.y -= 0.02;
               } else {

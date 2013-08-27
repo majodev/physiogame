@@ -1,5 +1,5 @@
-define(["displayController", "leapController", "display/factory", "utils/eventPublisher"],
-  function(displayController, leapController, factory, eventPublisher) {
+define(["displayController", "leapController", "display/factory", "utils/eventPublisher", "PIXI"],
+  function(displayController, leapController, factory, eventPublisher, PIXI) {
 
     var events = eventPublisher(["crosshairActive"]),
       running = false,
