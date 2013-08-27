@@ -8,7 +8,17 @@ define(["display/assets", "display/factory", "config", "displayController",
       height = config.get("height"),
       running = false,
       layer = factory.makeLayer(),
-      aliensArray = [];
+      aliensArray = [],
+      alienHittedScaleCap = 1,
+      alienHittedScaleBeforeCap = 0.12,
+      alienHittedScaleAfterCap = 0.08,
+      alienHittedSpeedMax = 5,
+      alienHittedSpeedStep = 1,
+      alienHittedAlphaStep = 0.2,
+      alienNormalScaleMin = 0.15,
+      alienNormalScaleCap = 0.9,
+      alienNormalScaleBeforeCap = 0.02;
+      alienNormalScaleAfterCap = 0.003;
 
 
     if (assets.assetsLoaded === true) {
@@ -88,30 +98,28 @@ define(["display/assets", "display/factory", "config", "displayController",
           }
 
           if (alien.hitted === true) {
-            if (alien.scale.x < 2) {
-              if(alien.scale.x < 1) {
-                alien.scale.x += 0.1;
-                alien.scale.y += 0.1;
-              } else {
-                alien.scale.x += 0.02;
-                alien.scale.y += 0.02;
-              }
+            if (alien.scale.x < alienHittedScaleCap) {
+              alien.scale.x += alienHittedScaleBeforeCap;
+              alien.scale.y += alienHittedScaleBeforeCap;
+            } else {
+              alien.scale.x += alienHittedScaleAfterCap;
+              alien.scale.y += alienHittedScaleAfterCap;
             }
             if (alien.alpha < 1) {
-              alien.alpha += 0.2;
+              alien.alpha += alienHittedAlphaStep;
             }
-            if (alien.speed < 6) {
-              alien.speed += 1;
+            if (alien.speed <= alienHittedSpeedMax) {
+              alien.speed += alienHittedSpeedStep;
             }
 
           } else {
-            if (alien.scale.x > 0.15) {
-              if (alien.scale.x > 0.9) {
-                alien.scale.x -= 0.02;
-                alien.scale.y -= 0.02;
+            if (alien.scale.x > alienNormalScaleMin) {
+              if (alien.scale.x > alienNormalScaleCap) {
+                alien.scale.x -= alienNormalScaleBeforeCap;
+                alien.scale.y -= alienNormalScaleBeforeCap;
               } else {
-                alien.scale.x -= 0.003;
-                alien.scale.y -= 0.003;
+                alien.scale.x -= alienNormalScaleAfterCap;
+                alien.scale.y -= alienNormalScaleAfterCap;
               }
 
             }
