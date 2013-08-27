@@ -10,6 +10,8 @@ define(["Leap", "config", "utils/eventPublisher"],
       displayWidth = config.get("width"),
       displayHeight = config.get("height");
 
+    config.on("change", configChanged);
+
     // per frame from leap
     controller.on("frame", function(frame) {
 
@@ -62,6 +64,11 @@ define(["Leap", "config", "utils/eventPublisher"],
       controller.connect();
 
       events.fire("init");
+    }
+
+    function configChanged(model, options) {
+      displayWidth = model.get("width");
+      displayHeight = model.get("height");
     }
 
     function getHandsAvailable() {

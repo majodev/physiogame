@@ -6,21 +6,48 @@ require.config({
     "Backbone": "../../node_modules/backbone/backbone",
     "PIXI": "../vendor/pixi/bin/pixi.dev",
     "Leap": "../vendor/leapjs/leap",
-    "key": "../vendor/keymaster/keymaster"
+    "key": "../vendor/keymaster/keymaster",
+    "jquery": "../vendor/jquery/jquery"
   },
   shim: {
     "Backbone": {
-      deps: ["underscore"],
-      exports: "Backbone"
+      deps: ["underscore", "jquery"],
+      exports: "Backbone",
+      init: function(_, $) {
+        console.log("requireconfig: init (AMD) underscore with noConflict");
+        _.noConflict(); // remove underscore from global scope
+
+        console.log("requireconfig: init (AMD) jquery with noConflict");
+        $.noConflict(true); // remove jquery from global scope
+        
+        console.log("requireconfig: init (shim) Backbone with noConflict");
+        return Backbone.noConflict();
+      }
     },
     "PIXI": {
-      exports: "PIXI"
+      exports: "PIXI",
+      init: function() {
+        console.log("requireconfig: init (shim) PIXI and remove from global scope");
+        var pixiLib = PIXI;
+        PIXI = undefined;
+        return pixiLib;
+      }
     },
     "Leap": {
-      exports: "Leap"
+      exports: "Leap",
+      init: function() {
+        console.log("requireconfig: init (shim) Leap and remove from global scope");
+        var leapLib = Leap;
+        Leap = undefined;
+        return leapLib;
+      }
     },
     "key": {
-      exports: "key"
+      exports: "key",
+      init: function() {
+        console.log("requireconfig: init (shim) key with noConflict");
+        return key.noConflict();
+      }
     }
   }
 });

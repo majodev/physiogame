@@ -1,4 +1,5 @@
-define(["Backbone"], function() {
+define(["Backbone"],
+  function(Backbone) {
     var config = new Backbone.Model({
       width: 640,
       height: 480,
@@ -7,7 +8,8 @@ define(["Backbone"], function() {
       renderTarget: document.body,
       spriteSheets: ["assets/SpriteSheetAliens.json",
         "assets/SpriteSheetExplosion.json"
-      ]
+      ],
+      aliensToSpawn: 10
     });
     return config;
   }

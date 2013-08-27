@@ -7,7 +7,8 @@ define(["PIXI", "utils/eventPublisher", "config", "display/loader"],
       explosionTextures = [],
       assetsLoaded = false,
       width = config.get("width"),
-      height = config.get("height");
+      height = config.get("height"),
+      aliensToSpawn = config.get("aliensToSpawn");
 
     loader.events.on("loaderComplete", onAssetsLoaded);
     loader.init();
@@ -18,7 +19,7 @@ define(["PIXI", "utils/eventPublisher", "config", "display/loader"],
         alien;
 
       // add aliens...
-      for (i; i < 10; i += 1) {
+      for (i; i < aliensToSpawn; i += 1) {
         frameName = alienFrames[i % 4];
 
         // create an alien using the frame name..

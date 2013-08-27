@@ -1,9 +1,7 @@
-define(["displayController", "config", "leapController", "display/factory", "utils/eventPublisher"],
-  function(displayController, config, leapController, factory, eventPublisher) {
+define(["displayController", "leapController", "display/factory", "utils/eventPublisher"],
+  function(displayController, leapController, factory, eventPublisher) {
 
     var events = eventPublisher(["crosshairActive"]),
-      width = config.get("width"),
-      height = config.get("height"),
       running = false,
       crosshair = factory.makeCrosshair(),
       layer = factory.makeLayer(),

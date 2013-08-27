@@ -1,8 +1,8 @@
 define(["display/assets", "display/factory", "config", "displayController",
-    "leapController", "utils/hittest", "underscore", "layers/crosshair"
+    "leapController", "utils/hittest", "underscore", "layers/crosshair", "PIXI", "score"
   ],
   function(assets, factory, config, displayController,
-    leapController, hittest, _, crosshair) {
+    leapController, hittest, _, crosshair, PIXI, score) {
 
     var width = config.get("width"),
       height = config.get("height"),
@@ -17,6 +17,8 @@ define(["display/assets", "display/factory", "config", "displayController",
       assets.events.on("assetsLoaded", addAliens);
     }
 
+    config.on("change", configChanged);
+
     function addAliens() {
       var i = 0,
         max = assets.aliens.length;
@@ -26,6 +28,11 @@ define(["display/assets", "display/factory", "config", "displayController",
       for (i; i < max; i += 1) {
         layer.addChild(aliensArray[i]);
       }
+    }
+
+    function configChanged(model, options) {
+      width = model.get("width");
+      height = model.get("height");
     }
 
     function activate() {
@@ -130,6 +137,8 @@ define(["display/assets", "display/factory", "config", "displayController",
 
 
             layer.addChild(explosion);
+
+            score.raiseScore();
 
           }
 

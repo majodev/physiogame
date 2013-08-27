@@ -1,5 +1,5 @@
-define(["PIXI", "config", "utils/eventPublisher"],
-  function(PIXI, config, eventPublisher) {
+define(["PIXI", "config", "utils/eventPublisher", "utils/resizeWatcher"],
+  function(PIXI, config, eventPublisher, resizeWatcher) {
 
     // private
     var stage = new PIXI.Stage(config.get("background"),
@@ -14,6 +14,9 @@ define(["PIXI", "config", "utils/eventPublisher"],
       console.log("displayController: init");
       renderTarget.appendChild(renderer.view);
       requestAnimFrame(renderFrame);
+
+      resizeWatcher.init(window, renderer);
+      resizeWatcher.resizeNow();
 
       events.fire("init");
     }
@@ -38,11 +41,16 @@ define(["PIXI", "config", "utils/eventPublisher"],
       frameCount += 1;
     }
 
+    function resize() {
+      resizeWatcher.resizeNow();
+    }
+
     // public
     return {
       init: init,
       stage: stage,
-      events: events
+      events: events,
+      resize: resize
     };
   }
 );

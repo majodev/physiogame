@@ -13,8 +13,14 @@ define(["displayController", "leapController", "sceneController", "key"],
       sceneController.init();
       leapController.init();
 
+      sceneController.events.on("showScene", sceneChanged);
       sceneController.showMainScene();
+
     }());
+
+    function sceneChanged(scene) {
+      displayController.resize();
+    }
 
     function toggleDebugInfo() {
       if (showDebug === true) {

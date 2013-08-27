@@ -25,7 +25,8 @@ define(["scenes/mainScene", "utils/eventPublisher", "displayController"],
 
     return {
       init: init,
-      showMainScene: showMainScene
+      showMainScene: showMainScene,
+      events: events
     };
 
   }
