@@ -22,12 +22,15 @@ define(["PIXI", "config"],
       return displayObject;
     }
 
-    function makeDisplayObject(texture, px, py, ax, ay) {
-
+    function makePIXISprite(texture, px, py, ax, ay) {
       var displayObject = new PIXI.Sprite(texture);
       setPosition(displayObject, px, py);
       setAnchor(displayObject, ax, ay);
       return displayObject;
+    }
+
+    function makePIXIMovieClip(textures, config) {
+
     }
 
     function makeDisplayObjectContainer(width, height) {
@@ -38,7 +41,7 @@ define(["PIXI", "config"],
     }
 
     function makeCrosshair(px, py, ax, ay) {
-      var cross = makeDisplayObject(crosshairTexture, px, py, ax, ay);
+      var cross = makePIXISprite(crosshairTexture, px, py, ax, ay);
       return cross;
     }
 
@@ -60,7 +63,9 @@ define(["PIXI", "config"],
     return {
       makeCrosshair: makeCrosshair,
       makeLayer: makeLayer,
-      makeScene: makeScene
+      makeScene: makeScene,
+      makePIXISprite: makePIXISprite,
+      setDimensions: setDimensions
     };
   }
 );

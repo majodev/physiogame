@@ -1,13 +1,25 @@
-define(["displayController", "leapController", "sceneController", "key"],
-  function(displayController, leapController, sceneController, key) {
+define(["displayController", "leapController", "sceneController", "key", "display/assets"],
+  function(displayController, leapController, sceneController, key, assets) {
 
     // private
     var showDebug = false;
 
-    // immediately invoked, inits gameController and child controllers
-    (function init() {
 
+
+    // immediately invoked, inits gameController and child controllers
+    (function preloading() {
+
+      if(assets.assetsLoaded === true) {
+        init();
+      } else {
+        assets.events.on("assetsLoaded", init);
+      }
+    }());
+
+    function init() {
       console.log("gameController: init");
+
+      assets.events.remove("assetsLoaded", init);
 
       displayController.init();
       sceneController.init();
@@ -15,8 +27,7 @@ define(["displayController", "leapController", "sceneController", "key"],
 
       sceneController.events.on("showScene", sceneChanged);
       sceneController.showMainScene();
-
-    }());
+    }
 
     function sceneChanged(scene) {
       displayController.resize();

@@ -15,7 +15,7 @@ require.config({
       exports: "Backbone",
       init: function(_, $) {
         console.log("requireconfig: init (AMD) underscore with noConflict");
-        _.noConflict(); // remove underscore from global scope
+        //_.noConflict(); // remove underscore from global scope
 
         console.log("requireconfig: init (AMD) jquery with noConflict");
         $.noConflict(true); // remove jquery from global scope

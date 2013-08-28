@@ -1,5 +1,5 @@
-define(["PIXI", "utils/eventPublisher", "config", "display/loader"],
-  function(PIXI, eventPublisher, config, loader) {
+define(["PIXI", "utils/eventPublisher", "config", "display/loader", "utils/zeroPad"],
+  function(PIXI, eventPublisher, config, loader, zeroPad) {
 
     var events = eventPublisher(["assetsLoaded"]),
       aliens = [],
@@ -8,7 +8,9 @@ define(["PIXI", "utils/eventPublisher", "config", "display/loader"],
       assetsLoaded = false,
       width = config.get("width"),
       height = config.get("height"),
-      aliensToSpawn = config.get("aliensToSpawn");
+      aliensToSpawn = config.get("aliensToSpawn"),
+      backgroundTexture,
+      cloudTextures = [];
 
     loader.events.on("loaderComplete", onAssetsLoaded);
     loader.init();
@@ -16,7 +18,8 @@ define(["PIXI", "utils/eventPublisher", "config", "display/loader"],
     function onAssetsLoaded() {
       var i = 0,
         frameName,
-        alien;
+        alien,
+        texture;
 
       // add aliens...
       for (i; i < aliensToSpawn; i += 1) {
@@ -43,11 +46,22 @@ define(["PIXI", "utils/eventPublisher", "config", "display/loader"],
 
       // add explosion textures
       for (i = 0; i < 26; i += 1) {
-        var texture = PIXI.Texture.fromFrame("Explosion_Sequence_A " + (i + 1) + ".png");
+        texture = PIXI.Texture.fromFrame("Explosion_Sequence_A " + (i + 1) + ".png");
         explosionTextures.push(texture);
       }
 
+      // add background textures
+      backgroundTexture = PIXI.Texture.fromFrame("bg/0000");
+
+      // add cloud textures
+      for (i = 0; i < 25; i += 1) {
+        texture = PIXI.Texture.fromFrame("cloud/" + zeroPad(i, 4));
+        cloudTextures.push(texture);
+      }
+
+      // show subscipers that we are finish loading our assets
       assetsLoaded = true;
+      console.log("display: assets loaded!");
       events.fire("assetsLoaded");
     }
 
@@ -55,7 +69,11 @@ define(["PIXI", "utils/eventPublisher", "config", "display/loader"],
       aliens: aliens,
       assetsLoaded: assetsLoaded,
       events: events,
-      explosionTextures: explosionTextures
+      explosionTextures: explosionTextures,
+      getBackgroundTexture: function () {
+        return backgroundTexture;
+      },
+      cloudTextures: cloudTextures
     };
   }
 );

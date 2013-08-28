@@ -1,17 +1,24 @@
-define(["layers/crosshair", "layers/aliens", "display/factory", "display/assets", "layers/score"],
-  function(crosshair, aliens, factory, assets, score) {
+define(["layers/crosshair", "layers/aliens", "display/factory",
+  "display/assets", "layers/score", "layers/background", "layers/clouds"],
+  function(crosshair, aliens, factory, assets, score, background, clouds) {
     var scene = factory.makeScene(),
       crosshairLayer = crosshair.getLayer(),
       alienLayer = aliens.getLayer(),
       scoreLayer = score.getLayer(),
-      running = false;
+      running = false,
+      backgroundLayer = background.getLayer(),
+      cloudsLayer = clouds.getLayer();
 
     function activate() {
       if (!running) {
         aliens.activate();
         crosshair.activate();
         score.activate();
+        background.activate();
+        clouds.activate();
         
+        scene.addChild(backgroundLayer);
+        scene.addChild(cloudsLayer);
         scene.addChild(alienLayer);
         scene.addChild(crosshairLayer);
         scene.addChild(scoreLayer);
@@ -24,10 +31,14 @@ define(["layers/crosshair", "layers/aliens", "display/factory", "display/assets"
       if(running) {
         aliens.deactivate();
         crosshair.deactivate();
+        score.deactivate();
+        background.deactivate();
         
         scene.removeChild(alienLayer);
         scene.removeChild(crosshairLayer);
         scene.removeChild(scoreLayer);
+        scene.removeChild(cloudsLayer);
+        scene.removeChild(backgroundLayer);
 
         running = false;
       }

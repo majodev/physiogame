@@ -17,17 +17,18 @@ define(["display/assets", "display/factory", "config", "displayController",
       alienHittedAlphaStep = 0.2,
       alienNormalScaleMin = 0.15,
       alienNormalScaleCap = 0.9,
-      alienNormalScaleBeforeCap = 0.02;
-      alienNormalScaleAfterCap = 0.003;
+      alienNormalScaleBeforeCap = 0.02,
+      alienNormalScaleAfterCap = 0.003,
+      explosionsClearing = [];
 
 
-    if (assets.assetsLoaded === true) {
-      addAliens();
-    } else {
-      assets.events.on("assetsLoaded", addAliens);
-    }
+    // if (assets.assetsLoaded === true) {
+    //   addAliens();
+    // } else {
+    //   assets.events.on("assetsLoaded", addAliens);
+    // }
 
-    config.on("change", configChanged);
+
 
     function addAliens() {
       var i = 0,
@@ -48,7 +49,18 @@ define(["display/assets", "display/factory", "config", "displayController",
     function activate() {
       if (!running) {
 
+        if (aliensArray.length < 1) {
+
+          width = config.get("width");
+          height = config.get("height");
+
+          config.on("change", configChanged);
+
+          addAliens();
+        }
+
         displayController.events.on("renderFrame", onRenderMove);
+        displayController.events.on("renderFrame", onRenderClearExplosions);
         leapController.events.on("handFrameNormalized", onHandFrame);
         crosshair.events.on("crosshairActive", onHandFrame);
 
@@ -64,6 +76,19 @@ define(["display/assets", "display/factory", "config", "displayController",
         crosshair.events.remove("newCrosshairPosition", onHandFrame);
 
         running = false;
+      }
+    }
+
+    function onRenderClearExplosions() {
+      var i = 0,
+        length = explosionsClearing.length;
+      for (i; i < length; i += 1) {
+        if(explosionsClearing[i].alpha > 0 && explosionsClearing[i].visible === true) {
+          explosionsClearing[i].alpha -= 0.01;
+        } else {
+          explosionsClearing[i].visible = false;
+        }
+        
       }
     }
 
@@ -148,16 +173,20 @@ define(["display/assets", "display/factory", "config", "displayController",
             explosion.loop = false;
             explosion.gotoAndPlay(0);
 
+            explosion.onComplete = onExplosionComplete;
+
 
             layer.addChild(explosion);
 
             score.raiseScore();
-
           }
-
         }
 
       }
+    }
+
+    function onExplosionComplete() {
+      explosionsClearing.push(this);
     }
 
     function onHandFrame(coordinates) {

@@ -22,8 +22,6 @@ define(["Backbone"],
       aliensKilled: 0
     });
 
-    console.log(score);
-
     return score;
   }
 );
