@@ -16,7 +16,7 @@ define(["display/assets", "display/factory", "config", "displayController",
       alienHittedSpeedMax = 5,
       alienHittedSpeedStep = 1,
       alienHittedAlphaStep = 0.2,
-      alienNormalScaleMin = 0.15,
+      alienNormalScaleMin = 0.25,
       alienNormalScaleCap = 0.9,
       alienNormalScaleBeforeCap = 0.02,
       alienNormalScaleAfterCap = 0.003,
@@ -204,7 +204,7 @@ define(["display/assets", "display/factory", "config", "displayController",
             explosion.loop = false;
             explosion.gotoAndPlay(0);
 
-            soundController.explosion();
+            soundController.explode();
 
             explosion.onComplete = onExplosionComplete;
 
@@ -224,6 +224,7 @@ define(["display/assets", "display/factory", "config", "displayController",
 
     function onHandFrame(coordinates) {
       var i = 0,
+        hitted = false,
         max = aliensArray.length,
         hitCord = _.extend(coordinates, {
           width: 20,
@@ -236,7 +237,11 @@ define(["display/assets", "display/factory", "config", "displayController",
 
       for (i; i < max; i += 1) {
         if (aliensArray[i].visible === true) {
-          aliensArray[i].hitted = hittest(aliensArray[i], hitCord);
+          hitted = hittest(aliensArray[i], hitCord);
+          if (aliensArray[i].hitted !== hitted) {
+            soundController.hit();
+          }
+          aliensArray[i].hitted = hitted;
         }
       }
     }

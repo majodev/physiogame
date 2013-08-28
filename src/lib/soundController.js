@@ -1,18 +1,31 @@
 define(["Howler"],
   function(Howler) {
-    var sound = new Howler.Howl({
+
+    var explosion = new Howler.Howl({
       urls: ['assets/sound/explosion.mp3', 'explosion.ogg', 'explosion.wav'],
       autoplay: false,
       loop: false,
-      volume: 1,
+      volume: 0.7,
     });
 
-    function explosion() {
-      sound.play();
+    var hitted = new Howler.Howl({
+      urls: ['assets/sound/hitted.mp3', 'hitted.ogg', 'hitted.wav'],
+      autoplay: false,
+      loop: false,
+      volume: 0.03,
+    });
+
+    function explode() {
+      explosion.play();
+    }
+
+    function hit() {
+      hitted.play();
     }
 
     return {
-      explosion: explosion
+      explode: explode,
+      hit: hit
     };
 
   }
