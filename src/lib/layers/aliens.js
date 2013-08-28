@@ -1,8 +1,9 @@
 define(["display/assets", "display/factory", "config", "displayController",
-    "leapController", "utils/hittest", "underscore", "layers/crosshair", "PIXI", "models/score"
+    "leapController", "utils/hittest", "underscore", "layers/crosshair", "PIXI",
+    "models/score", "soundController"
   ],
   function(assets, factory, config, displayController,
-    leapController, hittest, _, crosshair, PIXI, score) {
+    leapController, hittest, _, crosshair, PIXI, score, soundController) {
 
     var width = config.get("width"),
       height = config.get("height"),
@@ -202,6 +203,8 @@ define(["display/assets", "display/factory", "config", "displayController",
 
             explosion.loop = false;
             explosion.gotoAndPlay(0);
+
+            soundController.explosion();
 
             explosion.onComplete = onExplosionComplete;
 

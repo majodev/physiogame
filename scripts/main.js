@@ -2,12 +2,13 @@
 require.config({
   baseUrl: "src/lib/",
   paths: {
-    "underscore": "../../node_modules/lodash/lodash",
+    "underscore": "../../node_modules/lodash/lodash", // watch out: registers _ itself (noConflict!)
     "Backbone": "../../node_modules/backbone/backbone",
     "PIXI": "../vendor/pixi/bin/pixi.dev",
     "Leap": "../vendor/leapjs/leap",
     "key": "../vendor/keymaster/keymaster",
-    "jquery": "../vendor/jquery/jquery"
+    "jquery": "../vendor/jquery/jquery", // watch out: registers jquery and $ itself (prevented!)
+    "Howler": "../vendor/howler/howler" // watch out: registers itself as Howler!
   },
   shim: {
     "Backbone": {
@@ -15,7 +16,7 @@ require.config({
       exports: "Backbone",
       init: function(_, $) {
         console.log("requireconfig: init (AMD) underscore with noConflict");
-        //_.noConflict(); // remove underscore from global scope
+        _.noConflict(); // remove underscore from global scope
 
         console.log("requireconfig: init (AMD) jquery with noConflict");
         $.noConflict(true); // remove jquery from global scope

@@ -1,5 +1,7 @@
-define(["displayController", "leapController", "sceneController", "key", "display/assets"],
-  function(displayController, leapController, sceneController, key, assets) {
+define(["displayController", "leapController", "sceneController", "key",
+  "display/assets", "soundController"],
+  function(displayController, leapController, sceneController, key,
+    assets, soundController) {
 
     // private
     var showDebug = false;

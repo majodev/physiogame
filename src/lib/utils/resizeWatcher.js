@@ -88,8 +88,9 @@ define(["jquery", "config", "underscore"],
           newWidth = (newHeight / ratioy) * ratiox;
           offsetTop = (height - newHeight) / 2;
         } else {
-          // both new width and new height are to big for the renderer.
-          throw new Error("both width and height are to big!");
+          // they are both exactly what we need, no offset!
+          offsetTop = 0;
+          offsetLeft = 0;
         }
       }
 
