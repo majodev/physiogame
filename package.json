@@ -25,10 +25,10 @@
     "toolbar": false,
     "frame": true,
     "position": "center",
-    "width": 640,
-    "height": 480,
+    "width": 1280,
+    "height": 720,
     "min_width": 640,
-    "min_height": 480,
+    "min_height": 360,
     "kiosk": false
     },
     "private": true

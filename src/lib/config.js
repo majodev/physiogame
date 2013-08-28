@@ -1,8 +1,12 @@
 define(["Backbone"],
   function(Backbone) {
     var config = new Backbone.Model({
-      width: 640,
-      height: 480,
+      width: 1280,
+      height: 720,
+      ratio: {
+        x: 16,
+        y: 9
+      },
       interactive: true,
       background: 0xFFFFFF,
       renderTarget: document.body,
@@ -10,7 +14,7 @@ define(["Backbone"],
         "assets/SpriteSheetExplosion.json",
         "assets/background/backgroundSpriteData.json"
       ],
-      aliensToSpawn: 50
+      aliensToSpawn: 100
     });
     return config;
   }

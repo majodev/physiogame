@@ -7,11 +7,11 @@ define(["Backbone"],
         currentScore += 1;
 
         this.set("aliensKilled", currentScore);
-        console.log("raiseScore to " + currentScore);
+        //console.log("raiseScore to " + currentScore);
       },
       resetScore: function() {
         this.set("aliensKilled", 0);
-        console.log("resetScore to " + this.get("aliensKilled"));
+        //console.log("resetScore to " + this.get("aliensKilled"));
       },
       defaults: {
         aliensKilled: 0

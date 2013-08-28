@@ -29,17 +29,47 @@ define(["display/assets", "display/factory", "config", "displayController",
     // }
 
 
+    function createAliens() {
 
-    function addAliens() {
-      var i = 0,
-        max = assets.aliens.length;
+      var aliensToSpawn = config.get("aliensToSpawn"),
+        i = 0,
+        frameName,
+        asien;
+      // add aliens...
+      for (i = 0; i < aliensToSpawn; i += 1) {
+        frameName = assets.alienFrames[i % 4];
 
-      aliensArray = assets.aliens;
+        // create an alien using the frame name..
+        alien = factory.makePIXISprite(assets.getTextureByName(frameName));
 
-      for (i; i < max; i += 1) {
+        // set its initial values...
+        alien.position.x = parseInt(Math.random() * width, 10);
+        alien.position.y = parseInt(Math.random() * height, 10);
+        alien.targetX = parseInt(Math.random() * width, 10); // extra
+        alien.targetY = parseInt(Math.random() * height, 10); // extra
+        alien.anchor.x = 0.5;
+        alien.anchor.y = 0.5;
+        alien.scale.x = 0.2;
+        alien.scale.y = 0.2;
+        alien.hitted = false; // extra
+        alien.alpha = 0.5;
+        alien.speed = 1; // extra
+
+        aliensArray.push(alien);
         layer.addChild(aliensArray[i]);
       }
     }
+
+    // function addAliens() {
+    //   var i = 0,
+    //     max = assets.aliens.length;
+
+    //   aliensArray = assets.aliens;
+
+    //   for (i; i < max; i += 1) {
+    //     layer.addChild(aliensArray[i]);
+    //   }
+    // }
 
     function configChanged(model, options) {
       width = model.get("width");
@@ -56,7 +86,7 @@ define(["display/assets", "display/factory", "config", "displayController",
 
           config.on("change", configChanged);
 
-          addAliens();
+          createAliens();
         }
 
         displayController.events.on("renderFrame", onRenderMove);
