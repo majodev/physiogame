@@ -11,6 +11,8 @@ define(["displayController", "leapController", "display/factory", "utils/eventPu
       if (!running) {
         layer.addChild(crosshair);
 
+        crosshair.scale.x = crosshair.scale.y = 0.5;
+
         displayController.events.on("renderFrame", onRenderRotate);
         displayController.events.on("renderFrame", onRenderAlpha);
         leapController.events.on("handFrameNormalized", onHandFrame);

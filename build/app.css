@@ -1,0 +1,15 @@
+* { /* to remove the top and left whitespace */
+  margin: 0px;
+  padding: 0px; 
+  background: #000;
+}
+
+html, body { /* just to be sure these are full screen*/
+  width:100%; 
+  height:100%;
+}
+
+canvas { /* To remove the scrollbars */
+  display:block;
+  /*vertical-align:center; */
+}

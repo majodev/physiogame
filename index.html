@@ -1,19 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link href="app.css" rel="stylesheet">
-    <script type="text/javascript">
-      
-      // node-webkit hook to solve name-conflict with require statement
-      // TODO: take this in a seperate file and set nw.gui options
-      if(window && window.require) {
-        window.requireNode = window.require;
-        window.require = undefined; 
-      }
-      
-    </script>
-    <script data-main="scripts/main" src="node_modules/requirejs/require.js"></script>
   </head>
   <body>
+    <link href="app.css" rel="stylesheet">
+    <script src="app.js"></script>
   </body>
 </html>

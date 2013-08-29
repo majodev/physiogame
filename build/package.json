@@ -1,0 +1,19 @@
+{
+  "name": "require-test-project",
+  "version": "0.0.1",
+  "main": "index.html",
+  "window": {
+    "title": "require-test-project",
+    "show": true,
+    "toolbar": false,
+    "frame": true,
+    "position": "center",
+    "width": 1280,
+    "height": 720,
+    "min_width": 640,
+    "min_height": 360,
+    "kiosk": true,
+    "fullscreen": true
+  },
+  "nodejs": false
+}

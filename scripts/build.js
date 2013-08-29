@@ -11,7 +11,14 @@ var config = {
   paths: { // requireLib will be included and optimized
     "requireLib": "../../node_modules/requirejs/require"
   },
-  optimize: "none",
+  optimize: "uglify2",
+  onBuildRead: function(id, url, contents) {
+    if (id === 'Leap') { // handling bad Leap browserify style during optimization
+        return 'define(\'Leap\', [], function() {var define;\n ' + contents + ' return Leap; });';
+    } else {
+        return contents;
+    }
+  },
   include: "requireLib",
   name: "gameController", // Name of script to start building from
   insertRequire: ["gameController"],
