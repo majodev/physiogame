@@ -16,10 +16,10 @@
     // win.show();
 
     console.log("app.js (node-webkit): removing require from global object...");
-    // remove require from node from global namespace and append to requireNw
+    // remove require from node from global namespace and append to requirenw
     // solves name-conflict with require statement from requirejs
-    var requireNw = window.require;
-    window.requireNw = requireNw;
+    var requirenw = window.require;
+    window.requirenw = requirenw;
     window.require = undefined;
   }
 
