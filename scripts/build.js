@@ -21,7 +21,7 @@ var config = {
   },
   preserveLicenseComments: false,
   include: "requireLib",
-  logLevel: 1,
+  logLevel: 0,
   waitSeconds: 7,
   name: "gameController", // Name of script to start building from
   insertRequire: ["gameController"],
