@@ -30,6 +30,6 @@
     "min_width": 640,
     "min_height": 360,
     "kiosk": false
-    },
-    "private": true
+  },
+  "private": true
 }

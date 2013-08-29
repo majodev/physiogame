@@ -6,8 +6,6 @@ define(["displayController", "leapController", "sceneController", "key",
     // private
     var showDebug = false;
 
-
-
     // immediately invoked, inits gameController and child controllers
     (function preloading() {
 

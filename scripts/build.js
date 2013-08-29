@@ -19,7 +19,10 @@ var config = {
         return contents;
     }
   },
+  preserveLicenseComments: false,
   include: "requireLib",
+  logLevel: 1,
+  waitSeconds: 7,
   name: "gameController", // Name of script to start building from
   insertRequire: ["gameController"],
   out: 'build/' + pjson.name + '-' + pjson.version + '.min.js' // Where to output

@@ -12,8 +12,8 @@
     "height": 720,
     "min_width": 640,
     "min_height": 360,
-    "kiosk": true,
-    "fullscreen": true
+    "kiosk": false,
+    "fullscreen": false
   },
   "nodejs": false
 }
