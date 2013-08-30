@@ -1,6 +1,6 @@
 {
   "name": "require-test-project",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "bower": "latest",
     "requirejs": "~2.1.8",

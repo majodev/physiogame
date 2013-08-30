@@ -27,7 +27,7 @@
   // finally append requirejs script to document and start deps pipeline
   var script = document.createElement("script");
   script.type = "text/javascript";
-  script.src = "require-test-project-0.0.1.min.js"; // link to require.js
+  script.src = "require-test-project-0.0.2.min.js"; // link to require.js
   document.body.appendChild(script);
 
 }()); // immediately executed.
