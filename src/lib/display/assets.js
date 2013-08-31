@@ -1,7 +1,7 @@
-define(["PIXI", "config", "display/spriteLoader", "display/fontLoader", "utils/zeroPad", "Backbone",
+define(["PIXI", "config", "loaders/sprites", "loaders/fonts", "utils/zeroPad", "Backbone",
     "underscore"
   ],
-  function(PIXI, config, spriteLoader, fontLoader, zeroPad, Backbone, _) {
+  function(PIXI, config, sprites, fontLoader, zeroPad, Backbone, _) {
 
     var events = _.clone(Backbone.Events),
       aliens = [],
@@ -14,8 +14,8 @@ define(["PIXI", "config", "display/spriteLoader", "display/fontLoader", "utils/z
       backgroundTexture,
       cloudTextures = [];
 
-    spriteLoader.events.on("spritesLoaded", onAssetsLoaded);
-    spriteLoader.init();
+    sprites.events.on("spritesLoaded", onAssetsLoaded);
+    sprites.init();
 
     function onAssetsLoaded() {
       var i = 0,

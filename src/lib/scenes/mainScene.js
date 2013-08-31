@@ -14,8 +14,8 @@ define(["layers/crosshair", "layers/aliens", "display/factory",
         aliens.activate();
         crosshair.activate();
         score.activate();
-        background.activate();
         clouds.activate();
+        background.activate();
         
         scene.addChild(backgroundLayer);
         scene.addChild(cloudsLayer);
@@ -32,6 +32,7 @@ define(["layers/crosshair", "layers/aliens", "display/factory",
         aliens.deactivate();
         crosshair.deactivate();
         score.deactivate();
+        clouds.deactivate();
         background.deactivate();
         
         scene.removeChild(alienLayer);
