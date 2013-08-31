@@ -1,7 +1,8 @@
 define(["displayController", "leapController", "sceneController", "key",
-  "display/assets", "soundController"],
+    "display/assets", "soundController", "display/fonts"
+  ],
   function(displayController, leapController, sceneController, key,
-    assets, soundController) {
+    assets, soundController, fonts) {
 
     // private
     var showDebug = false;
@@ -9,7 +10,7 @@ define(["displayController", "leapController", "sceneController", "key",
     // immediately invoked, inits gameController and child controllers
     (function preloading() {
 
-      if(assets.assetsLoaded === true) {
+      if (assets.assetsLoaded === true) {
         init();
       } else {
         assets.events.on("assetsLoaded", init);

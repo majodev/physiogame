@@ -1,11 +1,11 @@
 {
-  "name": "require-test-project",
-  "version": "0.0.1",
+  "name": "physioshooter",
+  "version": "0.0.2",
   "main": "index.html",
   "window": {
-    "title": "require-test-project",
+    "title": "physioshooter",
     "show": true,
-    "toolbar": false,
+    "toolbar": true,
     "frame": true,
     "position": "center",
     "width": 1280,

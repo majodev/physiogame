@@ -20,7 +20,7 @@ require.config({
 
         console.log("requireconfig: init (AMD) jquery with noConflict");
         $.noConflict(true); // remove jquery from global scope
-        
+
         console.log("requireconfig: init (shim) Backbone with noConflict");
         return Backbone.noConflict();
       }
