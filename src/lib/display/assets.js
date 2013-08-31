@@ -1,7 +1,9 @@
-define(["PIXI", "utils/eventPublisher", "config", "display/loader", "utils/zeroPad"],
-  function(PIXI, eventPublisher, config, loader, zeroPad) {
+define(["PIXI", "config", "display/spriteLoader", "display/fontLoader", "utils/zeroPad", "Backbone",
+    "underscore"
+  ],
+  function(PIXI, config, spriteLoader, fontLoader, zeroPad, Backbone, _) {
 
-    var events = eventPublisher(["assetsLoaded"]),
+    var events = _.clone(Backbone.Events),
       aliens = [],
       alienFrames = ["eggHead.png", "flowerTop.png", "helmlok.png", "skully.png"],
       explosionTextures = [],
@@ -12,8 +14,8 @@ define(["PIXI", "utils/eventPublisher", "config", "display/loader", "utils/zeroP
       backgroundTexture,
       cloudTextures = [];
 
-    loader.events.on("loaderComplete", onAssetsLoaded);
-    loader.init();
+    spriteLoader.events.on("spritesLoaded", onAssetsLoaded);
+    spriteLoader.init();
 
     function onAssetsLoaded() {
       var i = 0,
@@ -37,7 +39,7 @@ define(["PIXI", "utils/eventPublisher", "config", "display/loader", "utils/zeroP
       // show subscipers that we are finish loading our assets
       assetsLoaded = true;
       console.log("display: assets loaded!");
-      events.fire("assetsLoaded");
+      events.trigger("assetsLoaded");
     }
 
     function getTextureByName(name) {
@@ -51,11 +53,11 @@ define(["PIXI", "utils/eventPublisher", "config", "display/loader", "utils/zeroP
       assetsLoaded: assetsLoaded,
       events: events,
       explosionTextures: explosionTextures,
-      getBackgroundTexture: function () {
+      getBackgroundTexture: function() {
         return backgroundTexture;
       },
       cloudTextures: cloudTextures,
-      getTextureByName : getTextureByName
+      getTextureByName: getTextureByName
     };
   }
 );

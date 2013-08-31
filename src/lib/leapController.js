@@ -1,12 +1,12 @@
-define(["Leap", "config", "utils/eventPublisher"],
-  function(Leap, config, eventPublisher) {
+define(["Leap", "config", "Backbone", "underscore"],
+  function(Leap, config, Backbone, _) {
 
     // private 
     var controller = new Leap.Controller(),
       frameCount = 0,
       handsAvailable = false,
       handsLength = 0,
-      events = eventPublisher(["handFrameNormalized", "debugInfo"]),
+      events = _.clone(Backbone.Events),
       displayWidth = config.get("width"),
       displayHeight = config.get("height");
 
@@ -38,7 +38,7 @@ define(["Leap", "config", "utils/eventPublisher"],
         x = parseInt(hand.palmPosition[0], 10);
         y = parseInt(hand.palmPosition[1], 10);
 
-        events.fire("handFrameNormalized", {
+        events.trigger("handFrameNormalized", {
           position: {
             x: (displayWidth / 2 + (x * 2.5)),
             y: ((displayHeight / 3) * 4 - (y * 2))
@@ -55,7 +55,7 @@ define(["Leap", "config", "utils/eventPublisher"],
       var time = frameCount / 2,
         debugText = "leap: received " + frameCount + " frames @ " +
           time + "fps.";
-      events.fire("debugInfo", debugText);
+      events.trigger("debugInfo", debugText);
       frameCount = 0;
     }, 2000);
 
@@ -63,7 +63,7 @@ define(["Leap", "config", "utils/eventPublisher"],
       console.log("leapController: init");
       controller.connect();
 
-      events.fire("init");
+      events.trigger("init");
     }
 
     function configChanged(model, options) {

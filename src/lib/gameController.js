@@ -1,8 +1,8 @@
 define(["displayController", "leapController", "sceneController", "key",
-    "display/assets", "soundController", "display/fonts"
+    "display/assets", "soundController"
   ],
   function(displayController, leapController, sceneController, key,
-    assets, soundController, fonts) {
+    assets, soundController) {
 
     // private
     var showDebug = false;
@@ -20,7 +20,7 @@ define(["displayController", "leapController", "sceneController", "key",
     function init() {
       console.log("gameController: init");
 
-      assets.events.remove("assetsLoaded", init);
+      assets.events.off("assetsLoaded", init);
 
       displayController.init();
       sceneController.init();
@@ -36,8 +36,8 @@ define(["displayController", "leapController", "sceneController", "key",
 
     function toggleDebugInfo() {
       if (showDebug === true) {
-        displayController.events.remove("debugInfo", logDebugText);
-        leapController.events.remove("debugInfo", logDebugText);
+        displayController.events.off("debugInfo", logDebugText);
+        leapController.events.off("debugInfo", logDebugText);
         console.log("hiding debug info");
         showDebug = false;
 

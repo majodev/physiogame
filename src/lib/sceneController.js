@@ -1,6 +1,6 @@
-define(["scenes/mainScene", "utils/eventPublisher", "displayController"],
-  function(mainScene, eventPublisher, displayController) {
-    var events = eventPublisher(["init", "showScene"]),
+define(["scenes/mainScene", "Backbone", "underscore", "displayController"],
+  function(mainScene, Backbone, _, displayController) {
+    var events = _.clone(Backbone.Events),
       currentScene;
 
     function showMainScene() {
@@ -15,12 +15,12 @@ define(["scenes/mainScene", "utils/eventPublisher", "displayController"],
 
       displayController.stage.addChild(currentScene.getScene());
 
-      events.fire("showScene", currentScene);
+      events.trigger("showScene", currentScene);
     }
 
     function init() {
       console.log("sceneController: init");
-      events.fire("init");
+      events.trigger("init");
     }
 
     return {

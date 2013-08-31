@@ -1,5 +1,5 @@
-define(["PIXI", "config", "utils/eventPublisher", "utils/resizeWatcher"],
-  function(PIXI, config, eventPublisher, resizeWatcher) {
+define(["PIXI", "config", "utils/resizeWatcher", "Backbone", "underscore"],
+  function(PIXI, config, resizeWatcher, Backbone, _) {
 
     // private
     var stage = new PIXI.Stage(config.get("background"),
@@ -8,7 +8,7 @@ define(["PIXI", "config", "utils/eventPublisher", "utils/resizeWatcher"],
         config.get("height")),
       renderTarget = config.get("renderTarget"),
       frameCount = 0,
-      events = eventPublisher(["init", "renderFrame", "debugInfo"]);
+      events = _.clone(Backbone.Events);
 
     function init() {
       console.log("displayController: init");
@@ -18,7 +18,7 @@ define(["PIXI", "config", "utils/eventPublisher", "utils/resizeWatcher"],
       resizeWatcher.init(window, renderer);
       resizeWatcher.resizeNow();
 
-      events.fire("init");
+      events.trigger("init");
     }
 
     // per interval ms
@@ -26,7 +26,7 @@ define(["PIXI", "config", "utils/eventPublisher", "utils/resizeWatcher"],
       var time = frameCount / 2,
         debugText = "display: received " + frameCount + " frames @ " + time +
           "fps.";
-      events.fire("debugInfo", debugText);
+      events.trigger("debugInfo", debugText);
       frameCount = 0;
     }, 2000);
 
@@ -34,7 +34,7 @@ define(["PIXI", "config", "utils/eventPublisher", "utils/resizeWatcher"],
       requestAnimFrame(renderFrame);
 
       // publish renderFrame event to subscribers
-      events.fire("renderFrame");
+      events.trigger("renderFrame");
 
       // finally render the stage
       renderer.render(stage);

@@ -102,9 +102,10 @@ define(["display/assets", "display/factory", "config", "displayController",
     function deactivate() {
       if (running) {
 
-        displayController.events.remove("renderFrame", onRenderMove);
-        leapController.events.remove("handFrameNormalized", onHandFrame);
-        crosshair.events.remove("newCrosshairPosition", onHandFrame);
+        displayController.events.off("renderFrame", onRenderMove);
+        displayController.events.off("renderFrame", onRenderClearExplosions);
+        leapController.events.off("handFrameNormalized", onHandFrame);
+        crosshair.events.off("newCrosshairPosition", onHandFrame);
 
         running = false;
       }

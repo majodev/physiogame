@@ -1,7 +1,9 @@
-define(["displayController", "leapController", "display/factory", "utils/eventPublisher", "PIXI"],
-  function(displayController, leapController, factory, eventPublisher, PIXI) {
+define(["displayController", "leapController", "display/factory",
+  "PIXI", "Backbone", "underscore"],
+  function(displayController, leapController, factory,
+    PIXI, Backbone, _) {
 
-    var events = eventPublisher(["crosshairActive"]),
+    var events = _.clone(Backbone.Events),
       running = false,
       crosshair = factory.makeCrosshair(),
       layer = factory.makeLayer(),
@@ -29,9 +31,9 @@ define(["displayController", "leapController", "display/factory", "utils/eventPu
       if (running) {
         layer.removeChild(crosshair);
 
-        displayController.events.remove("renderFrame", onRenderRotate);
-        displayController.events.remove("renderFrame", onRenderAlpha);
-        leapController.events.remove("handFrameNormalized", onHandFrame);
+        displayController.events.off("renderFrame", onRenderRotate);
+        displayController.events.off("renderFrame", onRenderAlpha);
+        leapController.events.off("handFrameNormalized", onHandFrame);
 
         crosshair.interactive = false;
         // this button mode will mean the hand cursor appears when you rollover the bunny with your mouse
@@ -48,7 +50,7 @@ define(["displayController", "leapController", "display/factory", "utils/eventPu
       this.position.y = newPosition.y;
 
       if (mouseCurrentlyDown === true) {
-        events.fire("crosshairActive", {
+        events.trigger("crosshairActive", {
           position: this.position
         });
       }
