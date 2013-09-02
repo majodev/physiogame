@@ -20,7 +20,7 @@ var config = {
     }
   },
   preserveLicenseComments: false,
-  include: ["requireLib", "controllers/game"],
+  include: ["requireLib", "controllers/game"], // heads up: game is loaded via "load" dynamically, hence include!
   logLevel: 0,
   waitSeconds: 7,
   name: "load", // Name of script to start building from
