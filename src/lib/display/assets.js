@@ -1,43 +1,18 @@
 define(["PIXI", "config", "utils/zeroPad",
-    "utils/publisher", "loaders/sprites", "loaders/fonts"
+    "utils/publisher", "loaders/sprites"
   ],
-  function(PIXI, config, zeroPad, publisher, sprites, fonts) {
+  function(PIXI, config, zeroPad, publisher, sprites) {
 
-    var events = publisher.make(),
-      aliens = [],
+    var aliens = [],
       alienFrames = ["eggHead.png", "flowerTop.png", "helmlok.png", "skully.png"],
       explosionTextures = [],
-      assetsLoaded = false,
-      spritesLoaded = false,
-      fontsLoaded = false,
       width = config.get("width"),
       height = config.get("height"),
       aliensToSpawn = config.get("aliensToSpawn"),
       backgroundTexture,
       cloudTextures = [];
 
-    sprites.events.on("spritesLoaded", onAssetsLoaded);
-    sprites.init();
-
-    fonts.events.on("fontsLoaded", onFontsLoaded);
-    fonts.init();
-
-    function onFontsLoaded() {
-      // font loaded, check other assets...
-      console.log("font assets loaded!");
-      fontsLoaded = true;
-      checkAssetsLoaded();
-    }
-
-    function checkAssetsLoaded() {
-      if (spritesLoaded === true && fontsLoaded === true) {
-        assetsLoaded = true;
-        console.log("all assets loaded!");
-        events.trigger("assetsLoaded");
-      }
-    }
-
-    function onAssetsLoaded() {
+    function init() {
       var i = 0,
         texture;
 
@@ -55,11 +30,6 @@ define(["PIXI", "config", "utils/zeroPad",
         texture = getTextureByName("cloud/" + zeroPad(i, 4));
         cloudTextures.push(texture);
       }
-
-      // sprites loaded, check other assets...
-      console.log("sprite assets loaded!");
-      spritesLoaded = true;
-      checkAssetsLoaded();
     }
 
     function getTextureByName(name) {
@@ -68,10 +38,9 @@ define(["PIXI", "config", "utils/zeroPad",
     }
 
     return {
+      init: init,
       aliens: aliens,
       alienFrames: alienFrames,
-      assetsLoaded: assetsLoaded,
-      events: events,
       explosionTextures: explosionTextures,
       getBackgroundTexture: function() {
         return backgroundTexture;

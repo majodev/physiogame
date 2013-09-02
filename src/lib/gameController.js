@@ -1,30 +1,26 @@
 define(["displayController", "leapController", "sceneController", "key",
-    "display/assets", "soundController"
+    "display/assets", "soundController", "loaders/preloader"
   ],
   function(displayController, leapController, sceneController, key,
-    assets, soundController) {
+    assets, soundController, preloader) {
 
     // private
     var showDebug = false;
 
-    // immediately invoked, inits gameController and child controllers
+    // gameController starts preloading and inits itself after finished
     (function preloading() {
-      console.log("gameController: preloading check.");
-      if (assets.assetsLoaded === true) {
-        console.log("gameController: assets loaded, init!");
-        init();
-      } else {
-        console.log("gameController: waiting until all assets are loaded.");
-        assets.events.on("assetsLoaded", init);
-      }
+
+      preloader.events.on("preloadedAll", init);
+      preloader.init();
+
     }());
 
     function init() {
       console.log("gameController: init");
 
-      assets.events.off("assetsLoaded", init);
-
+      assets.init();
       displayController.init();
+      soundController.init();
       sceneController.init();
       leapController.init();
 

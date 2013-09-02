@@ -15,10 +15,6 @@ define(["PIXI", "config", "utils/publisher"],
       }
     }
 
-    function getSpriteSheetsLoaded() {
-      return spriteSheetsLoaded;
-    }
-
     function onSpriteSheetsLoaded() {
       spriteSheetsLoaded = true;
       events.trigger("spritesLoaded");
@@ -26,7 +22,6 @@ define(["PIXI", "config", "utils/publisher"],
 
     return {
       init: init,
-      getSpriteSheetsLoaded: getSpriteSheetsLoaded,
       events: events
     };
 

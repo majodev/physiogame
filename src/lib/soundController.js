@@ -1,25 +1,25 @@
 define(["loaders/sounds"],
   function(sounds) {
 
-    sounds.events.on("soundsLoaded", onSoundsLoaded);
-    sounds.init();
+    var explosion,
+      hitted;
 
-    // important! it's essential to include ogg at first, as node-webkit falsely
-    // reports back mp3 support even when libmpegsumo for decoding isn't included
-
-    function onSoundsLoaded() {
-      console.log("soundController: soundsloaded!");
+    function init() {
+      console.log("soundController: init");
+      explosion = sounds.getSound("explosion");
+      hitted = sounds.getSound("hitted");
     }
 
     function explode() {
-      sounds.getSound("explosion").play();
+      explosion.play();
     }
 
     function hit() {
-      sounds.getSound("hitted").play();
+      hitted.play();
     }
 
     return {
+      init: init,
       explode: explode,
       hit: hit
     };

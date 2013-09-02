@@ -40,12 +40,12 @@ define(["Howler", "config", "utils/publisher"],
     }
 
     function onSoundLoaded(sound) {
-      console.log("sound loaded: " + sound);
+      //console.log("sound loaded: " + sound);
       soundsLoadedCount += 1;
 
       if(soundsToLoadLength === soundsLoadedCount) {
         // all sounds loaded!
-        console.log("all sounds loaded!");
+        //console.log("all sounds loaded!");
         events.trigger("soundsLoaded");
       }
     }
