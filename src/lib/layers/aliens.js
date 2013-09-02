@@ -1,9 +1,9 @@
-define(["display/textures", "display/factory", "config", "displayController",
-    "leapController", "utils/hittest", "underscore", "layers/crosshair", "PIXI",
-    "models/score", "soundController"
+define(["display/textures", "display/factory", "config", "controllers/display",
+    "controllers/leap", "utils/hittest", "underscore", "layers/crosshair", "PIXI",
+    "models/score", "controllers/sound"
   ],
-  function(textures, factory, config, displayController,
-    leapController, hittest, _, crosshair, PIXI, score, soundController) {
+  function(textures, factory, config, display,
+    leap, hittest, _, crosshair, PIXI, score, sound) {
 
     var width = config.get("width"),
       height = config.get("height"),
@@ -83,9 +83,9 @@ define(["display/textures", "display/factory", "config", "displayController",
           createAliens();
         }
 
-        displayController.events.on("renderFrame", onRenderMove);
-        displayController.events.on("renderFrame", onRenderClearExplosions);
-        leapController.events.on("handFrameNormalized", onHandFrame);
+        display.events.on("renderFrame", onRenderMove);
+        display.events.on("renderFrame", onRenderClearExplosions);
+        leap.events.on("handFrameNormalized", onHandFrame);
         crosshair.events.on("crosshairActive", onHandFrame);
 
         running = true;
@@ -95,9 +95,9 @@ define(["display/textures", "display/factory", "config", "displayController",
     function deactivate() {
       if (running) {
 
-        displayController.events.off("renderFrame", onRenderMove);
-        displayController.events.off("renderFrame", onRenderClearExplosions);
-        leapController.events.off("handFrameNormalized", onHandFrame);
+        display.events.off("renderFrame", onRenderMove);
+        display.events.off("renderFrame", onRenderClearExplosions);
+        leap.events.off("handFrameNormalized", onHandFrame);
         crosshair.events.off("newCrosshairPosition", onHandFrame);
 
         running = false;
@@ -198,7 +198,7 @@ define(["display/textures", "display/factory", "config", "displayController",
             explosion.loop = false;
             explosion.gotoAndPlay(0);
 
-            soundController.explode();
+            sound.explode();
 
             explosion.onComplete = onExplosionComplete;
 
@@ -233,7 +233,7 @@ define(["display/textures", "display/factory", "config", "displayController",
         if (aliensArray[i].visible === true) {
           hitted = hittest(aliensArray[i], hitCord);
           if (aliensArray[i].hitted !== hitted) {
-            soundController.hit();
+            sound.hit();
           }
           aliensArray[i].hitted = hitted;
         }

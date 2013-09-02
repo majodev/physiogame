@@ -1,7 +1,7 @@
-define(["displayController", "display/textures", "display/factory",
+define(["controllers/display", "display/textures", "display/factory",
     "PIXI", "underscore", "config"
   ],
-  function(displayController, textures, factory, PIXI, _, config) {
+  function(display, textures, factory, PIXI, _, config) {
 
     var layer = factory.makeLayer(),
       clouds = [],
@@ -43,7 +43,7 @@ define(["displayController", "display/textures", "display/factory",
       }
 
       if (running === false) {
-        displayController.events.on("renderFrame", onRenderMove);
+        display.events.on("renderFrame", onRenderMove);
         config.on("change", configChanged);
 
         running = true;
@@ -79,6 +79,7 @@ define(["displayController", "display/textures", "display/factory",
     }
 
     function deactivate() {
+      display.events.off("renderFrame", onRenderMove);
       layer.removeChild(bg);
     }
 

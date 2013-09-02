@@ -1,5 +1,5 @@
-define(["scenes/mainScene", "utils/publisher", "displayController"],
-  function(mainScene, publisher, displayController) {
+define(["scenes/mainScene", "utils/publisher", "controllers/display"],
+  function(mainScene, publisher, display) {
     var events = publisher.make(),
       currentScene;
 
@@ -7,13 +7,13 @@ define(["scenes/mainScene", "utils/publisher", "displayController"],
 
       if(typeof currentScene !== 'undefined') {
         currentScene.deactivate();
-        displayController.stage.removeChild(currentScene.getScene());
+        display.stage.removeChild(currentScene.getScene());
       }
 
       currentScene = mainScene;
       mainScene.activate();
 
-      displayController.stage.addChild(currentScene.getScene());
+      display.stage.addChild(currentScene.getScene());
 
       events.trigger("showScene", currentScene);
     }

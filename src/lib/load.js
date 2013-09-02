@@ -7,11 +7,11 @@ define(["loaders/preloader"],
     }());
 
     function preloadingFinished() {
-      // dynamic require! - dont forget include within build options
-      // THIS IS NOT SEEN BY THE R.JS OPTIMIZER, custom include needed!
-      // I want preloading to finish before executing ANY other scripts!
-      require(["gameController"], function (gameController) {
-        gameController.init();
+      // dynamic require! - dont forget to INCLUDE within build options
+      // THIS IS NOT SEEN BY THE R.JS OPTIMIZER!
+      // Preloading must finish before gameController gets included at all.
+      require(["controllers/game"], function (game) {
+        game.init();
       });
     }
   }

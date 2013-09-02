@@ -1,7 +1,5 @@
-define(["displayController", "display/textures", "display/factory",
-    "PIXI", "underscore", "config"
-  ],
-  function(displayController, textures, factory, PIXI, _, config) {
+define(["display/textures", "display/factory", "PIXI", "underscore", "config"],
+  function(textures, factory, PIXI, _, config) {
 
     var layer = factory.makeLayer(),
       bg;

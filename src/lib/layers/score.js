@@ -1,5 +1,5 @@
-define(["PIXI", "models/score", "display/factory", "config", "displayController"],
-  function(PIXI, score, factory, config, displayController) {
+define(["PIXI", "models/score", "display/factory", "config", "controllers/display"],
+  function(PIXI, score, factory, config, display) {
 
     var layer = factory.makeLayer(),
       countingText,
@@ -82,7 +82,7 @@ define(["PIXI", "models/score", "display/factory", "config", "displayController"
       layer.addChild(timerText);
       layer.addChild(introText);
 
-      displayController.events.on("renderFrame", onRenderDisableIntroAnimation);
+      display.events.on("renderFrame", onRenderDisableIntroAnimation);
     }
 
     function onRenderDisableIntroAnimation() {
@@ -170,7 +170,7 @@ define(["PIXI", "models/score", "display/factory", "config", "displayController"
     }, 100);
 
     function deactivate() {
-
+      display.events.off("renderFrame", onRenderDisableIntroAnimation);
     }
 
 

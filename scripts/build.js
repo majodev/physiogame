@@ -20,7 +20,7 @@ var config = {
     }
   },
   preserveLicenseComments: false,
-  include: ["requireLib", "gameController"],
+  include: ["requireLib", "controllers/game"],
   logLevel: 0,
   waitSeconds: 7,
   name: "load", // Name of script to start building from

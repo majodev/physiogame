@@ -1,7 +1,6 @@
-define(["displayController", "leapController", "display/factory",
+define(["controllers/display", "controllers/leap", "display/factory",
   "PIXI", "utils/publisher"],
-  function(displayController, leapController, factory,
-    PIXI, publisher) {
+  function(display, leap, factory, PIXI, publisher) {
 
     var events = publisher.make(),
       running = false,
@@ -15,9 +14,9 @@ define(["displayController", "leapController", "display/factory",
 
         crosshair.scale.x = crosshair.scale.y = 0.5;
 
-        displayController.events.on("renderFrame", onRenderRotate);
-        displayController.events.on("renderFrame", onRenderAlpha);
-        leapController.events.on("handFrameNormalized", onHandFrame);
+        display.events.on("renderFrame", onRenderRotate);
+        display.events.on("renderFrame", onRenderAlpha);
+        leap.events.on("handFrameNormalized", onHandFrame);
 
         crosshair.interactive = true;
         // this button mode will mean the hand cursor appears when you rollover the bunny with your mouse
@@ -31,9 +30,9 @@ define(["displayController", "leapController", "display/factory",
       if (running) {
         layer.removeChild(crosshair);
 
-        displayController.events.off("renderFrame", onRenderRotate);
-        displayController.events.off("renderFrame", onRenderAlpha);
-        leapController.events.off("handFrameNormalized", onHandFrame);
+        display.events.off("renderFrame", onRenderRotate);
+        display.events.off("renderFrame", onRenderAlpha);
+        leap.events.off("handFrameNormalized", onHandFrame);
 
         crosshair.interactive = false;
         // this button mode will mean the hand cursor appears when you rollover the bunny with your mouse
@@ -73,7 +72,7 @@ define(["displayController", "leapController", "display/factory",
 
     function onRenderAlpha() {
       //console.log("check hands");
-      if (leapController.getHandsAvailable() === true || mouseCurrentlyDown === true) {
+      if (leap.getHandsAvailable() === true || mouseCurrentlyDown === true) {
         if (crosshair.alpha < 1) {
           crosshair.alpha += 0.02;
         }
