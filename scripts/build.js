@@ -20,11 +20,11 @@ var config = {
     }
   },
   preserveLicenseComments: false,
-  include: "requireLib",
+  include: ["requireLib", "gameController"],
   logLevel: 0,
   waitSeconds: 7,
-  name: "gameController", // Name of script to start building from
-  insertRequire: ["gameController"],
+  name: "load", // Name of script to start building from
+  insertRequire: ["load"],
   out: 'build/' + pjson.name + '-' + pjson.version + '.min.js' // Where to output
 };
 

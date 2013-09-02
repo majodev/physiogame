@@ -1,19 +1,11 @@
 define(["displayController", "leapController", "sceneController", "key",
-  "soundController", "loaders/preloader"
+  "soundController"
   ],
   function(displayController, leapController, sceneController, key,
-    soundController, preloader) {
+    soundController) {
 
     // private
     var showDebug = false;
-
-    // gameController starts preloading and inits itself after finished
-    (function preloading() {
-
-      preloader.events.on("preloadedAll", init);
-      preloader.init();
-
-    }());
 
     function init() {
       console.log("gameController: init");
@@ -55,6 +47,8 @@ define(["displayController", "leapController", "sceneController", "key",
     }
 
     // public
-    return {};
+    return {
+      init: init
+    };
   }
 );

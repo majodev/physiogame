@@ -54,18 +54,16 @@ require.config({
     "WebFont": {
       exports: "WebFont",
       init: function() {
-        // console.log("requireconfig: init (shim) WebFont and remove from global scope");
-        // var WebFontLib = WebFont;
-        // WebFont = undefined;
-        // return WebFontLib;
-
-        return WebFont;
+        console.log("requireconfig: init (shim) WebFont and remove from global scope");
+        var WebFontLib = WebFont;
+        WebFont = undefined;
+        return WebFontLib;
       }
     }
   }
 });
 
 // Start the main app logic.
-require(["gameController"],
-  function(gameController) {}
+require(["load"],
+  function(load) {}
 );
