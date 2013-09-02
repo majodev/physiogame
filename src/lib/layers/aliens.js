@@ -54,17 +54,6 @@ define(["display/textures", "display/factory", "config", "controllers/display",
       }
     }
 
-    // function addAliens() {
-    //   var i = 0,
-    //     max = textures.aliens.length;
-
-    //   aliensArray = textures.aliens;
-
-    //   for (i; i < max; i += 1) {
-    //     layer.addChild(aliensArray[i]);
-    //   }
-    // }
-
     function configChanged(model, options) {
       width = model.get("width");
       height = model.get("height");
@@ -73,13 +62,11 @@ define(["display/textures", "display/factory", "config", "controllers/display",
     function activate() {
       if (!running) {
 
+        config.on("change", configChanged);
+        width = config.get("width");
+        height = config.get("height");
+
         if (aliensArray.length < 1) {
-
-          width = config.get("width");
-          height = config.get("height");
-
-          config.on("change", configChanged);
-
           createAliens();
         }
 
@@ -93,14 +80,24 @@ define(["display/textures", "display/factory", "config", "controllers/display",
     }
 
     function deactivate() {
+      var i = 0,
+          len = aliensArray.length;
       if (running) {
+
+        config.off("change", configChanged);
 
         display.events.off("renderFrame", onRenderMove);
         display.events.off("renderFrame", onRenderClearExplosions);
         leap.events.off("handFrameNormalized", onHandFrame);
-        crosshair.events.off("newCrosshairPosition", onHandFrame);
+        crosshair.events.off("crosshairActive", onHandFrame);
 
         running = false;
+
+        for (i = 0; i < len; i += 1) {
+          layer.removeChild(aliensArray[i]);
+        }
+
+        aliensArray = [];
       }
     }
 
@@ -108,12 +105,13 @@ define(["display/textures", "display/factory", "config", "controllers/display",
       var i = 0,
         length = explosionsClearing.length;
       for (i; i < length; i += 1) {
-        if(explosionsClearing[i].alpha > 0 && explosionsClearing[i].visible === true) {
+        if(explosionsClearing[i].alpha > 0) {
           explosionsClearing[i].alpha -= 0.01;
         } else {
-          explosionsClearing[i].visible = false;
+          layer.removeChild(explosionsClearing.splice(i, 1)[0]);
+          i -= 1;
+          length -= 1;
         }
-        
       }
     }
 

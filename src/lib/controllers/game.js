@@ -35,7 +35,18 @@ define(["controllers/display", "controllers/leap", "controllers/scene", "key",
 
     key('enter', function() {
       toggleDebugInfo();
+      toggleScene();
     });
+
+    function toggleScene() {
+
+      if(scene.getCurrentSceneIdentifier() === "shooter") {
+        scene.showScene("welcome");
+      } else {
+        scene.showScene("shooter");
+      }
+      console.log("toggleScene, currentScene: " + scene.getCurrentSceneIdentifier());
+    }
 
     function logDebugText(debugText) {
       console.log(debugText);

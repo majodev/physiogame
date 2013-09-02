@@ -4,7 +4,6 @@ define(["display/textures", "display/factory", "PIXI", "underscore", "config"],
     var layer = factory.makeLayer(),
       bg;
 
-
     function activate() {
       if (_.isUndefined(bg) === true) {
         bg = factory.makePIXISprite(textures.getBackgroundTexture());
@@ -12,13 +11,14 @@ define(["display/textures", "display/factory", "PIXI", "underscore", "config"],
         bg.position.y = 0;
         bg.anchor.x = 0;
         bg.anchor.y = 0;
-        scaleProperly();
-        layer.addChild(bg);
-
-        config.on("change", configChanged);
 
         console.log("bg activate");
       }
+
+      layer.addChild(bg);
+      scaleProperly();
+
+      config.on("change", configChanged);
     }
 
     function scaleProperly() {
@@ -36,6 +36,7 @@ define(["display/textures", "display/factory", "PIXI", "underscore", "config"],
 
     function deactivate() {
       layer.removeChild(bg);
+      config.off("change", configChanged);
     }
 
     return {

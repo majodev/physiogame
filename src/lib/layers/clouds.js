@@ -24,8 +24,6 @@ define(["controllers/display", "display/textures", "display/factory",
         for (cloudsCount; cloudsCount < cloudsToGenerate; cloudsCount += 1) {
           cloud = new PIXI.MovieClip(textures.cloudTextures);
 
-          
-
           cloud.anchor.x = 0.5;
           cloud.anchor.y = 0.5;
           cloud.position.x = parseInt(Math.random() * width, 10);
@@ -79,8 +77,18 @@ define(["controllers/display", "display/textures", "display/factory",
     }
 
     function deactivate() {
+      var i = 0,
+        len = clouds.length;
+
       display.events.off("renderFrame", onRenderMove);
-      layer.removeChild(bg);
+
+      for (i; i < len; i += 1) {
+        layer.removeChild(clouds[i]);
+      }
+
+      cloudsCount = 0;
+      clouds = [];
+      running = false;
     }
 
     return {

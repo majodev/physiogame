@@ -4,7 +4,6 @@ define(["utils/publisher", "controllers/display", "underscore",
   function(publisher, display, _,
     shooter, welcome) {
 
-
     var events = publisher.make(),
       scenes = {
         welcome: welcome,
@@ -26,16 +25,26 @@ define(["utils/publisher", "controllers/display", "underscore",
       display.stage.addChild(currentScene.getScene());
 
       // notify
-      events.trigger("showScene", currentScene);
+      events.trigger("showScene", getCurrentSceneIdentifier());
     }
 
     function showScene(name) {
-      if (_.isUndefined(scenes[name]) === true) {
-        throw new Error("showScene not possible, name (" + name + ") doesn't match any known scene or returns undefined!");
-      } else {
-        // if found, exchange current scene with new one.
-        exchangeScene(scenes[name]);
+      if (_.has(scenes, name) === false) {
+        throw new Error("UNKNOWN SCENE - scenes have no property (" + name + ")!");
+      } 
+      if (scenes[name] === currentScene) {
+        throw new Error("SAME SCENE - showScene not possible, scene with name (" + name + ") is already shown!");
       }
+        
+      // else found and new one, exchange current scene with new one.
+      exchangeScene(scenes[name]);
+    }
+
+    function getCurrentSceneIdentifier() {
+      var found = _.findKey(scenes, function (scene) {
+        return scene === currentScene;
+      });
+      return found;
     }
 
     function init() {
@@ -46,7 +55,8 @@ define(["utils/publisher", "controllers/display", "underscore",
     return {
       init: init,
       showScene: showScene,
-      events: events
+      events: events,
+      getCurrentSceneIdentifier: getCurrentSceneIdentifier
     };
 
   }

@@ -34,7 +34,7 @@ define(["Backbone", "display/factory"],
             scene.removeChild(layers[i].getLayer());
           }
 
-          this.set("running", true);
+          this.set("running", false);
         }
 
       },
