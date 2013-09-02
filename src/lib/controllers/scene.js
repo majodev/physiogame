@@ -1,21 +1,41 @@
-define(["scenes/mainScene", "utils/publisher", "controllers/display"],
-  function(mainScene, publisher, display) {
+define(["utils/publisher", "controllers/display", "underscore",
+  "scenes/shooter", "scenes/welcome"
+  ],
+  function(publisher, display, _,
+    shooter, welcome) {
+
+
     var events = publisher.make(),
+      scenes = {
+        welcome: welcome,
+        shooter: shooter
+      },
       currentScene;
 
-    function showMainScene() {
+    function exchangeScene(scene) {
 
-      if(typeof currentScene !== 'undefined') {
+      // disable previous Scene
+      if (typeof currentScene !== 'undefined') {
         currentScene.deactivate();
         display.stage.removeChild(currentScene.getScene());
       }
 
-      currentScene = mainScene;
-      mainScene.activate();
-
+      // reset current Scene
+      currentScene = scene;
+      scene.activate();
       display.stage.addChild(currentScene.getScene());
 
+      // notify
       events.trigger("showScene", currentScene);
+    }
+
+    function showScene(name) {
+      if (_.isUndefined(scenes[name]) === true) {
+        throw new Error("showScene not possible, name (" + name + ") doesn't match any known scene or returns undefined!");
+      } else {
+        // if found, exchange current scene with new one.
+        exchangeScene(scenes[name]);
+      }
     }
 
     function init() {
@@ -25,7 +45,7 @@ define(["scenes/mainScene", "utils/publisher", "controllers/display"],
 
     return {
       init: init,
-      showMainScene: showMainScene,
+      showScene: showScene,
       events: events
     };
 

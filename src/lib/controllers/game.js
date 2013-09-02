@@ -15,12 +15,7 @@ define(["controllers/display", "controllers/leap", "controllers/scene", "key",
       scene.init();
       leap.init();
 
-      scene.events.on("showScene", sceneChanged);
-      scene.showMainScene();
-    }
-
-    function sceneChanged(scene) {
-      display.resize();
+      scene.showScene("welcome");
     }
 
     function toggleDebugInfo() {
