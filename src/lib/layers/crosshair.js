@@ -1,9 +1,9 @@
 define(["displayController", "leapController", "display/factory",
-  "PIXI", "Backbone", "underscore"],
+  "PIXI", "utils/publisher"],
   function(displayController, leapController, factory,
-    PIXI, Backbone, _) {
+    PIXI, publisher) {
 
-    var events = _.clone(Backbone.Events),
+    var events = publisher,
       running = false,
       crosshair = factory.makeCrosshair(),
       layer = factory.makeLayer(),

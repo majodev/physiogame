@@ -8,7 +8,8 @@ require.config({
     "Leap": "../vendor/leapjs/leap",
     "key": "../vendor/keymaster/keymaster",
     "jquery": "../vendor/jquery/jquery", // watch out: registers jquery and $ itself (prevented!)
-    "Howler": "../vendor/howler/howler" // watch out: registers itself as Howler!
+    "Howler": "../vendor/howler/howler", // watch out: registers itself as Howler!
+    "WebFont": "../vendor/webfontloader/target/webfont"
   },
   shim: {
     "Backbone": {
@@ -49,10 +50,22 @@ require.config({
         console.log("requireconfig: init (shim) key with noConflict");
         return key.noConflict();
       }
+    },
+    "WebFont": {
+      exports: "WebFont",
+      init: function() {
+        // console.log("requireconfig: init (shim) WebFont and remove from global scope");
+        // var WebFontLib = WebFont;
+        // WebFont = undefined;
+        // return WebFontLib;
+
+        return WebFont;
+      }
     }
   }
 });
 
 // Start the main app logic.
 require(["gameController"],
-  function(gameController) {});
+  function(gameController) {}
+);

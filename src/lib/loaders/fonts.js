@@ -1,26 +1,39 @@
-define([],
-  function() {
+define(["WebFont", "utils/publisher"],
+  function(WebFont, publisher) {
 
-
-    // TODO: FAIL, no global object should be allowed!
-    window.WebFontConfig = {
-      google: {
-        families: ['Arvo:700italic']
-      },
-      active: function() {
-        console.log("google webfonts loaded!");
-        init();
-      }
-    };
+    var events = publisher,
+      fontConfig = {
+        google: {
+          families: ['Arvo:400,700,400italic,700italic:latin']
+        },
+        loading: function() {
+          console.log("fonts: loading");
+        },
+        active: function() {
+          console.log("fonts: active");
+          events.trigger("fontsLoaded");
+        },
+        inactive: function() {
+          console.log("fonts: inactive");
+        },
+        fontloading: function(familyName, fvd) {
+          console.log("fonts: fontloading " + familyName);
+        },
+        fontactive: function(familyName, fvd) {
+          console.log("fonts: fontactive " + familyName);
+        },
+        fontinactive: function(familyName, fvd) {
+          console.log("fonts: fontinactive " + familyName);
+        }
+      };
 
     function init() {
-      var wf = document.createElement('script');
-      wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-        '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-      wf.type = 'text/javascript';
-      wf.async = 'true';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(wf, s);
+      WebFont.load(fontConfig);
     }
+
+    return {
+      init: init,
+      events: events
+    };
   }
 );

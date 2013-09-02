@@ -1,7 +1,7 @@
-define(["PIXI", "config", "Backbone", "underscore"],
-  function(PIXI, config, Backbone, _) {
+define(["PIXI", "config", "utils/publisher"],
+  function(PIXI, config, publisher) {
 
-    var events = _.clone(Backbone.Events),
+    var events = publisher,
       pixiSpriteLoader = new PIXI.AssetLoader(config.get("spriteSheets")),
       spriteSheetsLoaded = false;
 

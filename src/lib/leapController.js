@@ -1,12 +1,12 @@
-define(["Leap", "config", "Backbone", "underscore"],
-  function(Leap, config, Backbone, _) {
+define(["Leap", "config", "utils/publisher"],
+  function(Leap, config, publisher) {
 
     // private 
     var controller = new Leap.Controller(),
       frameCount = 0,
       handsAvailable = false,
       handsLength = 0,
-      events = _.clone(Backbone.Events),
+      events = publisher,
       displayWidth = config.get("width"),
       displayHeight = config.get("height");
 

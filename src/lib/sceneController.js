@@ -1,6 +1,6 @@
-define(["scenes/mainScene", "Backbone", "underscore", "displayController"],
-  function(mainScene, Backbone, _, displayController) {
-    var events = _.clone(Backbone.Events),
+define(["scenes/mainScene", "utils/publisher", "displayController"],
+  function(mainScene, publisher, displayController) {
+    var events = publisher,
       currentScene;
 
     function showMainScene() {

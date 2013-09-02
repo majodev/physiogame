@@ -1,5 +1,5 @@
-define(["PIXI", "config", "utils/resizeWatcher", "Backbone", "underscore"],
-  function(PIXI, config, resizeWatcher, Backbone, _) {
+define(["PIXI", "config", "utils/resizeWatcher", "utils/publisher"],
+  function(PIXI, config, resizeWatcher, publisher) {
 
     // private
     var stage = new PIXI.Stage(config.get("background"),
@@ -8,7 +8,7 @@ define(["PIXI", "config", "utils/resizeWatcher", "Backbone", "underscore"],
         config.get("height")),
       renderTarget = config.get("renderTarget"),
       frameCount = 0,
-      events = _.clone(Backbone.Events);
+      events = publisher;
 
     function init() {
       console.log("displayController: init");

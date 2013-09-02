@@ -23,13 +23,6 @@ define(["display/assets", "display/factory", "config", "displayController",
       explosionsClearing = [];
 
 
-    // if (assets.assetsLoaded === true) {
-    //   addAliens();
-    // } else {
-    //   assets.events.on("assetsLoaded", addAliens);
-    // }
-
-
     function createAliens() {
 
       var aliensToSpawn = config.get("aliensToSpawn"),

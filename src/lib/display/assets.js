@@ -1,13 +1,15 @@
-define(["PIXI", "config", "loaders/sprites", "loaders/fonts", "utils/zeroPad", "Backbone",
-    "underscore"
+define(["PIXI", "config", "utils/zeroPad",
+    "utils/publisher", "loaders/sprites", "loaders/fonts"
   ],
-  function(PIXI, config, sprites, fontLoader, zeroPad, Backbone, _) {
+  function(PIXI, config, zeroPad, publisher, sprites, fonts) {
 
-    var events = _.clone(Backbone.Events),
+    var events = publisher,
       aliens = [],
       alienFrames = ["eggHead.png", "flowerTop.png", "helmlok.png", "skully.png"],
       explosionTextures = [],
       assetsLoaded = false,
+      spritesLoaded = false,
+      fontsLoaded = false,
       width = config.get("width"),
       height = config.get("height"),
       aliensToSpawn = config.get("aliensToSpawn"),
@@ -16,6 +18,24 @@ define(["PIXI", "config", "loaders/sprites", "loaders/fonts", "utils/zeroPad", "
 
     sprites.events.on("spritesLoaded", onAssetsLoaded);
     sprites.init();
+
+    fonts.events.on("fontsLoaded", onFontsLoaded);
+    fonts.init();
+
+    function onFontsLoaded() {
+      // font loaded, check other assets...
+      console.log("font assets loaded!");
+      fontsLoaded = true;
+      checkAssetsLoaded();
+    }
+
+    function checkAssetsLoaded() {
+      if (spritesLoaded === true && fontsLoaded === true) {
+        assetsLoaded = true;
+        console.log("all assets loaded!");
+        events.trigger("assetsLoaded");
+      }
+    }
 
     function onAssetsLoaded() {
       var i = 0,
@@ -36,10 +56,10 @@ define(["PIXI", "config", "loaders/sprites", "loaders/fonts", "utils/zeroPad", "
         cloudTextures.push(texture);
       }
 
-      // show subscipers that we are finish loading our assets
-      assetsLoaded = true;
-      console.log("display: assets loaded!");
-      events.trigger("assetsLoaded");
+      // sprites loaded, check other assets...
+      console.log("sprite assets loaded!");
+      spritesLoaded = true;
+      checkAssetsLoaded();
     }
 
     function getTextureByName(name) {

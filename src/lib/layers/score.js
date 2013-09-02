@@ -1,46 +1,72 @@
 define(["PIXI", "models/score", "display/factory", "config", "displayController"],
   function(PIXI, score, factory, config, displayController) {
+
+
+
     var layer = factory.makeLayer(),
-      countingText = new PIXI.Text("0 of " + config.get("aliensToSpawn"), {
-        font: "bold italic 20px Arvo",
-        fill: "#bb4433",
-        align: "right",
-        stroke: "#FFAAAA",
-        strokeThickness: 5
-      }),
-      introText = new PIXI.Text("STOP those " + config.get("aliensToSpawn") +
-        " bastards!\n\n\nmouse: point, hold and kill\n" +
-        "touchscreen: touch, point and kill\nleapmotion: point and kill", {
-        font: "bold 35px Arvo",
-        fill: "#3344bb",
-        align: "center",
-        stroke: "#AAAAFF",
-        strokeThickness: 5
-      }),
-      winningText = new PIXI.Text("WIN!", {
-        font: "bold 35px Arvo",
-        fill: "#3344bb",
-        align: "center",
-        stroke: "#AAAAFF",
-        strokeThickness: 5
-      }),
-      timerText = new PIXI.Text("0.0", {
-        font: "bold 30px Arvo",
-        fill: "#bb4433",
-        align: "right",
-        stroke: "#FFAAAA",
-        strokeThickness: 5
-      }),
+      countingText,
+      introText,
+      winningText,
+      timerText,
+      textsCreated = false,
       winningAdded = false,
       scoreTimerCount = 0,
       scoreTimerRunning = false,
       introTimerCount = 0,
       introTimerRunning = true;
 
+    console.log("score!");
+
     config.on("change", configChanged);
     score.on("change", scoreChanged);
 
+
+    function createTextButtons() {
+      if (textsCreated === false) {
+
+        console.log("createTextButtons");
+
+
+        countingText = new PIXI.Text("0 of " + config.get("aliensToSpawn"), {
+          font: "bold italic 20px Arvo",
+          fill: "#bb4433",
+          align: "right",
+          stroke: "#FFAAAA",
+          strokeThickness: 5
+        });
+        introText = new PIXI.Text("STOP those " + config.get("aliensToSpawn") +
+          " bastards!\n\n\nmouse: point, hold and kill\n" +
+          "touchscreen: touch, point and kill\nleapmotion: point and kill", {
+            font: "bold 35px Arvo",
+            fill: "#3344bb",
+            align: "center",
+            stroke: "#AAAAFF",
+            strokeThickness: 5
+          });
+        winningText = new PIXI.Text("WIN!", {
+          font: "bold 35px Arvo",
+          fill: "#3344bb",
+          align: "center",
+          stroke: "#AAAAFF",
+          strokeThickness: 5
+        });
+        timerText = new PIXI.Text("0.0", {
+          font: "bold 30px Arvo",
+          fill: "#bb4433",
+          align: "right",
+          stroke: "#FFAAAA",
+          strokeThickness: 5
+        });
+
+        textsCreated = true;
+      }
+    }
+
     function init() {
+
+      console.log("score: init");
+
+      createTextButtons();
 
       countingText.position.x = config.get("width") - 15;
       countingText.position.y = 0;
@@ -65,7 +91,7 @@ define(["PIXI", "models/score", "display/factory", "config", "displayController"
 
     function onRenderDisableIntroAnimation() {
       if (introText.alpha > 0) {
-        if(introTimerRunning) {
+        if (introTimerRunning) {
           introText.alpha -= 0.001;
         } else {
           introText.alpha -= 0.02;

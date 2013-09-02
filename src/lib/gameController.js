@@ -9,10 +9,12 @@ define(["displayController", "leapController", "sceneController", "key",
 
     // immediately invoked, inits gameController and child controllers
     (function preloading() {
-
+      console.log("gameController: preloading check.");
       if (assets.assetsLoaded === true) {
+        console.log("gameController: assets loaded, init!");
         init();
       } else {
+        console.log("gameController: waiting until all assets are loaded.");
         assets.events.on("assetsLoaded", init);
       }
     }());
