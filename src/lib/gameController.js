@@ -1,8 +1,8 @@
 define(["displayController", "leapController", "sceneController", "key",
-    "display/assets", "soundController", "loaders/preloader"
+  "soundController", "loaders/preloader"
   ],
   function(displayController, leapController, sceneController, key,
-    assets, soundController, preloader) {
+    soundController, preloader) {
 
     // private
     var showDebug = false;
@@ -18,7 +18,6 @@ define(["displayController", "leapController", "sceneController", "key",
     function init() {
       console.log("gameController: init");
 
-      assets.init();
       displayController.init();
       soundController.init();
       sceneController.init();

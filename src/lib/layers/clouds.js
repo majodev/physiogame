@@ -1,7 +1,7 @@
-define(["displayController", "display/assets", "display/factory",
+define(["displayController", "display/textures", "display/factory",
     "PIXI", "underscore", "config"
   ],
-  function(displayController, assets, factory, PIXI, _, config) {
+  function(displayController, textures, factory, PIXI, _, config) {
 
     var layer = factory.makeLayer(),
       clouds = [],
@@ -22,7 +22,7 @@ define(["displayController", "display/assets", "display/factory",
         height = config.get("height");
 
         for (cloudsCount; cloudsCount < cloudsToGenerate; cloudsCount += 1) {
-          cloud = new PIXI.MovieClip(assets.cloudTextures);
+          cloud = new PIXI.MovieClip(textures.cloudTextures);
 
           
 

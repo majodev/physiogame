@@ -1,6 +1,6 @@
-define(["layers/crosshair", "layers/aliens", "display/factory",
-  "display/assets", "layers/score", "layers/background", "layers/clouds"],
-  function(crosshair, aliens, factory, assets, score, background, clouds) {
+define(["layers/crosshair", "layers/aliens", "display/factory", "layers/score",
+  "layers/background", "layers/clouds"],
+  function(crosshair, aliens, factory, score, background, clouds) {
     var scene = factory.makeScene(),
       crosshairLayer = crosshair.getLayer(),
       alienLayer = aliens.getLayer(),

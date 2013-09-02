@@ -1,8 +1,8 @@
-define(["display/assets", "display/factory", "config", "displayController",
+define(["display/textures", "display/factory", "config", "displayController",
     "leapController", "utils/hittest", "underscore", "layers/crosshair", "PIXI",
     "models/score", "soundController"
   ],
-  function(assets, factory, config, displayController,
+  function(textures, factory, config, displayController,
     leapController, hittest, _, crosshair, PIXI, score, soundController) {
 
     var width = config.get("width"),
@@ -31,10 +31,10 @@ define(["display/assets", "display/factory", "config", "displayController",
         asien;
       // add aliens...
       for (i = 0; i < aliensToSpawn; i += 1) {
-        frameName = assets.alienFrames[i % 4];
+        frameName = textures.alienFrames[i % 4];
 
         // create an alien using the frame name..
-        alien = factory.makePIXISprite(assets.getTextureByName(frameName));
+        alien = factory.makePIXISprite(textures.getTextureByName(frameName));
 
         // set its initial values...
         alien.position.x = parseInt(Math.random() * width, 10);
@@ -56,9 +56,9 @@ define(["display/assets", "display/factory", "config", "displayController",
 
     // function addAliens() {
     //   var i = 0,
-    //     max = assets.aliens.length;
+    //     max = textures.aliens.length;
 
-    //   aliensArray = assets.aliens;
+    //   aliensArray = textures.aliens;
 
     //   for (i; i < max; i += 1) {
     //     layer.addChild(aliensArray[i]);
@@ -185,7 +185,7 @@ define(["display/assets", "display/factory", "config", "displayController",
           if (alien.scale.x > 1.8) { // boom
             alien.visible = false;
 
-            var explosion = new PIXI.MovieClip(assets.explosionTextures);
+            var explosion = new PIXI.MovieClip(textures.explosionTextures);
 
             explosion.position.x = aliensArray[i].position.x;
             explosion.position.y = aliensArray[i].position.y;

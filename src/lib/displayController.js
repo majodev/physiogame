@@ -1,5 +1,5 @@
-define(["PIXI", "config", "utils/resizeWatcher", "utils/publisher"],
-  function(PIXI, config, resizeWatcher, publisher) {
+define(["PIXI", "config", "utils/resizeWatcher", "utils/publisher", "display/textures"],
+  function(PIXI, config, resizeWatcher, publisher, textures) {
 
     // private
     var stage = new PIXI.Stage(config.get("background"),
@@ -12,6 +12,9 @@ define(["PIXI", "config", "utils/resizeWatcher", "utils/publisher"],
 
     function init() {
       console.log("displayController: init");
+
+      textures.init();
+
       renderTarget.appendChild(renderer.view);
       requestAnimFrame(renderFrame);
 

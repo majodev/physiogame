@@ -1,7 +1,6 @@
-define(["PIXI", "config", "utils/zeroPad",
-    "utils/publisher", "loaders/sprites"
+define(["PIXI", "config", "utils/zeroPad", "loaders/sprites"
   ],
-  function(PIXI, config, zeroPad, publisher, sprites) {
+  function(PIXI, config, zeroPad, sprites) {
 
     var aliens = [],
       alienFrames = ["eggHead.png", "flowerTop.png", "helmlok.png", "skully.png"],

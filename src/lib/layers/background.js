@@ -1,7 +1,7 @@
-define(["displayController", "display/assets", "display/factory",
+define(["displayController", "display/textures", "display/factory",
     "PIXI", "underscore", "config"
   ],
-  function(displayController, assets, factory, PIXI, _, config) {
+  function(displayController, textures, factory, PIXI, _, config) {
 
     var layer = factory.makeLayer(),
       bg;
@@ -9,7 +9,7 @@ define(["displayController", "display/assets", "display/factory",
 
     function activate() {
       if (_.isUndefined(bg) === true) {
-        bg = factory.makePIXISprite(assets.getBackgroundTexture());
+        bg = factory.makePIXISprite(textures.getBackgroundTexture());
         bg.position.x = 0;
         bg.position.y = 0;
         bg.anchor.x = 0;
