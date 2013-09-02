@@ -12,7 +12,7 @@ define(["displayController", "display/assets", "display/factory",
       cloudsCount = 0;
 
 
-    function init() {
+    function activate() {
 
       var cloud;
 
@@ -39,7 +39,7 @@ define(["displayController", "display/assets", "display/factory",
 
           layer.addChild(cloud);
         }
-        console.log("cloud init");
+        console.log("cloud activate");
       }
 
       if (running === false) {
@@ -78,13 +78,13 @@ define(["displayController", "display/assets", "display/factory",
       height = model.get("height");
     }
 
-    function kill() {
+    function deactivate() {
       layer.removeChild(bg);
     }
 
     return {
-      activate: init,
-      deactivate: kill,
+      activate: activate,
+      deactivate: deactivate,
       getLayer: function() {
         return layer;
       }

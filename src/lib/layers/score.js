@@ -62,9 +62,9 @@ define(["PIXI", "models/score", "display/factory", "config", "displayController"
       }
     }
 
-    function init() {
+    function activate() {
 
-      console.log("score: init");
+      console.log("score: activate");
 
       createTextButtons();
 
@@ -91,9 +91,7 @@ define(["PIXI", "models/score", "display/factory", "config", "displayController"
 
     function onRenderDisableIntroAnimation() {
       if (introText.alpha > 0) {
-        if (introTimerRunning) {
-          introText.alpha -= 0.001;
-        } else {
+        if (introTimerRunning === false && introText.alpha > 0) {
           introText.alpha -= 0.02;
         }
       }
@@ -175,15 +173,18 @@ define(["PIXI", "models/score", "display/factory", "config", "displayController"
 
     }, 100);
 
+    function deactivate () {
+
+    }
+
 
 
     return {
       getLayer: function() {
         return layer;
       },
-      activate: function() {
-        init();
-      }
+      activate: activate,
+      deactivate: deactivate
     };
   }
 );

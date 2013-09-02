@@ -7,7 +7,7 @@ define(["displayController", "display/assets", "display/factory",
       bg;
 
 
-    function init() {
+    function activate() {
       if (_.isUndefined(bg) === true) {
         bg = factory.makePIXISprite(assets.getBackgroundTexture());
         bg.position.x = 0;
@@ -19,7 +19,7 @@ define(["displayController", "display/assets", "display/factory",
 
         config.on("change", configChanged);
 
-        console.log("bg init");
+        console.log("bg activate");
       }
     }
 
@@ -36,13 +36,13 @@ define(["displayController", "display/assets", "display/factory",
       scaleProperly();
     }
 
-    function kill() {
+    function deactivate() {
       layer.removeChild(bg);
     }
 
     return {
-      activate: init,
-      deactivate: kill,
+      activate: activate,
+      deactivate: deactivate,
       getLayer: function() {
         return layer;
       }
