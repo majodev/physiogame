@@ -6,7 +6,7 @@ define(["Leap", "config", "utils/publisher"],
       frameCount = 0,
       handsAvailable = false,
       handsLength = 0,
-      events = publisher,
+      events = publisher.make(),
       displayWidth = config.get("width"),
       displayHeight = config.get("height");
 

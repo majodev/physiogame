@@ -8,7 +8,7 @@ define(["PIXI", "config", "utils/resizeWatcher", "utils/publisher"],
         config.get("height")),
       renderTarget = config.get("renderTarget"),
       frameCount = 0,
-      events = publisher;
+      events = publisher.make();
 
     function init() {
       console.log("displayController: init");

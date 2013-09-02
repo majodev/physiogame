@@ -14,6 +14,20 @@ define(["Backbone"],
         "assets/SpriteSheetExplosion.json",
         "assets/background/backgroundSpriteData.json"
       ],
+      soundBaseDir: "assets/sound/",
+      sounds: [{
+        name: "explosion",
+        volume: 0.1
+      }, {
+        name: "hitted",
+        volume: 0.005
+      }],
+      soundExtensions: [".ogg", ".mp3", ".wav"],
+      fonts: {
+        google: {
+          families: ['Arvo:400,700,400italic,700italic:latin']
+        }
+      },
       aliensToSpawn: 100
     });
     return config;

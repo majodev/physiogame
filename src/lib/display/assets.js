@@ -3,7 +3,7 @@ define(["PIXI", "config", "utils/zeroPad",
   ],
   function(PIXI, config, zeroPad, publisher, sprites, fonts) {
 
-    var events = publisher,
+    var events = publisher.make(),
       aliens = [],
       alienFrames = ["eggHead.png", "flowerTop.png", "helmlok.png", "skully.png"],
       explosionTextures = [],

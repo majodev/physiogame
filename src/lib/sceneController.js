@@ -1,6 +1,6 @@
 define(["scenes/mainScene", "utils/publisher", "displayController"],
   function(mainScene, publisher, displayController) {
-    var events = publisher,
+    var events = publisher.make(),
       currentScene;
 
     function showMainScene() {

@@ -1,7 +1,7 @@
 define(["PIXI", "config", "utils/publisher"],
   function(PIXI, config, publisher) {
 
-    var events = publisher,
+    var events = publisher.make(),
       pixiSpriteLoader = new PIXI.AssetLoader(config.get("spriteSheets")),
       spriteSheetsLoaded = false;
 

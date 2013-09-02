@@ -3,7 +3,7 @@ define(["displayController", "leapController", "display/factory",
   function(displayController, leapController, factory,
     PIXI, publisher) {
 
-    var events = publisher,
+    var events = publisher.make(),
       running = false,
       crosshair = factory.makeCrosshair(),
       layer = factory.makeLayer(),

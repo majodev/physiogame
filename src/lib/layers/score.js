@@ -1,8 +1,6 @@
 define(["PIXI", "models/score", "display/factory", "config", "displayController"],
   function(PIXI, score, factory, config, displayController) {
 
-
-
     var layer = factory.makeLayer(),
       countingText,
       introText,
@@ -14,8 +12,6 @@ define(["PIXI", "models/score", "display/factory", "config", "displayController"
       scoreTimerRunning = false,
       introTimerCount = 0,
       introTimerRunning = true;
-
-    console.log("score!");
 
     config.on("change", configChanged);
     score.on("change", scoreChanged);
@@ -173,7 +169,7 @@ define(["PIXI", "models/score", "display/factory", "config", "displayController"
 
     }, 100);
 
-    function deactivate () {
+    function deactivate() {
 
     }
 
