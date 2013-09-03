@@ -23,8 +23,8 @@ var config = {
   include: ["requireLib", "controllers/game"], // heads up: game is loaded via "load" dynamically, hence include!
   logLevel: 0,
   waitSeconds: 7,
-  name: "load", // Name of script to start building from
-  insertRequire: ["load"],
+  name: "physioshooter", // Name of script to start building from
+  insertRequire: ["physioshooter"],
   out: 'build/' + pjson.name + '-' + pjson.version + '.min.js' // Where to output
 };
 

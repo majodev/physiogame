@@ -64,6 +64,6 @@ require.config({
 });
 
 // Start the main app logic.
-require(["load"],
-  function(load) {}
+require(["physioshooter"],
+  function(physioshooter) {}
 );
