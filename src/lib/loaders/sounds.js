@@ -46,7 +46,7 @@ define(["log", "Howler", "config", "utils/publisher"],
       if(soundsToLoadLength === soundsLoadedCount) {
         // all sounds loaded!
         //log.debug("all sounds loaded!");
-        events.trigger("soundsLoaded");
+        events.trigger("allSoundsLoaded");
       }
     }
 

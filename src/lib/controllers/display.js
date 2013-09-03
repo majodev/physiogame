@@ -5,7 +5,7 @@ define(["log", "PIXI", "config", "utils/resizeWatcher", "utils/publisher", "disp
     var stage = new PIXI.Stage(config.get("background"),
       config.get("interactive")),
       renderer = PIXI.autoDetectRenderer(config.get("width"),
-        config.get("height")),
+        config.get("height"), null, config.get("transparent")),
       renderTarget = config.get("renderTarget"),
       frameCount = 0,
       events = publisher.make();
@@ -15,9 +15,16 @@ define(["log", "PIXI", "config", "utils/resizeWatcher", "utils/publisher", "disp
 
       textures.init();
 
+      // set style and append renderer
+      renderer.view.style.position = "absolute";
+      renderer.view.style.top = "0px";
+      renderer.view.style.left = "0px";
       renderTarget.appendChild(renderer.view);
+
+      // main animation function
       requestAnimFrame(renderFrame);
 
+      // resizer
       resizeWatcher.init(window, renderer);
       resizeWatcher.resizeNow();
 

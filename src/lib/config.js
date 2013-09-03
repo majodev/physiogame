@@ -8,6 +8,7 @@ define(["Backbone"],
         y: 9
       },
       interactive: true,
+      transparent: true,
       background: 0xFFFFFF,
       renderTarget: document.body,
       spriteSheets: ["assets/SpriteSheetAliens.json",

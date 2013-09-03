@@ -13,3 +13,7 @@ canvas { /* To remove the scrollbars */
   display:block;
   /*vertical-align:center; */
 }
+
+.preloaderProgress {
+  color: white;
+}

@@ -8,13 +8,13 @@ define(["log", "utils/publisher", "loaders/fonts", "loaders/sounds", "loaders/sp
 
     function init() {
       log.debug("preloader: init");
-      sprites.events.on("spritesLoaded", onSpritesLoaded);
+
+      sprites.events.on("allSpritesLoaded", onSpritesLoaded);
+      fonts.events.on("allFontsLoaded", onFontsLoaded);
+      sounds.events.on("allSoundsLoaded", onSoundsLoaded);
+
       sprites.init();
-
-      fonts.events.on("fontsLoaded", onFontsLoaded);
       fonts.init();
-
-      sounds.events.on("soundsLoaded", onSoundsLoaded);
       sounds.init();
     }
 
@@ -42,6 +42,11 @@ define(["log", "utils/publisher", "loaders/fonts", "loaders/sounds", "loaders/sp
     function checkAllLoaded() {
       if (spritesLoaded && fontsLoaded && soundsLoaded) {
         log.debug("preloader: preloadedAll");
+
+        sprites.events.off("allSpritesLoaded", onSpritesLoaded);
+        fonts.events.off("allFontsLoaded", onFontsLoaded);
+        sounds.events.off("allSoundsLoaded", onSoundsLoaded);
+
         events.trigger("preloadedAll");
       }
     }

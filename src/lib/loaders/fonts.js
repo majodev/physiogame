@@ -8,7 +8,7 @@ define(["log", "WebFont", "utils/publisher", "config", "underscore"],
         },
         active: function() {
           //log.debug("fonts: active, all loaded!");
-          events.trigger("fontsLoaded");
+          events.trigger("allFontsLoaded");
         },
         inactive: function() {
           //log.debug("fonts: inactive");
