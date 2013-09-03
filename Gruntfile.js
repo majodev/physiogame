@@ -20,7 +20,7 @@ module.exports = function(grunt) {
     copy: {
       "assets": {
         files: [{
-          src: ["assets/**/*.json", "assets/**/*.png", "assets/**/*.mp3", "assets/**/*.ogg"],
+          src: ["assets/**/*.json", "assets/**/*.png", "assets/**/*.mp3", "assets/**/*.ogg", "assets/**/*.m4a"],
           dest: "build/"
         }]
       }

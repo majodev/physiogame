@@ -27,7 +27,7 @@ define(["Backbone"],
         volume: 0.2,
         loop: true
       }],
-      soundExtensions: [".ogg", ".mp3"],
+      soundExtensions: [".ogg", ".mp3", "m4a"],
       fonts: {
         google: {
           families: ['Arvo:400,700,400italic,700italic:latin']
