@@ -6,7 +6,6 @@ define(["classes/Scene", "layers/crosshair", "layers/aliens", "display/factory",
 
     var scene = new Scene({
       layers: [background, clouds, aliens, crosshair, score]
-      //layers: [background]
     });
 
     return scene;
