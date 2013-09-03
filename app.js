@@ -2,7 +2,7 @@
   // WHAT: acts as generic startup script, placed at the end of the body tag
   // DOES: checks if node-webkit, sets it up and starts r.js pipeline at the end
   // PREREQUISITES: needs DOM to be ready (hence place at the end of the body!)
-  if (window && window.require) {
+  if (window && window.require && console) {
 
     console.log("app.js (node-webkit): initializing nw.gui...");
     // node-webkit uses require keyword, hence include needed before renaming
@@ -23,7 +23,7 @@
     window.require = undefined;
   }
 
-  console.log("app.js: initializing requirejs startup script...");
+  console.log("app.js: (browser): initializing requirejs startup script...");
   // finally append requirejs script to document and start deps pipeline
   var script = document.createElement("script");
   script.type = "text/javascript";

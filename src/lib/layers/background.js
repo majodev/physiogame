@@ -1,5 +1,5 @@
-define(["display/textures", "display/factory", "PIXI", "underscore", "config"],
-  function(textures, factory, PIXI, _, config) {
+define(["log", "display/textures", "display/factory", "PIXI", "underscore", "config"],
+  function(log, textures, factory, PIXI, _, config) {
 
     var layer = factory.makeLayer(),
       bg;
@@ -12,7 +12,7 @@ define(["display/textures", "display/factory", "PIXI", "underscore", "config"],
         bg.anchor.x = 0;
         bg.anchor.y = 0;
 
-        console.log("bg activate");
+        log.debug("bg activate");
       }
 
       layer.addChild(bg);

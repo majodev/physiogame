@@ -1,12 +1,12 @@
-define(["utils/publisher", "controllers/display", "underscore",
-  "scenes/shooter", "scenes/welcome"
+define(["log", "utils/publisher", "controllers/display", "underscore",
+  "scenes/shooter", "scenes/intro"
   ],
-  function(publisher, display, _,
-    shooter, welcome) {
+  function(log, publisher, display, _,
+    shooter, intro) {
 
     var events = publisher.make(),
       scenes = {
-        welcome: welcome,
+        intro: intro,
         shooter: shooter
       },
       currentScene;
@@ -31,7 +31,7 @@ define(["utils/publisher", "controllers/display", "underscore",
     function showScene(name) {
       if (_.has(scenes, name) === false) {
         throw new Error("UNKNOWN SCENE - scenes have no property (" + name + ")!");
-      } 
+      }
       if (scenes[name] === currentScene) {
         throw new Error("SAME SCENE - showScene not possible, scene with name (" + name + ") is already shown!");
       }
@@ -48,7 +48,7 @@ define(["utils/publisher", "controllers/display", "underscore",
     }
 
     function init() {
-      console.log("sceneController: init");
+      log.debug("sceneController: init");
       events.trigger("init");
     }
 

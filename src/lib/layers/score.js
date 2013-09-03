@@ -1,5 +1,5 @@
-define(["PIXI", "models/score", "display/factory", "config", "controllers/display"],
-  function(PIXI, score, factory, config, display) {
+define(["log", "PIXI", "models/score", "display/factory", "config", "controllers/display"],
+  function(log, PIXI, score, factory, config, display) {
 
     var layer = factory.makeLayer(),
       countingText,
@@ -20,7 +20,7 @@ define(["PIXI", "models/score", "display/factory", "config", "controllers/displa
     function createTextButtons() {
       if (textsCreated === false) {
 
-        console.log("createTextButtons");
+        log.debug("createTextButtons");
 
 
         countingText = new PIXI.Text("0 of " + config.get("aliensToSpawn"), {
@@ -60,7 +60,7 @@ define(["PIXI", "models/score", "display/factory", "config", "controllers/displa
 
     function activate() {
 
-      console.log("score: activate");
+      log.debug("score: activate");
 
       createTextButtons();
 

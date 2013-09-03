@@ -1,55 +1,62 @@
-define(["controllers/display", "controllers/leap", "controllers/scene", "key",
+define(["log", "controllers/display", "controllers/leap", "controllers/scene", "key",
   "controllers/sound"
   ],
-  function(display, leap, scene, key,
+  function(log, display, leap, scene, key,
     sound) {
 
     // private
     var showDebug = false;
 
     function init() {
-      console.log("gameController: init");
+      log.debug("gameController: init");
 
       display.init();
       sound.init();
       scene.init();
       leap.init();
 
-      scene.showScene("welcome");
+      scene.events.on("showScene", onSceneChanged);
+      scene.showScene("intro");
+    }
+
+    function onSceneChanged(newSceneName) {
+      log.info("onSceneChanged: scenename=" + newSceneName);
     }
 
     function toggleDebugInfo() {
       if (showDebug === true) {
         display.events.off("debugInfo", logDebugText);
         leap.events.off("debugInfo", logDebugText);
-        console.log("hiding debug info");
+        log.debug("hiding debug info (keyboard d)");
         showDebug = false;
 
       } else {
         display.events.on("debugInfo", logDebugText);
         leap.events.on("debugInfo", logDebugText);
-        console.log("showing debug info");
+        log.debug("showing debug info (keyboard d)");
         showDebug = true;
       }
     }
 
     key('enter', function() {
-      toggleDebugInfo();
       toggleScene();
+    });
+
+    key('d', function() {
+      toggleDebugInfo();
     });
 
     function toggleScene() {
 
       if(scene.getCurrentSceneIdentifier() === "shooter") {
-        scene.showScene("welcome");
+        scene.showScene("intro");
       } else {
         scene.showScene("shooter");
       }
-      console.log("toggleScene, currentScene: " + scene.getCurrentSceneIdentifier());
     }
 
     function logDebugText(debugText) {
-      console.log(debugText);
+      log.debug(debugText);
     }
 
     // public

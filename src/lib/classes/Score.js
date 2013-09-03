@@ -1,5 +1,5 @@
-define(["Backbone"],
-  function(Backbone) {
+define(["log", "Backbone"],
+  function(log, Backbone) {
     
     var ScoreModel = Backbone.Model.extend({
       raiseScore: function() {
@@ -7,11 +7,11 @@ define(["Backbone"],
         currentScore += 1;
 
         this.set("aliensKilled", currentScore);
-        //console.log("raiseScore to " + currentScore);
+        //log.trace("raiseScore to " + currentScore);
       },
       resetScore: function() {
         this.set("aliensKilled", 0);
-        //console.log("resetScore to " + this.get("aliensKilled"));
+        log.debug("resetScore to " + this.get("aliensKilled"));
       },
       defaults: {
         aliensKilled: 0

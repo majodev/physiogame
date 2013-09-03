@@ -1,5 +1,5 @@
-define(["utils/publisher", "loaders/fonts", "loaders/sounds", "loaders/sprites"],
-  function(publisher, fonts, sounds, sprites) {
+define(["log", "utils/publisher", "loaders/fonts", "loaders/sounds", "loaders/sprites"],
+  function(log, publisher, fonts, sounds, sprites) {
 
     var spritesLoaded = false,
       fontsLoaded = false,
@@ -7,7 +7,7 @@ define(["utils/publisher", "loaders/fonts", "loaders/sounds", "loaders/sprites"]
       events = publisher.make();
 
     function init() {
-      console.log("preloader: init");
+      log.debug("preloader: init");
       sprites.events.on("spritesLoaded", onSpritesLoaded);
       sprites.init();
 
@@ -19,21 +19,21 @@ define(["utils/publisher", "loaders/fonts", "loaders/sounds", "loaders/sprites"]
     }
 
     function onSpritesLoaded() {
-      console.log("preloader: preloadedSprites");
+      log.debug("preloader: preloadedSprites");
       spritesLoaded = true;
       events.trigger("preloadedSprites");
       checkAllLoaded();
     }
 
     function onSoundsLoaded() {
-      console.log("preloader: preloadedSounds");
+      log.debug("preloader: preloadedSounds");
       soundsLoaded = true;
       events.trigger("preloadedSounds");
       checkAllLoaded();
     }
 
     function onFontsLoaded() {
-      console.log("preloader: preloadedFonts");
+      log.debug("preloader: preloadedFonts");
       fontsLoaded = true;
       events.trigger("preloadedFonts");
       checkAllLoaded();
@@ -41,7 +41,7 @@ define(["utils/publisher", "loaders/fonts", "loaders/sounds", "loaders/sprites"]
 
     function checkAllLoaded() {
       if (spritesLoaded && fontsLoaded && soundsLoaded) {
-        console.log("preloader: preloadedAll");
+        log.debug("preloader: preloadedAll");
         events.trigger("preloadedAll");
       }
     }

@@ -28,7 +28,8 @@ define(["Backbone"],
           families: ['Arvo:400,700,400italic,700italic:latin']
         }
       },
-      aliensToSpawn: 100
+      aliensToSpawn: 100,
+      logLevel: 0, // 0 trace, 1 debug, 2 info, 3 warn, 4 error, 5 silent
     });
     return config;
   }

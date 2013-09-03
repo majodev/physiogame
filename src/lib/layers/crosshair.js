@@ -71,7 +71,6 @@ define(["controllers/display", "controllers/leap", "display/factory",
     }
 
     function onRenderAlpha() {
-      //console.log("check hands");
       if (leap.getHandsAvailable() === true || mouseCurrentlyDown === true) {
         if (crosshair.alpha < 1) {
           crosshair.alpha += 0.02;

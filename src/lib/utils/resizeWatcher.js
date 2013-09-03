@@ -1,5 +1,5 @@
-define(["jquery", "config", "underscore"],
-  function($, config, _) {
+define(["log", "jquery", "config", "underscore"],
+  function(log, $, config, _) {
 
     var running = false,
       initialWidth = config.get("width"),
@@ -27,7 +27,7 @@ define(["jquery", "config", "underscore"],
 
       if (running === false) {
 
-        console.log("resizeWatcher: init");
+        log.debug("resizeWatcher: init");
 
         // set nodes that should be watched and manipulated
         nodeToResize = targetToResize;
@@ -63,7 +63,7 @@ define(["jquery", "config", "underscore"],
 
         nodeToResize.resize(currentWidth, currentHeight);
 
-        console.log("resizeDirectly: " + currentWidth + "x" + currentHeight);
+        log.debug("resizeDirectly: " + currentWidth + "x" + currentHeight);
       }
     }
 
@@ -100,7 +100,7 @@ define(["jquery", "config", "underscore"],
       view.style.marginLeft = offsetLeft + "px";
       view.style.marginTop = offsetTop + "px";
 
-      //console.log("offsetLeft:" + offsetLeft + " offsetTop:" + offsetTop);
+      //log.debug("offsetLeft:" + offsetLeft + " offsetTop:" + offsetTop);
 
     }
 

@@ -1,5 +1,5 @@
-define(["PIXI", "config", "utils/publisher"],
-  function(PIXI, config, publisher) {
+define(["log", "PIXI", "config", "utils/publisher"],
+  function(log, PIXI, config, publisher) {
 
     var events = publisher.make(),
       pixiSpriteLoader = new PIXI.AssetLoader(config.get("spriteSheets")),
@@ -16,6 +16,7 @@ define(["PIXI", "config", "utils/publisher"],
     }
 
     function onSpriteSheetsLoaded() {
+      log.debug("spritesheets loaded");
       spriteSheetsLoaded = true;
       events.trigger("spritesLoaded");
     }

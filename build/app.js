@@ -23,7 +23,7 @@
     window.require = undefined;
   }
 
-  console.log("app.js: initializing requirejs startup script...");
+  console.log("app.js: (browser): initializing requirejs startup script...");
   // finally append requirejs script to document and start deps pipeline
   var script = document.createElement("script");
   script.type = "text/javascript";

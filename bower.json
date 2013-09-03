@@ -7,6 +7,7 @@
     "keymaster": "https://github.com/madrobby/keymaster.git",
     "jquery": "~2.0.3",
     "howler": "~1.1.11",
-    "webfontloader": "~1.4.12"
+    "webfontloader": "~1.4.12",
+    "loglevel": "~0.3.1"
   }
 }

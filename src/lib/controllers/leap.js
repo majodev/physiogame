@@ -1,5 +1,5 @@
-define(["Leap", "config", "utils/publisher"],
-  function(Leap, config, publisher) {
+define(["log", "Leap", "config", "utils/publisher"],
+  function(log, Leap, config, publisher) {
 
     // private 
     var controller = new Leap.Controller(),
@@ -60,7 +60,7 @@ define(["Leap", "config", "utils/publisher"],
     }, 2000);
 
     function init() {
-      console.log("leapController: init");
+      log.debug("leapController: init");
       controller.connect();
 
       events.trigger("init");

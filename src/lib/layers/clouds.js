@@ -1,7 +1,7 @@
-define(["controllers/display", "display/textures", "display/factory",
+define(["log", "controllers/display", "display/textures", "display/factory",
     "PIXI", "underscore", "config"
   ],
-  function(display, textures, factory, PIXI, _, config) {
+  function(log, display, textures, factory, PIXI, _, config) {
 
     var layer = factory.makeLayer(),
       clouds = [],
@@ -37,7 +37,7 @@ define(["controllers/display", "display/textures", "display/factory",
 
           layer.addChild(cloud);
         }
-        console.log("cloud activate");
+        log.debug("cloud activate");
       }
 
       if (running === false) {

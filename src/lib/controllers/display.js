@@ -1,5 +1,5 @@
-define(["PIXI", "config", "utils/resizeWatcher", "utils/publisher", "display/textures"],
-  function(PIXI, config, resizeWatcher, publisher, textures) {
+define(["log", "PIXI", "config", "utils/resizeWatcher", "utils/publisher", "display/textures"],
+  function(log, PIXI, config, resizeWatcher, publisher, textures) {
 
     // private
     var stage = new PIXI.Stage(config.get("background"),
@@ -11,7 +11,7 @@ define(["PIXI", "config", "utils/resizeWatcher", "utils/publisher", "display/tex
       events = publisher.make();
 
     function init() {
-      console.log("displayController: init");
+      log.debug("display: init");
 
       textures.init();
 
