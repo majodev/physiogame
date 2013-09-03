@@ -21,8 +21,12 @@ define(["Backbone"],
       }, {
         name: "hitted",
         volume: 0.005
+      }, {
+        name: "bg",
+        volume: 0.2,
+        loop: true
       }],
-      soundExtensions: [".ogg", ".mp3", ".wav"],
+      soundExtensions: [".ogg", ".mp3"],
       fonts: {
         google: {
           families: ['Arvo:400,700,400italic,700italic:latin']

@@ -60,9 +60,23 @@ define(["log", "PIXI", "models/score", "display/factory", "config", "controllers
 
     function activate() {
 
+      score.resetScore();
+
       log.debug("score: activate");
 
+      textsCreated = false;
+
       createTextButtons();
+
+      countingText.visible = true;
+      timerText.visible = true;
+      introText.visible = true;
+      winningText.visible = false;
+      winningAdded = false;
+      scoreTimerCount = 0;
+      scoreTimerRunning = false;
+      introTimerCount = 0;
+      introTimerRunning = true;
 
       countingText.position.x = config.get("width") - 15;
       countingText.position.y = 0;
@@ -83,6 +97,7 @@ define(["log", "PIXI", "models/score", "display/factory", "config", "controllers
       layer.addChild(introText);
 
       display.events.on("renderFrame", onRenderDisableIntroAnimation);
+
     }
 
     function onRenderDisableIntroAnimation() {
@@ -113,6 +128,8 @@ define(["log", "PIXI", "models/score", "display/factory", "config", "controllers
 
       scoreTimerRunning = true;
       countingText.setText(model.get("aliensKilled") + " of " + config.get("aliensToSpawn"));
+
+      log.warn("scoreChange");
 
       if (winningAdded === false && config.get("aliensToSpawn") <= model.get("aliensKilled")) {
         // win, display the text
@@ -146,10 +163,11 @@ define(["log", "PIXI", "models/score", "display/factory", "config", "controllers
           tempRankText = "A+, WAT WAT WAT!\n -- Batman!";
         }
 
-        winningText.setText(tempWinText + tempRankText);
+        winningText.setText(tempWinText + tempRankText + "\n\nPress ENTER to go back!");
 
         countingText.visible = false;
         timerText.visible = false;
+        winningText.visible = true;
       }
     }
 
@@ -171,6 +189,13 @@ define(["log", "PIXI", "models/score", "display/factory", "config", "controllers
 
     function deactivate() {
       display.events.off("renderFrame", onRenderDisableIntroAnimation);
+
+      layer.removeChild(countingText);
+      layer.removeChild(timerText);
+      layer.removeChild(introText);
+      if(winningAdded) {
+        layer.removeChild(winningText);
+      }
     }
 
 

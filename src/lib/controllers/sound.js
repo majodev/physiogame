@@ -8,6 +8,9 @@ define(["log", "loaders/sounds"],
       log.debug("soundController: init");
       explosion = sounds.getSound("explosion");
       hitted = sounds.getSound("hitted");
+      bg = sounds.getSound("bg");
+
+      background();
     }
 
     function explode() {
@@ -18,10 +21,16 @@ define(["log", "loaders/sounds"],
       hitted.play();
     }
 
+    function background() {
+      bg.loop = true;
+      bg.play();
+    }
+
     return {
       init: init,
       explode: explode,
-      hit: hit
+      hit: hit,
+      background: background
     };
   }
 );
