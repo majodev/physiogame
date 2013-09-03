@@ -14,6 +14,8 @@ canvas { /* To remove the scrollbars */
   /*vertical-align:center; */
 }
 
-.preloaderProgress {
-  color: white;
+#preloaderSpinner {
+  width: 100%;
+  height: 100%;
+  /*vertical-align:center;*/
 }

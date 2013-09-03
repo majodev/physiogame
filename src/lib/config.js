@@ -33,6 +33,8 @@ define(["Backbone"],
           families: ['Arvo:400,700,400italic,700italic:latin']
         }
       },
+      spinnerTargetID: "preloaderSpinner",
+      spinnerClassName: "spinner",
       aliensToSpawn: 100,
       logLevel: 0, // 0 trace, 1 debug, 2 info, 3 warn, 4 error, 5 silent
     });

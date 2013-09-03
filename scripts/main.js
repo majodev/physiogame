@@ -10,9 +10,16 @@ require.config({
     "key": "../vendor/keymaster/keymaster",
     "jquery": "../vendor/jquery/jquery", // watch out: registers jquery and $ itself (prevented!)
     "Howler": "../vendor/howler/howler", // watch out: registers itself as Howler!
-    "WebFont": "../vendor/webfontloader/target/webfont"
+    "WebFont": "../vendor/webfontloader/target/webfont",
+    "Spinner": "../vendor/spinjs/dist/spin"
   },
   shim: {
+    "Spinner": {
+      exports: "Spinner",
+      init: function() {
+        console.log("init spinner");
+      }
+    },
     "Backbone": {
       deps: ["underscore", "jquery"],
       exports: "Backbone",
