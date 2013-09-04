@@ -1,5 +1,5 @@
-define(["log", "PIXI", "models/score", "display/factory", "config", "base/displayManager"],
-  function(log, PIXI, score, factory, config, displayManager) {
+define(["log", "PIXI", "entities/scoreEntity", "display/factory", "config", "base/displayManager"],
+  function(log, PIXI, scoreEntity, factory, config, displayManager) {
 
     var layer = factory.makeLayer(),
       countingText,
@@ -14,7 +14,7 @@ define(["log", "PIXI", "models/score", "display/factory", "config", "base/displa
       introTimerRunning = true;
 
     config.on("change", configChanged);
-    score.on("change", scoreChanged);
+    scoreEntity.on("change", scoreChanged);
 
 
     function createTextButtons() {
@@ -60,7 +60,7 @@ define(["log", "PIXI", "models/score", "display/factory", "config", "base/displa
 
     function activate() {
 
-      score.resetScore();
+      scoreEntity.resetScore();
 
       log.debug("score: activate");
 
@@ -144,7 +144,7 @@ define(["log", "PIXI", "models/score", "display/factory", "config", "base/displa
         scoreTimerRunning = false;
 
         tempWinText = "WIN!\nYou have killed " +
-          score.get("aliensKilled") + " aliens in " + scoreTimerCount / 10 + " seconds!\n" +
+          scoreEntity.get("aliensKilled") + " aliens in " + scoreTimerCount / 10 + " seconds!\n" +
           "CONTRATULATIONS!\n\nRANK: ";
 
         if (scoreTimerCount >= 2000) {

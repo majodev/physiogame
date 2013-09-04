@@ -1,8 +1,8 @@
 define(["log", "utils/publisher", "base/displayManager", "underscore",
-  "factories/scenes"
+  "factories/sceneFactory"
   ],
   function(log, publisher, displayManager, _,
-    scenes) {
+    sceneFactory) {
 
     var events = publisher.make(),
       currentScene = {
@@ -33,7 +33,7 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
 
     // syntactic sugar for exchangeScene public api
     function pushScene(id) {
-      exchangeScene(id, scenes.makeScene(id));
+      exchangeScene(id, sceneFactory.makeScene(id));
     }
 
     function getCurrentSceneID() {

@@ -1,9 +1,9 @@
 define(["display/textures", "display/factory", "config", "base/displayManager",
     "base/leapManager", "utils/hittest", "underscore", "layers/crosshair", "PIXI",
-    "models/score", "base/soundManager"
+    "entities/scoreEntity", "base/soundManager"
   ],
   function(textures, factory, config, displayManager,
-    leapManager, hittest, _, crosshair, PIXI, score, soundManager) {
+    leapManager, hittest, _, crosshair, PIXI, scoreEntity, soundManager) {
 
     var width = config.get("width"),
       height = config.get("height"),
@@ -203,7 +203,7 @@ define(["display/textures", "display/factory", "config", "base/displayManager",
 
             layer.addChild(explosion);
 
-            score.raiseScore();
+            scoreEntity.raiseScore();
           }
         }
 
