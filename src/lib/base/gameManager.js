@@ -1,5 +1,5 @@
-define(["log", "controllers/displayManager", "controllers/leapManager", "controllers/sceneManager", "key",
-  "controllers/soundManager"
+define(["log", "base/displayManager", "base/leapManager", "base/sceneManager", "key",
+  "base/soundManager"
   ],
   function(log, displayManager, leapManager, sceneManager, key,
     soundManager) {

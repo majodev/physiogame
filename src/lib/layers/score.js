@@ -1,4 +1,4 @@
-define(["log", "PIXI", "models/score", "display/factory", "config", "controllers/displayManager"],
+define(["log", "PIXI", "models/score", "display/factory", "config", "base/displayManager"],
   function(log, PIXI, score, factory, config, displayManager) {
 
     var layer = factory.makeLayer(),

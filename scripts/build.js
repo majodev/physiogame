@@ -20,7 +20,7 @@ var config = {
     }
   },
   preserveLicenseComments: false,
-  include: ["requireLib", "controllers/gameManager"], // heads up: game is loaded via "load" dynamically, hence include!
+  include: ["requireLib", "base/gameManager"], // heads up: game is loaded via "load" dynamically, hence include!
   logLevel: 0,
   waitSeconds: 7,
   name: "physioshooter", // Name of script to start building from

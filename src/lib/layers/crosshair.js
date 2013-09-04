@@ -1,4 +1,4 @@
-define(["controllers/displayManager", "controllers/leapManager", "display/factory",
+define(["base/displayManager", "base/leapManager", "display/factory",
   "PIXI", "utils/publisher"],
   function(displayManager, leapManager, factory, PIXI, publisher) {
 

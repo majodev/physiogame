@@ -1,4 +1,4 @@
-define(["log", "utils/publisher", "controllers/displayManager", "underscore",
+define(["log", "utils/publisher", "base/displayManager", "underscore",
   "factories/scenes"
   ],
   function(log, publisher, displayManager, _,

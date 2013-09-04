@@ -1,6 +1,6 @@
-define(["display/textures", "display/factory", "config", "controllers/displayManager",
-    "controllers/leapManager", "utils/hittest", "underscore", "layers/crosshair", "PIXI",
-    "models/score", "controllers/soundManager"
+define(["display/textures", "display/factory", "config", "base/displayManager",
+    "base/leapManager", "utils/hittest", "underscore", "layers/crosshair", "PIXI",
+    "models/score", "base/soundManager"
   ],
   function(textures, factory, config, displayManager,
     leapManager, hittest, _, crosshair, PIXI, score, soundManager) {

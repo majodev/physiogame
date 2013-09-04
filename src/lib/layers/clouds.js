@@ -1,4 +1,4 @@
-define(["log", "controllers/displayManager", "display/textures", "display/factory",
+define(["log", "base/displayManager", "display/textures", "display/factory",
     "PIXI", "underscore", "config"
   ],
   function(log, displayManager, textures, factory, PIXI, _, config) {
