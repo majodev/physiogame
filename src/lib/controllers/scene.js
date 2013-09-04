@@ -1,51 +1,48 @@
 define(["log", "utils/publisher", "controllers/display", "underscore",
-  "scenes/shooter", "scenes/intro"
+  "factories/scenes"
   ],
   function(log, publisher, display, _,
-    shooter, intro) {
+    scenes) {
 
     var events = publisher.make(),
-      scenes = {
-        intro: intro,
-        shooter: shooter
-      },
-      currentScene;
+      currentScene = {
+        id: undefined,
+        object: undefined
+      };
 
-    function exchangeScene(scene) {
+    function exchangeScene(newID, newScene) {
 
       // disable previous Scene
-      if (typeof currentScene !== 'undefined') {
-        currentScene.deactivate();
-        display.stage.removeChild(currentScene.getScene());
+      if (typeof currentScene.object !== 'undefined') {
+        currentScene.object.deactivate();
+        display.stage.removeChild(currentScene.object.getScene());
       }
 
       // reset current Scene
-      currentScene = scene;
-      scene.activate();
-      display.stage.addChild(currentScene.getScene());
+      currentScene = {
+        id: newID,
+        object: newScene
+      };
+
+      newScene.activate();
+      display.stage.addChild(currentScene.object.getScene());
 
       // notify
-      events.trigger("showScene", getCurrentSceneIdentifier());
+      events.trigger("pushedScene", getCurrentSceneID());
     }
 
-    function showScene(name) {
-      if (_.has(scenes, name) === false) {
-        throw new Error("UNKNOWN SCENE - scenes have no property (" + name + ")!");
-      }
-      if (scenes[name] === currentScene) {
-        throw new Error("SAME SCENE - showScene not possible, scene with name (" + name + ") is already shown!");
-      }
-        
-      // else found and new one, exchange current scene with new one.
-      exchangeScene(scenes[name]);
+    // syntactic sugar for exchangeScene public api
+    function pushScene(id) {
+      exchangeScene(id, scenes.makeScene(id));
     }
 
-    function getCurrentSceneIdentifier() {
-      var found = _.findKey(scenes, function (scene) {
-        return scene === currentScene;
-      });
-      return found;
+    function getCurrentSceneID() {
+      return currentScene.id;
     }
+
+     function getCurrentSceneObject() {
+      return currentScene.object;
+     }
 
     function init() {
       log.debug("sceneController: init");
@@ -54,9 +51,10 @@ define(["log", "utils/publisher", "controllers/display", "underscore",
 
     return {
       init: init,
-      showScene: showScene,
+      pushScene: pushScene,
       events: events,
-      getCurrentSceneIdentifier: getCurrentSceneIdentifier
+      getCurrentSceneID: getCurrentSceneID,
+      getCurrentSceneObject: getCurrentSceneObject
     };
 
   }

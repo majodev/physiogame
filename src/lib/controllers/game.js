@@ -15,8 +15,8 @@ define(["log", "controllers/display", "controllers/leap", "controllers/scene", "
       scene.init();
       leap.init();
 
-      scene.events.on("showScene", onSceneChanged);
-      scene.showScene("intro");
+      scene.events.on("pushedScene", onSceneChanged);
+      scene.pushScene("startscreen");
     }
 
     function onSceneChanged(newSceneName) {
@@ -48,10 +48,10 @@ define(["log", "controllers/display", "controllers/leap", "controllers/scene", "
 
     function toggleScene() {
 
-      if(scene.getCurrentSceneIdentifier() === "shooter") {
-        scene.showScene("intro");
+      if(scene.getCurrentSceneID() === "shooting") {
+        scene.pushScene("startscreen");
       } else {
-        scene.showScene("shooter");
+        scene.pushScene("shooting");
       }
     }
 
