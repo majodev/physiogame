@@ -1,11 +1,11 @@
 define(["log", "utils/publisher", "loaders/indicator",
-  "loaders/fonts", "loaders/sounds", "loaders/sprites"],
+  "loaders/fontLoader", "loaders/soundLoader", "loaders/spriteLoader"],
   function(log, publisher, indicator,
-    fonts, sounds, sprites) {
+    fontLoader, soundLoader, spriteLoader) {
 
-    var spritesLoaded = false,
-      fontsLoaded = false,
-      soundsLoaded = false,
+    var spritesloaded = false,
+      fontsloaded = false,
+      soundsloaded = false,
       events = publisher.make();
 
     function init() {
@@ -13,43 +13,43 @@ define(["log", "utils/publisher", "loaders/indicator",
 
       indicator.enable();
 
-      sprites.events.on("allSpritesLoaded", onSpritesLoaded);
-      fonts.events.on("allFontsLoaded", onFontsLoaded);
-      sounds.events.on("allSoundsLoaded", onSoundsLoaded);
+      spriteLoader.events.on("allSpritesLoaded", onSpritesLoaded);
+      fontLoader.events.on("allFontsLoaded", onFontsLoaded);
+      soundLoader.events.on("allSoundsLoaded", onSoundsLoaded);
 
-      sprites.init();
-      fonts.init();
-      sounds.init();
+      spriteLoader.init();
+      fontLoader.init();
+      soundLoader.init();
     }
 
     function onSpritesLoaded() {
       log.debug("preloader: preloadedSprites");
-      spritesLoaded = true;
+      spritesloaded = true;
       events.trigger("preloadedSprites");
       checkAllLoaded();
     }
 
     function onSoundsLoaded() {
       log.debug("preloader: preloadedSounds");
-      soundsLoaded = true;
+      soundsloaded = true;
       events.trigger("preloadedSounds");
       checkAllLoaded();
     }
 
     function onFontsLoaded() {
       log.debug("preloader: preloadedFonts");
-      fontsLoaded = true;
+      fontsloaded = true;
       events.trigger("preloadedFonts");
       checkAllLoaded();
     }
 
     function checkAllLoaded() {
-      if (spritesLoaded && fontsLoaded && soundsLoaded) {
+      if (spritesloaded && fontsloaded && soundsloaded) {
         log.debug("preloader: preloadedAll");
 
-        sprites.events.off("allSpritesLoaded", onSpritesLoaded);
-        fonts.events.off("allFontsLoaded", onFontsLoaded);
-        sounds.events.off("allSoundsLoaded", onSoundsLoaded);
+        spriteLoader.events.off("allSpritesLoaded", onSpritesLoaded);
+        fontLoader.events.off("allFontsLoaded", onFontsLoaded);
+        soundLoader.events.off("allSoundsLoaded", onSoundsLoaded);
 
         indicator.disable();
 

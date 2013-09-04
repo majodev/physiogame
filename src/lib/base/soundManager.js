@@ -1,14 +1,14 @@
-define(["log", "loaders/sounds"],
-  function(log, sounds) {
+define(["log", "loaders/soundLoader"],
+  function(log, soundLoader) {
 
     var explosion,
       hitted;
 
     function init() {
       log.debug("soundController: init");
-      explosion = sounds.getSound("explosion");
-      hitted = sounds.getSound("hitted");
-      bg = sounds.getSound("bg");
+      explosion = soundLoader.getSound("explosion");
+      hitted = soundLoader.getSound("hitted");
+      bg = soundLoader.getSound("bg");
 
       background();
     }
