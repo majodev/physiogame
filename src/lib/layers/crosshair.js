@@ -1,6 +1,6 @@
-define(["controllers/display", "controllers/leap", "display/factory",
+define(["controllers/displayManager", "controllers/leapManager", "display/factory",
   "PIXI", "utils/publisher"],
-  function(display, leap, factory, PIXI, publisher) {
+  function(displayManager, leapManager, factory, PIXI, publisher) {
 
     var events = publisher.make(),
       running = false,
@@ -14,9 +14,9 @@ define(["controllers/display", "controllers/leap", "display/factory",
 
         crosshair.scale.x = crosshair.scale.y = 0.5;
 
-        display.events.on("renderFrame", onRenderRotate);
-        display.events.on("renderFrame", onRenderAlpha);
-        leap.events.on("handFrameNormalized", onHandFrame);
+        displayManager.events.on("renderFrame", onRenderRotate);
+        displayManager.events.on("renderFrame", onRenderAlpha);
+        leapManager.events.on("handFrameNormalized", onHandFrame);
 
         crosshair.interactive = true;
         // this button mode will mean the hand cursor appears when you rollover the bunny with your mouse
@@ -30,9 +30,9 @@ define(["controllers/display", "controllers/leap", "display/factory",
       if (running) {
         layer.removeChild(crosshair);
 
-        display.events.off("renderFrame", onRenderRotate);
-        display.events.off("renderFrame", onRenderAlpha);
-        leap.events.off("handFrameNormalized", onHandFrame);
+        displayManager.events.off("renderFrame", onRenderRotate);
+        displayManager.events.off("renderFrame", onRenderAlpha);
+        leapManager.events.off("handFrameNormalized", onHandFrame);
 
         crosshair.interactive = false;
         // this button mode will mean the hand cursor appears when you rollover the bunny with your mouse
@@ -71,7 +71,7 @@ define(["controllers/display", "controllers/leap", "display/factory",
     }
 
     function onRenderAlpha() {
-      if (leap.getHandsAvailable() === true || mouseCurrentlyDown === true) {
+      if (leapManager.getHandsAvailable() === true || mouseCurrentlyDown === true) {
         if (crosshair.alpha < 1) {
           crosshair.alpha += 0.02;
         }

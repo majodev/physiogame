@@ -1,5 +1,5 @@
-define(["log", "PIXI", "models/score", "display/factory", "config", "controllers/display"],
-  function(log, PIXI, score, factory, config, display) {
+define(["log", "PIXI", "models/score", "display/factory", "config", "controllers/displayManager"],
+  function(log, PIXI, score, factory, config, displayManager) {
 
     var layer = factory.makeLayer(),
       countingText,
@@ -96,7 +96,7 @@ define(["log", "PIXI", "models/score", "display/factory", "config", "controllers
       layer.addChild(timerText);
       layer.addChild(introText);
 
-      display.events.on("renderFrame", onRenderDisableIntroAnimation);
+      displayManager.events.on("renderFrame", onRenderDisableIntroAnimation);
 
     }
 
@@ -132,7 +132,7 @@ define(["log", "PIXI", "models/score", "display/factory", "config", "controllers
       log.warn("scoreChange");
 
       if (winningAdded === false && config.get("aliensToSpawn") <= model.get("aliensKilled")) {
-        // win, display the text
+        // win, displayManager the text
 
         winningText.position.x = config.get("width") / 2;
         winningText.position.y = config.get("height") / 2;
@@ -188,12 +188,12 @@ define(["log", "PIXI", "models/score", "display/factory", "config", "controllers
     }, 100);
 
     function deactivate() {
-      display.events.off("renderFrame", onRenderDisableIntroAnimation);
+      displayManager.events.off("renderFrame", onRenderDisableIntroAnimation);
 
       layer.removeChild(countingText);
       layer.removeChild(timerText);
       layer.removeChild(introText);
-      if(winningAdded) {
+      if (winningAdded) {
         layer.removeChild(winningText);
       }
     }

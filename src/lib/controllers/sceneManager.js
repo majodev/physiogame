@@ -1,7 +1,7 @@
-define(["log", "utils/publisher", "controllers/display", "underscore",
+define(["log", "utils/publisher", "controllers/displayManager", "underscore",
   "factories/scenes"
   ],
-  function(log, publisher, display, _,
+  function(log, publisher, displayManager, _,
     scenes) {
 
     var events = publisher.make(),
@@ -15,7 +15,7 @@ define(["log", "utils/publisher", "controllers/display", "underscore",
       // disable previous Scene
       if (typeof currentScene.object !== 'undefined') {
         currentScene.object.deactivate();
-        display.stage.removeChild(currentScene.object.getScene());
+        displayManager.stage.removeChild(currentScene.object.getScene());
       }
 
       // reset current Scene
@@ -25,7 +25,7 @@ define(["log", "utils/publisher", "controllers/display", "underscore",
       };
 
       newScene.activate();
-      display.stage.addChild(currentScene.object.getScene());
+      displayManager.stage.addChild(currentScene.object.getScene());
 
       // notify
       events.trigger("pushedScene", getCurrentSceneID());
