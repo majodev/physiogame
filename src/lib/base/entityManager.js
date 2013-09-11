@@ -1,14 +1,15 @@
 define(["base/systemManager"],
   function(systemManager) {
 
-    var entities = [];
+    var entities;
 
     function init() {
-
+      entities = [];
+      systemManager.init();
     }
 
     function kill() {
-      systemManager.remvoe
+      systemManager.kill();
       entities = [];
     }
 
@@ -27,6 +28,14 @@ define(["base/systemManager"],
     function addEntity(entity) {
       entities.push(entity);
       systemManager.attachEntityToSystems(entity);
+    }
+
+    function removeEntity(entity) {
+      var i = 0,
+        len = array.length;
+      for (i; i < len; i += 1) {
+        
+      }
     }
 
     return {

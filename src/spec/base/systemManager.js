@@ -92,6 +92,25 @@ define(["base/systemManager"],
 
       });
 
+      it("can deattach entity from specific system", function() {
+
+        systemManager.init();
+
+        var entity1 = {systems: ["moveToTarget"]};
+        var entity2 = {systems: ["moveToTarget", "randomPositionOnTargetReached"]};
+
+        systemManager.attachEntitiesToTheirSystems([entity1, entity2]);
+
+        systemManager.deattachEntityFromSystemID(entity1, "moveToTarget");
+        systemManager.deattachEntityFromSystemID(entity2, "randomPositionOnTargetReached");
+
+        systemManager.resolveSystem("moveToTarget").entities.length.should.equals(1);
+        systemManager.resolveSystem("randomPositionOnTargetReached").entities.length.should.equals(0);
+
+        systemManager.kill();
+
+      });
+
       it("updates entities through systems", function() {
         var entity1 = {
           c: {
