@@ -27,16 +27,14 @@ define(["underscore", "systems/physic/moveToTarget", "systems/physic/randomPosit
     }
 
     function kill() {
-      var i = 0;
-      for (i; i < systemsLength; i += 1) {
-        systems[i].removeAllEntities();
-      }
+
+      deattachAllEntitiesFromAllSystems();
 
       systems = [];
       systemsLength = 0;
     }
 
-    function attachEntityToSystems(entity) {
+    function attachEntityToItsSystems(entity) {
       var i = 0,
         len;
 
@@ -51,25 +49,57 @@ define(["underscore", "systems/physic/moveToTarget", "systems/physic/randomPosit
       }
     }
 
-    function attachEntitiesToSystems(entities) {
+    function attachEntitiesToTheirSystems(entities) {
       var i = 0,
         len = entities.length;
       for (i; i < len; i += 1) {
-        attachEntityToSystems(entities[i]);
+        attachEntityToItsSystems(entities[i]);
       }
     }
 
-    function removeEntityFromSystems(entity) {
+    function attachEntityToNewSystemID(entity, systemid) {
+      resolveSystem(systemid).addEntity(entity);
+    }
+
+    function deattachEntityFromSystemID(entity, systemid) {
+      resolveSystem(systemid).removeEntity(entity);
+    }
+
+    function deattachEntityFromItsSystems(entity) {
       var i = 0;
       for (i; i < systemsLength; i += 1) {
         systems[i].removeEntity(entity);
       }
     }
 
-    function resolveSystem(id) {
+    function deattachEntitiesFromSystems(entities) {
+      var i = 0,
+        len = entities.length;
+      for (i; i < len; i += 1) {
+        deattachEntityFromItsSystems(entities[i]);
+      }
+    }
+
+    function deattachAllEntitiesFromSystemID(systemid) {
+      resolveSystem(systemid).removeAllEntities();
+    }
+
+    function deattachAllEntitiesFromAllSystems() {
       var i = 0;
       for (i; i < systemsLength; i += 1) {
-        if (systems[i].id === id) {
+        systems[i].removeAllEntities();
+      }
+    }
+
+    function resolveSystem(systemid) {
+      var i = 0;
+
+      if(!_.isString(systemid)) {
+        throw new TypeError("resolveSystem: systemid must be of type string");
+      }
+
+      for (i; i < systemsLength; i += 1) {
+        if (systems[i].id === systemid) {
           return systems[i];
         }
       }
@@ -81,9 +111,14 @@ define(["underscore", "systems/physic/moveToTarget", "systems/physic/randomPosit
       init: init,
       kill: kill,
       update: update,
-      attachEntityToSystems: attachEntityToSystems,
-      attachEntitiesToSystems: attachEntitiesToSystems,
-      removeEntityFromSystems: removeEntityFromSystems,
+      attachEntityToItsSystems: attachEntityToItsSystems,
+      attachEntitiesToTheirSystems: attachEntitiesToTheirSystems,
+      attachEntityToNewSystemID: attachEntityToNewSystemID,
+      deattachEntityFromSystemID: deattachEntityFromSystemID,
+      deattachEntityFromItsSystems: deattachEntityFromItsSystems,
+      deattachEntitiesFromSystems: deattachEntitiesFromSystems,
+      deattachAllEntitiesFromSystemID: deattachAllEntitiesFromSystemID,
+      deattachAllEntitiesFromAllSystems: deattachAllEntitiesFromAllSystems,
       resolveSystem: resolveSystem
     };
 

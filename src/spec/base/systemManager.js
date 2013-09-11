@@ -2,19 +2,91 @@ define(["base/systemManager"],
   function(systemManager) {
     describe("systemManager", function() {
 
-      it("attaches entities to the specified systems", function() {
+      it("resolves system based on id", function() {
 
         systemManager.init();
 
-        systemManager.attachEntityToSystems({
+        systemManager.resolveSystem("moveToTarget").id.should.equal("moveToTarget");
+        systemManager.resolveSystem("randomPositionOnTargetReached").id.should.equal("randomPositionOnTargetReached");
+
+        systemManager.kill();
+
+      });
+
+      it("throws error on undefined system resolving", function() {
+
+        systemManager.init();
+
+        expect(function() {
+          systemManager.resolveSystem("undefinedSystem");
+        }).to.throw(Error);
+
+        expect(function() {
+          systemManager.resolveSystem();
+        }).to.throw(TypeError);
+
+        systemManager.kill();
+
+      });
+
+      it("can attach entities to predefined systems", function() {
+
+        systemManager.init();
+
+        systemManager.attachEntityToItsSystems({
           systems: ["moveToTarget", "randomPositionOnTargetReached"]
         });
-        systemManager.attachEntityToSystems({
+        systemManager.attachEntityToItsSystems({
           systems: ["moveToTarget", "randomPositionOnTargetReached"]
         });
 
         systemManager.resolveSystem("moveToTarget").entities.length.should.equal(2);
         systemManager.resolveSystem("randomPositionOnTargetReached").entities.length.should.equal(2);
+
+        systemManager.kill();
+
+      });
+
+      it("can attach entity to a new system", function () {
+        systemManager.init();
+
+        systemManager.attachEntityToNewSystemID({}, "moveToTarget");
+        systemManager.attachEntityToNewSystemID({}, "moveToTarget");
+
+        systemManager.resolveSystem("moveToTarget").entities.length.should.equal(2);
+        systemManager.resolveSystem("randomPositionOnTargetReached").entities.length.should.equal(0);
+
+        systemManager.kill();
+      });
+
+      it("can deattach all entities from a system", function() {
+        systemManager.init();
+
+        var entity1 = {systems: ["moveToTarget"]};
+        var entity2 = {systems: ["moveToTarget", "randomPositionOnTargetReached"]};
+
+        systemManager.attachEntitiesToTheirSystems([entity1, entity2]);
+        systemManager.deattachAllEntitiesFromSystemID("moveToTarget");
+
+        systemManager.resolveSystem("moveToTarget").entities.length.should.equals(0);
+        systemManager.resolveSystem("randomPositionOnTargetReached").entities.length.should.equals(1);
+
+        systemManager.kill();
+      });
+
+      it("can deattach specified entities from all systems", function() {
+
+        systemManager.init();
+
+        var entity1 = {systems: ["moveToTarget"]};
+        var entity2 = {systems: ["moveToTarget", "randomPositionOnTargetReached"]};
+
+        systemManager.attachEntitiesToTheirSystems([entity1, entity2]);
+
+        systemManager.deattachEntitiesFromSystems([entity2]);
+
+        systemManager.resolveSystem("moveToTarget").entities.length.should.equals(1);
+        systemManager.resolveSystem("randomPositionOnTargetReached").entities.length.should.equals(0);
 
         systemManager.kill();
 
@@ -59,7 +131,7 @@ define(["base/systemManager"],
 
         systemManager.init();
 
-        systemManager.attachEntitiesToSystems([entity1, entity2]);
+        systemManager.attachEntitiesToTheirSystems([entity1, entity2]);
         systemManager.update();
 
         // check if right

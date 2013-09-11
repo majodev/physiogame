@@ -3,15 +3,24 @@ define(["base/systemManager"],
 
     var entities = [];
 
-    function getEntityByID () {
+    function init() {
 
     }
 
-    function getEntitiesByGroup () {
+    function kill() {
+      systemManager.remvoe
+      entities = [];
+    }
+
+    function getEntityByID() {
 
     }
 
-    function getEntitiesByTag () {
+    function getEntitiesByGroup() {
+
+    }
+
+    function getEntitiesByTag() {
 
     }
 
