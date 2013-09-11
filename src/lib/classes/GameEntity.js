@@ -3,10 +3,10 @@ define(["underscore"],
     
     function GameEntity (container, components, systems) {
       this.container = container;
-      this.components = {};
+      this.c = {};
       this.systems = [];
 
-      _.defaults(this.components, components);
+      _.defaults(this.c, components);
       _.defaults(this.systems, systems);
     }
 

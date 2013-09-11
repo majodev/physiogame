@@ -85,12 +85,12 @@ define(["systems/GenericSystem"],
 
       it("appends needed components to entity.components[] when entity is added", function() {
         var system = new GenericSystem("testSystem", [{a1: 1}, {a2: 2}]);
-        var testEntity = { components: {} };
+        var testEntity = { c: {} };
 
         system.addEntity(testEntity);
 
-        testEntity.components.a1.should.equal(1);
-        testEntity.components.a2.should.equal(2);
+        testEntity.c.a1.should.equal(1);
+        testEntity.c.a2.should.equal(2);
       });
 
       it("appends systemid to entity.systems[] on add", function() {
@@ -114,6 +114,29 @@ define(["systems/GenericSystem"],
 
         system.removeEntity(testEntity);
         testEntity.systems.length.should.equal(0);
+
+      });
+
+      it("reports its systemType with generic", function() {
+        var system = new GenericSystem("testSystem");
+        system.getSystemType().should.equal("generic");
+
+      });
+
+      it("throws Error on init, update or kill (needs override)", function() {
+        var system = new GenericSystem("testSystem");
+        
+        expect(function() {
+          system.init();
+        }).to.throw(Error);
+
+        expect(function() {
+          system.update();
+        }).to.throw(Error);
+
+        expect(function() {
+          system.kill();
+        }).to.throw(Error);
 
       });
 

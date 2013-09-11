@@ -11,8 +11,8 @@ define(["classes/GameEntity"],
           }
         });
 
-        entity.components.position.x.should.equal(300);
-        entity.components.position.y.should.equal(500);
+        entity.c.position.x.should.equal(300);
+        entity.c.position.y.should.equal(500);
 
       });
 

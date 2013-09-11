@@ -28,14 +28,17 @@ define(["underscore"],
 
       init: function() {
         // NEEDS OVERRIDE: init handling of a given system will go here
+        throw new Error("GenericSystem: init must be overridden! systemid=" + this.id);
       },
 
       update: function() {
         // NEEDS OVERRIDE: update handling of a given system will go here
+        throw new Error("GenericSystem: update must be overridden! systemid=" + this.id);
       },
 
       kill: function() {
         // NEEDS OVERRIDE: kill handling of a given system will go here
+        throw new Error("GenericSystem: kill must be overridden! systemid=" + this.id);
       },
 
       resolveNeeds: function(entity) {
@@ -43,7 +46,7 @@ define(["underscore"],
           len = this.needs.length;
         for (i; i < len; i += 1) {
           // apply all needs for the system to operate to a given entity component
-          _.defaults(entity.components, this.needs[i]);
+          _.defaults(entity.c, this.needs[i]);
         }
       },
 
