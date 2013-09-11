@@ -1,4 +1,4 @@
-define(["lib/classes/GameEntity"],
+define(["classes/GameEntity"],
   function(GameEntity) {
 
     describe("GameEntity", function() {

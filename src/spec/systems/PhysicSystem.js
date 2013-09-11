@@ -1,4 +1,4 @@
-define(["lib/systems/PhysicSystem"],
+define(["systems/PhysicSystem"],
   function(PhysicSystem) {
     describe("PhysicSystem", function() {
 

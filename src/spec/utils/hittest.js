@@ -1,4 +1,4 @@
-define(["lib/utils/hittest"],
+define(["utils/hittest"],
   function(hittest) {
 
     describe("hittest", function() {

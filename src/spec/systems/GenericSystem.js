@@ -1,4 +1,4 @@
-define(["lib/systems/GenericSystem"],
+define(["systems/GenericSystem"],
   function(GenericSystem) {
     describe("GenericSystem", function() {
 

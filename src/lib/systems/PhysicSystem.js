@@ -1,5 +1,5 @@
-define(["systems/GenericSystem"],
-  function(GenericSystem) {
+define(["systems/GenericSystem", "utils/parasiticCombinationInheritance"],
+  function(GenericSystem, parasiticCombinationInheritance) {
 
     function PhysicSystem() {
       GenericSystem.call(this, id);

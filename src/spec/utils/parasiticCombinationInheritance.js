@@ -1,4 +1,4 @@
-define(["lib/utils/parasiticCombinationInheritance"],
+define(["utils/parasiticCombinationInheritance"],
   function(parasiticCombinationInheritance) {
 
     describe("parasiticCombinationInheritance", function() {
