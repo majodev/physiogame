@@ -1,6 +1,6 @@
 define(["display/textures", "display/factory", "config", "base/displayManager",
     "base/leapManager", "utils/hittest", "underscore", "layers/crosshair", "PIXI",
-    "entities/scoreEntity", "base/soundManager", "components/randomMoveTo"
+    "entities/scoreEntity", "base/soundManager", "systems/randomMoveTo"
   ],
   function(textures, factory, config, displayManager,
     leapManager, hittest, _, crosshair, PIXI, scoreEntity, soundManager, randomMoveTo) {

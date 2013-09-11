@@ -1,18 +1,20 @@
 define(["underscore"],
   function(_) {
-    return function hittest(r1, r2) {
 
+    function hittest(r1, r2) {
       // define vars for normalized positions will consider the anchor
       var r1posx = 0,
         r1posy = 0,
         r2posx = 0,
         r2posy = 0,
-        parameterDefaults = {width: 0,
-        height: 0,
-        anchor: {
-          x: 0,
-          y: 0
-        }};
+        parameterDefaults = {
+          width: 0,
+          height: 0,
+          anchor: {
+            x: 0,
+            y: 0
+          }
+        };
 
       // set defaults for parameters
       _.defaults(r1, parameterDefaults);
@@ -33,6 +35,8 @@ define(["underscore"],
       } else {
         return false;
       }
-    };
+    }
+
+    return hittest;
   }
 );

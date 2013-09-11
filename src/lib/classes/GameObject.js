@@ -7,29 +7,7 @@ define(["underscore"],
       this.behaviours = [];
       this.displayObject = displayObject;
 
-      // var child = Object.create(
-      //   , {
-      //   capabilities: [],
-      //   behaviours: []
-      // });
-
-      //GameObject.prototype = displayTarget;
-      
-      //_.extend(this, displayTarget);
-
-      //this.displayTarget = displayTarget;
-      //this.capabilities = [];
-      //this.behaviours = [];
-
-      //console.dir(child);
-
-      //return child;
-
     };
-
-    //GameObject.prototype.behaviours = [];
-    //GameObject.prototype.capabilities = [];
-
 
     GameObject.prototype.needsCapability = function(capability) {
       var i = 0,
