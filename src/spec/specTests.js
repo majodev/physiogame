@@ -1,4 +1,5 @@
 define([
+    "spec/base/systemManager",
     "spec/classes/GameEntity",
     "spec/systems/GenericSystem",
     "spec/systems/PhysicSystem",

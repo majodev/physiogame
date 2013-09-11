@@ -25,6 +25,13 @@ define(["systems/physic/moveToTarget"],
         testEntity.c.speed.x.should.equal(1);
         testEntity.c.speed.y.should.equal(1);
 
+        moveToTarget.removeAllEntities();
+        moveToTarget.entities.length.should.equal(0);
+
+      });
+
+      it("has the id moveToTarget", function() {
+        moveToTarget.id.should.equal("moveToTarget");
       });
 
     });

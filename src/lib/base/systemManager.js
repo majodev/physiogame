@@ -1,20 +1,23 @@
-define(["systems/physicMoveToTarget", "systems/physicRandomPositionOnTargetReached"],
-  function(physicMoveToTarget, physicRandomPositionOnTargetReached) {
+define(["underscore", "systems/physic/moveToTarget", "systems/physic/randomPositionOnTargetReached"],
+  function(_, moveToTarget, randomPositionOnTargetReached) {
 
-    var systems = [physicMoveToTarget, physicRandomPositionOnTargetReached],
-      systemsLength = systems.length;
+    var systems,
+      systemsLength;
 
 
     function init() {
+      
+      systems = [moveToTarget, randomPositionOnTargetReached];
+      systemsLength = systems.length;
 
       // TODO: systemManager must manage the events from the special systems
-      // hook the global up here!
+      // hook the global up here! (if good, is using special flags better?!?)
 
     }
 
     function update() {
 
-      // per Frame update all systems in defined order
+      // per Frame update all systems in the order of the above array
 
       var i = 0;
       for (i; i < systemsLength; i += 1) {
@@ -23,11 +26,36 @@ define(["systems/physicMoveToTarget", "systems/physicRandomPositionOnTargetReach
 
     }
 
+    function kill() {
+      var i = 0;
+      for (i; i < systemsLength; i += 1) {
+        systems[i].removeAllEntities();
+      }
+
+      systems = [];
+      systemsLength = 0;
+    }
+
     function attachEntityToSystems(entity) {
       var i = 0,
-        len = entity.systems.length;
+        len;
+
+      if (_.isUndefined(entity.systems.length)) {
+        entity.systems = [];
+      }
+
+      len = entity.systems.length;
+
       for (i; i < len; i += 1) {
         resolveSystem(entity.systems[i]).addEntity(entity);
+      }
+    }
+
+    function attachEntitiesToSystems(entities) {
+      var i = 0,
+        len = entities.length;
+      for (i; i < len; i += 1) {
+        attachEntityToSystems(entities[i]);
       }
     }
 
@@ -40,7 +68,6 @@ define(["systems/physicMoveToTarget", "systems/physicRandomPositionOnTargetReach
 
     function resolveSystem(id) {
       var i = 0;
-
       for (i; i < systemsLength; i += 1) {
         if (systems[i].id === id) {
           return systems[i];
@@ -51,8 +78,13 @@ define(["systems/physicMoveToTarget", "systems/physicRandomPositionOnTargetReach
     }
 
     return {
+      init: init,
+      kill: kill,
+      update: update,
       attachEntityToSystems: attachEntityToSystems,
-      removeEntityFromSystems: removeEntityFromSystems
+      attachEntitiesToSystems: attachEntitiesToSystems,
+      removeEntityFromSystems: removeEntityFromSystems,
+      resolveSystem: resolveSystem
     };
 
   }

@@ -1,5 +1,9 @@
 // Configure RequireJS
 require.config({
+
+  // TODO: makethis cleaner and use mainConfigFile parameter
+  // it doesn't work as expected :(
+
   baseUrl: "src/lib/",
   paths: {
     "underscore": "../../node_modules/lodash/lodash", // watch out: registers _ itself (noConflict!)

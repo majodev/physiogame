@@ -124,7 +124,11 @@ define(["underscore"],
           }
         }
         return false;
-      }
+      },
+
+      removeAllEntities: function() {
+        this.entities = [];
+      },
 
     };
 

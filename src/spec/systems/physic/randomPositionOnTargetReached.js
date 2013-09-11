@@ -29,6 +29,13 @@ define(["systems/physic/randomPositionOnTargetReached"],
         testEntity.c.target.x.should.not.equal(1);
         testEntity.c.target.y.should.not.equal(1);
 
+        randomPositionOnTargetReached.removeAllEntities();
+        randomPositionOnTargetReached.entities.length.should.equal(0);
+
+      });
+
+      it("has the id randomPositionOnTargetReached", function() {
+        randomPositionOnTargetReached.id.should.equal("randomPositionOnTargetReached");
       });
 
     });
