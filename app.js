@@ -1,6 +1,6 @@
 (function() {
-  // WHAT: acts as generic startup script, placed at the end of the body tag
-  // DOES: checks if node-webkit, sets it up and starts r.js pipeline at the end
+  // WHAT: acts as generic startup script for the application
+  // DOES: checks if node-webkit and sets it up if needed - starts r.js pipeline
   // PREREQUISITES: needs DOM to be ready (hence place at the end of the body!)
   if (window && window.require && console) {
 

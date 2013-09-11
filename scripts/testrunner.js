@@ -1,6 +1,9 @@
 // Configure RequireJS
 require.config({
   baseUrl: "src/",
+  paths: {
+    "underscore": "../node_modules/lodash/lodash", // watch out: registers _ itself (noConflict!)
+  },
   urlArgs: "v=" + (new Date()).getTime()
 });
 
