@@ -1,25 +1,30 @@
 define(["underscore"],
   function(_) {
-    function GenericSystem(id, needs, entities) {
+    function GenericSystem(optionsObject) {
 
       // error handling on construction...
-      if (_.isUndefined(id)) {
+      
+      if (_.isUndefined(optionsObject) || _.isObject(optionsObject) === false) {
+        throw new TypeError("you have to provide a object literal at construction");
+      }
+
+      if (_.isUndefined(optionsObject.id)) {
         throw new Error("id cant be undefined!");
       }
 
-      if (!_.isString(id)) {
+      if (!_.isString(optionsObject.id)) {
         throw new TypeError("id must be of type string!");
       }
 
       // set initial values
-      this.id = id;
+      this.id = optionsObject.id;
       this.needs = [];
       this.entities = [];
       this.systemType = "generic";
 
       // needs and entities optional parameters, apply defaults from parameters
-      _.defaults(this.needs, needs);
-      _.defaults(this.entities, entities);
+      _.defaults(this.needs, optionsObject.needs);
+      _.defaults(this.entities, optionsObject.entities);
     }
 
     GenericSystem.prototype = {

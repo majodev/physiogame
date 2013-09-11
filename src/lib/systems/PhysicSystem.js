@@ -1,8 +1,8 @@
 define(["systems/GenericSystem", "utils/parasiticCombinationInheritance"],
   function(GenericSystem, parasiticCombinationInheritance) {
 
-    function PhysicSystem(id) {
-      GenericSystem.call(this, id);
+    function PhysicSystem(optionsObject) {
+      GenericSystem.call(this, optionsObject);
       
       this.systemType = "physic";
     }

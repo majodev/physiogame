@@ -2,25 +2,42 @@ define(["systems/GenericSystem"],
   function(GenericSystem) {
     describe("GenericSystem", function() {
 
-      it("needs a mandadory id parameter", function() {
-        
+      it("needs a mandadory optionsObject parameter", function() {
+
         expect(function() {
           new GenericSystem();
-        }).to.throw(Error);
+        }).to.
+        throw (Error);
+
+      });
+
+      it("needs a mandadory id to be defined", function() {
+
+        expect(function() {
+          new GenericSystem({
+            id: undefined
+          });
+        }).to.
+        throw (Error);
 
       });
 
       it("needs mandadory id to be a string", function() {
-        
+
         expect(function() {
-          new GenericSystem({});
-        }).to.throw(TypeError);
+          new GenericSystem({
+            id: ["fgasdf"]
+          });
+        }).to.
+        throw (TypeError);
 
       });
 
       it("has optinal needs and entities parameters", function() {
 
-        var system = new GenericSystem("testSystem");
+        var system = new GenericSystem({
+          id: "testSystem"
+        });
         system.id.should.equal("testSystem");
         system.needs.length.should.equal(0);
         system.entities.length.should.equal(0);
@@ -29,7 +46,9 @@ define(["systems/GenericSystem"],
 
       it("can add entities", function() {
 
-        var system = new GenericSystem("testSystem");
+        var system = new GenericSystem({
+          id: "testSystem"
+        });
         var testEntity = {};
 
         system.addEntity(testEntity);
@@ -39,7 +58,9 @@ define(["systems/GenericSystem"],
 
       it("can remove entities", function() {
 
-        var system = new GenericSystem("testSystem");
+        var system = new GenericSystem({
+          id: "testSystem"
+        });
         var testEntity = {};
 
         system.addEntity(testEntity);
@@ -51,7 +72,9 @@ define(["systems/GenericSystem"],
       });
 
       it("avoids entity duplicates", function() {
-        var system = new GenericSystem("testSystem");
+        var system = new GenericSystem({
+          id: "testSystem"
+        });
         var testEntity = {};
 
         system.addEntity(testEntity);
@@ -64,7 +87,9 @@ define(["systems/GenericSystem"],
       });
 
       it("returns false when removing non existant entities", function() {
-        var system = new GenericSystem("testSystem");
+        var system = new GenericSystem({
+          id: "testSystem"
+        });
         var testEntity = {};
 
         system.removeEntity(testEntity).should.equal(false);
@@ -72,7 +97,9 @@ define(["systems/GenericSystem"],
       });
 
       it("returns false when adding existant entities", function() {
-        var system = new GenericSystem("testSystem");
+        var system = new GenericSystem({
+          id: "testSystem"
+        });
         var testEntity = {};
 
         system.addEntity(testEntity).should.equal(true);
@@ -84,8 +111,17 @@ define(["systems/GenericSystem"],
       });
 
       it("appends needed components to entity.components[] when entity is added", function() {
-        var system = new GenericSystem("testSystem", [{a1: 1}, {a2: 2}]);
-        var testEntity = { c: {} };
+        var system = new GenericSystem({
+          id: "testSystem",
+          needs: [{
+            a1: 1
+          }, {
+            a2: 2
+          }]
+        });
+        var testEntity = {
+          c: {}
+        };
 
         system.addEntity(testEntity);
 
@@ -94,7 +130,9 @@ define(["systems/GenericSystem"],
       });
 
       it("appends systemid to entity.systems[] on add", function() {
-        var system = new GenericSystem("testSystem");
+        var system = new GenericSystem({
+          id: "testSystem"
+        });
         var testEntity = {};
 
         system.addEntity(testEntity);
@@ -104,7 +142,9 @@ define(["systems/GenericSystem"],
       });
 
       it("removes systemid from entity.systems[] on remove", function() {
-        var system = new GenericSystem("testSystem");
+        var system = new GenericSystem({
+          id: "testSystem"
+        });
         var testEntity = {};
 
         system.addEntity(testEntity);
@@ -118,25 +158,32 @@ define(["systems/GenericSystem"],
       });
 
       it("reports its systemType with generic", function() {
-        var system = new GenericSystem("testSystem");
+        var system = new GenericSystem({
+          id: "testSystem"
+        });
         system.getSystemType().should.equal("generic");
 
       });
 
       it("throws Error on init, update or kill (needs override)", function() {
-        var system = new GenericSystem("testSystem");
-        
+        var system = new GenericSystem({
+          id: "testSystem"
+        });
+
         expect(function() {
           system.init();
-        }).to.throw(Error);
+        }).to.
+        throw (Error);
 
         expect(function() {
           system.update();
-        }).to.throw(Error);
+        }).to.
+        throw (Error);
 
         expect(function() {
           system.kill();
-        }).to.throw(Error);
+        }).to.
+        throw (Error);
 
       });
 

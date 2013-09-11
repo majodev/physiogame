@@ -1,7 +1,7 @@
 define(["underscore"],
   function(_) {
     
-    function GameEntity (paramObject) {
+    function GameEntity (optionsObject) {
       
       // uid is always here and should not be overridden!
       this.uid = _.uniqueId("ge_");
@@ -14,21 +14,21 @@ define(["underscore"],
       this.group = "";
       this.tags = [];
 
-      // all mandadory fields get filled via paramObject if it exists
-      if(_.isUndefined(paramObject) === false && _.isNull(paramObject) === false) {
-        _.defaults(this.c, paramObject.c);
-        _.defaults(this.display, paramObject.display);
-        _.defaults(this.systems, paramObject.systems);
+      // all mandadory fields get filled via optionsObject if it exists
+      if(_.isUndefined(optionsObject) === false && _.isNull(optionsObject) === false) {
+        _.defaults(this.c, optionsObject.c);
+        _.defaults(this.display, optionsObject.display);
+        _.defaults(this.systems, optionsObject.systems);
 
-        if(_.isString(paramObject.cid)) {
-          this.cid = paramObject.cid;
+        if(_.isString(optionsObject.cid)) {
+          this.cid = optionsObject.cid;
         }
 
-        if(_.isString(paramObject.group)) {
-          this.group = paramObject.group;
+        if(_.isString(optionsObject.group)) {
+          this.group = optionsObject.group;
         }
 
-        _.defaults(this.tags, paramObject.tags);
+        _.defaults(this.tags, optionsObject.tags);
       }
     }
 

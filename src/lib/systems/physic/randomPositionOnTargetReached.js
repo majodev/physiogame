@@ -1,11 +1,13 @@
 define(["systems/PhysicSystem", "config", "components/position2d", "components/target2d"],
   function(PhysicSystem, config, position2d, target2d) {
-    
-    var system = new PhysicSystem("randomPositionOnTargetReached"),
-      width = config.get("width"),
-      height = config.get("height");
 
-    system.needs = [position2d, target2d];
+    var system = new PhysicSystem({
+      id: "randomPositionOnTargetReached",
+      needs: [position2d, target2d]
+    });
+
+    var width = config.get("width"),
+      height = config.get("height");
 
     system.update = function() {
       var i = 0,
@@ -25,5 +27,4 @@ define(["systems/PhysicSystem", "config", "components/position2d", "components/t
     }
 
     return system;
-  }
-);
+  });
