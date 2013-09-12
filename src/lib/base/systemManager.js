@@ -38,7 +38,7 @@ define(["underscore", "systems/physic/moveToTarget", "systems/physic/randomPosit
       var i = 0,
         len;
 
-      if (_.isUndefined(entity.systems.length)) {
+      if (_.isUndefined(entity.systems)) {
         entity.systems = [];
       }
 
