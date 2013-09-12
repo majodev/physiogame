@@ -7,7 +7,7 @@ define(["base/systemManager"],
         systemManager.init();
 
         systemManager.resolveSystem("moveToTarget").id.should.equal("moveToTarget");
-        systemManager.resolveSystem("randomPositionOnTargetReached").id.should.equal("randomPositionOnTargetReached");
+        systemManager.resolveSystem("randomTarget").id.should.equal("randomTarget");
 
         systemManager.kill();
 
@@ -34,14 +34,14 @@ define(["base/systemManager"],
         systemManager.init();
 
         systemManager.attachEntityToItsSystems({
-          systems: ["moveToTarget", "randomPositionOnTargetReached"]
+          systems: ["moveToTarget", "randomTarget"]
         });
         systemManager.attachEntityToItsSystems({
-          systems: ["moveToTarget", "randomPositionOnTargetReached"]
+          systems: ["moveToTarget", "randomTarget"]
         });
 
         systemManager.resolveSystem("moveToTarget").entities.length.should.equal(2);
-        systemManager.resolveSystem("randomPositionOnTargetReached").entities.length.should.equal(2);
+        systemManager.resolveSystem("randomTarget").entities.length.should.equal(2);
 
         systemManager.kill();
 
@@ -54,7 +54,7 @@ define(["base/systemManager"],
         systemManager.attachEntityToNewSystemID({}, "moveToTarget");
 
         systemManager.resolveSystem("moveToTarget").entities.length.should.equal(2);
-        systemManager.resolveSystem("randomPositionOnTargetReached").entities.length.should.equal(0);
+        systemManager.resolveSystem("randomTarget").entities.length.should.equal(0);
 
         systemManager.kill();
       });
@@ -63,13 +63,13 @@ define(["base/systemManager"],
         systemManager.init();
 
         var entity1 = {systems: ["moveToTarget"]};
-        var entity2 = {systems: ["moveToTarget", "randomPositionOnTargetReached"]};
+        var entity2 = {systems: ["moveToTarget", "randomTarget"]};
 
         systemManager.attachEntitiesToTheirSystems([entity1, entity2]);
         systemManager.deattachAllEntitiesFromSystemID("moveToTarget");
 
         systemManager.resolveSystem("moveToTarget").entities.length.should.equals(0);
-        systemManager.resolveSystem("randomPositionOnTargetReached").entities.length.should.equals(1);
+        systemManager.resolveSystem("randomTarget").entities.length.should.equals(1);
 
         systemManager.kill();
       });
@@ -79,14 +79,14 @@ define(["base/systemManager"],
         systemManager.init();
 
         var entity1 = {systems: ["moveToTarget"]};
-        var entity2 = {systems: ["moveToTarget", "randomPositionOnTargetReached"]};
+        var entity2 = {systems: ["moveToTarget", "randomTarget"]};
 
         systemManager.attachEntitiesToTheirSystems([entity1, entity2]);
 
         systemManager.deattachEntitiesFromSystems([entity2]);
 
         systemManager.resolveSystem("moveToTarget").entities.length.should.equals(1);
-        systemManager.resolveSystem("randomPositionOnTargetReached").entities.length.should.equals(0);
+        systemManager.resolveSystem("randomTarget").entities.length.should.equals(0);
 
         systemManager.kill();
 
@@ -97,15 +97,15 @@ define(["base/systemManager"],
         systemManager.init();
 
         var entity1 = {systems: ["moveToTarget"]};
-        var entity2 = {systems: ["moveToTarget", "randomPositionOnTargetReached"]};
+        var entity2 = {systems: ["moveToTarget", "randomTarget"]};
 
         systemManager.attachEntitiesToTheirSystems([entity1, entity2]);
 
         systemManager.deattachEntityFromSystemID(entity1, "moveToTarget");
-        systemManager.deattachEntityFromSystemID(entity2, "randomPositionOnTargetReached");
+        systemManager.deattachEntityFromSystemID(entity2, "randomTarget");
 
         systemManager.resolveSystem("moveToTarget").entities.length.should.equals(1);
-        systemManager.resolveSystem("randomPositionOnTargetReached").entities.length.should.equals(0);
+        systemManager.resolveSystem("randomTarget").entities.length.should.equals(0);
 
         systemManager.kill();
 
@@ -145,7 +145,7 @@ define(["base/systemManager"],
               y: 5
             }
           },
-          systems: ["randomPositionOnTargetReached", "moveToTarget"]
+          systems: ["randomTarget", "moveToTarget"]
         };
 
         systemManager.init();

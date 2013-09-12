@@ -1,14 +1,14 @@
-define(["systems/physic/moveToTarget", "systems/physic/randomPositionOnTargetReached",
-    "systems/display/applyPixiPositions"
+define(["systems/physic/moveToTarget", "systems/physic/randomTarget",
+    "systems/display/pixiDisplay"
   ],
-  function(moveToTarget, randomPositionOnTargetReached, applyPixiPositions) {
+  function(moveToTarget, randomTarget, pixiDisplay) {
 
     // LOOK OUT MUST BE IN ORDER OF EXECTION!
     // all systems that are available have to be defined here.
     var systems = [
       moveToTarget,
-      randomPositionOnTargetReached,
-      applyPixiPositions
+      randomTarget,
+      pixiDisplay
     ];
 
     function getSystem(id) {

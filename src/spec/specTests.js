@@ -6,7 +6,7 @@ define([
     "spec/systems/PhysicSystem",
     "spec/systems/DisplaySystem",
     "spec/systems/physic/moveToTarget",
-    "spec/systems/physic/randomPositionOnTargetReached",
+    "spec/systems/physic/randomTarget",
     "spec/utils/parasiticCombinationInheritance",
     "spec/utils/hittest"
   ],

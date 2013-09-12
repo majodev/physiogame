@@ -45,12 +45,10 @@ define(["PIXI", "display/factory", "config", "base/entityManager", "classes/Game
             y: 1
           }
         },
-        systems: ["moveToTarget", "randomPositionOnTargetReached", "applyPixiPositions"]
+        systems: ["moveToTarget", "randomTarget", "pixiDisplay"]
       }));
 
       layer.addChild(entityManager.getEntityByCid("testEntity").display);
-
-      //console.dir(entityManager.getEntityByCid("testEntity"));
 
       config.on("change", configChanged);
     }
