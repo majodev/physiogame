@@ -1,7 +1,7 @@
 define(["systems/physic/randomPositionOnTargetReached"],
   function(randomPositionOnTargetReached) {
 
-    describe("randomPositionOnTargetReached", function() {
+    describe("systems/physic/randomPositionOnTargetReached", function() {
       
       it("resets position if target is reached", function() {
         var testEntity = {c: {

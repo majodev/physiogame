@@ -1,5 +1,5 @@
-define(["underscore", "systems/physic/moveToTarget", "systems/physic/randomPositionOnTargetReached"],
-  function(_, moveToTarget, randomPositionOnTargetReached) {
+define(["underscore", "systems/systemMap"],
+  function(_, systemMap) {
 
     var systems,
       systemsLength;
@@ -7,7 +7,7 @@ define(["underscore", "systems/physic/moveToTarget", "systems/physic/randomPosit
 
     function init() {
       
-      systems = [moveToTarget, randomPositionOnTargetReached];
+      systems = systemMap.getAllSystems();
       systemsLength = systems.length;
 
       // TODO: systemManager must manage the events from the special systems
@@ -18,7 +18,7 @@ define(["underscore", "systems/physic/moveToTarget", "systems/physic/randomPosit
     function update() {
 
       // per Frame update all systems in the order of the above array
-
+      
       var i = 0;
       for (i; i < systemsLength; i += 1) {
         systems[i].update();

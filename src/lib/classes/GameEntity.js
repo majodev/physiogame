@@ -17,7 +17,6 @@ define(["underscore"],
       // all mandadory fields get filled via optionsObject if it exists
       if(_.isUndefined(optionsObject) === false && _.isNull(optionsObject) === false) {
         _.defaults(this.c, optionsObject.c);
-        _.defaults(this.display, optionsObject.display);
         _.defaults(this.systems, optionsObject.systems);
 
         if(_.isString(optionsObject.cid)) {
@@ -26,6 +25,10 @@ define(["underscore"],
 
         if(_.isString(optionsObject.group)) {
           this.group = optionsObject.group;
+        }
+
+        if(_.isObject(optionsObject.display)) {
+          this.display = optionsObject.display;
         }
 
         _.defaults(this.tags, optionsObject.tags);

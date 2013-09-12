@@ -1,6 +1,6 @@
 define(["base/entityManager", "classes/GameEntity"],
   function(entityManager, GameEntity) {
-    describe("entityManager", function() {
+    describe("base/entityManager", function() {
 
       it("adds and gets entities based on cid", function() {
 

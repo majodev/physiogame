@@ -1,7 +1,7 @@
 define(["utils/parasiticCombinationInheritance"],
   function(parasiticCombinationInheritance) {
 
-    describe("parasiticCombinationInheritance", function() {
+    describe("utils/parasiticCombinationInheritance", function() {
 
       it("sets up prototype chain as expected", function() {
         var ParentClass = function (id) {

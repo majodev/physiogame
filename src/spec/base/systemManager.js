@@ -1,6 +1,6 @@
 define(["base/systemManager"],
   function(systemManager) {
-    describe("systemManager", function() {
+    describe("base/systemManager", function() {
 
       it("resolves system based on id", function() {
 

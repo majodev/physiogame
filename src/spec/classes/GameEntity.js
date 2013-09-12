@@ -1,7 +1,7 @@
 define(["classes/GameEntity"],
   function(GameEntity) {
 
-    describe("GameEntity", function() {
+    describe("classes/GameEntity", function() {
       it("can extend components", function() {
 
         var entity = new GameEntity({

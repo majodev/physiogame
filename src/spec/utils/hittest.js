@@ -1,7 +1,7 @@
 define(["utils/hittest"],
   function(hittest) {
 
-    describe("hittest", function() {
+    describe("utils/hittest", function() {
 
       it("can test if two points hit each other", function() {
         hittest({position: {x: 40, y: 40}},

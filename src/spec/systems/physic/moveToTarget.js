@@ -1,7 +1,7 @@
 define(["systems/physic/moveToTarget"],
   function(moveToTarget) {
 
-    describe("moveToTarget", function() {
+    describe("systems/physic/moveToTarget", function() {
       
       it("updates position correctly", function() {
         var testEntity = {c: {

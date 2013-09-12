@@ -1,6 +1,6 @@
 define(["systems/GenericSystem"],
   function(GenericSystem) {
-    describe("GenericSystem", function() {
+    describe("systems/GenericSystem", function() {
 
       it("needs a mandadory optionsObject parameter", function() {
 

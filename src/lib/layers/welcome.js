@@ -1,5 +1,5 @@
-define(["PIXI", "display/factory", "config"],
-  function(PIXI, factory, config) {
+define(["PIXI", "display/factory", "config", "base/entityManager", "classes/GameEntity"],
+  function(PIXI, factory, config, entityManager, GameEntity) {
     var layer = factory.makeLayer(),
       welcomeText;
 
@@ -21,11 +21,45 @@ define(["PIXI", "display/factory", "config"],
 
       layer.addChild(welcomeText);
 
+
+      entityManager.addEntity(new GameEntity({
+        cid: "testEntity",
+        display: new PIXI.Text("gameEntity WORKING!", {
+          font: "bold italic 30px Arvo",
+          fill: "#55AA77",
+          align: "center",
+          stroke: "#FFAAAA",
+          strokeThickness: 5
+        }),
+        c: {
+          position: {
+            x: config.get("width") / 2,
+            y: config.get("height") / 2
+          },
+          speed: {
+            x: 1,
+            y: 1
+          },
+          target: {
+            x: 344,
+            y: 453
+          }
+        },
+        systems: ["moveToTarget", "randomPositionOnTargetReached", "applyPixiPositions"]
+      }));
+
+      layer.addChild(entityManager.getEntityByCid("testEntity").display);
+
+      console.dir(entityManager.getEntityByCid("testEntity"));
+
       config.on("change", configChanged);
     }
 
     function deactivate() {
       layer.removeChild(welcomeText);
+
+      layer.removeChild(entityManager.getEntityByCid("testEntity").display);
+      entityManager.removeEntity(entityManager.getEntityByCid("testEntity"));
 
       config.off("change", configChanged);
     }

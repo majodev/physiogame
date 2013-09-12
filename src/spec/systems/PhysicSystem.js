@@ -1,6 +1,6 @@
 define(["systems/PhysicSystem"],
   function(PhysicSystem) {
-    describe("PhysicSystem", function() {
+    describe("systems/PhysicSystem", function() {
 
       it("reports its systemType with physic", function() {
         var system = new PhysicSystem({
