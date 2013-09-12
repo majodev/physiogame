@@ -24,12 +24,16 @@ define(["PIXI", "display/factory", "config", "base/entityManager", "classes/Game
 
       entityManager.addEntity(new GameEntity({
         cid: "testEntity",
-        display: new PIXI.Text("gameEntity WORKING!", {
+        display: new PIXI.Text("gameEntity now WORKING!", {
           font: "bold italic 30px Arvo",
           fill: "#55AA77",
           align: "center",
           stroke: "#FFAAAA",
-          strokeThickness: 5
+          strokeThickness: 5,
+          anchor: {
+            x: 0.5,
+            y: 0.5
+          }
         }),
         c: {
           position: {
@@ -39,10 +43,6 @@ define(["PIXI", "display/factory", "config", "base/entityManager", "classes/Game
           speed: {
             x: 1,
             y: 1
-          },
-          target: {
-            x: 344,
-            y: 453
           }
         },
         systems: ["moveToTarget", "randomPositionOnTargetReached", "applyPixiPositions"]
@@ -50,7 +50,7 @@ define(["PIXI", "display/factory", "config", "base/entityManager", "classes/Game
 
       layer.addChild(entityManager.getEntityByCid("testEntity").display);
 
-      console.dir(entityManager.getEntityByCid("testEntity"));
+      //console.dir(entityManager.getEntityByCid("testEntity"));
 
       config.on("change", configChanged);
     }
