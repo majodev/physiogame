@@ -38,6 +38,33 @@ define(["systems/physic/randomTarget"],
         randomTarget.id.should.equal("randomTarget");
       });
 
+      it("handles target positions in float via threshold", function () {
+
+        var targetEntity = {
+          c: {
+            position: {
+              x: 0.02345,
+              y: 0.1
+            },
+            target: {
+              x: 0.496543,
+              y: 1,
+              threshold: {
+                x: 0.5,
+                y: 0.89
+              }
+            }
+          }
+        };
+
+        randomTarget.addEntity(targetEntity);
+        randomTarget.update();
+
+        targetEntity.c.target.x.should.not.equal(0);
+        targetEntity.c.target.y.should.equal(1);
+
+      });
+
     });
 
   }

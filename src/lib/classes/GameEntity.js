@@ -16,7 +16,11 @@ define(["underscore"],
 
       // all mandadory fields get filled via optionsObject if it exists
       if(_.isUndefined(optionsObject) === false && _.isNull(optionsObject) === false) {
-        _.defaults(this.c, optionsObject.c);
+
+        // deeply adding the components given into the constructor
+        _.merge(this.c, optionsObject.c);
+
+        // simply adding the systems
         _.defaults(this.systems, optionsObject.systems);
 
         if(_.isString(optionsObject.cid)) {
@@ -31,6 +35,7 @@ define(["underscore"],
           this.display = optionsObject.display;
         }
 
+        // simply adding the tags
         _.defaults(this.tags, optionsObject.tags);
       }
     }

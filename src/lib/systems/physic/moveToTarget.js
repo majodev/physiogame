@@ -18,16 +18,16 @@ define(["systems/PhysicSystem", "components/position2d", "components/speed2d",
 
     function updateEntity(entity) {
       if (entity.c.position.x < entity.c.target.x) {
-        entity.c.position.x += entity.c.speed.x;
+        entity.c.position.x += Math.abs(entity.c.speed.x);
       }
       if (entity.c.position.x > entity.c.target.x) {
-        entity.c.position.x -= entity.c.speed.x;
+        entity.c.position.x -= Math.abs(entity.c.speed.x);
       }
       if (entity.c.position.y < entity.c.target.y) {
-        entity.c.position.y += entity.c.speed.y;
+        entity.c.position.y += Math.abs(entity.c.speed.y);
       }
       if (entity.c.position.y > entity.c.target.y) {
-        entity.c.position.y -= entity.c.speed.y;
+        entity.c.position.y -= Math.abs(entity.c.speed.y);
       }
     }
 

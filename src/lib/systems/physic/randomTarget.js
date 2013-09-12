@@ -18,10 +18,15 @@ define(["systems/PhysicSystem", "config", "components/position2d", "components/t
     };
 
     function updateEntity(entity) {
-      if (entity.c.position.x === entity.c.target.x) {
+      if (Math.abs(entity.c.position.x -
+        entity.c.target.x) <= entity.c.target.threshold.x) {
+
         entity.c.target.x = parseInt(Math.random() * width, 10);
       }
-      if (entity.c.position.y === entity.c.target.y) {
+      
+      if (Math.abs(entity.c.position.y -
+        entity.c.target.y) <= entity.c.target.threshold.y) {
+
         entity.c.target.y = parseInt(Math.random() * height, 10);
       }
     }

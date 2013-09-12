@@ -51,7 +51,9 @@ define(["underscore"],
           len = this.needs.length;
         for (i; i < len; i += 1) {
           // apply all needs for the system to operate to a given entity component
-          _.defaults(entity.c, this.needs[i]);
+          // behavior: deeply add defaults (the needs) to the current given entity.c without overriding current values!
+          _.merge(entity.c, this.needs[i], _.defaults);
+          //_.merge(entity.c, this.needs[i]);
         }
       },
 
