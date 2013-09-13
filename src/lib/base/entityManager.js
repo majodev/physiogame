@@ -19,7 +19,7 @@ define(["underscore", "base/systemManager"],
     function getEntityByCid(cid) {
       var i = 0;
       for (i; i < storedEntitiesLength; i += 1) {
-        if(storedEntities[i].cid === cid) {
+        if (storedEntities[i].cid === cid) {
           return storedEntities[i];
         }
       }
@@ -29,9 +29,9 @@ define(["underscore", "base/systemManager"],
 
     function getEntityByUid(uid) {
       var i = 0;
-      
+
       for (i; i < storedEntitiesLength; i += 1) {
-        if(storedEntities[i].uid === uid) {
+        if (storedEntities[i].uid === uid) {
           return storedEntities[i];
         }
       }
@@ -42,12 +42,12 @@ define(["underscore", "base/systemManager"],
     function getEntitiesByGroup(group) {
       var filter = _.filter(storedEntities,
         function(entity) {
-          if(entity.group === group) {
+          if (entity.group === group) {
             return true;
           } else {
             return false;
           }
-      });
+        });
 
       return filter;
     }
@@ -58,12 +58,12 @@ define(["underscore", "base/systemManager"],
           var i = 0,
             len = entity.tags.length;
           for (i; i < len; i += 1) {
-            if(entity.tags[i] === tag) {
+            if (entity.tags[i] === tag) {
               return true;
             }
           }
           return false;
-      });
+        });
 
       return filter;
     }
@@ -91,7 +91,7 @@ define(["underscore", "base/systemManager"],
     function removeEntity(entity) {
       var i = 0;
       for (i; i < storedEntitiesLength; i += 1) {
-        if(storedEntities[i] === entity) {
+        if (storedEntities[i] === entity) {
           systemManager.deattachEntityFromItsSystems(storedEntities[i]);
           storedEntities.splice(i, 1);
           storedEntitiesLength = storedEntities.length;
@@ -110,6 +110,30 @@ define(["underscore", "base/systemManager"],
       }
     }
 
+    function removeEntitiesStrictSortedUids(uidArray) {
+      var i = 0,
+        len = storedEntities.length,
+        uidLength = uidArray.length,
+        uidIndex = 0;
+      for (i; i < len; i += 1) {
+        if (storedEntities[i].uid === uidArray[uidIndex]) {
+          systemManager.deattachEntityFromItsSystems(storedEntities[i]);
+          storedEntities.splice(i, 1);
+
+          len -= 1;
+          i -= 1;
+          uidIndex += 1;
+        }
+      }
+
+      if (uidIndex !== uidLength) {
+        throw new Error("removeEntitiesStrictSortedUids: " + (uidLength - uidIndex) +
+          " not found, could not be removed!");
+      }
+
+      storedEntitiesLength = storedEntities.length;
+    }
+
     return {
       init: init,
       kill: kill,
@@ -121,7 +145,8 @@ define(["underscore", "base/systemManager"],
       addEntities: addEntities,
       addEntity: addEntity,
       removeEntity: removeEntity,
-      removeEntities: removeEntities
+      removeEntities: removeEntities,
+      removeEntitiesStrictSortedUids: removeEntitiesStrictSortedUids
     };
 
   }

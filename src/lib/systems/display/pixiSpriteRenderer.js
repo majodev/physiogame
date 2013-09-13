@@ -39,7 +39,8 @@ define(["systems/DisplaySystem", "components/object2d", "PIXI", "components/spri
     };
 
     system.onEntityRemoved = function(entity) {
-      // TODO: rip out the display?
+      // rip out display when removed from system
+      entity.display = undefined;
     };
 
     system.updateEntity = function(entity) {

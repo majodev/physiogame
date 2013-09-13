@@ -36,6 +36,46 @@ define(["base/entityManager", "classes/GameEntity"],
 
       });
 
+      it("removes multiple entities with uid array", function() {
+        var notRemoved1 = new GameEntity();
+        var entity1 = new GameEntity();
+        var notRemoved2 = new GameEntity();
+        var entity2 = new GameEntity();
+        var notRemoved3 = new GameEntity();
+        var entity3 = new GameEntity();
+        var notRemoved4 = new GameEntity();
+
+
+        entityManager.init();
+
+        entityManager.addEntities([notRemoved1, entity1, notRemoved2, entity2, notRemoved3, entity3, notRemoved4]);
+        entityManager.getEntitiesLength().should.equal(7);
+
+        entityManager.removeEntitiesStrictSortedUids([entity1.uid, entity2.uid, entity3.uid]);
+        entityManager.getEntitiesLength().should.equal(4);
+
+        entityManager.kill();
+      });
+
+      it("removeEntitiesStrictSortedUids throws error if a uid could not be removed", function() {
+
+        var entity1 = new GameEntity();
+        var notAdded = new GameEntity();
+        var entity2 = new GameEntity();
+
+        entityManager.init();
+
+        entityManager.addEntities([entity1, entity2]);
+        entityManager.getEntitiesLength().should.equal(2);
+
+        expect(function() {
+          entityManager.removeEntitiesStrictSortedUids([entity1.uid, entity2.uid, notAdded.uid]);
+        }).to.
+        throw (Error);
+
+        entityManager.kill();
+      });
+
       it("returns false on removing a nonexistant entity", function() {
         var entity = new GameEntity();
 
@@ -47,9 +87,15 @@ define(["base/entityManager", "classes/GameEntity"],
       });
 
       it("can remove many entities at once", function() {
-        var entity1 = new GameEntity({tags: ["one", "three", "two"]});
-        var entity2 = new GameEntity({tags: ["three"]});
-        var entity3 = new GameEntity({tags: ["three", "two"]});
+        var entity1 = new GameEntity({
+          tags: ["one", "three", "two"]
+        });
+        var entity2 = new GameEntity({
+          tags: ["three"]
+        });
+        var entity3 = new GameEntity({
+          tags: ["three", "two"]
+        });
 
         entityManager.init();
 
@@ -62,9 +108,15 @@ define(["base/entityManager", "classes/GameEntity"],
       });
 
       it("returns tagged entities", function() {
-        var entity1 = new GameEntity({tags: ["one", "three", "two"]});
-        var entity2 = new GameEntity({tags: ["three"]});
-        var entity3 = new GameEntity({tags: ["three", "two"]});
+        var entity1 = new GameEntity({
+          tags: ["one", "three", "two"]
+        });
+        var entity2 = new GameEntity({
+          tags: ["three"]
+        });
+        var entity3 = new GameEntity({
+          tags: ["three", "two"]
+        });
 
         entityManager.init();
 
@@ -79,9 +131,15 @@ define(["base/entityManager", "classes/GameEntity"],
       });
 
       it("returns group entities", function() {
-        var entity1 = new GameEntity({group: "first"});
-        var entity2 = new GameEntity({group: "second"});
-        var entity3 = new GameEntity({group: "second"});
+        var entity1 = new GameEntity({
+          group: "first"
+        });
+        var entity2 = new GameEntity({
+          group: "second"
+        });
+        var entity3 = new GameEntity({
+          group: "second"
+        });
 
         entityManager.init();
 
