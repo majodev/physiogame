@@ -43,14 +43,14 @@ define(["systems/DisplaySystem", "components/object2d", "PIXI",
 
       // then set the text specific options...
 
-      if (entity.c.dirty.text === true) {
+      if (entity.c.flags.dirty.text === true) {
         entity.display.text = entity.c.text;
-        entity.c.dirty.text = false;
+        entity.c.flags.dirty.text = false;
       }
 
-      if (entity.c.dirty.style === true) {
+      if (entity.c.flags.dirty.style === true) {
         entity.display.setStyle(entity.c.style);
-        entity.c.dirty.style = false;
+        entity.c.flags.dirty.style = false;
       }
 
     };

@@ -26,18 +26,7 @@ define(["PIXI", "display/factory", "config", "base/entityManager", "classes/Game
         cid: "testEntity1",
         group: "tests",
         c: {
-          text: "gameEntityTest",
-          style: {
-            font: "bold italic 30px Arvo",
-            fill: "#55AA77",
-            align: "center",
-            stroke: "#FFAAAA",
-            strokeThickness: 5
-          },
-          anchor: {
-            x: 0.5,
-            y: 0.5
-          },
+          text: "hello!",
           position: {
             x: config.get("width") / 2,
             y: config.get("height") / 2

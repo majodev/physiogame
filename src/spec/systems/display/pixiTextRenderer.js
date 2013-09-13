@@ -1,26 +1,12 @@
 define(["systems/display/pixiTextRenderer", "PIXI", "classes/GameEntity", "underscore"],
   function(pixiTextRenderer, PIXI, GameEntity, _) {
 
-    var testComponent = {
-      dirty: {
-        text: true,
-        style: true
-      },
-      style: {
-        font: "bold 20pt Arial",
-        fill: "#000000",
-        align: "center",
-        stroke: "#FFFFFF",
-        strokeThickness: 3,
-        wordWrap: false,
-        wordWrapWidth: 100
-      }
-    };
+    var testComponent = {};
 
 
     describe("systems/display/pixiTextRenderer", function() {
 
-      it("can update PIXI.Text basic values (Sprite like)", function() {
+      it("can update PIXI.Text basic values (defaults + Sprites)", function() {
         var ge = new GameEntity({
           display: new PIXI.Text(PIXI.Texture.fromImage("nopicNeeded.png")),
           c: _.extend(_.cloneDeep(testComponent), {
@@ -46,8 +32,8 @@ define(["systems/display/pixiTextRenderer", "PIXI", "classes/GameEntity", "under
         ge.display.text.should.equal("testText");
 
         // test display was synchronized with model...
-        ge.c.dirty.text.should.equal(false);
-        ge.c.dirty.style.should.equal(false);
+        ge.c.flags.dirty.text.should.equal(false);
+        ge.c.flags.dirty.style.should.equal(false);
 
       });
 
@@ -61,6 +47,55 @@ define(["systems/display/pixiTextRenderer", "PIXI", "classes/GameEntity", "under
         pixiTextRenderer.addEntity(ge);
 
         expect(ge.display).to.be.an.instanceof(PIXI.Text);
+      });
+
+      it("can construct a new PIXI.Text and dynamically reset text", function() {
+        var ge = new GameEntity({
+          c: _.extend(_.cloneDeep(testComponent), {
+            text: "myTestText"
+          })
+        });
+
+        pixiTextRenderer.addEntity(ge);
+
+        expect(ge.display).to.be.an.instanceof(PIXI.Text);
+
+        ge.c.text = "nextText";
+        ge.c.flags.dirty.text = true;
+
+        pixiTextRenderer.updateEntity(ge);
+        ge.display.text.should.equal("nextText");
+        ge.c.flags.dirty.text.should.equal(false);
+
+      });
+
+      it("can construct a new PIXI.Text and dynamically reset style", function() {
+        var ge = new GameEntity({
+          c: _.extend(_.cloneDeep(testComponent), {
+            text: "myTestText"
+          })
+        });
+
+        pixiTextRenderer.addEntity(ge);
+
+        expect(ge.display).to.be.an.instanceof(PIXI.Text);
+
+        ge.c.style = {
+          font: "bold 20pt Arial",
+          fill: "#111111",
+          align: "left",
+          stroke: "#000000",
+          strokeThickness: 1,
+          wordWrap: true,
+          wordWrapWidth: 20
+        };
+
+        ge.c.flags.dirty.style = true;
+        pixiTextRenderer.updateEntity(ge);
+        ge.c.flags.dirty.style.should.equal(false);
+
+        // no way to access style directly in pixi object.
+
       });
 
       it("raises error if text is undefined", function() {
@@ -85,7 +120,7 @@ define(["systems/display/pixiTextRenderer", "PIXI", "classes/GameEntity", "under
           pixiTextRenderer.addEntity(ge);
         }).to.
         throw (TypeError);
-        
+
       });
 
     });

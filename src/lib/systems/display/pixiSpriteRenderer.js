@@ -58,7 +58,7 @@ define(["systems/DisplaySystem", "components/object2d", "PIXI", "components/spri
 
 
       // based on autoDetect property scale and dimensions handling
-      if (entity.c.autoDetectDimensions === true) {
+      if (entity.c.flags.autoDetectDimensions === true) {
         // c.width and c.height are automatically set
         entity.c.width = entity.display.width;
         entity.c.height = entity.display.height;

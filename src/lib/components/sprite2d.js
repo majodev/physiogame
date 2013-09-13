@@ -1,6 +1,11 @@
 define([],
   function() {
     return {
+      flags: {
+        // renderers are allowed to control flags
+        // if dimension or scale gets autoupdated by renderer
+        autoDetectDimensions: true
+      },
       texture: {
         id: undefined,
         image: undefined
@@ -9,11 +14,9 @@ define([],
         x: 0.5,
         y: 0.5
       },
-      width: 0,
-      height: 0,
-      // renderers are allowed to control 
-      //if dimension or scale gets autoupdated by display
-      autoDetectDimensions: true
+      width: -1,
+      height: -1,
+      
     };
   }
 );
