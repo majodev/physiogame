@@ -1,9 +1,9 @@
-define(["systems/PhysicSystem", "config", "components/position2d", "components/target2d"],
-  function(PhysicSystem, config, position2d, target2d) {
+define(["systems/PhysicSystem", "config", "components/object2d", "components/target2d"],
+  function(PhysicSystem, config, object2d, target2d) {
 
     var system = new PhysicSystem({
       id: "randomTarget",
-      needs: [position2d, target2d]
+      needs: [object2d, target2d]
     });
 
     var width = config.get("width"),

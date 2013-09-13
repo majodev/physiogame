@@ -23,19 +23,21 @@ define(["PIXI", "display/factory", "config", "base/entityManager", "classes/Game
 
 
       entityManager.addEntity(new GameEntity({
-        cid: "testEntity",
-        display: new PIXI.Text("gameEntity now WORKING!", {
-          font: "bold italic 30px Arvo",
-          fill: "#55AA77",
-          align: "center",
-          stroke: "#FFAAAA",
-          strokeThickness: 5,
+        cid: "testEntity1",
+        group: "tests",
+        c: {
+          text: "gameEntityTest",
+          style: {
+            font: "bold italic 30px Arvo",
+            fill: "#55AA77",
+            align: "center",
+            stroke: "#FFAAAA",
+            strokeThickness: 5
+          },
           anchor: {
             x: 0.5,
             y: 0.5
-          }
-        }),
-        c: {
+          },
           position: {
             x: config.get("width") / 2,
             y: config.get("height") / 2
@@ -45,10 +47,26 @@ define(["PIXI", "display/factory", "config", "base/entityManager", "classes/Game
             y: 1
           }
         },
-        systems: ["moveToTarget", "randomTarget", "pixiDisplay"]
+        systems: ["moveToTarget", "randomTarget", "pixiTextRenderer"]
       }));
 
-      layer.addChild(entityManager.getEntityByCid("testEntity").display);
+      entityManager.addEntity(new GameEntity({
+        cid: "testEntity2",
+        group: "tests",
+        c: {
+          texture: {
+            image: "assets/crosshair.png"
+          },
+          speed: {
+            x: 1,
+            y: 1
+          }
+        },
+        systems: ["moveToTarget", "randomTarget", "pixiSpriteRenderer"]
+      }));
+
+      layer.addChild(entityManager.getEntityByCid("testEntity1").display);
+      layer.addChild(entityManager.getEntityByCid("testEntity2").display);
 
       config.on("change", configChanged);
     }
@@ -56,8 +74,11 @@ define(["PIXI", "display/factory", "config", "base/entityManager", "classes/Game
     function deactivate() {
       layer.removeChild(welcomeText);
 
-      layer.removeChild(entityManager.getEntityByCid("testEntity").display);
-      entityManager.removeEntity(entityManager.getEntityByCid("testEntity"));
+      layer.removeChild(entityManager.getEntityByCid("testEntity1").display);
+      entityManager.removeEntity(entityManager.getEntityByCid("testEntity1"));
+
+      layer.removeChild(entityManager.getEntityByCid("testEntity2").display);
+      entityManager.removeEntity(entityManager.getEntityByCid("testEntity2"));
 
       config.off("change", configChanged);
     }

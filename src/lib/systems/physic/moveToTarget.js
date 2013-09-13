@@ -1,11 +1,11 @@
-define(["systems/PhysicSystem", "components/position2d", "components/speed2d",
+define(["systems/PhysicSystem", "components/object2d", "components/speed2d",
     "components/target2d"
   ],
-  function(PhysicSystem, position2d, speed2d, target2d) {
+  function(PhysicSystem, object2d, speed2d, target2d) {
 
     var system = new PhysicSystem({
       id: "moveToTarget",
-      needs: [position2d, speed2d, target2d]
+      needs: [object2d, speed2d, target2d]
     });
 
     system.update = function() {

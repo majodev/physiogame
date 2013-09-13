@@ -3,7 +3,7 @@ define(["underscore"],
     function GenericSystem(optionsObject) {
 
       // error handling on construction...
-      
+
       if (_.isUndefined(optionsObject) || _.isObject(optionsObject) === false) {
         throw new TypeError("you have to provide a object literal at construction");
       }
@@ -31,19 +31,26 @@ define(["underscore"],
 
       constructor: GenericSystem,
 
-      init: function() {
-        // NEEDS OVERRIDE: init handling of a given system will go here
-        throw new Error("GenericSystem: init must be overridden! systemid=" + this.id);
+      updateEntity: function(entity) {
+        // NEEDS OVERRIDE: update handling of a given entity will go here
+        throw new Error("GenericSystem: updateEntity not overridden! systemid=" + this.id);
       },
 
       update: function() {
-        // NEEDS OVERRIDE: update handling of a given system will go here
-        throw new Error("GenericSystem: update must be overridden! systemid=" + this.id);
+        // OPTIONAL OVERRIDE: update handling for ALL entities
+        var i = 0,
+          len = this.entities.length;
+        for (i; i < len; i += 1) {
+          this.updateEntity(this.entities[i]);
+        }
       },
 
-      kill: function() {
-        // NEEDS OVERRIDE: kill handling of a given system will go here
-        throw new Error("GenericSystem: kill must be overridden! systemid=" + this.id);
+      onEntityAdded: function(entity) {
+        // OPTIONAL OVERRIDE: executed after entity was added from genericSystem
+      },
+
+      onEntityRemoved: function(entity) {
+        // OPTIONAL OVERRIDE: executed before entity was removed from genericSystem
       },
 
       resolveNeeds: function(entity) {
@@ -64,8 +71,8 @@ define(["underscore"],
       checkEntityHasSystemID: function(entity) {
         var i = 0,
           len;
-        
-        if(_.isUndefined(entity.systems)) {
+
+        if (_.isUndefined(entity.systems)) {
           // append a systems array to entity if missing.
           entity.systems = [];
         }
@@ -114,6 +121,8 @@ define(["underscore"],
         this.checkEntityHasSystemID(entity);
         this.entities.push(entity);
 
+        this.onEntityAdded(entity);
+
         return true;
       },
 
@@ -125,6 +134,7 @@ define(["underscore"],
 
         for (i; i < len; i += 1) {
           if (entity === this.entities[i]) {
+            this.onEntityRemoved(entity);
             this.removeSystemIDFromEntity(this.entities[i]);
             this.entities.splice(i, 1);
             return true;

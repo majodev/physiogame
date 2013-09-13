@@ -1,14 +1,18 @@
 define(["systems/physic/moveToTarget", "systems/physic/randomTarget",
-    "systems/display/pixiDisplay"
+    "systems/display/pixiDOCRenderer", "systems/display/pixiSpriteRenderer",
+    "systems/display/pixiTextRenderer"
   ],
-  function(moveToTarget, randomTarget, pixiDisplay) {
+  function(moveToTarget, randomTarget, pixiDOCRenderer, pixiSpriteRenderer,
+    pixiTextRenderer) {
 
     // LOOK OUT MUST BE IN ORDER OF EXECTION!
     // all systems that are available have to be defined here.
     var systems = [
       moveToTarget,
       randomTarget,
-      pixiDisplay
+      pixiDOCRenderer,
+      pixiSpriteRenderer,
+      pixiTextRenderer
     ];
 
     function getSystem(id) {

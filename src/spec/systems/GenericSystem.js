@@ -165,23 +165,14 @@ define(["systems/GenericSystem"],
 
       });
 
-      it("throws Error on init, update or kill (needs override)", function() {
-        var system = new GenericSystem({
-          id: "testSystem"
+      it("throws Error when updateEntity was not overridden", function() {
+        
+        var systemWithNoOverride = new GenericSystem({
+          id: "testSystem3"
         });
 
         expect(function() {
-          system.init();
-        }).to.
-        throw (Error);
-
-        expect(function() {
-          system.update();
-        }).to.
-        throw (Error);
-
-        expect(function() {
-          system.kill();
+          systemWithNoOverride.updateEntity({});
         }).to.
         throw (Error);
 

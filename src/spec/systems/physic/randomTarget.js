@@ -44,14 +44,14 @@ define(["systems/physic/randomTarget"],
           c: {
             position: {
               x: 0.02345,
-              y: 0.1
+              y: 0
             },
             target: {
               x: 0.496543,
               y: 1,
               threshold: {
                 x: 0.5,
-                y: 0.89
+                y: 0.99
               }
             }
           }
