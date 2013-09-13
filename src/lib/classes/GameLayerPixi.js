@@ -22,7 +22,7 @@ define(["PIXI", "base/entityManager", "classes/GameEntity"],
         var gameEntity = new GameEntity(entityOptionsObject);
 
         // remember uid of GameEntity
-        this.gameEntityUids.push(gameEntity.c.uid);
+        this.gameEntityUids.push(gameEntity.uid);
 
         // add to entityManager
         entityManager.addEntity(gameEntity);
@@ -31,9 +31,15 @@ define(["PIXI", "base/entityManager", "classes/GameEntity"],
         this.layer.addChild(gameEntity.display);
       },
       removeAllChildGes: function() {
+
+        var i = this.layer.children.length-1;
+        for (i; i >= 0; i -= 1) {
+          this.layer.removeChild(this.layer.children[i]);
+        }
+
         // strictly remove sorted uid array
-        entityManager.removeEntitiesStrictSortedUids(gameEntityUids);
-        gameEntityUids = [];
+        entityManager.removeEntitiesStrictSortedUids(this.gameEntityUids);
+        this.gameEntityUids = [];
       }
 
     };

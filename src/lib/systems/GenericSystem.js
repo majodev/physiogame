@@ -1,5 +1,5 @@
-define(["underscore"],
-  function(_) {
+define(["underscore", "utils/publisher"],
+  function(_, publisher) {
     function GenericSystem(optionsObject) {
 
       // error handling on construction...
@@ -21,6 +21,7 @@ define(["underscore"],
       this.needs = [];
       this.entities = [];
       this.systemType = "generic";
+      this.events = publisher.make();
 
       // needs and entities optional parameters, apply defaults from parameters
       _.defaults(this.needs, optionsObject.needs);

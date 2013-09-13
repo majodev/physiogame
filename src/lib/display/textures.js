@@ -9,7 +9,8 @@ define(["PIXI", "config", "utils/zeroPad", "loaders/spriteLoader"
       height = config.get("height"),
       aliensToSpawn = config.get("aliensToSpawn"),
       backgroundTexture,
-      cloudTextures = [];
+      cloudTextures = [],
+      cloudTextureNames = [];
 
     function init() {
       var i = 0,
@@ -26,6 +27,7 @@ define(["PIXI", "config", "utils/zeroPad", "loaders/spriteLoader"
 
       // add cloud textures
       for (i = 0; i < 25; i += 1) {
+        cloudTextureNames.push("cloud/" + zeroPad(i, 4));
         texture = getTextureByName("cloud/" + zeroPad(i, 4));
         cloudTextures.push(texture);
       }
@@ -45,7 +47,8 @@ define(["PIXI", "config", "utils/zeroPad", "loaders/spriteLoader"
         return backgroundTexture;
       },
       cloudTextures: cloudTextures,
-      getTextureByName: getTextureByName
+      getTextureByName: getTextureByName,
+      cloudTextureNames: cloudTextureNames
     };
   }
 );

@@ -1,7 +1,7 @@
 define(["systems/PhysicSystem", "components/object2d",
-  "components/target2d", "components/speed2d"],
+  "components/target2d", "components/speed2d", "underscore"],
   function(PhysicSystem, object2d,
-    target2d, speed2d) {
+    target2d, speed2d, _) {
 
     var system = new PhysicSystem({
       id: "randomTarget",
@@ -17,16 +17,23 @@ define(["systems/PhysicSystem", "components/object2d",
     };
 
     function updateEntity(entity) {
+
+      // set random x on target reached
       if (Math.abs(entity.c.position.x -
         entity.c.target.x) <= Math.abs(entity.c.speed.x)) {
 
-        entity.c.target.x = parseInt(Math.random() * entity.c.target.bounds.width, 10);
+        entity.c.target.x = _.random(
+          0 - entity.c.target.bounds.x,
+          entity.c.target.bounds.width + entity.c.target.bounds.x);
       }
       
+      // set random y on target reached
       if (Math.abs(entity.c.position.y -
         entity.c.target.y) <= Math.abs(entity.c.speed.y)) {
 
-        entity.c.target.y = parseInt(Math.random() * entity.c.target.bounds.height, 10);
+        entity.c.target.y = _.random(
+          0 - entity.c.target.bounds.y,
+          entity.c.target.bounds.height + entity.c.target.bounds.y);
       }
     }
 

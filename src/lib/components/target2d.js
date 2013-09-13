@@ -4,7 +4,7 @@ define(["components/sub/bounds2d"],
       target: {
         x: 0,
         y: 0,
-        bounds: bounds2d
+        bounds: bounds2d.bounds
       }
     };
   }
