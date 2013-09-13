@@ -1,24 +1,34 @@
-define(["underscore", "systems/systemMap"],
-  function(_, systemMap) {
+define(["underscore", "systems/systemMap", "log"],
+  function(_, systemMap, log) {
 
     var systems,
-      systemsLength;
+      systemsLength,
+      initialized = false;
 
 
     function init() {
-      
-      systems = systemMap.getAllSystems();
-      systemsLength = systems.length;
 
-      // TODO: systemManager must manage the events from the special systems
-      // hook the global up here! (if good, is using special flags better?!?)
+      var i = 0;
+
+      if (initialized === false) {
+        log.debug("init");
+
+        systems = systemMap.getAllSystems();
+        systemsLength = systems.length;
+
+        // attach eventHandling
+        for (i; i < systemsLength; i += 1) {
+          systems[i].events.on("all", entityEvent);
+        }
+        initialized = true;
+      }
 
     }
 
     function update() {
 
       // per Frame update all systems in the order of the above array
-      
+
       var i = 0;
       for (i; i < systemsLength; i += 1) {
         systems[i].update();
@@ -28,10 +38,28 @@ define(["underscore", "systems/systemMap"],
 
     function kill() {
 
-      deattachAllEntitiesFromAllSystems();
+      var i = 0;
 
-      systems = [];
-      systemsLength = 0;
+      if (initialized === true) {
+        log.debug("kill");
+
+        // deattach eventHandling
+        for (i; i < systemsLength; i += 1) {
+          systems[i].events.off("all", entityEvent);
+        }
+
+        deattachAllEntitiesFromAllSystems();
+
+        systems = [];
+        systemsLength = 0;
+
+        initialized = false;
+      }
+
+    }
+
+    function entityEvent(eventName, entity) {
+      console.log("entityEvent: " + eventName + " uid: " + entity.uid);
     }
 
     function attachEntityToItsSystems(entity) {
@@ -94,7 +122,7 @@ define(["underscore", "systems/systemMap"],
     function resolveSystem(systemid) {
       var i = 0;
 
-      if(!_.isString(systemid)) {
+      if (!_.isString(systemid)) {
         throw new TypeError("resolveSystem: systemid must be of type string");
       }
 

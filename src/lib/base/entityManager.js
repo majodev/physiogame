@@ -2,18 +2,26 @@ define(["underscore", "base/systemManager"],
   function(_, systemManager) {
 
     var storedEntities,
-      storedEntitiesLength;
+      storedEntitiesLength,
+      initialized = false;
 
     function init() {
-      storedEntities = [];
-      storedEntitiesLength = 0;
-      systemManager.init();
+      if (initialized === false) {
+        storedEntities = [];
+        storedEntitiesLength = 0;
+        systemManager.init();
+        initialized = true;
+      }
     }
 
     function kill() {
-      systemManager.kill();
-      storedEntities = [];
-      storedEntitiesLength = 0;
+      if (initialized === true) {
+        systemManager.kill();
+        storedEntities = [];
+        storedEntitiesLength = 0;
+        initialized = false;
+      }
+
     }
 
     function getEntityByCid(cid) {

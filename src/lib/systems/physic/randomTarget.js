@@ -25,6 +25,9 @@ define(["systems/PhysicSystem", "components/object2d",
         entity.c.target.x = _.random(
           0 - entity.c.target.bounds.x,
           entity.c.target.bounds.width + entity.c.target.bounds.x);
+
+        system.events.trigger("randomTargetx", entity);
+
       }
       
       // set random y on target reached
@@ -34,6 +37,8 @@ define(["systems/PhysicSystem", "components/object2d",
         entity.c.target.y = _.random(
           0 - entity.c.target.bounds.y,
           entity.c.target.bounds.height + entity.c.target.bounds.y);
+
+        system.events.trigger("randomTargety", entity);
       }
     }
 

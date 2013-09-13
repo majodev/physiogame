@@ -24,7 +24,7 @@ define(["systems/PhysicSystem", "components/object2d",
         // reset to left
         entity.c.position.x = entity.c.bounds.x - entity.c.width;
 
-        system.events.trigger("reset", entity);
+        system.events.trigger("resetRightToLeft", entity);
       }
     }
 
