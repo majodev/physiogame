@@ -32,8 +32,8 @@ define(["PIXI", "display/factory", "config", "base/entityManager", "classes/Game
             y: config.get("height") / 2
           },
           speed: {
-            x: 1,
-            y: 1
+            x: 6.345,
+            y: 7.2234
           }
         },
         systems: ["moveToTarget", "randomTarget", "pixiTextRenderer"]
@@ -47,8 +47,8 @@ define(["PIXI", "display/factory", "config", "base/entityManager", "classes/Game
             image: "assets/crosshair.png"
           },
           speed: {
-            x: 1,
-            y: 1
+            x: 8.345,
+            y: 6.345
           }
         },
         systems: ["moveToTarget", "randomTarget", "pixiSpriteRenderer"]

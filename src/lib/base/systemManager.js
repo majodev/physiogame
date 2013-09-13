@@ -104,7 +104,7 @@ define(["underscore", "systems/systemMap"],
         }
       }
 
-      throw new Error("resolveSystem: system not found!");
+      throw new Error("resolveSystem: system not found: " + systemid);
     }
 
     return {

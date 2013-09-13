@@ -1,10 +1,10 @@
-define(["log", "classes/Scene",
+define(["log", "classes/GameScenePixi",
     "layers/aliens", "layers/background", "layers/clouds", "layers/crosshair",
-    "layers/score", "layers/welcome"
+    "layers/score", "layers/welcome", "layers/testLayer"
   ],
-  function(log, Scene,
+  function(log, GameScenePixi,
     aliens, background, clouds, crosshair,
-    score, welcome) {
+    score, welcome, testLayer) {
 
     function makeScene(sceneID) {
 
@@ -13,19 +13,19 @@ define(["log", "classes/Scene",
       switch (sceneID) {
 
         case "startscreen":
-          scene = new Scene({
-            layers: [background, clouds, welcome, crosshair]
+          scene = new GameScenePixi({
+            layers: [background, clouds, welcome, crosshair, testLayer]
           });
           break;
 
         case "shooting":
-          scene = new Scene({
+          scene = new GameScenePixi({
             layers: [background, clouds, aliens, crosshair, score]
           });
           break;
 
         default:
-          scene = new Scene({
+          scene = new GameScenePixi({
             layers: [background]
           });
           log.warn("sceneID (" + sceneID + ") not found, returning default scene");

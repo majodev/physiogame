@@ -1,13 +1,12 @@
-define(["systems/PhysicSystem", "config", "components/object2d", "components/target2d"],
-  function(PhysicSystem, config, object2d, target2d) {
+define(["systems/PhysicSystem", "components/object2d",
+  "components/target2d", "components/speed2d"],
+  function(PhysicSystem, object2d,
+    target2d, speed2d) {
 
     var system = new PhysicSystem({
       id: "randomTarget",
-      needs: [object2d, target2d]
+      needs: [object2d, target2d, speed2d]
     });
-
-    var width = config.get("width"),
-      height = config.get("height");
 
     system.update = function() {
       var i = 0,
@@ -19,15 +18,15 @@ define(["systems/PhysicSystem", "config", "components/object2d", "components/tar
 
     function updateEntity(entity) {
       if (Math.abs(entity.c.position.x -
-        entity.c.target.x) <= entity.c.target.threshold.x) {
+        entity.c.target.x) <= Math.abs(entity.c.speed.x)) {
 
-        entity.c.target.x = parseInt(Math.random() * width, 10);
+        entity.c.target.x = parseInt(Math.random() * entity.c.target.bounds.width, 10);
       }
       
       if (Math.abs(entity.c.position.y -
-        entity.c.target.y) <= entity.c.target.threshold.y) {
+        entity.c.target.y) <= Math.abs(entity.c.speed.y)) {
 
-        entity.c.target.y = parseInt(Math.random() * height, 10);
+        entity.c.target.y = parseInt(Math.random() * entity.c.target.bounds.height, 10);
       }
     }
 

@@ -1,13 +1,10 @@
-define([],
-  function() {
+define(["components/sub/bounds2d"],
+  function(bounds2d) {
     return {
       target: {
         x: 0,
         y: 0,
-        threshold: {
-          x: 0.5,
-          y: 0.5
-        }
+        bounds: bounds2d
       }
     };
   }

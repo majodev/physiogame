@@ -1,0 +1,12 @@
+define(["config"],
+  function(config) {
+    return {
+      position: {
+        x: 0,
+        y: 0
+      },
+      width: config.get("width"),
+      height: config.get("height"),
+    };
+  }
+);

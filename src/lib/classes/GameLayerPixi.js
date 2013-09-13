@@ -1,24 +1,24 @@
-define(["PIXI", "base/entityManager"],
-  function(PIXI, entityManager) {
+define(["PIXI", "base/entityManager", "classes/GameEntity"],
+  function(PIXI, entityManager, GameEntity) {
 
     var Layer = function() {
       this.layer = new PIXI.DisplayObjectContainer();
       this.gameEntityUids = [];
     };
 
-    layer.prototype = {
+    Layer.prototype = {
       constructor: Layer,
       activate: function() {
         // NEEDS OVERRIDE: activate handling goes here
         throw new Error("Layer: activate must be overridden");
       },
       deactivate: function() {
-        this.removeOwnGameEntities();
+        this.removeAllChildGes();
       },
       getLayer: function() {
         return this.layer;
       },
-      addOwnGameEntity: function(entityOptionsObject) {
+      addChildGe: function(entityOptionsObject) {
         var gameEntity = new GameEntity(entityOptionsObject);
 
         // remember uid of GameEntity
@@ -30,7 +30,7 @@ define(["PIXI", "base/entityManager"],
         // add child to layer
         this.layer.addChild(gameEntity.display);
       },
-      removeOwnGameEntities: function() {
+      removeAllChildGes: function() {
         // strictly remove sorted uid array
         entityManager.removeEntitiesStrictSortedUids(gameEntityUids);
         gameEntityUids = [];
