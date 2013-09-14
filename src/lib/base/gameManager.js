@@ -1,8 +1,8 @@
-define(["log", "base/displayManager", "base/leapManager", "base/sceneManager",
-  "base/soundManager", "base/systemManager", "base/entityManager", "key"
+define(["log", "base/displayManager", "base/leapManager", "base/sceneManager", "key",
+  "base/soundManager"
   ],
-  function(log, displayManager, leapManager, sceneManager, 
-    soundManager, systemManager, entityManager, key) {
+  function(log, displayManager, leapManager, sceneManager, key,
+    soundManager) {
 
     // private
     var showDebug = false;
@@ -10,17 +10,12 @@ define(["log", "base/displayManager", "base/leapManager", "base/sceneManager",
     function init() {
       log.debug("gameController: init");
 
-      systemManager.init();
       displayManager.init();
       soundManager.init();
-      entityManager.init();
-      leapManager.init();
       sceneManager.init();
+      leapManager.init();
 
-      // attach event for scene changes
       sceneManager.events.on("pushedScene", onSceneChanged);
-
-      // start with first scene
       sceneManager.pushScene("startscreen");
     }
 

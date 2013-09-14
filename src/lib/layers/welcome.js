@@ -1,5 +1,5 @@
-define(["PIXI", "display/factory", "config", "base/entityManager", "classes/GameEntity"],
-  function(PIXI, factory, config, entityManager, GameEntity) {
+define(["PIXI", "display/factory", "config"],
+  function(PIXI, factory, config) {
     var layer = factory.makeLayer(),
       welcomeText;
 
@@ -21,38 +21,11 @@ define(["PIXI", "display/factory", "config", "base/entityManager", "classes/Game
 
       layer.addChild(welcomeText);
 
-
-      entityManager.addEntity(new GameEntity({
-        cid: "testEntity1",
-        group: "tests",
-        c: {
-          text: "hello!",
-          position: {
-            x: config.get("width") / 2,
-            y: config.get("height") / 2
-          },
-          speed: {
-            x: 6.345,
-            y: 7.2234
-          }
-        },
-        systems: ["moveToTarget", "pixiTextRenderer"],
-        binding: {
-          moveToTargetXReached: ["randomTargetX"],
-          moveToTargetYReached: ["randomTargetY"]
-        }
-      }));
-
-      layer.addChild(entityManager.getEntityByCid("testEntity1").display);
-
       config.on("change", configChanged);
     }
 
     function deactivate() {
       layer.removeChild(welcomeText);
-
-      layer.removeChild(entityManager.getEntityByCid("testEntity1").display);
-      entityManager.removeEntity(entityManager.getEntityByCid("testEntity1"));
 
       config.off("change", configChanged);
     }

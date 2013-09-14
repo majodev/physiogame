@@ -1,9 +1,9 @@
 define(["display/textures", "display/factory", "config", "base/displayManager",
     "base/leapManager", "utils/hittest", "underscore", "layers/crosshair", "PIXI",
-    "entities/scoreEntity", "base/soundManager", "systems/randomMoveTo"
+    "entities/scoreEntity", "base/soundManager"
   ],
   function(textures, factory, config, displayManager,
-    leapManager, hittest, _, crosshair, PIXI, scoreEntity, soundManager, randomMoveTo) {
+    leapManager, hittest, _, crosshair, PIXI, scoreEntity, soundManager) {
 
     var width = config.get("width"),
       height = config.get("height"),
@@ -36,18 +36,18 @@ define(["display/textures", "display/factory", "config", "base/displayManager",
         // create an alien using the frame name..
         alien = factory.makePIXISprite(textures.getTextureByName(frameName));
 
-        // components...
-        randomMoveTo.init(alien);
-
         // set its initial values...
         alien.position.x = parseInt(Math.random() * width, 10);
         alien.position.y = parseInt(Math.random() * height, 10);
+        alien.targetX = parseInt(Math.random() * width, 10); // extra
+        alien.targetY = parseInt(Math.random() * height, 10); // extra
         alien.anchor.x = 0.5;
         alien.anchor.y = 0.5;
         alien.scale.x = 0.2;
         alien.scale.y = 0.2;
         alien.hitted = false; // extra
         alien.alpha = 0.5;
+        alien.speed = 1; // extra
 
         aliensArray.push(alien);
         layer.addChild(aliensArray[i]);
@@ -81,7 +81,7 @@ define(["display/textures", "display/factory", "config", "base/displayManager",
 
     function deactivate() {
       var i = 0,
-          len = aliensArray.length;
+        len = aliensArray.length;
       if (running) {
 
         config.off("change", configChanged);
@@ -105,7 +105,7 @@ define(["display/textures", "display/factory", "config", "base/displayManager",
       var i = 0,
         length = explosionsClearing.length;
       for (i; i < length; i += 1) {
-        if(explosionsClearing[i].alpha > 0) {
+        if (explosionsClearing[i].alpha > 0) {
           explosionsClearing[i].alpha -= 0.01;
         } else {
           layer.removeChild(explosionsClearing.splice(i, 1)[0]);
@@ -126,10 +126,24 @@ define(["display/textures", "display/factory", "config", "base/displayManager",
 
         if (alien.visible === true) {
 
-          randomMoveTo.update(alien);
-
-
-
+          if (alien.position.x < alien.targetX) {
+            alien.position.x += alien.speed;
+          }
+          if (alien.position.x > alien.targetX) {
+            alien.position.x -= alien.speed;
+          }
+          if (alien.position.y < alien.targetY) {
+            alien.position.y += alien.speed;
+          }
+          if (alien.position.y > alien.targetY) {
+            alien.position.y -= alien.speed;
+          }
+          if (alien.position.x === alien.targetX) {
+            alien.targetX = parseInt(Math.random() * width, 10);
+          }
+          if (alien.position.y === alien.targetY) {
+            alien.targetY = parseInt(Math.random() * height, 10);
+          }
 
           if (alien.hitted === true) {
             if (alien.scale.x < alienHittedScaleCap) {
@@ -142,9 +156,8 @@ define(["display/textures", "display/factory", "config", "base/displayManager",
             if (alien.alpha < 1) {
               alien.alpha += alienHittedAlphaStep;
             }
-            if (alien.speed.x <= alienHittedSpeedMax) {
-              alien.speed.x += alienHittedSpeedStep;
-              alien.speed.y += alienHittedSpeedStep;
+            if (alien.speed <= alienHittedSpeedMax) {
+              alien.speed += alienHittedSpeedStep;
             }
 
           } else {
@@ -162,9 +175,8 @@ define(["display/textures", "display/factory", "config", "base/displayManager",
               alien.alpha -= 0.01;
             }
 
-            if (alien.speed.x > 1) {
-              alien.speed.x -= 1;
-              alien.speed.y -= 1;
+            if (alien.speed > 1) {
+              alien.speed -= 1;
             }
           }
 

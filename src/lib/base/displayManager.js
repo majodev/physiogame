@@ -1,5 +1,5 @@
-define(["log", "base/systemManager", "PIXI", "config", "utils/resizeWatcher", "utils/publisher", "display/textures"],
-  function(log, systemManager, PIXI, config, resizeWatcher, publisher, textures) {
+define(["log", "PIXI", "config", "utils/resizeWatcher", "utils/publisher", "display/textures"],
+  function(log, PIXI, config, resizeWatcher, publisher, textures) {
 
     // private
     var stage = new PIXI.Stage(config.get("background"),
@@ -42,9 +42,6 @@ define(["log", "base/systemManager", "PIXI", "config", "utils/resizeWatcher", "u
 
     function renderFrame() {
       requestAnimFrame(renderFrame);
-
-      // directly call the systemsmanager to update its systems
-      systemManager.update();
 
       // publish renderFrame event to subscribers
       events.trigger("renderFrame");
