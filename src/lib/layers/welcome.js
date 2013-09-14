@@ -36,26 +36,14 @@ define(["PIXI", "display/factory", "config", "base/entityManager", "classes/Game
             y: 7.2234
           }
         },
-        systems: ["moveToTarget", "randomTarget", "pixiTextRenderer"]
-      }));
-
-      entityManager.addEntity(new GameEntity({
-        cid: "testEntity2",
-        group: "tests",
-        c: {
-          texture: {
-            image: "assets/crosshair.png"
-          },
-          speed: {
-            x: 8.345,
-            y: 6.345
-          }
-        },
-        systems: ["moveToTarget", "randomTarget", "pixiSpriteRenderer"]
+        systems: ["moveToTarget", "pixiTextRenderer"],
+        binding: {
+          moveToTargetXReached: ["randomTargetX"],
+          moveToTargetYReached: ["randomTargetY"]
+        }
       }));
 
       layer.addChild(entityManager.getEntityByCid("testEntity1").display);
-      layer.addChild(entityManager.getEntityByCid("testEntity2").display);
 
       config.on("change", configChanged);
     }
@@ -65,9 +53,6 @@ define(["PIXI", "display/factory", "config", "base/entityManager", "classes/Game
 
       layer.removeChild(entityManager.getEntityByCid("testEntity1").display);
       entityManager.removeEntity(entityManager.getEntityByCid("testEntity1"));
-
-      layer.removeChild(entityManager.getEntityByCid("testEntity2").display);
-      entityManager.removeEntity(entityManager.getEntityByCid("testEntity2"));
 
       config.off("change", configChanged);
     }

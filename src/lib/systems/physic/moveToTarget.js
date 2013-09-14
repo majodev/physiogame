@@ -25,6 +25,19 @@ define(["systems/PhysicSystem", "components/object2d", "components/speed2d",
           entity.c.position.y -= Math.abs(entity.c.speed.y);
         }
       }
+
+      if (Math.abs(entity.c.position.x -
+        entity.c.target.x) <= Math.abs(entity.c.speed.x)) {
+
+        entity.events.trigger("moveToTargetXReached", entity, this.id);
+      }
+
+      if (Math.abs(entity.c.position.y -
+        entity.c.target.y) <= Math.abs(entity.c.speed.y)) {
+
+        entity.events.trigger("moveToTargetYReached", entity, this.id);
+      }
+
     };
 
     return system;

@@ -44,17 +44,17 @@ define(["log", "base/displayManager", "display/textures", "display/factory",
           }
         });
 
-        entity.events.on("resetRightToLeft", onCloudReset);
+        //entity.events.on("resetRightToLeft", onCloudReset);
       }
 
       //cloud.loop = true;
       //cloud.gotoAndPlay(_.random(0, 24));
     };
 
-    function onCloudReset(entity, systemid) {
+    //function onCloudReset(entity, systemid) {
         //console.log("layer: cloud reset: e=" + entity.uid + " sys=" + systemid);
-        layer.removeChildGe(entity);
-    }
+        //layer.removeChildGe(entity);
+    //}
 
     return layer;
 

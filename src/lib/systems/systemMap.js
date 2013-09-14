@@ -1,17 +1,19 @@
-define(["systems/physic/moveToTarget", "systems/physic/randomTarget",
+define(["systems/physic/moveToTarget", "systems/physic/rotateWithSpeed",
     "systems/display/pixiDOCRenderer", "systems/display/pixiSpriteRenderer",
     "systems/display/pixiTextRenderer", "systems/display/pixiMCRenderer",
     "systems/physic/resetRightToLeft", "systems/physic/moveWithSpeed"
   ],
-  function(moveToTarget, randomTarget, pixiDOCRenderer, pixiSpriteRenderer,
-    pixiTextRenderer, pixiMCRenderer, resetRightToLeft, moveWithSpeed) {
+  function(moveToTarget, rotateWithSpeed, 
+    pixiDOCRenderer, pixiSpriteRenderer,
+    pixiTextRenderer, pixiMCRenderer,
+    resetRightToLeft, moveWithSpeed) {
 
     // LOOK OUT MUST BE IN ORDER OF EXECTION!
     // all systems that are available have to be defined here.
     var systems = [
       moveWithSpeed,
       moveToTarget,
-      randomTarget,
+      rotateWithSpeed,
       resetRightToLeft,
       pixiDOCRenderer,
       pixiSpriteRenderer,
