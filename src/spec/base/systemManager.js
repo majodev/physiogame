@@ -125,118 +125,118 @@ define(["base/systemManager", "classes/GameEntity"],
 
       });
 
-      it("can (de)attach gameEntities with system bindings (complex systems)", function() {
+      // it("can (de)attach gameEntities with system bindings (complex systems)", function() {
 
-        systemManager.init();
+      //   systemManager.init();
 
-        var entity = new GameEntity({
-          systems: [{
-            id: "moveToTarget",
-            bindings: {
-              reset: "bindingFunction" // call 1 (string) on event
-            }
-          }, {
-            id: "randomTarget",
-            bindings: {
-              anotherevent: ["bindedFunction1", "bindedFunction2"], // call 1 and 2 on event
-              yetanother: "binded3"
-            }
-          }]
-        });
+      //   var entity = new GameEntity({
+      //     systems: [{
+      //       id: "moveToTarget",
+      //       bindings: {
+      //         reset: "bindingFunction" // call 1 (string) on event
+      //       }
+      //     }, {
+      //       id: "randomTarget",
+      //       bindings: {
+      //         anotherevent: ["bindedFunction1", "bindedFunction2"], // call 1 and 2 on event
+      //         yetanother: "binded3"
+      //       }
+      //     }]
+      //   });
 
-        systemManager.attachEntitiesToTheirSystems([entity]);
+      //   systemManager.attachEntitiesToTheirSystems([entity]);
 
-        systemManager.resolveSystem("moveToTarget").entities.length.should.equals(1);
-        systemManager.resolveSystem("randomTarget").entities.length.should.equals(1);
+      //   systemManager.resolveSystem("moveToTarget").entities.length.should.equals(1);
+      //   systemManager.resolveSystem("randomTarget").entities.length.should.equals(1);
 
-        systemManager.deattachEntitiesFromSystems([entity]);
+      //   systemManager.deattachEntitiesFromSystems([entity]);
 
-        systemManager.resolveSystem("moveToTarget").entities.length.should.equals(0);
-        systemManager.resolveSystem("randomTarget").entities.length.should.equals(0);
+      //   systemManager.resolveSystem("moveToTarget").entities.length.should.equals(0);
+      //   systemManager.resolveSystem("randomTarget").entities.length.should.equals(0);
 
-        systemManager.kill();
+      //   systemManager.kill();
 
-      });
+      // });
 
-      it("throws error when binding of entity from systemevent was not found", function() {
+      // it("throws error when binding of entity from systemevent was not found", function() {
 
-        systemManager.init();
+      //   systemManager.init();
 
-        var entity = new GameEntity({
-          c: {
-            position: {
-              x: 0,
-              y: 0
-            },
-            target: {
-              x: 0,
-              y: 0
-            }
-          },
-          systems: [{
-            id: "randomTarget",
-            bindings: {
-              resetTargetX: ["testBinding1", "testBinding2"], // call 1 and 2 on event
-              resetTargetY: "testBinding3"
-            }
-          }]
-        });
+      //   var entity = new GameEntity({
+      //     c: {
+      //       position: {
+      //         x: 0,
+      //         y: 0
+      //       },
+      //       target: {
+      //         x: 0,
+      //         y: 0
+      //       }
+      //     },
+      //     systems: [{
+      //       id: "randomTarget",
+      //       bindings: {
+      //         resetTargetX: ["testBinding1", "testBinding2"], // call 1 and 2 on event
+      //         resetTargetY: "testBinding3"
+      //       }
+      //     }]
+      //   });
 
-        systemManager.attachEntitiesToTheirSystems([entity]);
-        systemManager.resolveSystem("randomTarget").entities.length.should.equals(1);
+      //   systemManager.attachEntitiesToTheirSystems([entity]);
+      //   systemManager.resolveSystem("randomTarget").entities.length.should.equals(1);
 
-        expect(function() {
-          systemManager.update();
-        }).to.
-        throw (Error); // bindings not found (runtime event check!)
+      //   expect(function() {
+      //     systemManager.update();
+      //   }).to.
+      //   throw (Error); // bindings not found (runtime event check!)
 
 
-        systemManager.kill();
+      //   systemManager.kill();
 
-      });
+      // });
 
-      it("can execute bindings of systems", function() {
+      // it("can execute bindings of systems", function() {
 
-        systemManager.init();
+      //   systemManager.init();
 
-        var entity = new GameEntity({
-          c: {
-            position: {
-              x: 0,
-              y: 0
-            },
-            target: {
-              x: 0,
-              y: 0
-            },
-            scale: {
-              x: -1,
-              y: -1
-            }
-          },
-          systems: [{
-            id: "randomTarget",
-            bindings: {
-              resetTargetX: ["randomScale", "randomScale"], // call 1 and 2 on event
-              resetTargetY: "randomScale"
-            }
-          }]
-        });
+      //   var entity = new GameEntity({
+      //     c: {
+      //       position: {
+      //         x: 0,
+      //         y: 0
+      //       },
+      //       target: {
+      //         x: 0,
+      //         y: 0
+      //       },
+      //       scale: {
+      //         x: -1,
+      //         y: -1
+      //       }
+      //     },
+      //     systems: [{
+      //       id: "randomTarget",
+      //       bindings: {
+      //         resetTargetX: ["randomScale", "randomScale"], // call 1 and 2 on event
+      //         resetTargetY: "randomScale"
+      //       }
+      //     }]
+      //   });
 
-        systemManager.attachEntitiesToTheirSystems([entity]);
-        systemManager.resolveSystem("randomTarget").entities.length.should.equals(1);
+      //   systemManager.attachEntitiesToTheirSystems([entity]);
+      //   systemManager.resolveSystem("randomTarget").entities.length.should.equals(1);
 
-        entity.c.scale.x.should.equal(-1);
-        entity.c.scale.y.should.equal(-1);
+      //   entity.c.scale.x.should.equal(-1);
+      //   entity.c.scale.y.should.equal(-1);
 
-        systemManager.update();
+      //   systemManager.update();
 
-        entity.c.scale.x.should.not.equal(-1);
-        entity.c.scale.y.should.not.equal(-1);
+      //   entity.c.scale.x.should.not.equal(-1);
+      //   entity.c.scale.y.should.not.equal(-1);
 
-        systemManager.kill();
+      //   systemManager.kill();
 
-      });
+      // });
 
       it("updates entities through systems", function() {
         var entity1 = {
@@ -292,6 +292,47 @@ define(["base/systemManager", "classes/GameEntity"],
         entity2.c.target.y.should.not.equals(5);
 
         systemManager.kill();
+      });
+
+      it("can attach binding of entity and set it up correctly", function() {
+
+        var entity = new GameEntity({
+          systems: ["randomTarget"],
+          binding: {
+            randomTargetX: ["randomRotation", "randomScale"],
+            randomTargetY: ["randomScale"]
+          }
+        });
+
+        systemManager.init();
+
+        systemManager.attachAllEntityBindings(entity);
+
+        systemManager.kill();
+
+      });
+
+      it("throws error when binding of entity cant be resolved", function() {
+
+        var entity = new GameEntity({
+          systems: ["randomTarget"],
+          binding: {
+            randomTargetX: ["NOTFOUND", "randomScale"],
+            randomTargetY: ["randomScale"]
+          }
+        });
+
+        systemManager.init();
+
+        expect(function() {
+          systemManager.attachAllEntityBindings(entity);
+        }).to.
+        throw (Error);
+
+        
+
+        systemManager.kill();
+
       });
 
     });

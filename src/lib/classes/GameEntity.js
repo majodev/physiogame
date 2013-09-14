@@ -1,5 +1,5 @@
-define(["underscore"],
-  function(_) {
+define(["underscore", "utils/publisher"],
+  function(_, publisher) {
     
     function GameEntity (optionsObject) {
       
@@ -13,6 +13,8 @@ define(["underscore"],
       this.cid = "";
       this.group = "";
       this.tags = [];
+      this.events = publisher.make();
+      this.binding = {};
 
       // all mandadory fields get filled via optionsObject if it exists
       if(_.isUndefined(optionsObject) === false && _.isNull(optionsObject) === false) {
@@ -33,6 +35,10 @@ define(["underscore"],
 
         if(_.isObject(optionsObject.display)) {
           this.display = optionsObject.display;
+        }
+
+        if(_.isObject(optionsObject.binding)) {
+          this.binding = optionsObject.binding;
         }
 
         // simply adding the tags

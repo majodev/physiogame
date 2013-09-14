@@ -4,6 +4,7 @@ define(["systems/Binding", "underscore"],
     var binding = new Binding("randomScale");
 
     binding.onBinding = function(entity, systemid) {
+      //console.log("randomRotation onBinding");
       entity.c.rotation = Math.random() * Math.PI;
     };
 

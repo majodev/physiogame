@@ -21,7 +21,7 @@ define(["underscore", "utils/publisher"],
       this.needs = [];
       this.entities = [];
       this.systemType = "generic";
-      this.events = publisher.make();
+      //this.events = publisher.make();
 
       // needs and entities optional parameters, apply defaults from parameters
       _.defaults(this.needs, optionsObject.needs);
@@ -54,9 +54,9 @@ define(["underscore", "utils/publisher"],
         // OPTIONAL OVERRIDE: executed before entity was removed from genericSystem
       },
 
-      triggerEntityBinding: function(eventType, entity) {
-        this.events.trigger(eventType, entity, this.id);
-      },
+      // triggerEntityBinding: function(eventType, entity) {
+      //   this.events.trigger(eventType, entity, this.id);
+      // },
 
       resolveNeeds: function(entity) {
         var i = 0,
@@ -96,6 +96,12 @@ define(["underscore", "utils/publisher"],
 
       },
 
+      checkEntityHasEvents: function(entity) {
+        if(_.isUndefined(entity.events)) {
+          entity.events = publisher.make();
+        }
+      },
+
       removeSystemIDFromEntity: function(entity) {
         var i = 0,
           len = entity.systems.length;
@@ -124,6 +130,7 @@ define(["underscore", "utils/publisher"],
         // entity is new, examine needs and then push.
         this.resolveNeeds(entity);
         this.checkEntityHasSystemID(entity);
+        this.checkEntityHasEvents(entity);
         this.entities.push(entity);
 
         this.onEntityAdded(entity);

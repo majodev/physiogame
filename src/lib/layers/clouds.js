@@ -10,7 +10,7 @@ define(["log", "base/displayManager", "display/textures", "display/factory",
 
       var i = 0,
         randomScale;
-      for (i; i < 50; i += 1) {
+      for (i; i < 200; i += 1) {
 
         randomizer = _.random(1, 1000) / 1000;
 
@@ -37,12 +37,11 @@ define(["log", "base/displayManager", "display/textures", "display/factory",
               y: randomizer
             }
           },
-          systems: ["pixiMCRenderer", "moveWithSpeed", {
-            id: "resetRightToLeft",
-            bindings: {
-              resetPositionXToLeft: ["randomScale", "randomRotation"]
-            }
-          }]
+          systems: ["pixiMCRenderer", "moveWithSpeed", "resetRightToLeft"],
+          binding: {
+            resetRightToLeft: ["randomScale", "randomRotation"],
+            randomTargetY: ["randomScale"]
+          }
         });
       }
 

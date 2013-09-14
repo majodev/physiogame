@@ -18,7 +18,7 @@ define(["systems/PhysicSystem", "components/object2d",
           0 - entity.c.target.bounds.x,
           entity.c.target.bounds.width + entity.c.target.bounds.x);
 
-        system.triggerEntityBinding("resetTargetX", entity);
+        entity.events.trigger("randomTargetX", entity, this.id);
 
       }
       
@@ -30,7 +30,7 @@ define(["systems/PhysicSystem", "components/object2d",
           0 - entity.c.target.bounds.y,
           entity.c.target.bounds.height + entity.c.target.bounds.y);
 
-        system.triggerEntityBinding("resetTargetY", entity);
+        entity.events.trigger("randomTargetY", entity, this.id);
       }
     };
 

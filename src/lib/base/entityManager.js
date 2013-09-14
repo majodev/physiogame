@@ -84,6 +84,7 @@ define(["underscore", "base/systemManager"],
       storedEntities.push(entity);
       storedEntitiesLength = storedEntities.length;
       systemManager.attachEntityToItsSystems(entity);
+      systemManager.attachAllEntityBindings(entity);
 
       return entity;
     }
@@ -101,6 +102,7 @@ define(["underscore", "base/systemManager"],
       for (i; i < storedEntitiesLength; i += 1) {
         if (storedEntities[i] === entity) {
           systemManager.deattachEntityFromItsSystems(storedEntities[i]);
+          systemManager.deattachAllEntityBindings(entity);
           storedEntities.splice(i, 1);
           storedEntitiesLength = storedEntities.length;
           return true;

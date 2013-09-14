@@ -92,43 +92,61 @@ define(["classes/GameEntity", "underscore"],
 
       });
 
-      it("can accept optional bindings to systemevents on a entity", function() {
+      // it("can accept optional bindings to systemevents on a entity", function() {
+
+      //   var entity = new GameEntity({
+      //     systems: ["normal", {
+      //       id: "bindedsystem",
+      //       bindings: {
+      //         reset: "bindingFunction" // call 1 (string) on event
+      //       }
+      //     }, {
+      //       id: "bindedsystem2",
+      //       bindings: {
+      //         anotherevent: ["bindedFunction1", "bindedFunction2"], // call 1 and 2 on event
+      //         yetanother: "binded3"
+      //       }
+      //     }]
+      //   });
+
+      //   entity.systems[0].should.equal("normal");
+
+      //   // one binding per event id
+
+      //   entity.systems[1].id.should.equal("bindedsystem");
+
+      //   _.keys(entity.systems[1].bindings).length.should.equal(1);
+      //   _.keys(entity.systems[1].bindings)[0].should.equal("reset");
+      //   entity.systems[1].bindings.reset.should.equal("bindingFunction");
+
+      //   // more bindings per event id
+
+      //   entity.systems[2].id.should.equal("bindedsystem2");
+
+      //   _.keys(entity.systems[2].bindings).length.should.equal(2);
+
+      //   _.isArray(entity.systems[2].bindings.anotherevent).should.equal(true);
+      //   _.isString(entity.systems[2].bindings.yetanother).should.equal(true);
+
+      //   entity.systems[2].bindings.anotherevent[0].should.equal("bindedFunction1");
+
+      // });
+      // 
+      // 
+      it("can accept optional binding object, describing actions on entity event", function() {
 
         var entity = new GameEntity({
-          systems: ["normal", {
-            id: "bindedsystem",
-            bindings: {
-              reset: "bindingFunction" // call 1 (string) on event
-            }
-          }, {
-            id: "bindedsystem2",
-            bindings: {
-              anotherevent: ["bindedFunction1", "bindedFunction2"], // call 1 and 2 on event
-              yetanother: "binded3"
-            }
-          }]
+          systems: ["normal", "another"],
+          binding: {
+            event1: ["asdfa", "asdf"],
+            event2: ["asdfa"]
+          }
         });
 
-        entity.systems[0].should.equal("normal");
+        _.keys(entity.binding).length.should.equal(2);
 
-        // one binding per event id
-
-        entity.systems[1].id.should.equal("bindedsystem");
-        
-        _.keys(entity.systems[1].bindings).length.should.equal(1);
-        _.keys(entity.systems[1].bindings)[0].should.equal("reset");
-        entity.systems[1].bindings.reset.should.equal("bindingFunction");
-
-        // more bindings per event id
-
-        entity.systems[2].id.should.equal("bindedsystem2");
-        
-        _.keys(entity.systems[2].bindings).length.should.equal(2);
-        
-        _.isArray(entity.systems[2].bindings.anotherevent).should.equal(true);
-        _.isString(entity.systems[2].bindings.yetanother).should.equal(true);
-
-        entity.systems[2].bindings.anotherevent[0].should.equal("bindedFunction1");
+        entity.binding.event1.length.should.equal(2);
+        entity.binding.event2.length.should.equal(1);
 
       });
 
