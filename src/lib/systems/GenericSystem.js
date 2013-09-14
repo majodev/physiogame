@@ -146,6 +146,7 @@ define(["underscore", "utils/publisher"],
 
         for (i; i < len; i += 1) {
           if (entity === this.entities[i]) {
+            //console.log("system remove entity!");
             this.onEntityRemoved(entity);
             this.removeSystemIDFromEntity(this.entities[i]);
             this.entities.splice(i, 1);

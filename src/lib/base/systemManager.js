@@ -1,10 +1,12 @@
-define(["underscore", "systems/systemMap", "systems/bindingMap", "log"],
-  function(_, systemMap, bindingMap, log) {
+define(["underscore", "systems/systemMap", "systems/bindingMap", "log", "utils/publisher"],
+  function(_, systemMap, bindingMap, log, publisher) {
 
     var systems,
       systemsLength,
       bindings,
-      initialized = false;
+      initialized = false,
+      entitesToRemoveOnNextUpdate = [],
+      events = publisher.make();
 
 
     function init() {
@@ -88,8 +90,11 @@ define(["underscore", "systems/systemMap", "systems/bindingMap", "log"],
     function update() {
 
       // per Frame update all systems in the order of the above array
-
       var i = 0;
+
+      // softly deattach marked entities
+      deattachMarkedEntitiesBeforeUpdate();
+
       for (i; i < systemsLength; i += 1) {
         systems[i].update();
       }
@@ -116,6 +121,21 @@ define(["underscore", "systems/systemMap", "systems/bindingMap", "log"],
         initialized = false;
       }
 
+    }
+
+    function markEntityToBeDeattachedOnNextUpdate(entity) {
+      entitesToRemoveOnNextUpdate.push(entity);
+    }
+
+    function deattachMarkedEntitiesBeforeUpdate() {
+      var i = 0,
+        len = entitesToRemoveOnNextUpdate.length;
+      for (i; i < len; i += 1) {
+        deattachEntityFromItsSystems(entitesToRemoveOnNextUpdate[i]);
+        events.trigger("entitySoftlyDeattached", entitesToRemoveOnNextUpdate[i]);
+      }
+
+      entitesToRemoveOnNextUpdate = [];
     }
 
     function attachAllEntityBindings(entity) {
@@ -240,6 +260,7 @@ define(["underscore", "systems/systemMap", "systems/bindingMap", "log"],
     }
 
     return {
+      events: events,
       init: init,
       kill: kill,
       update: update,
@@ -253,7 +274,8 @@ define(["underscore", "systems/systemMap", "systems/bindingMap", "log"],
       deattachAllEntitiesFromAllSystems: deattachAllEntitiesFromAllSystems,
       resolveSystem: resolveSystem,
       attachAllEntityBindings: attachAllEntityBindings,
-      deattachAllEntityBindings: deattachAllEntityBindings
+      deattachAllEntityBindings: deattachAllEntityBindings,
+      markEntityToBeDeattachedOnNextUpdate: markEntityToBeDeattachedOnNextUpdate
     };
 
   }

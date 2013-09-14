@@ -9,12 +9,13 @@ define(["log", "base/displayManager", "display/textures", "display/factory",
     layer.activate = function() {
 
       var i = 0,
-        randomScale;
+        randomScale,
+        entity;
       for (i; i < 200; i += 1) {
 
         randomizer = _.random(1, 1000) / 1000;
 
-        this.addChildGe({
+        entity = this.addChildGe({
           group: "clouds",
           c: {
             textures: textures.cloudTextureNames,
@@ -39,15 +40,21 @@ define(["log", "base/displayManager", "display/textures", "display/factory",
           },
           systems: ["pixiMCRenderer", "moveWithSpeed", "resetRightToLeft"],
           binding: {
-            resetRightToLeft: ["randomScale", "randomRotation"],
-            randomTargetY: ["randomScale"]
+            resetRightToLeft: ["randomScale", "randomRotation"]
           }
         });
+
+        entity.events.on("resetRightToLeft", onCloudReset);
       }
 
       //cloud.loop = true;
       //cloud.gotoAndPlay(_.random(0, 24));
     };
+
+    function onCloudReset(entity, systemid) {
+        //console.log("layer: cloud reset: e=" + entity.uid + " sys=" + systemid);
+        layer.removeChildGe(entity);
+    }
 
     return layer;
 

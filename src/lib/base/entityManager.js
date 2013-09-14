@@ -10,12 +10,15 @@ define(["underscore", "base/systemManager"],
         storedEntities = [];
         storedEntitiesLength = 0;
         systemManager.init();
+        systemManager.events.on("entitySoftlyDeattached", onEntitySoftlyDeattached);
         initialized = true;
       }
     }
 
     function kill() {
       if (initialized === true) {
+
+        systemManager.events.off("entitySoftlyDeattached", onEntitySoftlyDeattached);
         systemManager.kill();
         storedEntities = [];
         storedEntitiesLength = 0;
@@ -101,15 +104,25 @@ define(["underscore", "base/systemManager"],
       var i = 0;
       for (i; i < storedEntitiesLength; i += 1) {
         if (storedEntities[i] === entity) {
-          systemManager.deattachEntityFromItsSystems(storedEntities[i]);
           systemManager.deattachAllEntityBindings(entity);
+          systemManager.deattachEntityFromItsSystems(storedEntities[i]);
           storedEntities.splice(i, 1);
           storedEntitiesLength = storedEntities.length;
+          //console.log("removed entity!");
           return true;
         }
       }
 
       return false;
+    }
+
+    function removeEntitySoftly(entity) {
+      systemManager.markEntityToBeDeattachedOnNextUpdate(entity);
+    }
+
+    function onEntitySoftlyDeattached(entity) {
+      //console.log("onEntitySoftlyDeattached");
+      removeEntity(entity);
     }
 
     function removeEntities(entities) {
@@ -156,7 +169,8 @@ define(["underscore", "base/systemManager"],
       addEntity: addEntity,
       removeEntity: removeEntity,
       removeEntities: removeEntities,
-      removeEntitiesStrictSortedUids: removeEntitiesStrictSortedUids
+      removeEntitiesStrictSortedUids: removeEntitiesStrictSortedUids,
+      removeEntitySoftly: removeEntitySoftly
     };
 
   }

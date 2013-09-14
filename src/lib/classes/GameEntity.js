@@ -15,6 +15,7 @@ define(["underscore", "utils/publisher"],
       this.tags = [];
       this.events = publisher.make();
       this.binding = {};
+      //this.evaluateBindings = false; // this flag will be checked everytime before a binding is executed (to see if its still valid)
 
       // all mandadory fields get filled via optionsObject if it exists
       if(_.isUndefined(optionsObject) === false && _.isNull(optionsObject) === false) {

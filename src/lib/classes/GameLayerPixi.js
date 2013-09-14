@@ -29,6 +29,14 @@ define(["PIXI", "base/entityManager", "classes/GameEntity"],
 
         // add child to layer
         this.layer.addChild(gameEntity.display);
+
+        return gameEntity;
+      },
+      removeChildGe: function(entity) {
+
+        this.removeEntityForLayersGameEntityUids(entity);
+        entityManager.removeEntitySoftly(entity);
+        this.layer.removeChild(entity.display);
       },
       removeAllChildGes: function() {
 
@@ -40,6 +48,18 @@ define(["PIXI", "base/entityManager", "classes/GameEntity"],
         // strictly remove sorted uid array
         entityManager.removeEntitiesStrictSortedUids(this.gameEntityUids);
         this.gameEntityUids = [];
+      },
+      removeEntityForLayersGameEntityUids: function (entity) {
+        var i = 0,
+          len = this.gameEntityUids.length;
+        for (i; i < len; i += 1) {
+          if(entity.uid === this.gameEntityUids[i]) {
+            this.gameEntityUids.splice(i, 1);
+            return true;
+          }
+        }
+
+        throw new Error("entity " + entity.uid + " wasnt found in gameEntityUids!");
       }
 
     };
