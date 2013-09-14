@@ -7,7 +7,7 @@ define(["base/systemManager", "classes/GameEntity"],
         systemManager.init();
 
         systemManager.resolveSystem("moveToTarget").id.should.equal("moveToTarget");
-        systemManager.resolveSystem("randomTarget").id.should.equal("randomTarget");
+        systemManager.resolveSystem("moveWithSpeed").id.should.equal("moveWithSpeed");
 
         systemManager.kill();
 
@@ -36,14 +36,14 @@ define(["base/systemManager", "classes/GameEntity"],
         systemManager.init();
 
         systemManager.attachEntityToItsSystems({
-          systems: ["moveToTarget", "randomTarget"]
+          systems: ["moveToTarget", "moveWithSpeed"]
         });
         systemManager.attachEntityToItsSystems({
-          systems: ["moveToTarget", "randomTarget"]
+          systems: ["moveToTarget", "moveWithSpeed"]
         });
 
         systemManager.resolveSystem("moveToTarget").entities.length.should.equal(2);
-        systemManager.resolveSystem("randomTarget").entities.length.should.equal(2);
+        systemManager.resolveSystem("moveWithSpeed").entities.length.should.equal(2);
 
         systemManager.kill();
 
@@ -56,7 +56,7 @@ define(["base/systemManager", "classes/GameEntity"],
         systemManager.attachEntityToNewSystemID({}, "moveToTarget");
 
         systemManager.resolveSystem("moveToTarget").entities.length.should.equal(2);
-        systemManager.resolveSystem("randomTarget").entities.length.should.equal(0);
+        systemManager.resolveSystem("moveWithSpeed").entities.length.should.equal(0);
 
         systemManager.kill();
       });
@@ -68,14 +68,14 @@ define(["base/systemManager", "classes/GameEntity"],
           systems: ["moveToTarget"]
         };
         var entity2 = {
-          systems: ["moveToTarget", "randomTarget"]
+          systems: ["moveToTarget", "moveWithSpeed"]
         };
 
         systemManager.attachEntitiesToTheirSystems([entity1, entity2]);
         systemManager.deattachAllEntitiesFromSystemID("moveToTarget");
 
         systemManager.resolveSystem("moveToTarget").entities.length.should.equals(0);
-        systemManager.resolveSystem("randomTarget").entities.length.should.equals(1);
+        systemManager.resolveSystem("moveWithSpeed").entities.length.should.equals(1);
 
         systemManager.kill();
       });
@@ -88,7 +88,7 @@ define(["base/systemManager", "classes/GameEntity"],
           systems: ["moveToTarget"]
         };
         var entity2 = {
-          systems: ["moveToTarget", "randomTarget"]
+          systems: ["moveToTarget", "moveWithSpeed"]
         };
 
         systemManager.attachEntitiesToTheirSystems([entity1, entity2]);
@@ -96,7 +96,7 @@ define(["base/systemManager", "classes/GameEntity"],
         systemManager.deattachEntitiesFromSystems([entity2]);
 
         systemManager.resolveSystem("moveToTarget").entities.length.should.equals(1);
-        systemManager.resolveSystem("randomTarget").entities.length.should.equals(0);
+        systemManager.resolveSystem("moveWithSpeed").entities.length.should.equals(0);
 
         systemManager.kill();
 
@@ -110,16 +110,16 @@ define(["base/systemManager", "classes/GameEntity"],
           systems: ["moveToTarget"]
         };
         var entity2 = {
-          systems: ["moveToTarget", "randomTarget"]
+          systems: ["moveToTarget", "moveWithSpeed"]
         };
 
         systemManager.attachEntitiesToTheirSystems([entity1, entity2]);
 
         systemManager.deattachEntityFromSystemID(entity1, "moveToTarget");
-        systemManager.deattachEntityFromSystemID(entity2, "randomTarget");
+        systemManager.deattachEntityFromSystemID(entity2, "moveWithSpeed");
 
         systemManager.resolveSystem("moveToTarget").entities.length.should.equals(1);
-        systemManager.resolveSystem("randomTarget").entities.length.should.equals(0);
+        systemManager.resolveSystem("moveWithSpeed").entities.length.should.equals(0);
 
         systemManager.kill();
 
@@ -136,7 +136,7 @@ define(["base/systemManager", "classes/GameEntity"],
       //         reset: "bindingFunction" // call 1 (string) on event
       //       }
       //     }, {
-      //       id: "randomTarget",
+      //       id: "moveWithSpeed",
       //       bindings: {
       //         anotherevent: ["bindedFunction1", "bindedFunction2"], // call 1 and 2 on event
       //         yetanother: "binded3"
@@ -147,12 +147,12 @@ define(["base/systemManager", "classes/GameEntity"],
       //   systemManager.attachEntitiesToTheirSystems([entity]);
 
       //   systemManager.resolveSystem("moveToTarget").entities.length.should.equals(1);
-      //   systemManager.resolveSystem("randomTarget").entities.length.should.equals(1);
+      //   systemManager.resolveSystem("moveWithSpeed").entities.length.should.equals(1);
 
       //   systemManager.deattachEntitiesFromSystems([entity]);
 
       //   systemManager.resolveSystem("moveToTarget").entities.length.should.equals(0);
-      //   systemManager.resolveSystem("randomTarget").entities.length.should.equals(0);
+      //   systemManager.resolveSystem("moveWithSpeed").entities.length.should.equals(0);
 
       //   systemManager.kill();
 
@@ -174,7 +174,7 @@ define(["base/systemManager", "classes/GameEntity"],
       //       }
       //     },
       //     systems: [{
-      //       id: "randomTarget",
+      //       id: "moveWithSpeed",
       //       bindings: {
       //         resetTargetX: ["testBinding1", "testBinding2"], // call 1 and 2 on event
       //         resetTargetY: "testBinding3"
@@ -183,7 +183,7 @@ define(["base/systemManager", "classes/GameEntity"],
       //   });
 
       //   systemManager.attachEntitiesToTheirSystems([entity]);
-      //   systemManager.resolveSystem("randomTarget").entities.length.should.equals(1);
+      //   systemManager.resolveSystem("moveWithSpeed").entities.length.should.equals(1);
 
       //   expect(function() {
       //     systemManager.update();
@@ -215,7 +215,7 @@ define(["base/systemManager", "classes/GameEntity"],
       //       }
       //     },
       //     systems: [{
-      //       id: "randomTarget",
+      //       id: "moveWithSpeed",
       //       bindings: {
       //         resetTargetX: ["randomScale", "randomScale"], // call 1 and 2 on event
       //         resetTargetY: "randomScale"
@@ -224,7 +224,7 @@ define(["base/systemManager", "classes/GameEntity"],
       //   });
 
       //   systemManager.attachEntitiesToTheirSystems([entity]);
-      //   systemManager.resolveSystem("randomTarget").entities.length.should.equals(1);
+      //   systemManager.resolveSystem("moveWithSpeed").entities.length.should.equals(1);
 
       //   entity.c.scale.x.should.equal(-1);
       //   entity.c.scale.y.should.equal(-1);
@@ -238,7 +238,7 @@ define(["base/systemManager", "classes/GameEntity"],
 
       // });
 
-      it("updates entities through systems", function() {
+      it("updates entities through systems (with binding test)", function() {
         var entity1 = {
           c: {
             position: {
@@ -254,7 +254,11 @@ define(["base/systemManager", "classes/GameEntity"],
               y: 0
             }
           },
-          systems: ["moveToTarget"]
+          systems: ["moveToTarget"],
+          binding: {
+            moveToTargetXReached: ["randomTargetX"],
+            moveToTargetYReached: ["randomTargetY"],
+          }
         };
 
         var entity2 = {
@@ -272,19 +276,25 @@ define(["base/systemManager", "classes/GameEntity"],
               y: 5
             }
           },
-          systems: ["randomTarget", "moveToTarget"]
+          systems: ["moveToTarget"],
+          binding: {
+            moveToTargetXReached: ["randomTargetX"],
+            moveToTargetYReached: ["randomTargetY"],
+          }
         };
 
         systemManager.init();
 
         systemManager.attachEntitiesToTheirSystems([entity1, entity2]);
+        systemManager.attachAllEntityBindings(entity1);
+        systemManager.attachAllEntityBindings(entity2);
         systemManager.update();
 
         // check if right
         entity1.c.position.x.should.equals(0);
         entity1.c.position.y.should.equals(0);
-        entity1.c.target.x.should.equals(0);
-        entity1.c.target.y.should.equals(0);
+        entity1.c.target.x.should.not.equals(0);
+        entity1.c.target.y.should.not.equals(0);
 
         entity2.c.position.x.should.equals(5);
         entity2.c.position.y.should.equals(5);
@@ -297,10 +307,10 @@ define(["base/systemManager", "classes/GameEntity"],
       it("can attach binding of entity and set it up correctly", function() {
 
         var entity = new GameEntity({
-          systems: ["randomTarget"],
+          systems: ["moveWithSpeed"],
           binding: {
-            randomTargetX: ["randomRotation", "randomScale"],
-            randomTargetY: ["randomScale"]
+            moveWithSpeedX: ["randomRotation", "randomScale"],
+            moveWithSpeedY: ["randomScale"]
           }
         });
 
@@ -315,10 +325,10 @@ define(["base/systemManager", "classes/GameEntity"],
       it("throws error when binding of entity cant be resolved", function() {
 
         var entity = new GameEntity({
-          systems: ["randomTarget"],
+          systems: ["moveToTarget"],
           binding: {
-            randomTargetX: ["NOTFOUND", "randomScale"],
-            randomTargetY: ["randomScale"]
+            moveToTargetXReached: ["NOTFOUND", "randomScale"],
+            moveToTargetYReached: ["randomScale"]
           }
         });
 

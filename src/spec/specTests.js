@@ -10,7 +10,6 @@ define([
     "spec/systems/display/pixiTextRenderer",
     "spec/systems/display/pixiMCRenderer",
     "spec/systems/physic/moveToTarget",
-    "spec/systems/physic/randomTarget",
     "spec/utils/parasiticCombinationInheritance",
     "spec/utils/hittest"
   ],
