@@ -2,7 +2,7 @@ define(["PIXI", "base/entityManager", "classes/GameEntity"],
   function(PIXI, entityManager, GameEntity) {
 
     var Layer = function() {
-      this.layer = new PIXI.DisplayObjectContainer();
+      this.pixiLayer = new PIXI.DisplayObjectContainer();
       this.gameEntityUids = [];
     };
 
@@ -16,7 +16,7 @@ define(["PIXI", "base/entityManager", "classes/GameEntity"],
         this.removeAllChildGes();
       },
       getLayer: function() {
-        return this.layer;
+        return this.pixiLayer;
       },
       addChildGe: function(entityOptionsObject) {
         var gameEntity = new GameEntity(entityOptionsObject);
@@ -27,8 +27,8 @@ define(["PIXI", "base/entityManager", "classes/GameEntity"],
         // add to entityManager
         entityManager.addEntity(gameEntity);
 
-        // add child to layer
-        this.layer.addChild(gameEntity.display);
+        // add child to pixiLayer
+        this.pixiLayer.addChild(gameEntity.display);
 
         return gameEntity;
       },
@@ -36,13 +36,13 @@ define(["PIXI", "base/entityManager", "classes/GameEntity"],
 
         this.removeEntityForLayersGameEntityUids(entity);
         entityManager.removeEntitySoftly(entity);
-        this.layer.removeChild(entity.display);
+        this.pixiLayer.removeChild(entity.display);
       },
       removeAllChildGes: function() {
 
-        var i = this.layer.children.length-1;
+        var i = this.pixiLayer.children.length-1;
         for (i; i >= 0; i -= 1) {
-          this.layer.removeChild(this.layer.children[i]);
+          this.pixiLayer.removeChild(this.pixiLayer.children[i]);
         }
 
         // strictly remove sorted uid array
