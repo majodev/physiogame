@@ -11,9 +11,16 @@ require.config({
     "jquery": "../vendor/jquery/jquery", // watch out: registers jquery and $ itself (prevented!)
     "Howler": "../vendor/howler/howler", // watch out: registers itself as Howler!
     "WebFont": "../vendor/webfontloader/target/webfont",
-    "Spinner": "../vendor/spinjs/dist/spin"
+    "Spinner": "../vendor/spinjs/dist/spin",
+    "Poll": "../vendor/polljs/poll"
   },
   shim: {
+    "Poll": {
+      exports: "Poll",
+      init: function () {
+        console.log("init Poll");
+      }
+    },
     "Spinner": {
       exports: "Spinner",
       init: function() {

@@ -51,17 +51,29 @@ define(["log", "Leap", "config", "utils/publisher"],
     });
 
     // per interval ms
-    setInterval(function() {
-      var time = frameCount / 2,
-        debugText = "leap: received " + frameCount + " frames @ " +
-          time + "fps.";
-      events.trigger("debugInfo", debugText);
-      frameCount = 0;
-    }, 2000);
+    // setInterval(function() {
+    //   var time = frameCount / 2,
+    //     debugText = "leap: received " + frameCount + " frames @ " +
+    //       time + "fps.";
+    //   events.trigger("debugInfo", debugText);
+    //   frameCount = 0;
+    // }, 2000);
 
     function init() {
       log.debug("leapController: init");
       controller.connect();
+
+      Poll.start({
+        name: "debug",
+        interval: 2000,
+        action: function() {
+          var time = frameCount / 2,
+            debugText = "leap: received " + frameCount + " frames @ " +
+              time + "fps.";
+          events.trigger("debugInfo", debugText);
+          frameCount = 0;
+        }
+      });
 
       events.trigger("init");
     }

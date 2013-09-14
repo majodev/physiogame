@@ -29,16 +29,29 @@ define(["log", "PIXI", "config", "utils/resizeWatcher", "utils/publisher", "disp
       resizeWatcher.resizeNow();
 
       events.trigger("init");
+
+      Poll.start({
+        name: "debug",
+        interval: 2000,
+        action: function() {
+          var time = frameCount / 2,
+            debugText = "display: received " + frameCount + " frames @ " + time +
+              "fps.";
+          events.trigger("debugInfo", debugText);
+          frameCount = 0;
+        }
+      });
+
     }
 
     // per interval ms
-    setInterval(function() {
-      var time = frameCount / 2,
-        debugText = "display: received " + frameCount + " frames @ " + time +
-          "fps.";
-      events.trigger("debugInfo", debugText);
-      frameCount = 0;
-    }, 2000);
+    // setInterval(function() {
+    //   var time = frameCount / 2,
+    //     debugText = "display: received " + frameCount + " frames @ " + time +
+    //       "fps.";
+    //   events.trigger("debugInfo", debugText);
+    //   frameCount = 0;
+    // }, 2000);
 
     function renderFrame() {
       requestAnimFrame(renderFrame);

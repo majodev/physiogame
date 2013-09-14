@@ -1,5 +1,5 @@
-define(["log", "PIXI", "entities/scoreEntity", "display/factory", "config", "base/displayManager"],
-  function(log, PIXI, scoreEntity, factory, config, displayManager) {
+define(["log", "PIXI", "entities/scoreEntity", "display/factory", "config", "base/displayManager", "Poll"],
+  function(log, PIXI, scoreEntity, factory, config, displayManager, Poll) {
 
     var layer = factory.makeLayer(),
       countingText,
@@ -98,6 +98,24 @@ define(["log", "PIXI", "entities/scoreEntity", "display/factory", "config", "bas
 
       displayManager.events.on("renderFrame", onRenderDisableIntroAnimation);
 
+
+      Poll.start({
+        name: "textUpdater",
+        interval: 100,
+        action: function() {
+          if (scoreTimerRunning) {
+            scoreTimerCount += 1;
+            timerText.setText("Time: " + scoreTimerCount / 10);
+          }
+          if (introTimerRunning) {
+            introTimerCount += 1;
+            if (introTimerCount > 60) {
+              introTimerRunning = false;
+            }
+          }
+        }
+      });
+
     }
 
     function onRenderDisableIntroAnimation() {
@@ -171,24 +189,10 @@ define(["log", "PIXI", "entities/scoreEntity", "display/factory", "config", "bas
       }
     }
 
-    setInterval(function() {
-      if (scoreTimerRunning) {
-        scoreTimerCount += 1;
-        //scoreTimerCount = parseInt(scoreTimerCount*10 , 10)/10;
-
-        timerText.setText("Time: " + scoreTimerCount / 10);
-      }
-      if (introTimerRunning) {
-        introTimerCount += 1;
-        if (introTimerCount > 60) {
-          introTimerRunning = false;
-        }
-      }
-
-    }, 100);
-
     function deactivate() {
       displayManager.events.off("renderFrame", onRenderDisableIntroAnimation);
+
+      Poll.stop("textUpdater");
 
       layer.removeChild(countingText);
       layer.removeChild(timerText);
