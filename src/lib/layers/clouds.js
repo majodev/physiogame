@@ -12,7 +12,7 @@ define(["log", "base/displayManager", "display/textures", "display/factory",
         randomScale;
       for (i; i < 50; i += 1) {
 
-        randomizer = _.random(1, 1000)/1000;
+        randomizer = _.random(1, 1000) / 1000;
 
         this.addChildGe({
           group: "clouds",
@@ -30,13 +30,19 @@ define(["log", "base/displayManager", "display/textures", "display/factory",
               x: randomizer,
               y: 0
             },
+            rotation: Math.random() * Math.PI,
             alpha: randomizer,
             scale: {
               x: randomizer,
               y: randomizer
             }
           },
-          systems: ["pixiMCRenderer", "moveWithSpeed", "resetRightToLeft"]
+          systems: ["pixiMCRenderer", "moveWithSpeed", {
+            id: "resetRightToLeft",
+            bindings: {
+              resetPositionXToLeft: ["randomScale", "randomRotation"]
+            }
+          }]
         });
       }
 

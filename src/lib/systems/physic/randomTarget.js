@@ -8,15 +8,7 @@ define(["systems/PhysicSystem", "components/object2d",
       needs: [object2d, target2d, speed2d]
     });
 
-    system.update = function() {
-      var i = 0,
-        len = system.entities.length;
-      for (i; i < len; i += 1) {
-        updateEntity(system.entities[i]);
-      }
-    };
-
-    function updateEntity(entity) {
+    system.updateEntity = function(entity) {
 
       // set random x on target reached
       if (Math.abs(entity.c.position.x -
@@ -26,7 +18,7 @@ define(["systems/PhysicSystem", "components/object2d",
           0 - entity.c.target.bounds.x,
           entity.c.target.bounds.width + entity.c.target.bounds.x);
 
-        system.events.trigger("randomTargetx", entity);
+        system.triggerEntityBinding("resetTargetX", entity);
 
       }
       
@@ -38,9 +30,9 @@ define(["systems/PhysicSystem", "components/object2d",
           0 - entity.c.target.bounds.y,
           entity.c.target.bounds.height + entity.c.target.bounds.y);
 
-        system.events.trigger("randomTargety", entity);
+        system.triggerEntityBinding("resetTargetY", entity);
       }
-    }
+    };
 
     return system;
   });

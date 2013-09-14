@@ -1,5 +1,5 @@
-define(["base/systemManager"],
-  function(systemManager) {
+define(["base/systemManager", "classes/GameEntity"],
+  function(systemManager, GameEntity) {
     describe("base/systemManager", function() {
 
       it("resolves system based on id", function() {
@@ -19,11 +19,13 @@ define(["base/systemManager"],
 
         expect(function() {
           systemManager.resolveSystem("undefinedSystem");
-        }).to.throw(Error);
+        }).to.
+        throw (Error);
 
         expect(function() {
           systemManager.resolveSystem();
-        }).to.throw(TypeError);
+        }).to.
+        throw (TypeError);
 
         systemManager.kill();
 
@@ -47,7 +49,7 @@ define(["base/systemManager"],
 
       });
 
-      it("can attach entity to a new system", function () {
+      it("can attach entity to a new system", function() {
         systemManager.init();
 
         systemManager.attachEntityToNewSystemID({}, "moveToTarget");
@@ -62,8 +64,12 @@ define(["base/systemManager"],
       it("can deattach all entities from a system", function() {
         systemManager.init();
 
-        var entity1 = {systems: ["moveToTarget"]};
-        var entity2 = {systems: ["moveToTarget", "randomTarget"]};
+        var entity1 = {
+          systems: ["moveToTarget"]
+        };
+        var entity2 = {
+          systems: ["moveToTarget", "randomTarget"]
+        };
 
         systemManager.attachEntitiesToTheirSystems([entity1, entity2]);
         systemManager.deattachAllEntitiesFromSystemID("moveToTarget");
@@ -78,8 +84,12 @@ define(["base/systemManager"],
 
         systemManager.init();
 
-        var entity1 = {systems: ["moveToTarget"]};
-        var entity2 = {systems: ["moveToTarget", "randomTarget"]};
+        var entity1 = {
+          systems: ["moveToTarget"]
+        };
+        var entity2 = {
+          systems: ["moveToTarget", "randomTarget"]
+        };
 
         systemManager.attachEntitiesToTheirSystems([entity1, entity2]);
 
@@ -96,8 +106,12 @@ define(["base/systemManager"],
 
         systemManager.init();
 
-        var entity1 = {systems: ["moveToTarget"]};
-        var entity2 = {systems: ["moveToTarget", "randomTarget"]};
+        var entity1 = {
+          systems: ["moveToTarget"]
+        };
+        var entity2 = {
+          systems: ["moveToTarget", "randomTarget"]
+        };
 
         systemManager.attachEntitiesToTheirSystems([entity1, entity2]);
 
@@ -106,6 +120,119 @@ define(["base/systemManager"],
 
         systemManager.resolveSystem("moveToTarget").entities.length.should.equals(1);
         systemManager.resolveSystem("randomTarget").entities.length.should.equals(0);
+
+        systemManager.kill();
+
+      });
+
+      it("can (de)attach gameEntities with system bindings (complex systems)", function() {
+
+        systemManager.init();
+
+        var entity = new GameEntity({
+          systems: [{
+            id: "moveToTarget",
+            bindings: {
+              reset: "bindingFunction" // call 1 (string) on event
+            }
+          }, {
+            id: "randomTarget",
+            bindings: {
+              anotherevent: ["bindedFunction1", "bindedFunction2"], // call 1 and 2 on event
+              yetanother: "binded3"
+            }
+          }]
+        });
+
+        systemManager.attachEntitiesToTheirSystems([entity]);
+
+        systemManager.resolveSystem("moveToTarget").entities.length.should.equals(1);
+        systemManager.resolveSystem("randomTarget").entities.length.should.equals(1);
+
+        systemManager.deattachEntitiesFromSystems([entity]);
+
+        systemManager.resolveSystem("moveToTarget").entities.length.should.equals(0);
+        systemManager.resolveSystem("randomTarget").entities.length.should.equals(0);
+
+        systemManager.kill();
+
+      });
+
+      it("throws error when binding of entity from systemevent was not found", function() {
+
+        systemManager.init();
+
+        var entity = new GameEntity({
+          c: {
+            position: {
+              x: 0,
+              y: 0
+            },
+            target: {
+              x: 0,
+              y: 0
+            }
+          },
+          systems: [{
+            id: "randomTarget",
+            bindings: {
+              resetTargetX: ["testBinding1", "testBinding2"], // call 1 and 2 on event
+              resetTargetY: "testBinding3"
+            }
+          }]
+        });
+
+        systemManager.attachEntitiesToTheirSystems([entity]);
+        systemManager.resolveSystem("randomTarget").entities.length.should.equals(1);
+
+        expect(function() {
+          systemManager.update();
+        }).to.
+        throw (Error); // bindings not found (runtime event check!)
+
+
+        systemManager.kill();
+
+      });
+
+      it("can execute bindings of systems", function() {
+
+        systemManager.init();
+
+        var entity = new GameEntity({
+          c: {
+            position: {
+              x: 0,
+              y: 0
+            },
+            target: {
+              x: 0,
+              y: 0
+            },
+            scale: {
+              x: -1,
+              y: -1
+            }
+          },
+          systems: [{
+            id: "randomTarget",
+            bindings: {
+              resetTargetX: ["randomScale", "randomScale"], // call 1 and 2 on event
+              resetTargetY: "randomScale"
+            }
+          }]
+        });
+
+        systemManager.attachEntitiesToTheirSystems([entity]);
+        systemManager.resolveSystem("randomTarget").entities.length.should.equals(1);
+
+        entity.c.scale.x.should.equal(-1);
+        entity.c.scale.y.should.equal(-1);
+
+        systemManager.update();
+
+        entity.c.scale.x.should.not.equal(-1);
+        entity.c.scale.y.should.not.equal(-1);
 
         systemManager.kill();
 

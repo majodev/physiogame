@@ -54,6 +54,10 @@ define(["underscore", "utils/publisher"],
         // OPTIONAL OVERRIDE: executed before entity was removed from genericSystem
       },
 
+      triggerEntityBinding: function(eventType, entity) {
+        this.events.trigger(eventType, entity, this.id);
+      },
+
       resolveNeeds: function(entity) {
         var i = 0,
           len = this.needs.length;

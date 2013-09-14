@@ -1,5 +1,5 @@
-define(["classes/GameEntity"],
-  function(GameEntity) {
+define(["classes/GameEntity", "underscore"],
+  function(GameEntity, _) {
 
     describe("classes/GameEntity", function() {
       it("can extend components", function() {
@@ -55,7 +55,7 @@ define(["classes/GameEntity"],
 
       });
 
-      it("has a automatically filled uniqueID", function () {
+      it("has a automatically filled uniqueID", function() {
         var entity1 = new GameEntity();
         var entity2 = new GameEntity();
 
@@ -67,15 +67,21 @@ define(["classes/GameEntity"],
 
       });
 
-      it("has cid, group and tags", function () {
-        var entity1 = new GameEntity({cid: "one"});
-        var entity2 = new GameEntity({group: "lol"});
-        var entity3 = new GameEntity({tags:["first", "lol"]});
+      it("has cid, group and tags", function() {
+        var entity1 = new GameEntity({
+          cid: "one"
+        });
+        var entity2 = new GameEntity({
+          group: "lol"
+        });
+        var entity3 = new GameEntity({
+          tags: ["first", "lol"]
+        });
         var entity4 = new GameEntity();
 
         entity1.cid.should.equal("one");
         entity2.group.should.equal("lol");
-        
+
         entity3.tags.length.should.equal(2);
         entity3.tags[0].should.equal("first");
         entity3.tags[1].should.equal("lol");
@@ -83,6 +89,46 @@ define(["classes/GameEntity"],
         entity4.cid.should.equal("");
         entity4.group.should.equal("");
         entity4.tags.length.should.equal(0);
+
+      });
+
+      it("can accept optional bindings to systemevents on a entity", function() {
+
+        var entity = new GameEntity({
+          systems: ["normal", {
+            id: "bindedsystem",
+            bindings: {
+              reset: "bindingFunction" // call 1 (string) on event
+            }
+          }, {
+            id: "bindedsystem2",
+            bindings: {
+              anotherevent: ["bindedFunction1", "bindedFunction2"], // call 1 and 2 on event
+              yetanother: "binded3"
+            }
+          }]
+        });
+
+        entity.systems[0].should.equal("normal");
+
+        // one binding per event id
+
+        entity.systems[1].id.should.equal("bindedsystem");
+        
+        _.keys(entity.systems[1].bindings).length.should.equal(1);
+        _.keys(entity.systems[1].bindings)[0].should.equal("reset");
+        entity.systems[1].bindings.reset.should.equal("bindingFunction");
+
+        // more bindings per event id
+
+        entity.systems[2].id.should.equal("bindedsystem2");
+        
+        _.keys(entity.systems[2].bindings).length.should.equal(2);
+        
+        _.isArray(entity.systems[2].bindings.anotherevent).should.equal(true);
+        _.isString(entity.systems[2].bindings.yetanother).should.equal(true);
+
+        entity.systems[2].bindings.anotherevent[0].should.equal("bindedFunction1");
 
       });
 

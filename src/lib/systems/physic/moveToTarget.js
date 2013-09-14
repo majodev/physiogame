@@ -8,15 +8,7 @@ define(["systems/PhysicSystem", "components/object2d", "components/speed2d",
       needs: [object2d, speed2d, target2d]
     });
 
-    system.update = function() {
-      var i = 0,
-        len = system.entities.length;
-      for (i; i < len; i += 1) {
-        updateEntity(system.entities[i]);
-      }
-    };
-
-    function updateEntity(entity) {
+    system.updateEntity = function(entity) {
       if (entity.c.speed.x !== 0) {
         if (entity.c.position.x < entity.c.target.x) {
           entity.c.position.x += Math.abs(entity.c.speed.x);
@@ -33,7 +25,7 @@ define(["systems/PhysicSystem", "components/object2d", "components/speed2d",
           entity.c.position.y -= Math.abs(entity.c.speed.y);
         }
       }
-    }
+    };
 
     return system;
   }

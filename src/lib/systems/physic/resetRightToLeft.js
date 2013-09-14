@@ -10,23 +10,15 @@ define(["systems/PhysicSystem", "components/object2d",
       needs: [object2d, sprite2d, speed2d, bounds2d]
     });
 
-    system.update = function() {
-      var i = 0,
-        len = system.entities.length;
-      for (i; i < len; i += 1) {
-        updateEntity(system.entities[i]);
-      }
-    };
-
-    function updateEntity(entity) {
+    system.updateEntity = function(entity) {
 
       if((entity.c.position.x - entity.c.width) > entity.c.bounds.width) {
         // reset to left
         entity.c.position.x = entity.c.bounds.x - entity.c.width;
 
-        system.events.trigger("resetRightToLeft", entity);
+        system.triggerEntityBinding("resetPositionXToLeft", entity);
       }
-    }
+    };
 
     return system;
   });
