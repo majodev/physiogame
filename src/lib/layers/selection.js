@@ -3,7 +3,8 @@ define(["classes/Layer", "classes/Button"],
 
     var layer = new Layer(),
       shootingButton,
-      creditsButton;
+      creditsButton,
+      balloonsButton;
 
     layer.onActivate = function() {
 
@@ -14,17 +15,41 @@ define(["classes/Layer", "classes/Button"],
         }
       });
 
+      shootingButton.display.position = {
+        x: this.width * 0.33,
+        y: this.height * 0.75
+      };
+
+      shootingButton.onClick = function() {
+        layer.notifyScene({
+          pushScene: "shooting"
+        });
+      };
+
+      balloonsButton = new Button({
+        texts: {
+          normal: "balloons",
+          mouseover: "play!",
+        }
+      });
+
+      balloonsButton.display.position = {
+        x: this.width * 0.66,
+        y: this.height * 0.75
+      };
+
+      balloonsButton.onClick = function() {
+        layer.notifyScene({
+          pushScene: "balloons"
+        });
+      };
+
       creditsButton = new Button({
         texts: {
           normal: "credits",
           mouseover: "credits!"
         }
       });
-
-      shootingButton.display.position = {
-        x: this.width * 0.5,
-        y: this.height * 0.75
-      };
 
       creditsButton.display.scale = {
         x: 0.5,
@@ -36,12 +61,6 @@ define(["classes/Layer", "classes/Button"],
         y: this.height - creditsButton.buttonBG.height/4 - 10
       };
 
-      shootingButton.onClick = function() {
-        layer.notifyScene({
-          pushScene: "shooting"
-        });
-      };
-
       creditsButton.onClick = function() {
         layer.notifyScene({
           pushScene: "credits"
@@ -49,6 +68,7 @@ define(["classes/Layer", "classes/Button"],
       };
 
       this.addChild(shootingButton.display);
+      this.addChild(balloonsButton.display);
       this.addChild(creditsButton.display);
     };
 
