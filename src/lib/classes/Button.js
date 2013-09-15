@@ -8,7 +8,7 @@ define(["PIXI", "display/textures", "underscore"],
 
       this.settings = {
         style: {
-          font: "bold italic 40px Arvo",
+          font: "bold 40px Arvo",
           fill: "#bb4433",
           align: "center",
           stroke: "#FFAAAA",
@@ -25,7 +25,7 @@ define(["PIXI", "display/textures", "underscore"],
         textures: defaultBGTextures
       };
 
-      console.dir(this.settings);
+      //console.dir(this.settings);
 
       // examine options and merge into settings
       if (_.isUndefined(options) === false) {
@@ -61,6 +61,8 @@ define(["PIXI", "display/textures", "underscore"],
       // set the button layers interactive
       this.buttonText.interactive = true;
       this.buttonBG.interactive = true;
+      this.buttonText.buttonMode = true;
+      this.buttonBG.buttonMode = true;
 
       // attach button text and bg to container
       this.display = new PIXI.DisplayObjectContainer();

@@ -1,7 +1,7 @@
 define(["display/textures", "display/factory", "config", "utils/hittest", "underscore", "PIXI",
-    "entities/scoreEntity", "base/soundManager", "gameObjects/crosshairSprite", "classes/Layer"
+    "entities/scoreEntity", "base/soundManager", "gameObjects/crosshairGO", "classes/Layer"
   ],
-  function(textures, factory, config, hittest, _, PIXI, scoreEntity, soundManager, crosshairSprite, Layer) {
+  function(textures, factory, config, hittest, _, PIXI, scoreEntity, soundManager, crosshairGO, Layer) {
 
     var layer = new Layer({
       listeners: {
@@ -26,11 +26,11 @@ define(["display/textures", "display/factory", "config", "utils/hittest", "under
     layer.onActivate = function() {
       createAliens();
 
-      crosshairSprite.events.on("crosshairActive", detectCrosshairHitsAlien);
+      crosshairGO.events.on("crosshairActive", detectCrosshairHitsAlien);
     };
 
     layer.onDeactivate = function() {
-      crosshairSprite.events.off("crosshairActive", detectCrosshairHitsAlien);
+      crosshairGO.events.off("crosshairActive", detectCrosshairHitsAlien);
 
       aliensArray = [];
       explosionsClearing = [];

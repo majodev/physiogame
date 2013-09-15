@@ -1,8 +1,7 @@
 define(["log", "PIXI", "entities/scoreEntity",
-    "display/factory", "config", "base/displayManager", "Poll",
-    "classes/Layer"
+    "display/factory", "config", "Poll", "classes/Layer"
   ],
-  function(log, PIXI, scoreEntity, factory, config, displayManager, Poll, Layer) {
+  function(log, PIXI, scoreEntity, factory, config, Poll, Layer) {
 
     var layer = new Layer({
       listeners: {
@@ -40,17 +39,17 @@ define(["log", "PIXI", "entities/scoreEntity",
       introTimerCount = 0;
       introTimerRunning = true;
 
-      countingText.position.x = config.get("width") - 15;
+      countingText.position.x = layer.width - 15;
       countingText.position.y = 0;
       countingText.anchor.x = 1;
 
-      timerText.position.x = config.get("width") - 15;
-      timerText.position.y = config.get("height") - 15;
+      timerText.position.x = layer.width - 15;
+      timerText.position.y = layer.height - 15;
       timerText.anchor.x = 1;
       timerText.anchor.y = 1;
 
-      introText.position.x = config.get("width") / 2;
-      introText.position.y = config.get("height") / 2;
+      introText.position.x = layer.width / 2;
+      introText.position.y = layer.height / 2;
       introText.anchor.x = 0.5;
       introText.anchor.y = 0.5;
 
@@ -147,13 +146,13 @@ define(["log", "PIXI", "entities/scoreEntity",
       scoreTimerRunning = true;
       countingText.setText(model.get("aliensKilled") + " of " + config.get("aliensToSpawn"));
 
-      log.warn("scoreChange");
+      //log.warn("scoreChange");
 
       if (winningAdded === false && config.get("aliensToSpawn") <= model.get("aliensKilled")) {
         // win, displayManager the text
 
-        winningText.position.x = config.get("width") / 2;
-        winningText.position.y = config.get("height") / 2;
+        winningText.position.x = layer.width / 2;
+        winningText.position.y = layer.height / 2;
         winningText.anchor.x = 0.5;
         winningText.anchor.y = 0.5;
 

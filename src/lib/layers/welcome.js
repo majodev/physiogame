@@ -1,5 +1,5 @@
-define(["PIXI", "display/factory", "config", "classes/Layer"],
-  function(PIXI, factory, config, Layer) {
+define(["PIXI", "classes/Layer"],
+  function(PIXI, Layer) {
 
     var layer = new Layer(),
       welcomeText;

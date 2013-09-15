@@ -1,7 +1,7 @@
 define(["base/displayManager", "base/leapManager", "display/factory",
-  "PIXI", "utils/publisher", "classes/Layer", "gameObjects/crosshairSprite"],
+  "PIXI", "utils/publisher", "classes/Layer", "gameObjects/crosshairGO"],
   function(displayManager, leapManager, factory, PIXI, publisher,
-    Layer, crosshairSprite) {
+    Layer, crosshairGO) {
 
     var layer = new Layer({
       listeners: {
@@ -11,7 +11,7 @@ define(["base/displayManager", "base/leapManager", "display/factory",
     });
 
     layer.onActivate = function () {
-      this.pixiLayer.addChild(crosshairSprite.crosshairSprite);
+      this.pixiLayer.addChild(crosshairGO.display);
     };
 
     layer.onRender = function () {
@@ -20,22 +20,22 @@ define(["base/displayManager", "base/leapManager", "display/factory",
     };
 
     layer.onHandFrame = function (coordinates) {
-      crosshairSprite.crosshairSprite.position.x = coordinates.position.x;
-      crosshairSprite.crosshairSprite.position.y = coordinates.position.y;
+      crosshairGO.display.position.x = coordinates.position.x;
+      crosshairGO.display.position.y = coordinates.position.y;
     };
 
     function onRenderRotate() {
-      crosshairSprite.crosshairSprite.rotation += 0.1;
+      crosshairGO.display.rotation += 0.1;
     }
 
     function onRenderAlpha() {
-      if (leapManager.getHandsAvailable() === true || crosshairSprite.mouseCurrentlyDown === true) {
-        if (crosshairSprite.crosshairSprite.alpha < 1) {
-          crosshairSprite.crosshairSprite.alpha += 0.02;
+      if (leapManager.getHandsAvailable() === true || crosshairGO.display.buttonMode === true) {
+        if (crosshairGO.display.alpha < 1) {
+          crosshairGO.display.alpha += 0.02;
         }
       } else {
-        if (crosshairSprite.crosshairSprite.alpha > 0.2) {
-          crosshairSprite.crosshairSprite.alpha -= 0.01;
+        if (crosshairGO.display.alpha > 0.2) {
+          crosshairGO.display.alpha -= 0.01;
         }
       }
     }

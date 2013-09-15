@@ -1,7 +1,7 @@
-define(["log", "base/displayManager", "display/textures", "display/factory",
-    "PIXI", "underscore", "config", "classes/Layer"
+define(["log", "display/textures",
+    "PIXI", "underscore", "classes/Layer"
   ],
-  function(log, displayManager, textures, factory, PIXI, _, config, Layer) {
+  function(log, textures, PIXI, _, Layer) {
 
     var layer = new Layer({
       listeners: {
