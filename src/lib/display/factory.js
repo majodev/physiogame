@@ -1,5 +1,5 @@
-define(["PIXI", "config"],
-  function(PIXI, config) {
+define(["PIXI", "config", "display/textures"],
+  function(PIXI, config, textures) {
 
     // private
     var crosshairTexture = PIXI.Texture.fromImage("assets/crosshair.png");
@@ -42,6 +42,7 @@ define(["PIXI", "config"],
 
     function makeCrosshair(px, py, ax, ay) {
       var cross = makePIXISprite(crosshairTexture, px, py, ax, ay);
+      //var cross = makePIXISprite(textures.atlas.crosshair, px, py, ax, ay);
       return cross;
     }
 

@@ -1,41 +1,64 @@
-define(["PIXI", "config", "utils/zeroPad", "loaders/spriteLoader"
-  ],
+define(["PIXI", "config", "utils/zeroPad", "loaders/spriteLoader"],
   function(PIXI, config, zeroPad, spriteLoader) {
 
-    var aliens = [],
-      alienFrames = ["eggHead.png", "flowerTop.png", "helmlok.png", "skully.png"],
-      explosionTextures = [],
-      width = config.get("width"),
-      height = config.get("height"),
-      aliensToSpawn = config.get("aliensToSpawn"),
-      backgroundTexture,
-      cloudTextures = [],
-      buttonBGTextures = [];
+    var atlas = {
+        background: undefined,
+        crosshair: undefined,
+        aliens: [],
+        explosions: [],
+        clouds: [],
+        buttonBGs: [],
+        balloons: []
+      };
+
+    // will be called when all preloading of pictures and json has finished!
 
     function init() {
-      var i = 0,
-        texture;
-
-      // add explosion textures
-      for (i = 0; i < 26; i += 1) {
-        texture = getTextureByName("Explosion_Sequence_A " + (i + 1) + ".png");
-        explosionTextures.push(texture);
-      }
 
       // add background texture
-      backgroundTexture = getTextureByName("bg/0000");
+      atlas.background = getTextureByName("bg/0000");
 
-      // add cloud texture
-      for (i = 0; i < 25; i += 1) {
-        texture = getTextureByName("cloud/" + zeroPad(i, 4));
-        cloudTextures.push(texture);
-      }
+      // add crosshair
+      //atlas.crosshair = getTextureByImageID("assets/crosshair.png");
+
+      // add alien textures
+      parseTexturesByNames(atlas.aliens, [
+        "eggHead.png", "flowerTop.png", "helmlok.png", "skully.png"]);
+
+      // add explosion textures
+      parseTextures(atlas.explosions, "Explosion_Sequence_A ", ".png", 1, 26, false);
+
+      // add cloud textures
+      parseTextures(atlas.clouds, "cloud/", "", 0, 24, true, 4);
 
       // add buttonBG textures
-      for (i = 0; i < 4 ; i += 1) {
-        texture = getTextureByName("ButtonBG" + zeroPad(i, 4));
-        buttonBGTextures.push(texture);
-      } 
+      parseTextures(atlas.buttonBGs, "ButtonBG", "", 0, 3, true, 4);
+
+      // add balloon textures
+      parseTextures(atlas.balloons, "ballMC", "", 0, 5, true, 4);
+    }
+
+    function parseTexturesByNames(atlasArray, textureNames) {
+      var i = 0,
+        len = textureNames.length;
+      for (i; i < len; i += 1) {
+        atlasArray.push(getTextureByName(textureNames[i]));
+      }
+    }
+
+    function parseTextures(atlasArray, prefix, postfix, firstIndex, lastIndex, pad, padLength) {
+      var i = firstIndex,
+        len = lastIndex,
+        texture;
+
+      for (i; i <= len; i += 1) {
+        if (pad === false) {
+          texture = getTextureByName(prefix + i + postfix);
+        } else {
+          texture = getTextureByName(prefix + zeroPad(i, padLength) + postfix);
+        }
+        atlasArray.push(texture);
+      }
     }
 
     function getTextureByName(name) {
@@ -43,17 +66,15 @@ define(["PIXI", "config", "utils/zeroPad", "loaders/spriteLoader"
       return textureByName;
     }
 
+    function getTextureByImageID(id) {
+      var textureByImageID = PIXI.Texture.fromFrameId(id);
+      return textureByImageID;
+    }
+
     return {
       init: init,
-      aliens: aliens,
-      alienFrames: alienFrames,
-      explosionTextures: explosionTextures,
-      getBackgroundTexture: function() {
-        return backgroundTexture;
-      },
-      cloudTextures: cloudTextures,
       getTextureByName: getTextureByName,
-      buttonBGTextures: buttonBGTextures
+      atlas: atlas
     };
   }
 );

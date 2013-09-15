@@ -2,10 +2,10 @@ define(["log", "PIXI", "config", "utils/publisher"],
   function(log, PIXI, config, publisher) {
 
     var events = publisher.make(),
-      pixiSpriteLoader = new PIXI.AssetLoader(config.get("spriteSheets")),
+      pixiSpriteLoader = new PIXI.AssetLoader(config.get("images")),
       spriteSheetsLoaded = false,
       spritesSheetLoadedCount = 0,
-      spritesSheetToLoadLength = config.get("spriteSheets").length;
+      spritesSheetToLoadLength = config.get("images").length;
 
     // set callback to fire after pixiSpriteLoader is complete
     pixiSpriteLoader.onComplete = onSpriteSheetsLoaded;
@@ -22,6 +22,8 @@ define(["log", "PIXI", "config", "utils/publisher"],
       log.debug("spritesheets loaded");
       spriteSheetsLoaded = true;
       events.trigger("allSpritesLoaded");
+
+      console.dir(PIXI.TextureCache);
     }
 
     function onSpriteSheetProgress() {

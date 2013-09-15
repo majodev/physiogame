@@ -1,8 +1,8 @@
 define(["log", "utils/publisher", "base/displayManager", "underscore",
-    "factories/sceneFactory"
+    "factories/sceneMap"
   ],
   function(log, publisher, displayManager, _,
-    sceneFactory) {
+    sceneMap) {
 
     var events = publisher.make(),
       currentScene = {
@@ -36,11 +36,11 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
     // syntactic sugar for exchangeScene public api
 
     function pushScene(id) {
-      exchangeScene(id, sceneFactory.getScene(id));
+      exchangeScene(id, sceneMap.getScene(id));
     }
 
     function onSceneLayerEvent(options) {
-      console.log("onSceneLayerEvent: " + options);
+      //console.log("onSceneLayerEvent: " + options);
       if (_.isUndefined(options) === false) {
         if(_.isUndefined(options.pushScene) === false) {
           pushScene(options.pushScene);

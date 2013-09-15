@@ -4,7 +4,7 @@ define(["PIXI", "display/textures", "underscore"],
     var Button = function(options) {
 
       var self = this; // save a reference to reference back in eventlisteners
-      var defaultBGTextures = textures.buttonBGTextures;
+      var defaultBGTextures = textures.atlas.buttonBGs;
 
       this.settings = {
         style: {

@@ -74,14 +74,11 @@ define(["display/textures", "display/factory", "config", "utils/hittest", "under
 
       var aliensToSpawn = config.get("aliensToSpawn"),
         i = 0,
-        frameName,
         asien;
       // add aliens...
       for (i = 0; i < aliensToSpawn; i += 1) {
-        frameName = textures.alienFrames[i % 4];
 
-        // create an alien using the frame name..
-        alien = factory.makePIXISprite(textures.getTextureByName(frameName));
+        alien = factory.makePIXISprite(textures.atlas.aliens[i % 4]);
 
         // set its initial values...
         alien.position.x = parseInt(Math.random() * layer.width, 10);
@@ -183,7 +180,7 @@ define(["display/textures", "display/factory", "config", "utils/hittest", "under
           if (alien.scale.x > 1.8) { // boom
             alien.visible = false;
 
-            var explosion = new PIXI.MovieClip(textures.explosionTextures);
+            var explosion = new PIXI.MovieClip(textures.atlas.explosions);
 
             explosion.position.x = aliensArray[i].position.x;
             explosion.position.y = aliensArray[i].position.y;

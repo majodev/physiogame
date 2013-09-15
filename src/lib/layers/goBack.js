@@ -9,7 +9,7 @@ define(["classes/Layer", "classes/Button"],
       goBackButton = new Button({
         texts: {
           normal: "back",
-          mouseover: "go back!",
+          mouseover: "back!",
         }
       });
 

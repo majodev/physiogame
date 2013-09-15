@@ -7,7 +7,7 @@ define(["display/textures", "display/factory", "PIXI", "underscore", "classes/La
     layer.onActivate = function () {
       if (_.isUndefined(bg) === true) {
 
-        bg = factory.makePIXISprite(textures.getBackgroundTexture());
+        bg = factory.makePIXISprite(textures.atlas.background);
         bg.position.x = 0;
         bg.position.y = 0;
         bg.anchor.x = 0;

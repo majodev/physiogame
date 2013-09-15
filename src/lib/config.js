@@ -11,10 +11,12 @@ define(["Backbone"],
       transparent: true,
       background: 0xFFFFFF,
       renderTarget: document.body,
-      spriteSheets: ["assets/SpriteSheetAliens.json",
+      images: ["assets/SpriteSheetAliens.json",
         "assets/SpriteSheetExplosion.json",
         "assets/background/backgroundSpriteData.json",
-        "assets/SpriteSheetButtonBG.json"
+        "assets/SpriteSheetButtonBG.json",
+        "assets/SpriteSheetBalloons.json",
+        "assets/crosshair.png"
       ],
       soundBaseDir: "assets/sound/",
       sounds: [{

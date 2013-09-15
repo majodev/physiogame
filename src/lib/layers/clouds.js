@@ -19,7 +19,7 @@ define(["log", "display/textures",
       if (cloudsCount < cloudsToGenerate) {
 
         for (cloudsCount; cloudsCount < cloudsToGenerate; cloudsCount += 1) {
-          cloud = new PIXI.MovieClip(textures.cloudTextures);
+          cloud = new PIXI.MovieClip(textures.atlas.clouds);
 
           cloud.anchor.x = 0.5;
           cloud.anchor.y = 0.5;
@@ -34,7 +34,6 @@ define(["log", "display/textures",
 
           this.pixiLayer.addChild(cloud);
         }
-        log.debug("cloud activate");
       }
 
     };
