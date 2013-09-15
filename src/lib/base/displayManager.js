@@ -31,11 +31,11 @@ define(["log", "PIXI", "config", "utils/resizeWatcher", "utils/publisher", "disp
       events.trigger("init");
 
       Poll.start({
-        name: "debug",
+        name: "debugDisplay",
         interval: 2000,
         action: function() {
           var time = frameCount / 2,
-            debugText = "display: received " + frameCount + " frames @ " + time +
+            debugText = "display: " + frameCount + " frames @ " + time +
               "fps.";
           events.trigger("debugInfo", debugText);
           frameCount = 0;

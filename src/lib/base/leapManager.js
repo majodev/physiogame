@@ -55,11 +55,11 @@ define(["log", "Leap", "config", "utils/publisher", "Poll"],
       controller.connect();
 
       Poll.start({
-        name: "debug",
+        name: "debugLeap",
         interval: 2000,
         action: function() {
           var time = frameCount / 2,
-            debugText = "leap: received " + frameCount + " frames @ " +
+            debugText = "leap: " + frameCount + " frames @ " +
               time + "fps.";
           events.trigger("debugInfo", debugText);
           frameCount = 0;

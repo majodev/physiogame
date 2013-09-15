@@ -23,28 +23,28 @@ define(["log", "base/displayManager", "base/leapManager", "base/sceneManager", "
       log.info("onSceneChanged: new scene id=" + newSceneName);
     }
 
-    function toggleDebugInfo() {
-      if (showDebug === true) {
-        displayManager.events.off("debugInfo", logDebugText);
-        leapManager.events.off("debugInfo", logDebugText);
-        log.debug("hiding debug info (keyboard d)");
-        showDebug = false;
+    // function toggleDebugInfo() {
+    //   if (showDebug === true) {
+    //     displayManager.events.off("debugInfo", logDebugText);
+    //     leapManager.events.off("debugInfo", logDebugText);
+    //     log.debug("hiding debug info (keyboard d)");
+    //     showDebug = false;
 
-      } else {
-        displayManager.events.on("debugInfo", logDebugText);
-        leapManager.events.on("debugInfo", logDebugText);
-        log.debug("showing debug info (keyboard d)");
-        showDebug = true;
-      }
-    }
+    //   } else {
+    //     displayManager.events.on("debugInfo", logDebugText);
+    //     leapManager.events.on("debugInfo", logDebugText);
+    //     log.debug("showing debug info (keyboard d)");
+    //     showDebug = true;
+    //   }
+    // }
 
     key('enter', function() {
       toggleScene();
     });
 
-    key('d', function() {
-      toggleDebugInfo();
-    });
+    // key('d', function() {
+    //   toggleDebugInfo();
+    // });
 
     function toggleScene() {
 

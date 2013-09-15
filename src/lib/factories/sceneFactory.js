@@ -1,19 +1,20 @@
 define(["log", "classes/Scene",
     "layers/aliens", "layers/background", "layers/clouds", "layers/crosshair",
-    "layers/score", "layers/welcome", "layers/gameSelection", "layers/goBack"
+    "layers/score", "layers/welcome", "layers/gameSelection", "layers/goBack",
+    "layers/debugInfo"
   ],
   function(log, Scene,
     aliens, background, clouds, crosshair,
-    score, welcome, gameSelection, goBack) {
+    score, welcome, gameSelection, goBack, debugInfo) {
 
     var scenes = [
       new Scene({
         id: "startscreen",
-        layers: [background, clouds, welcome, gameSelection]
+        layers: [background, clouds, debugInfo, welcome, gameSelection]
       }),
       new Scene({
         id: "shooting",
-        layers: [background, clouds, aliens, crosshair, score, goBack]
+        layers: [background, clouds, debugInfo, aliens, crosshair, score, goBack]
       })
     ];
 
