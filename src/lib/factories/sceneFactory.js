@@ -1,10 +1,10 @@
 define(["log", "classes/Scene",
     "layers/aliens", "layers/background", "layers/clouds", "layers/crosshair",
-    "layers/score", "layers/welcome"
+    "layers/score", "layers/welcome", "layers/button"
   ],
   function(log, Scene,
     aliens, background, clouds, crosshair,
-    score, welcome) {
+    score, welcome, button) {
 
     function makeScene(sceneID) {
 
@@ -14,7 +14,7 @@ define(["log", "classes/Scene",
 
         case "startscreen":
           scene = new Scene({
-            layers: [background, clouds, welcome, crosshair]
+            layers: [background, clouds, welcome, crosshair, button]
           });
           break;
 

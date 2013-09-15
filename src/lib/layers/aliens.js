@@ -1,15 +1,18 @@
 define(["display/textures", "display/factory", "config", "base/displayManager",
     "base/leapManager", "utils/hittest", "underscore", "layers/crosshair", "PIXI",
-    "entities/scoreEntity", "base/soundManager"
+    "entities/scoreEntity", "base/soundManager", "gameObjects/crosshairSprite", "classes/Layer"
   ],
   function(textures, factory, config, displayManager,
-    leapManager, hittest, _, crosshair, PIXI, scoreEntity, soundManager) {
+    leapManager, hittest, _, crosshair, PIXI, scoreEntity, soundManager, crosshairSprite, Layer) {
 
-    var width = config.get("width"),
-      height = config.get("height"),
-      running = false,
-      layer = factory.makeLayer(),
-      aliensArray = [],
+    var layer = new Layer({
+      listeners: {
+        render: true,
+        leap: true
+      }
+    });
+
+    var aliensArray = [],
       alienHittedScaleCap = 1,
       alienHittedScaleBeforeCap = 0.12,
       alienHittedScaleAfterCap = 0.08,
@@ -21,6 +24,51 @@ define(["display/textures", "display/factory", "config", "base/displayManager",
       alienNormalScaleBeforeCap = 0.02,
       alienNormalScaleAfterCap = 0.003,
       explosionsClearing = [];
+
+    layer.onActivate = function() {
+      createAliens();
+
+      crosshairSprite.events.on("crosshairActive", detectCrosshairHitsAlien);
+    };
+
+    layer.onDeactivate = function() {
+      crosshairSprite.events.off("crosshairActive", detectCrosshairHitsAlien);
+
+      aliensArray = [];
+    };
+
+    layer.onRender = function() {
+      onRenderMove();
+      onRenderClearExplosions();
+    };
+
+    layer.onHandFrame = function(coordinates) {
+      detectCrosshairHitsAlien(coordinates);
+    };
+
+    function detectCrosshairHitsAlien(coordinates) {
+      var i = 0,
+        hitted = false,
+        max = aliensArray.length,
+        hitCord = _.extend(coordinates, {
+          width: 20,
+          height: 20,
+          anchor: {
+            x: 0.5,
+            y: 0.5
+          }
+        });
+
+      for (i; i < max; i += 1) {
+        if (aliensArray[i].visible === true) {
+          hitted = hittest(aliensArray[i], hitCord);
+          if (aliensArray[i].hitted !== hitted) {
+            soundManager.hit();
+          }
+          aliensArray[i].hitted = hitted;
+        }
+      }
+    }
 
 
     function createAliens() {
@@ -37,10 +85,10 @@ define(["display/textures", "display/factory", "config", "base/displayManager",
         alien = factory.makePIXISprite(textures.getTextureByName(frameName));
 
         // set its initial values...
-        alien.position.x = parseInt(Math.random() * width, 10);
-        alien.position.y = parseInt(Math.random() * height, 10);
-        alien.targetX = parseInt(Math.random() * width, 10); // extra
-        alien.targetY = parseInt(Math.random() * height, 10); // extra
+        alien.position.x = parseInt(Math.random() * layer.width, 10);
+        alien.position.y = parseInt(Math.random() * layer.height, 10);
+        alien.targetX = parseInt(Math.random() * layer.width, 10); // extra
+        alien.targetY = parseInt(Math.random() * layer.height, 10); // extra
         alien.anchor.x = 0.5;
         alien.anchor.y = 0.5;
         alien.scale.x = 0.2;
@@ -51,53 +99,6 @@ define(["display/textures", "display/factory", "config", "base/displayManager",
 
         aliensArray.push(alien);
         layer.addChild(aliensArray[i]);
-      }
-    }
-
-    function configChanged(model, options) {
-      width = model.get("width");
-      height = model.get("height");
-    }
-
-    function activate() {
-      if (!running) {
-
-        config.on("change", configChanged);
-        width = config.get("width");
-        height = config.get("height");
-
-        if (aliensArray.length < 1) {
-          createAliens();
-        }
-
-        displayManager.events.on("renderFrame", onRenderMove);
-        displayManager.events.on("renderFrame", onRenderClearExplosions);
-        leapManager.events.on("handFrameNormalized", onHandFrame);
-        crosshair.events.on("crosshairActive", onHandFrame);
-
-        running = true;
-      }
-    }
-
-    function deactivate() {
-      var i = 0,
-        len = aliensArray.length;
-      if (running) {
-
-        config.off("change", configChanged);
-
-        displayManager.events.off("renderFrame", onRenderMove);
-        displayManager.events.off("renderFrame", onRenderClearExplosions);
-        leapManager.events.off("handFrameNormalized", onHandFrame);
-        crosshair.events.off("crosshairActive", onHandFrame);
-
-        running = false;
-
-        for (i = 0; i < len; i += 1) {
-          layer.removeChild(aliensArray[i]);
-        }
-
-        aliensArray = [];
       }
     }
 
@@ -139,10 +140,10 @@ define(["display/textures", "display/factory", "config", "base/displayManager",
             alien.position.y -= alien.speed;
           }
           if (alien.position.x === alien.targetX) {
-            alien.targetX = parseInt(Math.random() * width, 10);
+            alien.targetX = parseInt(Math.random() * layer.width, 10);
           }
           if (alien.position.y === alien.targetY) {
-            alien.targetY = parseInt(Math.random() * height, 10);
+            alien.targetY = parseInt(Math.random() * layer.height, 10);
           }
 
           if (alien.hitted === true) {
@@ -214,39 +215,6 @@ define(["display/textures", "display/factory", "config", "base/displayManager",
       explosionsClearing.push(this);
     }
 
-    function onHandFrame(coordinates) {
-      var i = 0,
-        hitted = false,
-        max = aliensArray.length,
-        hitCord = _.extend(coordinates, {
-          width: 20,
-          height: 20,
-          anchor: {
-            x: 0.5,
-            y: 0.5
-          }
-        });
-
-      for (i; i < max; i += 1) {
-        if (aliensArray[i].visible === true) {
-          hitted = hittest(aliensArray[i], hitCord);
-          if (aliensArray[i].hitted !== hitted) {
-            soundManager.hit();
-          }
-          aliensArray[i].hitted = hitted;
-        }
-      }
-    }
-
-    return {
-      activate: activate,
-      deactivate: deactivate,
-      getRunning: function() {
-        return running;
-      },
-      getLayer: function() {
-        return layer;
-      }
-    };
+    return layer;
   }
 );

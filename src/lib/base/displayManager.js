@@ -1,5 +1,5 @@
-define(["log", "PIXI", "config", "utils/resizeWatcher", "utils/publisher", "display/textures"],
-  function(log, PIXI, config, resizeWatcher, publisher, textures) {
+define(["log", "PIXI", "config", "utils/resizeWatcher", "utils/publisher", "display/textures", "Poll"],
+  function(log, PIXI, config, resizeWatcher, publisher, textures, Poll) {
 
     // private
     var stage = new PIXI.Stage(config.get("background"),
@@ -43,15 +43,6 @@ define(["log", "PIXI", "config", "utils/resizeWatcher", "utils/publisher", "disp
       });
 
     }
-
-    // per interval ms
-    // setInterval(function() {
-    //   var time = frameCount / 2,
-    //     debugText = "display: received " + frameCount + " frames @ " + time +
-    //       "fps.";
-    //   events.trigger("debugInfo", debugText);
-    //   frameCount = 0;
-    // }, 2000);
 
     function renderFrame() {
       requestAnimFrame(renderFrame);

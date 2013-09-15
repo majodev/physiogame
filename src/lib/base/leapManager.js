@@ -1,5 +1,5 @@
-define(["log", "Leap", "config", "utils/publisher"],
-  function(log, Leap, config, publisher) {
+define(["log", "Leap", "config", "utils/publisher", "Poll"],
+  function(log, Leap, config, publisher, Poll) {
 
     // private 
     var controller = new Leap.Controller(),
@@ -49,15 +49,6 @@ define(["log", "Leap", "config", "utils/publisher"],
 
       frameCount += 1;
     });
-
-    // per interval ms
-    // setInterval(function() {
-    //   var time = frameCount / 2,
-    //     debugText = "leap: received " + frameCount + " frames @ " +
-    //       time + "fps.";
-    //   events.trigger("debugInfo", debugText);
-    //   frameCount = 0;
-    // }, 2000);
 
     function init() {
       log.debug("leapController: init");

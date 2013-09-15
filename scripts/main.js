@@ -17,8 +17,8 @@ require.config({
   shim: {
     "Poll": {
       exports: "Poll",
-      init: function () {
-        console.log("init Poll");
+      init: function () { // Poll must reside globally to work
+        //console.log("init Poll");
       }
     },
     "Spinner": {

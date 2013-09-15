@@ -1,8 +1,16 @@
-define(["log", "PIXI", "entities/scoreEntity", "display/factory", "config", "base/displayManager", "Poll"],
-  function(log, PIXI, scoreEntity, factory, config, displayManager, Poll) {
+define(["log", "PIXI", "entities/scoreEntity",
+    "display/factory", "config", "base/displayManager", "Poll",
+    "classes/Layer"
+  ],
+  function(log, PIXI, scoreEntity, factory, config, displayManager, Poll, Layer) {
 
-    var layer = factory.makeLayer(),
-      countingText,
+    var layer = new Layer({
+      listeners: {
+        render: true
+      }
+    });
+
+    var countingText,
       introText,
       winningText,
       timerText,
@@ -13,9 +21,73 @@ define(["log", "PIXI", "entities/scoreEntity", "display/factory", "config", "bas
       introTimerCount = 0,
       introTimerRunning = true;
 
-    config.on("change", configChanged);
-    scoreEntity.on("change", scoreChanged);
+    layer.onActivate = function() {
+      scoreEntity.resetScore();
 
+      log.debug("score: activate");
+
+      textsCreated = false;
+
+      createTextButtons();
+
+      countingText.visible = true;
+      timerText.visible = true;
+      introText.visible = true;
+      winningText.visible = false;
+      winningAdded = false;
+      scoreTimerCount = 0;
+      scoreTimerRunning = false;
+      introTimerCount = 0;
+      introTimerRunning = true;
+
+      countingText.position.x = config.get("width") - 15;
+      countingText.position.y = 0;
+      countingText.anchor.x = 1;
+
+      timerText.position.x = config.get("width") - 15;
+      timerText.position.y = config.get("height") - 15;
+      timerText.anchor.x = 1;
+      timerText.anchor.y = 1;
+
+      introText.position.x = config.get("width") / 2;
+      introText.position.y = config.get("height") / 2;
+      introText.anchor.x = 0.5;
+      introText.anchor.y = 0.5;
+
+      this.pixiLayer.addChild(countingText);
+      this.pixiLayer.addChild(timerText);
+      this.pixiLayer.addChild(introText);
+
+      Poll.start({
+        name: "textUpdater",
+        interval: 100,
+        action: function() {
+          if (scoreTimerRunning) {
+            scoreTimerCount += 1;
+            timerText.setText("Time: " + scoreTimerCount / 10);
+          }
+          if (introTimerRunning) {
+            introTimerCount += 1;
+            if (introTimerCount > 60) {
+              introTimerRunning = false;
+            }
+          }
+        }
+      });
+
+      scoreEntity.on("change", scoreChanged);
+
+    };
+
+    layer.onRender = function() {
+      onRenderDisableIntroAnimation();
+    };
+
+    layer.onDeactivate = function() {
+      Poll.stop("textUpdater");
+
+      scoreEntity.off("change", scoreChanged);
+    };
 
     function createTextButtons() {
       if (textsCreated === false) {
@@ -58,83 +130,11 @@ define(["log", "PIXI", "entities/scoreEntity", "display/factory", "config", "bas
       }
     }
 
-    function activate() {
-
-      scoreEntity.resetScore();
-
-      log.debug("score: activate");
-
-      textsCreated = false;
-
-      createTextButtons();
-
-      countingText.visible = true;
-      timerText.visible = true;
-      introText.visible = true;
-      winningText.visible = false;
-      winningAdded = false;
-      scoreTimerCount = 0;
-      scoreTimerRunning = false;
-      introTimerCount = 0;
-      introTimerRunning = true;
-
-      countingText.position.x = config.get("width") - 15;
-      countingText.position.y = 0;
-      countingText.anchor.x = 1;
-
-      timerText.position.x = config.get("width") - 15;
-      timerText.position.y = config.get("height") - 15;
-      timerText.anchor.x = 1;
-      timerText.anchor.y = 1;
-
-      introText.position.x = config.get("width") / 2;
-      introText.position.y = config.get("height") / 2;
-      introText.anchor.x = 0.5;
-      introText.anchor.y = 0.5;
-
-      layer.addChild(countingText);
-      layer.addChild(timerText);
-      layer.addChild(introText);
-
-      displayManager.events.on("renderFrame", onRenderDisableIntroAnimation);
-
-
-      Poll.start({
-        name: "textUpdater",
-        interval: 100,
-        action: function() {
-          if (scoreTimerRunning) {
-            scoreTimerCount += 1;
-            timerText.setText("Time: " + scoreTimerCount / 10);
-          }
-          if (introTimerRunning) {
-            introTimerCount += 1;
-            if (introTimerCount > 60) {
-              introTimerRunning = false;
-            }
-          }
-        }
-      });
-
-    }
-
     function onRenderDisableIntroAnimation() {
       if (introText.alpha > 0) {
         if (introTimerRunning === false && introText.alpha > 0) {
           introText.alpha -= 0.02;
         }
-      }
-    }
-
-    function configChanged(model, options) {
-      countingText.position.x = model.get("width") - 15;
-
-      timerText.position.x = model.get("width") - 15;
-      timerText.position.y = model.get("height") - 15;
-
-      if (winningAdded === true) {
-        winningText.position.x = model.get("width") / 2;
-        winningText.position.y = model.get("height") / 2;
       }
     }
 
@@ -157,7 +157,7 @@ define(["log", "PIXI", "entities/scoreEntity", "display/factory", "config", "bas
         winningText.anchor.x = 0.5;
         winningText.anchor.y = 0.5;
 
-        layer.addChild(winningText);
+        layer.pixiLayer.addChild(winningText);
         winningAdded = true;
         scoreTimerRunning = false;
 
@@ -188,28 +188,7 @@ define(["log", "PIXI", "entities/scoreEntity", "display/factory", "config", "bas
         winningText.visible = true;
       }
     }
-
-    function deactivate() {
-      displayManager.events.off("renderFrame", onRenderDisableIntroAnimation);
-
-      Poll.stop("textUpdater");
-
-      layer.removeChild(countingText);
-      layer.removeChild(timerText);
-      layer.removeChild(introText);
-      if (winningAdded) {
-        layer.removeChild(winningText);
-      }
-    }
-
-
-
-    return {
-      getLayer: function() {
-        return layer;
-      },
-      activate: activate,
-      deactivate: deactivate
-    };
+    
+    return layer;
   }
 );

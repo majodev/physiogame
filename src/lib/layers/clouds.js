@@ -1,32 +1,29 @@
 define(["log", "base/displayManager", "display/textures", "display/factory",
-    "PIXI", "underscore", "config"
+    "PIXI", "underscore", "config", "classes/Layer"
   ],
-  function(log, displayManager, textures, factory, PIXI, _, config) {
+  function(log, displayManager, textures, factory, PIXI, _, config, Layer) {
 
-    var layer = factory.makeLayer(),
-      clouds = [],
-      width,
-      height,
-      running = false,
+    var layer = new Layer({
+      listeners: {
+        render: true
+      }
+    });
+
+    var clouds = [],
       cloudsToGenerate = 50,
       cloudsCount = 0;
 
-
-    function activate() {
-
+    layer.onActivate = function () {
       var cloud;
 
-      if (cloudsCount < cloudsToGenerate && running === false) {
-
-        width = config.get("width");
-        height = config.get("height");
+      if (cloudsCount < cloudsToGenerate) {
 
         for (cloudsCount; cloudsCount < cloudsToGenerate; cloudsCount += 1) {
           cloud = new PIXI.MovieClip(textures.cloudTextures);
 
           cloud.anchor.x = 0.5;
           cloud.anchor.y = 0.5;
-          cloud.position.x = parseInt(Math.random() * width, 10);
+          cloud.position.x = parseInt(Math.random() * layer.width, 10);
 
           randomizeCloud(cloud);
 
@@ -35,21 +32,24 @@ define(["log", "base/displayManager", "display/textures", "display/factory",
 
           clouds.push(cloud);
 
-          layer.addChild(cloud);
+          this.pixiLayer.addChild(cloud);
         }
         log.debug("cloud activate");
       }
 
-      if (running === false) {
-        displayManager.events.on("renderFrame", onRenderMove);
-        config.on("change", configChanged);
+    };
 
-        running = true;
-      }
-    }
+    layer.onRender = function () {
+      onRenderMove();
+    };
+
+    layer.onDeactivate = function () {
+      cloudsCount = 0;
+      clouds = [];
+    };
 
     function randomizeCloud(cloud) {
-      cloud.position.y = parseInt((height * 0.40) + (Math.random() * height * 0.60), 10);
+      cloud.position.y = parseInt((layer.height * 0.40) + (Math.random() * layer.height * 0.60), 10);
       cloud.rotation = Math.random() * Math.PI;
       cloud.scale.x = cloud.scale.y = 0.10 + Math.random() * 1.10;
       cloud.speed = cloud.scale.x / 2;
@@ -63,41 +63,15 @@ define(["log", "base/displayManager", "display/textures", "display/factory",
         for (i; i < cloudsCount; i += 1) {
           clouds[i].position.x += clouds[i].speed;
           clouds[i].position.y += (_.random(0, 1) === 0) ? -clouds[i].speed : clouds[i].speed;
-          if (clouds[i].position.x > width + 100) {
-            clouds[i].position.x = - 100;
+          if (clouds[i].position.x > layer.width + 100) {
+            clouds[i].position.x = -100;
             randomizeCloud(clouds[i]);
           }
         }
       }
     }
 
-    function configChanged(model, options) {
-      width = model.get("width");
-      height = model.get("height");
-    }
-
-    function deactivate() {
-      var i = 0,
-        len = clouds.length;
-
-      displayManager.events.off("renderFrame", onRenderMove);
-
-      for (i; i < len; i += 1) {
-        layer.removeChild(clouds[i]);
-      }
-
-      cloudsCount = 0;
-      clouds = [];
-      running = false;
-    }
-
-    return {
-      activate: activate,
-      deactivate: deactivate,
-      getLayer: function() {
-        return layer;
-      }
-    };
+    return layer;
 
   }
 );
