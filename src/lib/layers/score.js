@@ -1,7 +1,7 @@
 define(["log", "PIXI", "entities/scoreEntity",
-    "display/factory", "config", "Poll", "classes/Layer"
+    "config", "Poll", "classes/Layer"
   ],
-  function(log, PIXI, scoreEntity, factory, config, Poll, Layer) {
+  function(log, PIXI, scoreEntity, config, Poll, Layer) {
 
     var layer = new Layer({
       listeners: {

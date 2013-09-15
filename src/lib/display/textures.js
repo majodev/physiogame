@@ -1,5 +1,5 @@
-define(["PIXI", "config", "utils/zeroPad", "loaders/spriteLoader"],
-  function(PIXI, config, zeroPad, spriteLoader) {
+define(["PIXI", "config", "utils/zeroPad", "log"],
+  function(PIXI, config, zeroPad, log) {
 
     var atlas = {
         background: undefined,
@@ -15,11 +15,13 @@ define(["PIXI", "config", "utils/zeroPad", "loaders/spriteLoader"],
 
     function init() {
 
+      log.debug("textures: creating atlas...");
+
       // add background texture
       atlas.background = getTextureByName("bg/0000");
 
       // add crosshair
-      //atlas.crosshair = getTextureByImageID("assets/crosshair.png");
+      atlas.crosshair = getTextureByName("assets/crosshair.png");
 
       // add alien textures
       parseTexturesByNames(atlas.aliens, [
@@ -36,6 +38,8 @@ define(["PIXI", "config", "utils/zeroPad", "loaders/spriteLoader"],
 
       // add balloon textures
       parseTextures(atlas.balloons, "ballMC", "", 0, 5, true, 4);
+
+      log.debug("textures: atlas created!");
     }
 
     function parseTexturesByNames(atlasArray, textureNames) {
@@ -64,11 +68,6 @@ define(["PIXI", "config", "utils/zeroPad", "loaders/spriteLoader"],
     function getTextureByName(name) {
       var textureByName = PIXI.Texture.fromFrame(name);
       return textureByName;
-    }
-
-    function getTextureByImageID(id) {
-      var textureByImageID = PIXI.Texture.fromFrameId(id);
-      return textureByImageID;
     }
 
     return {

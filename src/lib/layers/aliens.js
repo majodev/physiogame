@@ -1,7 +1,7 @@
-define(["display/textures", "display/factory", "config", "utils/hittest", "underscore", "PIXI",
+define(["display/textures", "config", "utils/hittest", "underscore", "PIXI",
     "entities/scoreEntity", "base/soundManager", "gameObjects/crosshairGO", "classes/Layer"
   ],
-  function(textures, factory, config, hittest, _, PIXI, scoreEntity, soundManager, crosshairGO, Layer) {
+  function(textures, config, hittest, _, PIXI, scoreEntity, soundManager, crosshairGO, Layer) {
 
     var layer = new Layer({
       listeners: {
@@ -78,7 +78,7 @@ define(["display/textures", "display/factory", "config", "utils/hittest", "under
       // add aliens...
       for (i = 0; i < aliensToSpawn; i += 1) {
 
-        alien = factory.makePIXISprite(textures.atlas.aliens[i % 4]);
+        alien = new PIXI.Sprite(textures.atlas.aliens[i % 4]);
 
         // set its initial values...
         alien.position.x = parseInt(Math.random() * layer.width, 10);

@@ -1,5 +1,5 @@
-define(["log", "PIXI", "config", "utils/publisher"],
-  function(log, PIXI, config, publisher) {
+define(["log", "PIXI", "config", "utils/publisher", "display/textures"],
+  function(log, PIXI, config, publisher, textures) {
 
     var events = publisher.make(),
       pixiSpriteLoader = new PIXI.AssetLoader(config.get("images")),
@@ -21,9 +21,11 @@ define(["log", "PIXI", "config", "utils/publisher"],
     function onSpriteSheetsLoaded() {
       log.debug("spritesheets loaded");
       spriteSheetsLoaded = true;
-      events.trigger("allSpritesLoaded");
 
-      console.dir(PIXI.TextureCache);
+      // create the texture atlas when its finished loading images!
+      textures.init();
+
+      events.trigger("allSpritesLoaded");
     }
 
     function onSpriteSheetProgress() {

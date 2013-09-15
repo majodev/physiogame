@@ -1,8 +1,13 @@
-define(["display/factory", "utils/publisher"],
-  function(factory, publisher) {
+define(["PIXI", "utils/publisher", "display/textures"],
+  function(PIXI, publisher, textures) {
 
-    var display = factory.makeCrosshair(),
+    var display = new PIXI.Sprite(textures.atlas.crosshair),
       events = publisher.make();
+
+    display.anchor = {
+      x: 0.5,
+      y: 0.5
+    };
 
     display.interactive = true;
     display.buttonMode = false;

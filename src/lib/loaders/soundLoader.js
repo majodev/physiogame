@@ -25,7 +25,6 @@ define(["log", "Howler", "config", "utils/publisher"],
           onload: onSoundLoaded(soundFiles[i])
         });
       }
-
     }
 
     function generateUrls(basedir, sound, extensions) {

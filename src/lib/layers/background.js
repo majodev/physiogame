@@ -1,5 +1,5 @@
-define(["display/textures", "display/factory", "PIXI", "underscore", "classes/Layer"],
-  function(textures, factory, PIXI, _, Layer) {
+define(["display/textures", "PIXI", "underscore", "classes/Layer"],
+  function(textures, PIXI, _, Layer) {
 
     var layer = new Layer(),
       bg;
@@ -7,7 +7,8 @@ define(["display/textures", "display/factory", "PIXI", "underscore", "classes/La
     layer.onActivate = function () {
       if (_.isUndefined(bg) === true) {
 
-        bg = factory.makePIXISprite(textures.atlas.background);
+        bg = new PIXI.Sprite(textures.atlas.background);
+
         bg.position.x = 0;
         bg.position.y = 0;
         bg.anchor.x = 0;

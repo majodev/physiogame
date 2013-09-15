@@ -13,8 +13,6 @@ define(["log", "PIXI", "config", "utils/resizeWatcher", "utils/publisher", "disp
     function init() {
       log.debug("display: init");
 
-      textures.init();
-
       // set style and append renderer
       renderer.view.style.position = "absolute";
       renderer.view.style.top = "0px";

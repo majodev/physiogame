@@ -1,6 +1,6 @@
-define(["base/displayManager", "base/leapManager", "display/factory",
+define(["base/displayManager", "base/leapManager",
   "PIXI", "utils/publisher", "classes/Layer", "gameObjects/crosshairGO"],
-  function(displayManager, leapManager, factory, PIXI, publisher,
+  function(displayManager, leapManager, PIXI, publisher,
     Layer, crosshairGO) {
 
     var layer = new Layer({
