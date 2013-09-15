@@ -1,7 +1,9 @@
 define(["PIXI", "underscore", "base/displayManager",
     "base/leapManager", "config", "utils/publisher"
   ],
-  function(PIXI, _, displayManager, leapManager, config, publisher) {
+  function(PIXI, _, displayManager,
+    leapManager, config, publisher) {
+
     var Layer = function(options) {
       this.width = config.get("width");
       this.height = config.get("height");
@@ -67,11 +69,14 @@ define(["PIXI", "underscore", "base/displayManager",
           this.pixiLayer.removeChild(this.pixiLayer.children[i]);
         }
       },
-      addChild: function (child) {
+      addChild: function(child) {
         this.pixiLayer.addChild(child);
       },
-      removeChild: function (child) {
+      removeChild: function(child) {
         this.pixiLayer.removeChild(child);
+      },
+      notifyScene: function(options) {
+        this.events.trigger("sceneNotification", options);
       },
       getLayer: function() {
         return this.pixiLayer;

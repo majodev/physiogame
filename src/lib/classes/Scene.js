@@ -1,56 +1,65 @@
-define(["Backbone", "display/factory"],
-  function(Backbone, factory) {
+define(["underscore", "PIXI", "utils/publisher"],
+  function(_, PIXI, publisher) {
 
-    var SceneModel = Backbone.Model.extend({
+
+    var Scene = function(options) {
+
+
+
+      this.running = false;
+      this.pixiScene = new PIXI.DisplayObjectContainer();
+      this.events = publisher.make();
+
+      if (_.isUndefined(options) || _.isUndefined(options.layers) || _.isUndefined(options.id)) {
+        throw new Error("A Scene needs to have an id and layers!");
+      }
+
+      this.layers = options.layers;
+      this.id = options.id;
+    };
+
+    Scene.prototype = {
+      constructor: Scene,
       activate: function() {
-
         var i = 0,
-          layers = this.get("layers"),
-          scene = this.get("scene"),
-          len = this.get("layers").length;
+          len = this.layers.length;
 
-        if (this.get("running") === false) {
-
+        if (this.running === false) {
           for (i; i < len; i += 1) {
-            layers[i].activate();
-            scene.addChild(layers[i].getLayer());
+            this.layers[i].events.on("sceneNotification", this.onLayerEvent, this);
+            this.layers[i].activate();
+            this.pixiScene.addChild(this.layers[i].getLayer());
           }
 
-          this.set("running", true);
+          this.running = true;
         }
-
       },
       deactivate: function() {
-
         var i = 0,
-          layers = this.get("layers"),
-          scene = this.get("scene"),
-          len = layers.length;
+          len = this.layers.length;
 
-        if (this.get("running") === true) {
+        if (this.running === true) {
 
           for (i; i < len; i += 1) {
-            layers[i].deactivate();
-            scene.removeChild(layers[i].getLayer());
+            this.layers[i].events.off("sceneNotification", this.onLayerEvent, this);
+            this.layers[i].deactivate();
+            this.pixiScene.removeChild(this.layers[i].getLayer());
           }
 
-          this.set("running", false);
+          this.running = false;
         }
-
       },
       getScene: function() {
-        return this.get("scene");
+        return this.pixiScene;
       },
       getRunning: function() {
-        return this.get("running");
+        return this.running;
       },
-      defaults: {
-        scene: factory.makeScene(),
-        layers: [],
-        running: false
+      onLayerEvent: function(options) {
+        this.events.trigger("sceneLayerEvent", options);
       }
-    });
+    };
 
-    return SceneModel;
+    return Scene;
   }
 );

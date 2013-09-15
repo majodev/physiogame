@@ -13,7 +13,8 @@ define(["Backbone"],
       renderTarget: document.body,
       spriteSheets: ["assets/SpriteSheetAliens.json",
         "assets/SpriteSheetExplosion.json",
-        "assets/background/backgroundSpriteData.json"
+        "assets/background/backgroundSpriteData.json",
+        "assets/SpriteSheetButtonBG.json"
       ],
       soundBaseDir: "assets/sound/",
       sounds: [{

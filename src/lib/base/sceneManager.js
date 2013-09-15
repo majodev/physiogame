@@ -1,5 +1,5 @@
 define(["log", "utils/publisher", "base/displayManager", "underscore",
-  "factories/sceneFactory"
+    "factories/sceneFactory"
   ],
   function(log, publisher, displayManager, _,
     sceneFactory) {
@@ -14,6 +14,7 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
 
       // disable previous Scene
       if (typeof currentScene.object !== 'undefined') {
+        currentScene.object.events.off("sceneLayerEvent", onSceneLayerEvent);
         currentScene.object.deactivate();
         displayManager.stage.removeChild(currentScene.object.getScene());
       }
@@ -24,7 +25,8 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
         object: newScene
       };
 
-      newScene.activate();
+      currentScene.object.events.on("sceneLayerEvent", onSceneLayerEvent);
+      currentScene.object.activate();
       displayManager.stage.addChild(currentScene.object.getScene());
 
       // notify
@@ -32,17 +34,27 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
     }
 
     // syntactic sugar for exchangeScene public api
+
     function pushScene(id) {
-      exchangeScene(id, sceneFactory.makeScene(id));
+      exchangeScene(id, sceneFactory.getScene(id));
+    }
+
+    function onSceneLayerEvent(options) {
+      console.log("onSceneLayerEvent: " + options);
+      if (_.isUndefined(options) === false) {
+        if(_.isUndefined(options.pushScene) === false) {
+          pushScene(options.pushScene);
+        }
+      }
     }
 
     function getCurrentSceneID() {
       return currentScene.id;
     }
 
-     function getCurrentSceneObject() {
+    function getCurrentSceneObject() {
       return currentScene.object;
-     }
+    }
 
     function init() {
       log.debug("sceneController: init");

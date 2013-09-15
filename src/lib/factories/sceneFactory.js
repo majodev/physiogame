@@ -1,42 +1,36 @@
 define(["log", "classes/Scene",
     "layers/aliens", "layers/background", "layers/clouds", "layers/crosshair",
-    "layers/score", "layers/welcome", "layers/button"
+    "layers/score", "layers/welcome", "layers/selection"
   ],
   function(log, Scene,
     aliens, background, clouds, crosshair,
-    score, welcome, button) {
+    score, welcome, selection) {
 
-    function makeScene(sceneID) {
+    var scenes = [
+      new Scene({
+        id: "startscreen",
+        layers: [background, clouds, welcome, selection]
+      }),
+      new Scene({
+        id: "shooting",
+        layers: [background, clouds, aliens, crosshair, score]
+      })
+    ];
 
-      var scene;
-
-      switch (sceneID) {
-
-        case "startscreen":
-          scene = new Scene({
-            layers: [background, clouds, welcome, crosshair, button]
-          });
-          break;
-
-        case "shooting":
-          scene = new Scene({
-            layers: [background, clouds, aliens, crosshair, score]
-          });
-          break;
-
-        default:
-          scene = new Scene({
-            layers: [background]
-          });
-          log.warn("sceneID (" + sceneID + ") not found, returning default scene");
+    function getScene(sceneID) {
+      var i = 0,
+        len = scenes.length;
+      for (i; i < len; i += 1) {
+        if (scenes[i].id === sceneID) {
+          return scenes[i];
+        }
       }
 
-      return scene;
-
+      throw new Error("MakeScene: scene with id=" + sceneID + " not found!");
     }
 
     return {
-      makeScene: makeScene
+      getScene: getScene
     };
   }
 );
