@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         banner: '/*! <%= pkg.name %> v<%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd HH:MM:s") %> */'
       },
       css: {
-        src: "app.css",
+        src: ["src/vendor/bootstrap/dist/css/bootstrap.css", "app.css"],
         dest: "build/app.min.css"
       }
     },

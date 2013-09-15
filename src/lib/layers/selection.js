@@ -1,16 +1,16 @@
-define(["classes/Layer", "classes/Button"],
-  function(Layer, Button, sceneManager) {
+define(["classes/Layer", "classes/Button", "views/settingsModal"],
+  function(Layer, Button, settingsModal) {
 
     var layer = new Layer(),
       shootingButton,
       creditsButton,
-      balloonsButton;
+      settingsButton;
 
     layer.onActivate = function() {
 
       shootingButton = new Button({
         texts: {
-          normal: "shooting",
+          normal: "play",
           mouseover: "play!",
         }
       });
@@ -26,25 +26,21 @@ define(["classes/Layer", "classes/Button"],
         });
       };
 
-      // balloonsButton = new Button({
-      //   texts: {
-      //     normal: "balloons",
-      //     mouseover: "play!",
-      //   }
-      // });
+      settingsButton = new Button({
+        texts: {
+          normal: "settings",
+          mouseover: "settings!",
+        }
+      });
 
-      // balloonsButton.display.position = {
-      //   x: this.width * 0.66,
-      //   y: this.height * 0.75
-      // };
+      settingsButton.display.position = {
+        x: this.width * 0.66,
+        y: this.height * 0.75
+      };
 
-      // balloonsButton.onClick = function() {
-      //   layer.notifyScene({
-      //     pushScene: "balloons"
-      //   });
-      // };
-
-      //this.addChild(balloonsButton.display);
+      settingsButton.onClick = function () {
+        settingsModal.show();
+      };
 
       creditsButton = new Button({
         texts: {
@@ -69,6 +65,7 @@ define(["classes/Layer", "classes/Button"],
         });
       };
 
+      this.addChild(settingsButton.display);
       this.addChild(shootingButton.display);
       this.addChild(creditsButton.display);
     };

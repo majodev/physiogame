@@ -10,6 +10,8 @@
     "webfontloader": "~1.4.12",
     "loglevel": "~0.3.1",
     "spinjs": "~1.3.2",
-    "polljs": "https://github.com/mtrpcic/polljs.git"
+    "polljs": "https://github.com/mtrpcic/polljs.git",
+    "bootstrap": "~3.0.0",
+    "text": "~2.0.10"
   }
 }

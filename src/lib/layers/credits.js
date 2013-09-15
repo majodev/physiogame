@@ -9,7 +9,8 @@ define(["classes/Layer", "PIXI"],
       creditsText = new PIXI.Text("Mario Ranftl, BSc. (majodev)\n" +
         "practical part of the master thesis\n\n" +
         "FH JOANNEUM advanced information management \nDMT department" +
-        "\n\n:\nBalloons Vector is from Stuart Bainbridge \n" +
+        "\n\nAssets by other artists:" +
+        "\nBalloons Vector is from Stuart Bainbridge \n" +
         "Creative Commons Attribution-Share Alike 3.0 License.\n" +
         "http://stoostock.deviantart.com/art/Balloons-Vector-211127121 \n", {
           font: "bold 20px Arvo",

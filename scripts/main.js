@@ -12,7 +12,9 @@ require.config({
     "Howler": "../vendor/howler/howler", // watch out: registers itself as Howler!
     "WebFont": "../vendor/webfontloader/target/webfont",
     "Spinner": "../vendor/spinjs/dist/spin",
-    "Poll": "../vendor/polljs/poll"
+    "Poll": "../vendor/polljs/poll",
+    "bootstrap": "../vendor/bootstrap/dist/js/bootstrap",
+    "text": "../vendor/text/text"
   },
   shim: {
     "Poll": {
@@ -27,6 +29,12 @@ require.config({
         console.log("init spinner");
       }
     },
+    "bootstrap": {
+      deps: ["jquery"],
+      init: function($) {
+        console.log("init bootstrap");
+      }
+    },
     "Backbone": {
       deps: ["underscore", "jquery"],
       exports: "Backbone",
@@ -34,8 +42,8 @@ require.config({
         //console.log("requireconfig: init (AMD) underscore with noConflict");
         _.noConflict(); // remove underscore from global scope
 
-        //console.log("requireconfig: init (AMD) jquery with noConflict");
-        $.noConflict(true); // remove jquery from global scope
+        console.log("requireconfig: init (AMD) jquery with noConflict");
+        $.noConflict(false); // remove jquery from global scope
 
         //console.log("requireconfig: init (shim) Backbone with noConflict");
         return Backbone.noConflict();
