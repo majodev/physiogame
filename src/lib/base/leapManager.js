@@ -1,5 +1,5 @@
-define(["log", "Leap", "config", "utils/publisher", "Poll"],
-  function(log, Leap, config, publisher, Poll) {
+define(["log", "Leap", "appConfig", "utils/publisher", "Poll"],
+  function(log, Leap, appConfig, publisher, Poll) {
 
     // private 
     var controller = new Leap.Controller(),
@@ -7,10 +7,10 @@ define(["log", "Leap", "config", "utils/publisher", "Poll"],
       handsAvailable = false,
       handsLength = 0,
       events = publisher.make(),
-      displayWidth = config.get("width"),
-      displayHeight = config.get("height");
+      displayWidth = appConfig.get("width"),
+      displayHeight = appConfig.get("height");
 
-    config.on("change", configChanged);
+    appConfig.on("change", appConfigChanged);
 
     // per frame from leap
     controller.on("frame", function(frame) {
@@ -69,7 +69,7 @@ define(["log", "Leap", "config", "utils/publisher", "Poll"],
       events.trigger("init");
     }
 
-    function configChanged(model, options) {
+    function appConfigChanged(model, options) {
       displayWidth = model.get("width");
       displayHeight = model.get("height");
     }

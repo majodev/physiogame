@@ -1,12 +1,12 @@
-define(["log", "PIXI", "config", "utils/resizeWatcher", "utils/publisher", "display/textures", "Poll"],
-  function(log, PIXI, config, resizeWatcher, publisher, textures, Poll) {
+define(["log", "PIXI", "appConfig", "utils/resizeWatcher", "utils/publisher", "display/textures", "Poll"],
+  function(log, PIXI, appConfig, resizeWatcher, publisher, textures, Poll) {
 
     // private
-    var stage = new PIXI.Stage(config.get("background"),
-      config.get("interactive")),
-      renderer = PIXI.autoDetectRenderer(config.get("width"),
-        config.get("height"), null, config.get("transparent")),
-      renderTarget = config.get("renderTarget"),
+    var stage = new PIXI.Stage(appConfig.get("background"),
+      appConfig.get("interactive")),
+      renderer = PIXI.autoDetectRenderer(appConfig.get("width"),
+        appConfig.get("height"), null, appConfig.get("transparent")),
+      renderTarget = appConfig.get("renderTarget"),
       frameCount = 0,
       events = publisher.make();
 

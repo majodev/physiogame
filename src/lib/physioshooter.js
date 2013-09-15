@@ -1,10 +1,10 @@
-define(["config", "log", "loaders/preloader"],
-  function(config, log, preloader) {
+define(["appConfig", "log", "loaders/preloader"],
+  function(appConfig, log, preloader) {
 
     (function preloading() {
-      log.setLevel(config.get("logLevel"));
+      log.setLevel(appConfig.get("logLevel"));
       log.debug("self executing startup function - preloading, logLevel is " +
-        config.get("logLevel"));
+        appConfig.get("logLevel"));
 
       preloader.events.on("preloadedAll", preloadingFinished);
       preloader.init();

@@ -1,18 +1,18 @@
-define(["log", "Howler", "config", "utils/publisher"],
-  function(log, Howler, config, publisher) {
+define(["log", "Howler", "appConfig", "utils/publisher"],
+  function(log, Howler, appConfig, publisher) {
 
     var sounds = {},
       events = publisher.make(),
       soundsLoadedCount = 0,
-      soundsToLoadLength = config.get("sounds").length;
+      soundsToLoadLength = appConfig.get("sounds").length;
 
     function init() {
 
       var i = 0,
-        soundFiles = config.get("sounds"),
+        soundFiles = appConfig.get("sounds"),
         len = soundFiles.length,
-        soundBaseDir = config.get("soundBaseDir"),
-        soundExtensions = config.get("soundExtensions"),
+        soundBaseDir = appConfig.get("soundBaseDir"),
+        soundExtensions = appConfig.get("soundExtensions"),
         soundUrls = [];
 
 

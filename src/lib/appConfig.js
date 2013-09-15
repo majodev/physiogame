@@ -1,6 +1,6 @@
 define(["Backbone"],
   function(Backbone) {
-    var config = new Backbone.Model({
+    var appConfig = new Backbone.Model({
       width: 1280,
       height: 720,
       ratio: {
@@ -38,9 +38,8 @@ define(["Backbone"],
       },
       spinnerTargetID: "preloaderSpinner",
       spinnerClassName: "spinner",
-      aliensToSpawn: 100,
       logLevel: 0, // 0 trace, 1 debug, 2 info, 3 warn, 4 error, 5 silent
     });
-    return config;
+    return appConfig;
   }
 );

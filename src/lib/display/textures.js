@@ -1,5 +1,5 @@
-define(["PIXI", "config", "utils/zeroPad", "log"],
-  function(PIXI, config, zeroPad, log) {
+define(["PIXI", "appConfig", "utils/zeroPad", "log"],
+  function(PIXI, appConfig, zeroPad, log) {
 
     var atlas = {
         background: undefined,

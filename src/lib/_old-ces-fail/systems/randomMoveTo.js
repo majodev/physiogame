@@ -1,8 +1,8 @@
-define(["config"],
-  function(config) {
+define(["appConfig"],
+  function(appConfig) {
 
-    var width = config.get("width"),
-      height = config.get("height");
+    var width = appConfig.get("width"),
+      height = appConfig.get("height");
 
     function init(container) {
       

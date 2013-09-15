@@ -26,23 +26,25 @@ define(["classes/Layer", "classes/Button"],
         });
       };
 
-      balloonsButton = new Button({
-        texts: {
-          normal: "balloons",
-          mouseover: "play!",
-        }
-      });
+      // balloonsButton = new Button({
+      //   texts: {
+      //     normal: "balloons",
+      //     mouseover: "play!",
+      //   }
+      // });
 
-      balloonsButton.display.position = {
-        x: this.width * 0.66,
-        y: this.height * 0.75
-      };
+      // balloonsButton.display.position = {
+      //   x: this.width * 0.66,
+      //   y: this.height * 0.75
+      // };
 
-      balloonsButton.onClick = function() {
-        layer.notifyScene({
-          pushScene: "balloons"
-        });
-      };
+      // balloonsButton.onClick = function() {
+      //   layer.notifyScene({
+      //     pushScene: "balloons"
+      //   });
+      // };
+
+      //this.addChild(balloonsButton.display);
 
       creditsButton = new Button({
         texts: {
@@ -68,7 +70,6 @@ define(["classes/Layer", "classes/Button"],
       };
 
       this.addChild(shootingButton.display);
-      this.addChild(balloonsButton.display);
       this.addChild(creditsButton.display);
     };
 

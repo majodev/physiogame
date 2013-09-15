@@ -1,12 +1,12 @@
 define(["PIXI", "underscore", "base/displayManager",
-    "base/leapManager", "config", "utils/publisher"
+    "base/leapManager", "appConfig", "utils/publisher"
   ],
   function(PIXI, _, displayManager,
-    leapManager, config, publisher) {
+    leapManager, appConfig, publisher) {
 
     var Layer = function(options) {
-      this.width = config.get("width");
-      this.height = config.get("height");
+      this.width = appConfig.get("width");
+      this.height = appConfig.get("height");
 
       this.pixiLayer = new PIXI.DisplayObjectContainer();
 

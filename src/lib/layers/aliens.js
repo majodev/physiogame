@@ -1,7 +1,7 @@
-define(["display/textures", "config", "utils/hittest", "underscore", "PIXI",
+define(["display/textures", "objectsConfig", "utils/hittest", "underscore", "PIXI",
     "entities/scoreEntity", "base/soundManager", "gameObjects/crosshairGO", "classes/Layer"
   ],
-  function(textures, config, hittest, _, PIXI, scoreEntity, soundManager, crosshairGO, Layer) {
+  function(textures, objectsConfig, hittest, _, PIXI, scoreEntity, soundManager, crosshairGO, Layer) {
 
     var layer = new Layer({
       listeners: {
@@ -10,20 +10,33 @@ define(["display/textures", "config", "utils/hittest", "underscore", "PIXI",
       }
     });
 
-    var aliensArray = [],
-      alienHittedScaleCap = 1,
-      alienHittedScaleBeforeCap = 0.12,
-      alienHittedScaleAfterCap = 0.08,
-      alienHittedSpeedMax = 5,
-      alienHittedSpeedStep = 1,
-      alienHittedAlphaStep = 0.2,
-      alienNormalScaleMin = 0.25,
-      alienNormalScaleCap = 0.9,
-      alienNormalScaleBeforeCap = 0.02,
-      alienNormalScaleAfterCap = 0.003,
-      explosionsClearing = [];
+    var objectsArray = [],
+      killAnimationsToRemove = [],
+      objectHittedScaleCap,
+      objectHittedScaleBeforeCap,
+      objectHittedScaleAfterCap,
+      objectHittedSpeedMax,
+      objectHittedSpeedStep,
+      objectHittedAlphaStep,
+      objectNormalScaleMin,
+      objectNormalScaleCap,
+      objectNormalScaleBeforeCap,
+      objectNormalScaleAfterCap;
+      
 
     layer.onActivate = function() {
+
+      objectHittedScaleCap = objectsConfig.get("objectHittedScaleCap");
+      objectHittedScaleBeforeCap = objectsConfig.get("objectHittedScaleBeforeCap");
+      objectHittedScaleAfterCap = objectsConfig.get("objectHittedScaleAfterCap");
+      objectHittedSpeedMax = objectsConfig.get("objectHittedSpeedMax");
+      objectHittedSpeedStep = objectsConfig.get("objectHittedSpeedStep");
+      objectHittedAlphaStep = objectsConfig.get("objectHittedAlphaStep");
+      objectNormalScaleMin = objectsConfig.get("objectHittedAlphaStep");
+      objectNormalScaleCap = objectsConfig.get("objectNormalScaleCap");
+      objectNormalScaleBeforeCap = objectsConfig.get("objectNormalScaleBeforeCap");
+      objectNormalScaleAfterCap = objectsConfig.get("objectNormalScaleAfterCap");
+
       createAliens();
 
       crosshairGO.events.on("crosshairActive", detectCrosshairHitsAlien);
@@ -32,8 +45,8 @@ define(["display/textures", "config", "utils/hittest", "underscore", "PIXI",
     layer.onDeactivate = function() {
       crosshairGO.events.off("crosshairActive", detectCrosshairHitsAlien);
 
-      aliensArray = [];
-      explosionsClearing = [];
+      objectsArray = [];
+      killAnimationsToRemove = [];
     };
 
     layer.onRender = function() {
@@ -48,7 +61,7 @@ define(["display/textures", "config", "utils/hittest", "underscore", "PIXI",
     function detectCrosshairHitsAlien(coordinates) {
       var i = 0,
         hitted = false,
-        max = aliensArray.length,
+        max = objectsArray.length,
         hitCord = _.extend(coordinates, {
           width: 20,
           height: 20,
@@ -59,12 +72,12 @@ define(["display/textures", "config", "utils/hittest", "underscore", "PIXI",
         });
 
       for (i; i < max; i += 1) {
-        if (aliensArray[i].visible === true) {
-          hitted = hittest(aliensArray[i], hitCord);
-          if (aliensArray[i].hitted !== hitted) {
+        if (objectsArray[i].visible === true) {
+          hitted = hittest(objectsArray[i], hitCord);
+          if (objectsArray[i].hitted !== hitted) {
             soundManager.hit();
           }
-          aliensArray[i].hitted = hitted;
+          objectsArray[i].hitted = hitted;
         }
       }
     }
@@ -72,11 +85,11 @@ define(["display/textures", "config", "utils/hittest", "underscore", "PIXI",
 
     function createAliens() {
 
-      var aliensToSpawn = config.get("aliensToSpawn"),
+      var objectsToSpawn = objectsConfig.get("objectsToSpawn"),
         i = 0,
         asien;
       // add aliens...
-      for (i = 0; i < aliensToSpawn; i += 1) {
+      for (i = 0; i < objectsToSpawn; i += 1) {
 
         alien = new PIXI.Sprite(textures.atlas.aliens[i % 4]);
 
@@ -93,19 +106,19 @@ define(["display/textures", "config", "utils/hittest", "underscore", "PIXI",
         alien.alpha = 0.5;
         alien.speed = 1; // extra
 
-        aliensArray.push(alien);
-        layer.addChild(aliensArray[i]);
+        objectsArray.push(alien);
+        layer.addChild(objectsArray[i]);
       }
     }
 
     function onRenderClearExplosions() {
       var i = 0,
-        length = explosionsClearing.length;
+        length = killAnimationsToRemove.length;
       for (i; i < length; i += 1) {
-        if (explosionsClearing[i].alpha > 0) {
-          explosionsClearing[i].alpha -= 0.01;
+        if (killAnimationsToRemove[i].alpha > 0) {
+          killAnimationsToRemove[i].alpha -= 0.01;
         } else {
-          layer.removeChild(explosionsClearing.splice(i, 1)[0]);
+          layer.removeChild(killAnimationsToRemove.splice(i, 1)[0]);
           i -= 1;
           length -= 1;
         }
@@ -114,12 +127,12 @@ define(["display/textures", "config", "utils/hittest", "underscore", "PIXI",
 
     function onRenderMove() {
       var i = 0,
-        max = aliensArray.length,
+        max = objectsArray.length,
         alien;
 
       for (i; i < max; i += 1) {
 
-        alien = aliensArray[i];
+        alien = objectsArray[i];
 
         if (alien.visible === true) {
 
@@ -143,28 +156,28 @@ define(["display/textures", "config", "utils/hittest", "underscore", "PIXI",
           }
 
           if (alien.hitted === true) {
-            if (alien.scale.x < alienHittedScaleCap) {
-              alien.scale.x += alienHittedScaleBeforeCap;
-              alien.scale.y += alienHittedScaleBeforeCap;
+            if (alien.scale.x < objectHittedScaleCap) {
+              alien.scale.x += objectHittedScaleBeforeCap;
+              alien.scale.y += objectHittedScaleBeforeCap;
             } else {
-              alien.scale.x += alienHittedScaleAfterCap;
-              alien.scale.y += alienHittedScaleAfterCap;
+              alien.scale.x += objectHittedScaleAfterCap;
+              alien.scale.y += objectHittedScaleAfterCap;
             }
             if (alien.alpha < 1) {
-              alien.alpha += alienHittedAlphaStep;
+              alien.alpha += objectHittedAlphaStep;
             }
-            if (alien.speed <= alienHittedSpeedMax) {
-              alien.speed += alienHittedSpeedStep;
+            if (alien.speed <= objectHittedSpeedMax) {
+              alien.speed += objectHittedSpeedStep;
             }
 
           } else {
-            if (alien.scale.x > alienNormalScaleMin) {
-              if (alien.scale.x > alienNormalScaleCap) {
-                alien.scale.x -= alienNormalScaleBeforeCap;
-                alien.scale.y -= alienNormalScaleBeforeCap;
+            if (alien.scale.x > objectNormalScaleMin) {
+              if (alien.scale.x > objectNormalScaleCap) {
+                alien.scale.x -= objectNormalScaleBeforeCap;
+                alien.scale.y -= objectNormalScaleBeforeCap;
               } else {
-                alien.scale.x -= alienNormalScaleAfterCap;
-                alien.scale.y -= alienNormalScaleAfterCap;
+                alien.scale.x -= objectNormalScaleAfterCap;
+                alien.scale.y -= objectNormalScaleAfterCap;
               }
 
             }
@@ -182,8 +195,8 @@ define(["display/textures", "config", "utils/hittest", "underscore", "PIXI",
 
             var explosion = new PIXI.MovieClip(textures.atlas.explosions);
 
-            explosion.position.x = aliensArray[i].position.x;
-            explosion.position.y = aliensArray[i].position.y;
+            explosion.position.x = objectsArray[i].position.x;
+            explosion.position.y = objectsArray[i].position.y;
             explosion.anchor.x = 0.5;
             explosion.anchor.y = 0.5;
 
@@ -208,7 +221,7 @@ define(["display/textures", "config", "utils/hittest", "underscore", "PIXI",
     }
 
     function onExplosionComplete() {
-      explosionsClearing.push(this);
+      killAnimationsToRemove.push(this);
     }
 
     return layer;

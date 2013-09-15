@@ -1,7 +1,7 @@
 define(["log", "display/textures",
-    "PIXI", "underscore", "classes/Layer"
+    "PIXI", "underscore", "classes/Layer", "objectsConfig"
   ],
-  function(log, textures, PIXI, _, Layer) {
+  function(log, textures, PIXI, _, Layer, objectsConfig) {
 
     var layer = new Layer({
       listeners: {
@@ -10,11 +10,12 @@ define(["log", "display/textures",
     });
 
     var clouds = [],
-      cloudsToGenerate = 50,
       cloudsCount = 0;
 
     layer.onActivate = function () {
       var cloud;
+
+      cloudsToGenerate = objectsConfig.get("cloudsToGenerate");
 
       if (cloudsCount < cloudsToGenerate) {
 

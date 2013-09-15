@@ -1,9 +1,9 @@
-define(["log", "jquery", "config", "underscore"],
-  function(log, $, config, _) {
+define(["log", "jquery", "appConfig", "underscore"],
+  function(log, $, appConfig, _) {
 
     var running = false,
-      initialWidth = config.get("width"),
-      initialHeight = config.get("height"),
+      initialWidth = appConfig.get("width"),
+      initialHeight = appConfig.get("height"),
       currentWidth = initialWidth,
       currentHeight = initialHeight,
       watcherWidth = 0,
@@ -58,8 +58,8 @@ define(["log", "jquery", "config", "underscore"],
         currentWidth = width;
         currentHeight = height;
 
-        config.set("width", width);
-        config.set("height", height);
+        appConfig.set("width", width);
+        appConfig.set("height", height);
 
         nodeToResize.resize(currentWidth, currentHeight);
 
@@ -69,8 +69,8 @@ define(["log", "jquery", "config", "underscore"],
 
     function resizeWithScaleRatio(width, height) {
 
-      var ratiox = config.get("ratio").x,
-        ratioy = config.get("ratio").y,
+      var ratiox = appConfig.get("ratio").x,
+        ratioy = appConfig.get("ratio").y,
         view = nodeToResize.view,
         newHeight = (width / ratiox) * ratioy,
         newWidth = (height / ratioy) * ratiox,

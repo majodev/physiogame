@@ -1,11 +1,11 @@
-define(["log", "PIXI", "config", "utils/publisher", "display/textures"],
-  function(log, PIXI, config, publisher, textures) {
+define(["log", "PIXI", "appConfig", "utils/publisher", "display/textures"],
+  function(log, PIXI, appConfig, publisher, textures) {
 
     var events = publisher.make(),
-      pixiSpriteLoader = new PIXI.AssetLoader(config.get("images")),
+      pixiSpriteLoader = new PIXI.AssetLoader(appConfig.get("images")),
       spriteSheetsLoaded = false,
       spritesSheetLoadedCount = 0,
-      spritesSheetToLoadLength = config.get("images").length;
+      spritesSheetToLoadLength = appConfig.get("images").length;
 
     // set callback to fire after pixiSpriteLoader is complete
     pixiSpriteLoader.onComplete = onSpriteSheetsLoaded;

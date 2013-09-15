@@ -1,5 +1,5 @@
-define(["Spinner", "config"],
-  function(Spinner, config) {
+define(["Spinner", "appConfig"],
+  function(Spinner, appConfig) {
     
     var opts = {
       lines: 17, // The number of lines to draw
@@ -14,12 +14,12 @@ define(["Spinner", "config"],
       trail: 40, // Afterglow percentage
       shadow: true, // Whether to render a shadow
       hwaccel: false, // Whether to use hardware acceleration
-      className: config.get("spinnerClassName"), // The CSS class to assign to the spinner
+      className: appConfig.get("spinnerClassName"), // The CSS class to assign to the spinner
       zIndex: 2e9, // The z-index (defaults to 2000000000)
       top: "auto", // Top position relative to parent in px
       left: "auto" // Left position relative to parent in px
     },
-      target = document.getElementById(config.get("spinnerTargetID")),
+      target = document.getElementById(appConfig.get("spinnerTargetID")),
       spinner;
 
     function enable() {

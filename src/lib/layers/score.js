@@ -1,7 +1,7 @@
 define(["log", "PIXI", "entities/scoreEntity",
-    "config", "Poll", "classes/Layer"
+    "objectsConfig", "Poll", "classes/Layer"
   ],
-  function(log, PIXI, scoreEntity, config, Poll, Layer) {
+  function(log, PIXI, scoreEntity, objectsConfig, Poll, Layer) {
 
     var layer = new Layer({
       listeners: {
@@ -94,14 +94,14 @@ define(["log", "PIXI", "entities/scoreEntity",
         log.debug("createTextButtons");
 
 
-        countingText = new PIXI.Text("0 of " + config.get("aliensToSpawn"), {
+        countingText = new PIXI.Text("0 of " + objectsConfig.get("objectsToSpawn"), {
           font: "bold italic 20px Arvo",
           fill: "#bb4433",
           align: "right",
           stroke: "#FFAAAA",
           strokeThickness: 5
         });
-        introText = new PIXI.Text("STOP those " + config.get("aliensToSpawn") +
+        introText = new PIXI.Text("STOP those " + objectsConfig.get("objectsToSpawn") +
           " bastards!\n\n\nmouse: point, hold and kill\n" +
           "touchscreen: touch, point and kill\nleapmotion: point and kill", {
             font: "bold 35px Arvo",
@@ -144,11 +144,11 @@ define(["log", "PIXI", "entities/scoreEntity",
       introTimerRunning = false;
 
       scoreTimerRunning = true;
-      countingText.setText(model.get("aliensKilled") + " of " + config.get("aliensToSpawn"));
+      countingText.setText(model.get("aliensKilled") + " of " + objectsConfig.get("objectsToSpawn"));
 
       //log.warn("scoreChange");
 
-      if (winningAdded === false && config.get("aliensToSpawn") <= model.get("aliensKilled")) {
+      if (winningAdded === false && objectsConfig.get("objectsToSpawn") <= model.get("aliensKilled")) {
         // win, displayManager the text
 
         winningText.position.x = layer.width / 2;

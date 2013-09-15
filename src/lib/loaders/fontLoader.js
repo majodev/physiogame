@@ -1,8 +1,8 @@
-define(["log", "WebFont", "utils/publisher", "config", "underscore"],
-  function(log, WebFont, publisher, config, _) {
+define(["log", "WebFont", "utils/publisher", "appConfig", "underscore"],
+  function(log, WebFont, publisher, appConfig, _) {
 
     var events = publisher.make(),
-      fontConfig = _.extend(config.get("fonts"), {
+      fontConfig = _.extend(appConfig.get("fonts"), {
         loading: function() {
           //log.debug("fonts: loading");
         },
