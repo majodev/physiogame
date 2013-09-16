@@ -14,7 +14,10 @@ require.config({
     "Spinner": "../vendor/spinjs/dist/spin",
     "Poll": "../vendor/polljs/poll",
     "bootstrap": "../vendor/bootstrap/dist/js/bootstrap",
-    "text": "../vendor/text/text"
+    "text": "../vendor/text/text",
+    "Handlebars": "../vendor/handlebars/handlebars",
+    "hbars": "../vendor/requirejs-handlebars/hbars",
+    "bootstrap-slider": "../vendor/bootstrap-slider/js/bootstrap-slider"
   },
   shim: {
     "Poll": {
@@ -27,6 +30,18 @@ require.config({
       exports: "Spinner",
       init: function() {
         console.log("init spinner");
+      }
+    },
+    "Handlebars": {
+      exports: "Handlebars",
+      init: function() {
+        console.log("init Handlebars");
+      }
+    },
+    "bootstrap-slider": {
+      deps: ["jquery", "bootstrap"],
+      init : function($) {
+        console.log("init bootstrap-slider");
       }
     },
     "bootstrap": {

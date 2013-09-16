@@ -13,6 +13,8 @@
     "polljs": "https://github.com/mtrpcic/polljs.git",
     "bootstrap": "~3.0.0",
     "text": "~2.0.10",
-    "handlebars": "~1.0.0"
+    "handlebars": "~1.0.0",
+    "requirejs-handlebars": "https://github.com/jfparadis/requirejs-handlebars.git",
+    "bootstrap-slider": "https://github.com/seiyria/bootstrap-slider.git"
   }
 }

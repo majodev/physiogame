@@ -15,18 +15,24 @@ canvas { /* To remove the scrollbars */
 }
 
 .app {
-  width: 100%;
-  height: 100%;
-  background: #000;
+  /*width: 100%;
+  height: 100%;*/
+  /*background: #000;*/
 }
 
 #pixiContainer {
-  width: 100%;
+  /*width: 100%;
   height: 100%;
-  background: #000;
+  background: #000;*/
 }
 
 #preloaderSpinner {
   width: 100%;
   height: 100%;
+  background: #000;
+}
+
+#settingsModal {
+  /*width: 100%;
+  height: 100%;*/
 }

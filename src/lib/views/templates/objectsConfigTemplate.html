@@ -1,0 +1,43 @@
+<!-- <input id="slider1" type="range" min="100" max="500" step="10" onchange="$()event.target.value">
+<input id="rangeValue1" type="text" size="2"> -->
+
+<!-- <div class="row">
+  <input type="text" class="parameterSlider col-md-12" value="" data-slider-min="-20" data-slider-max="20"
+  data-slider-step="1" data-slider-value="-14" data-slider-selection="after" data-slider-tooltip="show">
+</div> -->
+<!--   <p>{{objectsToSpawn}}</p>
+  <p>{{cloudsToGenerate}}</p>
+  <p>{{objectHittedScaleCap}}</p>
+  <p>{{objectHittedScaleBeforeCap}}</p>
+  <p>{{objectHittedScaleAfterCap}}</p>
+  <p>{{objectHittedSpeedMax}}</p>
+  <p>{{objectHittedSpeedStep}}</p>
+  <p>{{objectHittedAlphaStep}}</p>
+  <p>{{objectNormalScaleMin}}</p>
+  <p>{{objectNormalScaleCap}}</p>
+  <p>{{objectNormalScaleBeforeCap}}</p>
+  <p>{{objectNormalScaleAfterCap}}</p> -->
+
+  <div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>parameter</th>
+        <th>value</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#keyValues}}
+        <tr>
+          <td>{{objectKey}}</td>
+          <td><input id="{{objectKey}}" type="text" class="parameterSlider col-md-12"
+            value="{{objectValue}}" data-slider-min="0" data-slider-max="100"
+            data-slider-step="1" data-slider-value="{{objectValue}}"
+            data-slider-selection="after" data-slider-tooltip="show"></td>
+        </tr>
+      {{/keyValues}}
+    </tbody>
+  </table>
+</div>
+
+

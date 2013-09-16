@@ -1,6 +1,6 @@
-define(["log", "utils/publisher", "loaders/indicator",
+define(["log", "utils/publisher",
   "loaders/fontLoader", "loaders/soundLoader", "loaders/spriteLoader"],
-  function(log, publisher, indicator,
+  function(log, publisher,
     fontLoader, soundLoader, spriteLoader) {
 
     var spritesloaded = false,
@@ -10,8 +10,6 @@ define(["log", "utils/publisher", "loaders/indicator",
 
     function init() {
       log.debug("preloader: init");
-
-      indicator.enable();
 
       spriteLoader.events.on("allSpritesLoaded", onSpritesLoaded);
       fontLoader.events.on("allFontsLoaded", onFontsLoaded);
@@ -50,8 +48,6 @@ define(["log", "utils/publisher", "loaders/indicator",
         spriteLoader.events.off("allSpritesLoaded", onSpritesLoaded);
         fontLoader.events.off("allFontsLoaded", onFontsLoaded);
         soundLoader.events.off("allSoundsLoaded", onSoundsLoaded);
-
-        indicator.disable();
 
         events.trigger("preloadedAll");
       }

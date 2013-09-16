@@ -1,7 +1,8 @@
-define(["appConfig", "log", "loaders/preloader"],
-  function(appConfig, log, preloader) {
+define(["appConfig", "log", "loaders/preloader", "loaders/indicator"],
+  function(appConfig, log, preloader, indicator) {
 
     (function preloading() {
+      indicator.enable();
       log.setLevel(appConfig.get("logLevel"));
       log.debug("self executing startup function - preloading, logLevel is " +
         appConfig.get("logLevel"));
@@ -19,6 +20,7 @@ define(["appConfig", "log", "loaders/preloader"],
       // Preloading must finish before gameController gets included at all.
       require(["base/gameManager"], function(game) {
         game.init();
+        indicator.disable();
       });
 
     }
