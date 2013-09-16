@@ -63,7 +63,7 @@ define(["log", "PIXI", "entities/scoreEntity",
         action: function() {
           if (scoreTimerRunning) {
             scoreTimerCount += 1;
-            timerText.setText("Time: " + scoreTimerCount / 10);
+            timerText.setText("Zeit: " + scoreTimerCount / 10);
           }
           if (introTimerRunning) {
             introTimerCount += 1;
