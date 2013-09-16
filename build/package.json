@@ -1,9 +1,9 @@
 {
-  "name": "physioshooter",
-  "version": "0.0.2",
+  "name": "physiogame",
+  "version": "0.1.0",
   "main": "index.html",
   "window": {
-    "title": "physioshooter",
+    "title": "physiogame",
     "show": true,
     "toolbar": false,
     "frame": true,

@@ -19,7 +19,7 @@ var config = {
         return contents;
     }
   },
-  preserveLicenseComments: false,
+  preserveLicenseComments: true,
   include: ["requireLib", "base/gameManager"], // heads up: game is loaded via "load" dynamically, hence include!
   logLevel: 0,
   waitSeconds: 7,

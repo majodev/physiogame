@@ -1,6 +1,6 @@
 {
-  "name": "physioshooter",
-  "version": "0.0.2",
+  "name": "physiogame",
+  "version": "0.1.0",
   "dependencies": {
     "bower": "latest",
     "requirejs": "~2.1.8",
@@ -23,7 +23,7 @@
   },
   "main": "index.html",
   "window": {
-    "title": "require-test-project",
+    "title": "physiogame",
     "show": true,
     "toolbar": true,
     "frame": true,
