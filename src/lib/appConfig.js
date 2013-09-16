@@ -1,6 +1,7 @@
 define(["Backbone"],
   function(Backbone) {
     var appConfig = new Backbone.Model({
+      applicationName: "Physio/Ergo Prototype",
       width: 1280,
       height: 720,
       ratio: {

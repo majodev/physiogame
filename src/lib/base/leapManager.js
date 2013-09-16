@@ -59,8 +59,9 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll"],
         interval: 2000,
         action: function() {
           var time = frameCount / 2,
-            debugText = "leap: " + frameCount + " frames @ " +
-              time + "fps.";
+            // debugText = "leap: " + frameCount + " frames @ " +
+            //   time + "fps.";
+            debugText = "leap @ " + time + "fps";
           events.trigger("debugInfo", debugText);
           frameCount = 0;
         }

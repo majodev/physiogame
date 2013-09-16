@@ -39,6 +39,12 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
       exchangeScene(id, sceneMap.getScene(id));
     }
 
+    function resetCurrentScene() {
+      if (typeof currentScene.object !== 'undefined') {
+        currentScene.object.reset();
+      }
+    }
+
     function onSceneLayerEvent(options) {
       //console.log("onSceneLayerEvent: " + options);
       if (_.isUndefined(options) === false) {
@@ -64,6 +70,7 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
     return {
       init: init,
       pushScene: pushScene,
+      resetCurrentScene: resetCurrentScene,
       events: events,
       getCurrentSceneID: getCurrentSceneID,
       getCurrentSceneObject: getCurrentSceneObject

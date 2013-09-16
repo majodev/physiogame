@@ -4,7 +4,8 @@ define(["log", "jquery", "views/ObjectsConfigView",
     modalHTML) {
 
     var initialized = false,
-      objectsConfigView;
+      objectsConfigView,
+      showing = false;
 
     function init() {
       log.debug("settingsModal: init");
@@ -20,13 +21,25 @@ define(["log", "jquery", "views/ObjectsConfigView",
         init();
       }
       $('#myModal').modal("show");
+      showing = true;
     }
 
-    //console.log("settingsModal init!");
-    //console.log(modalHTML);
+    function hide() {
+      if (!initialized) {
+        init();
+      }
+      $('#myModal').modal("hide");
+      showing = false;
+    }
+
+    function getShowing() {
+      return showing;
+    }
 
     return {
-      show: show
+      show: show,
+      hide: hide,
+      getShowing: getShowing
     };
   }
 );

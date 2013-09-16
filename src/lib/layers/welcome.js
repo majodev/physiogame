@@ -1,11 +1,11 @@
-define(["PIXI", "classes/Layer"],
-  function(PIXI, Layer) {
+define(["PIXI", "classes/Layer", "appConfig"],
+  function(PIXI, Layer, appConfig) {
 
     var layer = new Layer(),
       welcomeText;
 
     layer.onActivate = function () {
-      welcomeText = new PIXI.Text("Physioshooter internal", {
+      welcomeText = new PIXI.Text(appConfig.get("applicationName"), {
         font: "bold italic 80px Arvo",
         fill: "#bb4433",
         align: "center",

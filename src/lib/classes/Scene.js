@@ -49,6 +49,12 @@ define(["underscore", "PIXI", "utils/publisher"],
           this.running = false;
         }
       },
+      reset: function() {
+        if(this.running === true) {
+          this.deactivate();
+        }
+        this.activate();
+      },
       getScene: function() {
         return this.pixiScene;
       },

@@ -94,23 +94,23 @@ define(["log", "PIXI", "entities/scoreEntity",
         log.debug("createTextButtons");
 
 
-        countingText = new PIXI.Text("0 of " + objectsConfig.get("objectsToSpawn"), {
+        countingText = new PIXI.Text("0 von " + objectsConfig.get("objectsToSpawn"), {
           font: "bold italic 20px Arvo",
           fill: "#bb4433",
           align: "right",
           stroke: "#FFAAAA",
           strokeThickness: 5
         });
-        introText = new PIXI.Text("STOP those " + objectsConfig.get("objectsToSpawn") +
-          " bastards!\n\n\nmouse: point, hold and kill\n" +
-          "touchscreen: touch, point and kill\nleapmotion: point and kill", {
+        introText = new PIXI.Text("Mach den Bildschirm von diesen " + objectsConfig.get("objectsToSpawn") +
+          " Objekte frei!\n\n\nMaus: Taste gedrückt halten\n" +
+          "Touchscreen: gedrückt halten\nLeap Motion: einfach zielen", {
             font: "bold 35px Arvo",
             fill: "#3344bb",
             align: "center",
             stroke: "#AAAAFF",
             strokeThickness: 5
           });
-        winningText = new PIXI.Text("WIN!", {
+        winningText = new PIXI.Text("Fertig!", {
           font: "bold 35px Arvo",
           fill: "#3344bb",
           align: "center",
@@ -160,9 +160,9 @@ define(["log", "PIXI", "entities/scoreEntity",
         winningAdded = true;
         scoreTimerRunning = false;
 
-        tempWinText = "WIN!\nYou have killed " +
-          scoreEntity.get("aliensKilled") + " aliens in " + scoreTimerCount / 10 + " seconds!\n" +
-          "CONTRATULATIONS!\n\nRANK: ";
+        tempWinText = "Fertig!\nDu hast " +
+          scoreEntity.get("aliensKilled") + " Objekte in " + scoreTimerCount / 10 + " Sekunden abgeschossen!\n" +
+          "GRATULATION!\n\nRang: ";
 
         if (scoreTimerCount >= 2000) {
           tempRankText = "D, sufficiant!\n -- Yaa *eehhm* training for mastery...";
@@ -180,7 +180,7 @@ define(["log", "PIXI", "entities/scoreEntity",
           tempRankText = "A+, WAT WAT WAT!\n -- Batman!";
         }
 
-        winningText.setText(tempWinText + tempRankText + "\n\nPress ENTER to go back!");
+        winningText.setText(tempWinText + tempRankText + "\n\nDanke fürs Spielen!");
 
         countingText.visible = false;
         timerText.visible = false;

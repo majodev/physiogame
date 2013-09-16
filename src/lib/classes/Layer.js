@@ -69,6 +69,10 @@ define(["PIXI", "underscore", "base/displayManager",
           this.pixiLayer.removeChild(this.pixiLayer.children[i]);
         }
       },
+      reset: function () {
+        this.deactivate();
+        this.activate();
+      },
       addChild: function(child) {
         this.pixiLayer.addChild(child);
       },

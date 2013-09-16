@@ -11,8 +11,8 @@ define(["classes/Layer", "classes/Button", "views/settingsModal", "base/soundMan
 
       shootingButton = new Button({
         texts: {
-          normal: "play",
-          mouseover: "play!",
+          normal: "Spielen",
+          mouseover: "Spielen!",
         }
       });
 
@@ -27,10 +27,18 @@ define(["classes/Layer", "classes/Button", "views/settingsModal", "base/soundMan
         });
       };
 
+      shootingButton.display.scale = {
+        x: 1.5,
+        y: 1.5
+      };
+
       settingsButton = new Button({
+        style: {
+          font: "bold 30px Arvo"
+        },
         texts: {
-          normal: "settings",
-          mouseover: "settings!",
+          normal: "Einstellungen",
+          mouseover: "Einstellungen!",
         }
       });
 
@@ -43,10 +51,15 @@ define(["classes/Layer", "classes/Button", "views/settingsModal", "base/soundMan
         settingsModal.show();
       };
 
+      settingsButton.display.scale = {
+        x: 1.5,
+        y: 1.5
+      };
+
       creditsButton = new Button({
         texts: {
-          normal: "credits",
-          mouseover: "credits!"
+          normal: "Credits",
+          mouseover: "Credits!"
         }
       });
 
@@ -68,7 +81,7 @@ define(["classes/Layer", "classes/Button", "views/settingsModal", "base/soundMan
 
       soundButton = new Button({
         style: {
-          font: "bold 30px Arvo"
+          font: "bold 22px Arvo"
         }
       });
 
@@ -101,19 +114,19 @@ define(["classes/Layer", "classes/Button", "views/settingsModal", "base/soundMan
       if (soundManager.getSoundEnabled() === true) {
         soundButton.resetSettings({
           texts: {
-            normal: "sound enabled",
-            mouseover: "disable sound!",
-            click: "disable sound!",
-            tap: "disable sound!"
+            normal: "Sound aktiviert",
+            mouseover: "Sound deaktivieren!",
+            click: "Sound deaktivieren!",
+            tap: "Sound deaktivieren!"
           }
         });
       } else {
         soundButton.resetSettings({
           texts: {
-            normal: "sound disabled",
-            mouseover: "enable sound!",
-            click: "enable sound!",
-            tap: "enable sound!"
+            normal: "Sound deaktiviert",
+            mouseover: "Sound aktivieren!",
+            click: "Sound aktivieren!",
+            tap: "Sound aktivieren!"
           }
         });
       }
