@@ -25,9 +25,12 @@ canvas { /* To remove the scrollbars */
   background: #000;
 }
 
-.slider.slider-horizontal {
-width: 210px;
-height: 20px;
+.parameterButton {
+  width: 150px;
+}
+
+.parameterSlider {
+  width: 150px;
 }
 
 .modal-dialog {

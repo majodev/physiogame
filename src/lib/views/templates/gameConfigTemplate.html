@@ -14,10 +14,24 @@
         <tr>
           <td>{{objectDesc}}</td>
           <td>{{objectDef}}</td>
-          <td><input id="{{objectKey}}" type="text" class="parameterSlider col-md-12"
-            value="{{objectValue}}" data-slider-min="{{objectMin}}" data-slider-max="{{objectMax}}"
-            data-slider-step="{{objectStep}}" data-slider-value="{{objectValue}}"
-            data-slider-selection="after" data-slider-tooltip="hide"></td>
+          {{#if uiSlider}}
+            <td><input id="{{objectKey}}" type="text" class="parameterSlider col-md-12"
+              value="{{objectValue}}" data-slider-min="{{objectMin}}" data-slider-max="{{objectMax}}"
+              data-slider-step="{{objectStep}}" data-slider-value="{{objectValue}}"
+              data-slider-selection="after" data-slider-tooltip="hide"></td>
+          {{/if}}
+          {{#if uiDropdown}}
+            <td><div class="btn-group btn-group-sm">
+              <button type="button" class="btn btn-primary dropdown-toggle parameterButton" data-toggle="dropdown">
+                {{objectValue}} <span class="caret"></span>
+              </button>
+              <ul id="{{objectKey}}" class="dropdown-menu" role="menu">
+                {{#each objectOpt}}
+                  <li><a id="{{this}}" href="#">{{this}}</a></li>
+                {{/each}}
+              </ul>
+            </div></td>
+          {{/if}}
           <td id="{{objectKey}}-value">{{objectValue}}</td>
         </tr>
       {{/keyValues}}

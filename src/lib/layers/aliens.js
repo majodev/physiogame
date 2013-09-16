@@ -25,7 +25,7 @@ define(["display/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       objectNormalScaleBeforeCap,
       objectNormalScaleAfterCap,
       objectNormalSpeedMin;
-      
+
 
     layer.onActivate = function() {
 
@@ -93,11 +93,18 @@ define(["display/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
       var objectsToSpawn = gameConfig.get("objectsToSpawn"),
         i = 0,
-        asien;
+        theTextures,
+        theTexturesLength;
+
+      theTextures = textures.atlas[gameConfig.get("objectTexture")];
+      theTexturesLength = theTextures.length;
+
       // add aliens...
       for (i = 0; i < objectsToSpawn; i += 1) {
 
-        alien = new PIXI.Sprite(textures.atlas.aliens[i % 4]);
+        //alien = new PIXI.Sprite(textures.atlas.aliens[i % 4]);
+
+        alien = new PIXI.Sprite(theTextures[i % theTexturesLength]);
 
         // set its initial values...
         alien.position.x = parseInt(Math.random() * layer.width, 10);
