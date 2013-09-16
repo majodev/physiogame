@@ -66,19 +66,13 @@ define(["classes/Layer", "classes/Button", "views/settingsModal", "base/soundMan
         });
       };
 
-
-
       soundButton = new Button({
         style: {
           font: "bold 30px Arvo"
-        },
-        texts: {
-          normal: "sound disabled",
-          mouseover: "enable sound!",
-          click: "enable sound!",
-          tap: "enable sound!"
         }
       });
+
+      setSoundButtons(); // set the texts according to the soundManager settings
 
       soundButton.display.scale = {
         x: 0.5,
@@ -92,32 +86,38 @@ define(["classes/Layer", "classes/Button", "views/settingsModal", "base/soundMan
 
       soundButton.onClick = function() {
         soundManager.toggleSound();
-        if (soundManager.getSoundEnabled() === true) {
-          soundButton.resetSettings({
-            texts: {
-              normal: "sound enabled",
-              mouseover: "disable sound!",
-              click: "disable sound!",
-              tap: "disable sound!"
-            }
-          });
-        } else {
-          soundButton.resetSettings({
-            texts: {
-              normal: "sound disabled",
-              mouseover: "enable sound!",
-              click: "enable sound!",
-              tap: "enable sound!"
-            }
-          });
-        }
+        setSoundButtons();
       };
+
+
 
       this.addChild(settingsButton.display);
       this.addChild(shootingButton.display);
       this.addChild(creditsButton.display);
       this.addChild(soundButton.display);
     };
+
+    function setSoundButtons() {
+      if (soundManager.getSoundEnabled() === true) {
+        soundButton.resetSettings({
+          texts: {
+            normal: "sound enabled",
+            mouseover: "disable sound!",
+            click: "disable sound!",
+            tap: "disable sound!"
+          }
+        });
+      } else {
+        soundButton.resetSettings({
+          texts: {
+            normal: "sound disabled",
+            mouseover: "enable sound!",
+            click: "enable sound!",
+            tap: "enable sound!"
+          }
+        });
+      }
+    }
 
     return layer;
 
