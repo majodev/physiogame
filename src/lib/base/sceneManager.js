@@ -51,6 +51,9 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
         if(_.isUndefined(options.pushScene) === false) {
           pushScene(options.pushScene);
         }
+        if(_.isUndefined(options.resetCurrentScene) === false) {
+          resetCurrentScene();
+        }
       }
     }
 

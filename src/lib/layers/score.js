@@ -1,7 +1,7 @@
 define(["log", "PIXI", "entities/scoreEntity",
-    "objectsConfig", "Poll", "classes/Layer"
+    "objectsConfig", "Poll", "classes/Layer", "classes/Button"
   ],
-  function(log, PIXI, scoreEntity, objectsConfig, Poll, Layer) {
+  function(log, PIXI, scoreEntity, objectsConfig, Poll, Layer, Button) {
 
     var layer = new Layer({
       listeners: {
@@ -18,7 +18,8 @@ define(["log", "PIXI", "entities/scoreEntity",
       scoreTimerCount = 0,
       scoreTimerRunning = false,
       introTimerCount = 0,
-      introTimerRunning = true;
+      introTimerRunning = true,
+      retryButton;
 
     layer.onActivate = function() {
       scoreEntity.resetScore();
@@ -69,6 +70,7 @@ define(["log", "PIXI", "entities/scoreEntity",
             introTimerCount += 1;
             if (introTimerCount > 60) {
               introTimerRunning = false;
+              introText.visible = false;
             }
           }
         }
@@ -79,7 +81,7 @@ define(["log", "PIXI", "entities/scoreEntity",
     };
 
     layer.onRender = function() {
-      onRenderDisableIntroAnimation();
+      //onRenderDisableIntroAnimation();
     };
 
     layer.onDeactivate = function() {
@@ -102,7 +104,7 @@ define(["log", "PIXI", "entities/scoreEntity",
           strokeThickness: 5
         });
         introText = new PIXI.Text("Mach den Bildschirm von diesen " + objectsConfig.get("objectsToSpawn") +
-          " Objekte frei!\n\n\nMaus: Taste gedrückt halten\n" +
+          " Objekten frei!\n\n\nMaus: Taste gedrückt halten\n" +
           "Touchscreen: gedrückt halten\nLeap Motion: einfach zielen", {
             font: "bold 35px Arvo",
             fill: "#3344bb",
@@ -129,22 +131,24 @@ define(["log", "PIXI", "entities/scoreEntity",
       }
     }
 
-    function onRenderDisableIntroAnimation() {
-      if (introText.alpha > 0) {
-        if (introTimerRunning === false && introText.alpha > 0) {
-          introText.alpha -= 0.02;
-        }
-      }
-    }
+    // function onRenderDisableIntroAnimation() {
+    //   //if (introText.alpha > 0) {
+    //     //if (introTimerRunning === false && introText.alpha > 0) {
+    //       //introText.alpha -= 0.02;
+    //       //introText.visible = false;
+    //     //}
+    //   //}
+    // }
 
     function scoreChanged(model, options) {
       var tempWinText,
         tempRankText;
 
       introTimerRunning = false;
+      introText.visible = false;
 
       scoreTimerRunning = true;
-      countingText.setText(model.get("aliensKilled") + " of " + objectsConfig.get("objectsToSpawn"));
+      countingText.setText(model.get("aliensKilled") + " von " + objectsConfig.get("objectsToSpawn"));
 
       //log.warn("scoreChange");
 
@@ -185,9 +189,42 @@ define(["log", "PIXI", "entities/scoreEntity",
         countingText.visible = false;
         timerText.visible = false;
         winningText.visible = true;
+
+
+        // RETRY BUTTON HINZUFUEGEN...
+        // 
+        
+        retryButton = new Button({
+          style: {
+            font: "bold 23px Arvo"
+          },
+          texts: {
+            normal: "Neuer Versuch",
+            mouseover: "Neuer Versuch!",
+          }
+        });
+
+        retryButton.display.position = {
+          x: layer.width/2,
+          y: layer.height*0.87
+        };
+
+        retryButton.display.scale = {
+          x: 1.2,
+          y: 1.2
+        };
+
+        retryButton.onClick = function() {
+          layer.notifyScene({
+            resetCurrentScene: true
+          });
+        };
+
+        layer.addChild(retryButton.display);
+
       }
     }
-    
+
     return layer;
   }
 );
