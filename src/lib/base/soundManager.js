@@ -1,7 +1,8 @@
 define(["log", "loaders/soundLoader"],
   function(log, soundLoader) {
 
-    var explosion,
+    var soundEnabled = false,
+      explosion,
       hitted;
 
     function init() {
@@ -14,23 +15,46 @@ define(["log", "loaders/soundLoader"],
     }
 
     function explode() {
-      explosion.play();
+      if(soundEnabled) {
+        explosion.play();
+      }
     }
 
     function hit() {
-      hitted.play();
+      if(soundEnabled) {
+        hitted.play();
+      }
     }
 
     function background() {
-      bg.loop = true;
-      bg.play();
+      if(soundEnabled) {
+        bg.loop = true;
+        bg.play();
+      }
+    }
+
+    function toggleSound() {
+      
+      if(soundEnabled) {
+        bg.stop();
+      } else {
+        bg.play();
+      }
+
+      soundEnabled = !soundEnabled;
+    }
+
+    function getSoundEnabled() {
+      return soundEnabled;
     }
 
     return {
       init: init,
       explode: explode,
       hit: hit,
-      background: background
+      background: background,
+      toggleSound: toggleSound,
+      getSoundEnabled: getSoundEnabled
     };
   }
 );

@@ -1,10 +1,11 @@
-define(["classes/Layer", "classes/Button", "views/settingsModal"],
-  function(Layer, Button, settingsModal) {
+define(["classes/Layer", "classes/Button", "views/settingsModal", "base/soundManager"],
+  function(Layer, Button, settingsModal, soundManager) {
 
     var layer = new Layer(),
       shootingButton,
       creditsButton,
-      settingsButton;
+      settingsButton,
+      soundButton;
 
     layer.onActivate = function() {
 
@@ -38,7 +39,7 @@ define(["classes/Layer", "classes/Button", "views/settingsModal"],
         y: this.height * 0.75
       };
 
-      settingsButton.onClick = function () {
+      settingsButton.onClick = function() {
         settingsModal.show();
       };
 
@@ -55,8 +56,8 @@ define(["classes/Layer", "classes/Button", "views/settingsModal"],
       };
 
       creditsButton.display.position = {
-        x: creditsButton.buttonBG.width/4 + 10,
-        y: this.height - creditsButton.buttonBG.height/4 - 10
+        x: creditsButton.buttonBG.width / 4 + 10,
+        y: this.height - creditsButton.buttonBG.height / 4 - 10
       };
 
       creditsButton.onClick = function() {
@@ -65,9 +66,57 @@ define(["classes/Layer", "classes/Button", "views/settingsModal"],
         });
       };
 
+
+
+      soundButton = new Button({
+        style: {
+          font: "bold 30px Arvo"
+        },
+        texts: {
+          normal: "sound disabled",
+          mouseover: "enable sound!",
+          click: "enable sound!",
+          tap: "enable sound!"
+        }
+      });
+
+      soundButton.display.scale = {
+        x: 0.5,
+        y: 0.5
+      };
+
+      soundButton.display.position = {
+        x: this.width - soundButton.buttonBG.width / 4 - 10,
+        y: soundButton.buttonBG.height / 4 + 10
+      };
+
+      soundButton.onClick = function() {
+        soundManager.toggleSound();
+        if (soundManager.getSoundEnabled() === true) {
+          soundButton.resetSettings({
+            texts: {
+              normal: "sound enabled",
+              mouseover: "disable sound!",
+              click: "disable sound!",
+              tap: "disable sound!"
+            }
+          });
+        } else {
+          soundButton.resetSettings({
+            texts: {
+              normal: "sound disabled",
+              mouseover: "enable sound!",
+              click: "enable sound!",
+              tap: "enable sound!"
+            }
+          });
+        }
+      };
+
       this.addChild(settingsButton.display);
       this.addChild(shootingButton.display);
       this.addChild(creditsButton.display);
+      this.addChild(soundButton.display);
     };
 
     return layer;

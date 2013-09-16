@@ -132,6 +132,9 @@ define(["PIXI", "display/textures", "underscore"],
         if (_.isUndefined(options) === false) {
           _.merge(this.settings, options);
         }
+
+        this.buttonText.setText(this.settings.text.normal);
+        this.buttonBG.setTexture(this.settings.textures[0]);
       }
     };
 
