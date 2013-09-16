@@ -3,15 +3,15 @@ define([],
     return {
       objectsToSpawn: {
         def: 100,
-        min: 1,
-        max: 200,
+        min: 2,
+        max: 400,
         step: 1,
         desc: "Anzahl der Spiel-Objekte"
       },
       cloudsToGenerate: {
         def: 50,
         min: 0,
-        max: 200,
+        max: 500,
         step: 1,
         desc: "Anzahl der Wolken-Objekte"
       },
@@ -50,6 +50,20 @@ define([],
         step: 0.1,
         desc: "Geschwindigkeitserhöhung von getroffenen Spiel-Objekten"
       },
+      objectNormalSpeedMin: {
+        def: 1,
+        min: 0.1,
+        max: 5,
+        step: 0.1,
+        desc: "Minimale Geschwindigkeit von normalen Spiel-Objekten"
+      },
+      objectNormalAlphaMin: {
+        def: 0.5,
+        min: 0.1,
+        max: 1,
+        step: 0.01,
+        desc: "Minimale Durchsichtigkeit von normalen Spiel-Objekten"
+      },
       objectHittedAlphaStep: {
         def: 0.2,
         min: 0.01,
@@ -57,10 +71,17 @@ define([],
         step: 0.01,
         desc: "Durchsichtigkeitserhöhung von getroffenen Spiel-Objekten"
       },
+      objectNormalAlphaStep: {
+        def: 0.01,
+        min: 0.01,
+        max: 0.1,
+        step: 0.01,
+        desc: "Durchsichtigkeitsverringerung von normalen Spiel-Objekten"
+      },
       objectNormalScaleMin: {
-        def: 0.25,
+        def: 0.7,
         min: 0.1,
-        max: 0.4,
+        max: 1.5,
         step: 0.01,
         desc: "Minimale Skalierung von normalen Spiel-Objekten"
       },
@@ -68,7 +89,7 @@ define([],
         def: 0.9,
         min: 0.5,
         max: 1,
-        step: 0.05,
+        step: 0.01,
         desc: "Skalier-Grenze von normalen Spiel-Objekten"
       },
       objectNormalScaleBeforeCap: {

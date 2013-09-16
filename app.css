@@ -7,23 +7,16 @@ html, body { /* just to be sure these are full screen*/
   width:100%; 
   height:100%;
   background: #000;
+  font-family: Arvo, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: Arvo, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 canvas { /* To remove the scrollbars */
   display:block;
   /*vertical-align:center; */
-}
-
-.app {
-  /*width: 100%;
-  height: 100%;*/
-  /*background: #000;*/
-}
-
-#pixiContainer {
-  /*width: 100%;
-  height: 100%;
-  background: #000;*/
 }
 
 #preloaderSpinner {
@@ -32,7 +25,11 @@ canvas { /* To remove the scrollbars */
   background: #000;
 }
 
-#settingsModal {
-  /*width: 100%;
-  height: 100%;*/
+.slider.slider-horizontal {
+width: 210px;
+height: 20px;
+}
+
+.modal-dialog {
+  width: 90%;
 }

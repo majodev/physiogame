@@ -23,8 +23,8 @@ var config = {
   include: ["requireLib", "base/gameManager"], // heads up: game is loaded via "load" dynamically, hence include!
   logLevel: 0,
   waitSeconds: 7,
-  name: "physioshooter", // Name of script to start building from
-  insertRequire: ["physioshooter"],
+  name: "appInitializer", // Name of script to start building from
+  insertRequire: ["appInitializer"],
   out: 'build/' + pjson.name + '-' + pjson.version + '.min.js' // Where to output
 };
 

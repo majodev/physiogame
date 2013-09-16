@@ -1,17 +1,17 @@
-define(["log", "jquery", "views/ObjectsConfigView",
+define(["log", "jquery", "views/GameConfigView",
   "text!views/templates/settingsModal.html", "bootstrap"],
-  function(log, $, ObjectsConfigView,
+  function(log, $, GameConfigView,
     modalHTML) {
 
     var initialized = false,
-      objectsConfigView,
+      gameConfigView,
       showing = false;
 
     function init() {
       log.debug("settingsModal: init");
       $("#settingsModal").append(modalHTML);
-      objectsConfigView = new ObjectsConfigView({
-        el: $("#objectsConfig")
+      gameConfigView = new GameConfigView({
+        el: $("#gameConfig")
       });
       initialized = true;
     }

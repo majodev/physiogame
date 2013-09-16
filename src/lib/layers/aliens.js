@@ -1,7 +1,7 @@
-define(["display/textures", "objectsConfig", "utils/hittest", "underscore", "PIXI",
+define(["display/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     "entities/scoreEntity", "base/soundManager", "gameObjects/crosshairGO", "classes/Layer"
   ],
-  function(textures, objectsConfig, hittest, _, PIXI, scoreEntity, soundManager, crosshairGO, Layer) {
+  function(textures, gameConfig, hittest, _, PIXI, scoreEntity, soundManager, crosshairGO, Layer) {
 
     var layer = new Layer({
       listeners: {
@@ -17,25 +17,31 @@ define(["display/textures", "objectsConfig", "utils/hittest", "underscore", "PIX
       objectHittedScaleAfterCap,
       objectHittedSpeedMax,
       objectHittedSpeedStep,
+      objectNormalAlphaMin,
       objectHittedAlphaStep,
+      objectNormalAlphaStep,
       objectNormalScaleMin,
       objectNormalScaleCap,
       objectNormalScaleBeforeCap,
-      objectNormalScaleAfterCap;
+      objectNormalScaleAfterCap,
+      objectNormalSpeedMin;
       
 
     layer.onActivate = function() {
 
-      objectHittedScaleCap = objectsConfig.get("objectHittedScaleCap");
-      objectHittedScaleBeforeCap = objectsConfig.get("objectHittedScaleBeforeCap");
-      objectHittedScaleAfterCap = objectsConfig.get("objectHittedScaleAfterCap");
-      objectHittedSpeedMax = objectsConfig.get("objectHittedSpeedMax");
-      objectHittedSpeedStep = objectsConfig.get("objectHittedSpeedStep");
-      objectHittedAlphaStep = objectsConfig.get("objectHittedAlphaStep");
-      objectNormalScaleMin = objectsConfig.get("objectHittedAlphaStep");
-      objectNormalScaleCap = objectsConfig.get("objectNormalScaleCap");
-      objectNormalScaleBeforeCap = objectsConfig.get("objectNormalScaleBeforeCap");
-      objectNormalScaleAfterCap = objectsConfig.get("objectNormalScaleAfterCap");
+      objectHittedScaleCap = gameConfig.get("objectHittedScaleCap");
+      objectHittedScaleBeforeCap = gameConfig.get("objectHittedScaleBeforeCap");
+      objectHittedScaleAfterCap = gameConfig.get("objectHittedScaleAfterCap");
+      objectHittedSpeedMax = gameConfig.get("objectHittedSpeedMax");
+      objectHittedSpeedStep = gameConfig.get("objectHittedSpeedStep");
+      objectHittedAlphaStep = gameConfig.get("objectHittedAlphaStep");
+      objectNormalScaleMin = gameConfig.get("objectNormalScaleMin");
+      objectNormalScaleCap = gameConfig.get("objectNormalScaleCap");
+      objectNormalScaleBeforeCap = gameConfig.get("objectNormalScaleBeforeCap");
+      objectNormalScaleAfterCap = gameConfig.get("objectNormalScaleAfterCap");
+      objectNormalAlphaMin = gameConfig.get("objectNormalAlphaMin");
+      objectNormalAlphaStep = gameConfig.get("objectNormalAlphaStep");
+      objectNormalSpeedMin = gameConfig.get("objectNormalSpeedMin");
 
       createAliens();
 
@@ -85,7 +91,7 @@ define(["display/textures", "objectsConfig", "utils/hittest", "underscore", "PIX
 
     function createAliens() {
 
-      var objectsToSpawn = objectsConfig.get("objectsToSpawn"),
+      var objectsToSpawn = gameConfig.get("objectsToSpawn"),
         i = 0,
         asien;
       // add aliens...
@@ -100,11 +106,11 @@ define(["display/textures", "objectsConfig", "utils/hittest", "underscore", "PIX
         alien.targetY = parseInt(Math.random() * layer.height, 10); // extra
         alien.anchor.x = 0.5;
         alien.anchor.y = 0.5;
-        alien.scale.x = 0.2;
-        alien.scale.y = 0.2;
+        alien.scale.x = objectNormalScaleMin;
+        alien.scale.y = objectNormalScaleMin;
         alien.hitted = false; // extra
-        alien.alpha = 0.5;
-        alien.speed = 1; // extra
+        alien.alpha = objectNormalAlphaMin;
+        alien.speed = objectNormalSpeedMin; // extra
 
         objectsArray.push(alien);
         layer.addChild(objectsArray[i]);
@@ -148,10 +154,10 @@ define(["display/textures", "objectsConfig", "utils/hittest", "underscore", "PIX
           if (alien.position.y > alien.targetY) {
             alien.position.y -= alien.speed;
           }
-          if (alien.position.x === alien.targetX) {
+          if (Math.abs(alien.position.x - alien.targetX) <= alien.speed) {
             alien.targetX = parseInt(Math.random() * layer.width, 10);
           }
-          if (alien.position.y === alien.targetY) {
+          if (Math.abs(alien.position.y - alien.targetY) <= alien.speed) {
             alien.targetY = parseInt(Math.random() * layer.height, 10);
           }
 
@@ -166,7 +172,7 @@ define(["display/textures", "objectsConfig", "utils/hittest", "underscore", "PIX
             if (alien.alpha < 1) {
               alien.alpha += objectHittedAlphaStep;
             }
-            if (alien.speed <= objectHittedSpeedMax) {
+            if (alien.speed < objectHittedSpeedMax) {
               alien.speed += objectHittedSpeedStep;
             }
 
@@ -181,11 +187,11 @@ define(["display/textures", "objectsConfig", "utils/hittest", "underscore", "PIX
               }
 
             }
-            if (alien.alpha > 0.5) {
-              alien.alpha -= 0.01;
+            if (alien.alpha > objectNormalAlphaMin) {
+              alien.alpha -= objectNormalAlphaStep;
             }
 
-            if (alien.speed > 1) {
+            if (alien.speed > objectNormalSpeedMin) {
               alien.speed -= 1;
             }
           }

@@ -102,6 +102,6 @@ require.config({
 });
 
 // Start the main app logic.
-require(["physioshooter"],
-  function(physioshooter) {}
+require(["appInitializer"],
+  function(appInitializer) {}
 );

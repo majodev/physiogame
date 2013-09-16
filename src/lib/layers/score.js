@@ -1,7 +1,7 @@
 define(["log", "PIXI", "entities/scoreEntity",
-    "objectsConfig", "Poll", "classes/Layer", "classes/Button"
+    "gameConfig", "Poll", "classes/Layer", "classes/Button"
   ],
-  function(log, PIXI, scoreEntity, objectsConfig, Poll, Layer, Button) {
+  function(log, PIXI, scoreEntity, gameConfig, Poll, Layer, Button) {
 
     var layer = new Layer({
       listeners: {
@@ -96,14 +96,14 @@ define(["log", "PIXI", "entities/scoreEntity",
         log.debug("createTextButtons");
 
 
-        countingText = new PIXI.Text("0 von " + objectsConfig.get("objectsToSpawn"), {
+        countingText = new PIXI.Text("0 von " + gameConfig.get("objectsToSpawn"), {
           font: "bold italic 20px Arvo",
           fill: "#bb4433",
           align: "right",
           stroke: "#FFAAAA",
           strokeThickness: 5
         });
-        introText = new PIXI.Text("Mach den Bildschirm von diesen " + objectsConfig.get("objectsToSpawn") +
+        introText = new PIXI.Text("Mach den Bildschirm von diesen " + gameConfig.get("objectsToSpawn") +
           " Objekten frei!\n\n\nMaus: Taste gedrückt halten\n" +
           "Touchscreen: gedrückt halten\nLeap Motion: einfach zielen", {
             font: "bold 35px Arvo",
@@ -148,11 +148,11 @@ define(["log", "PIXI", "entities/scoreEntity",
       introText.visible = false;
 
       scoreTimerRunning = true;
-      countingText.setText(model.get("aliensKilled") + " von " + objectsConfig.get("objectsToSpawn"));
+      countingText.setText(model.get("aliensKilled") + " von " + gameConfig.get("objectsToSpawn"));
 
       //log.warn("scoreChange");
 
-      if (winningAdded === false && objectsConfig.get("objectsToSpawn") <= model.get("aliensKilled")) {
+      if (winningAdded === false && gameConfig.get("objectsToSpawn") <= model.get("aliensKilled")) {
         // win, displayManager the text
 
         winningText.position.x = layer.width / 2;
@@ -166,25 +166,25 @@ define(["log", "PIXI", "entities/scoreEntity",
 
         tempWinText = "Fertig!\nDu hast " +
           scoreEntity.get("aliensKilled") + " Objekte in " + scoreTimerCount / 10 + " Sekunden abgeschossen!\n" +
-          "GRATULATION!\n\nRang: ";
+          "GRATULATION!\n\n\n\n";
 
-        if (scoreTimerCount >= 2000) {
-          tempRankText = "D, sufficiant!\n -- Yaa *eehhm* training for mastery...";
-        }
-        if (scoreTimerCount < 2000) {
-          tempRankText = "C, good!\n -- You know your weapons young soldier...";
-        }
-        if (scoreTimerCount < 1300) {
-          tempRankText = "B, nice!\n -- You have laser eyes and fast reflexes...";
-        }
-        if (scoreTimerCount < 600) {
-          tempRankText = "A, aWeSoMe!\n -- I'm tha lase33r. ALL RIGHT!";
-        }
-        if (scoreTimerCount < 400) {
-          tempRankText = "A+, WAT WAT WAT!\n -- Batman!";
-        }
+        // if (scoreTimerCount >= 2000) {
+        //   tempRankText = "D, sufficiant!\n -- Yaa *eehhm* training for mastery...";
+        // }
+        // if (scoreTimerCount < 2000) {
+        //   tempRankText = "C, good!\n -- You know your weapons young soldier...";
+        // }
+        // if (scoreTimerCount < 1300) {
+        //   tempRankText = "B, nice!\n -- You have laser eyes and fast reflexes...";
+        // }
+        // if (scoreTimerCount < 600) {
+        //   tempRankText = "A, aWeSoMe!\n -- I'm tha lase33r. ALL RIGHT!";
+        // }
+        // if (scoreTimerCount < 400) {
+        //   tempRankText = "A+, WAT WAT WAT!\n -- Batman!";
+        // }
 
-        winningText.setText(tempWinText + tempRankText + "\n\nDanke fürs Spielen!");
+        winningText.setText(tempWinText + "\nDanke fürs Spielen!");
 
         countingText.visible = false;
         timerText.visible = false;

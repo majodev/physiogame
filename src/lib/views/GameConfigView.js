@@ -1,7 +1,7 @@
-define(["Backbone", "jquery", "log", "objectsConfig", "underscore",
-    "hbars!views/templates/objectsConfigTemplate", "bootstrap-slider"
+define(["Backbone", "jquery", "log", "gameConfig", "underscore",
+    "hbars!views/templates/gameConfigTemplate", "bootstrap-slider"
   ],
-  function(Backbone, $, log, objectsConfig, _, objectsConfigTemplate) {
+  function(Backbone, $, log, gameConfig, _, gameConfigTemplate) {
     
     var ObjectsConfigView = Backbone.View.extend({
       initialize: function() {
@@ -9,10 +9,11 @@ define(["Backbone", "jquery", "log", "objectsConfig", "underscore",
         this.listenTo(this.model, "change", this.render);
         this.render();
       },
-      model: objectsConfig,
+      model: gameConfig,
       render: function() {
-        this.$el.html(objectsConfigTemplate(this.model.generateKeyValuePairs()));
+        this.$el.html(gameConfigTemplate(this.model.generateKeyValuePairs()));
         $("input.parameterSlider").slider();
+        $(".slider-horizontal").css("width", "150px");
         return this; // for chaining
       },
       events: {
@@ -37,7 +38,7 @@ define(["Backbone", "jquery", "log", "objectsConfig", "underscore",
 
     function refreshGameWithNewValues() {
       require(["base/sceneManager"], function (sceneManager) {
-        console.dir(sceneManager);
+        //console.dir(sceneManager);
         sceneManager.resetCurrentScene();
       });
     }
