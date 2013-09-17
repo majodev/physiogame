@@ -49,7 +49,7 @@ define([],
       objectHittedSpeedMax: {
         def: 5,
         min: 0.1,
-        max: 10,
+        max: 20,
         step: 0.1,
         ui: "slider",
         cat: "speed",
@@ -57,9 +57,9 @@ define([],
       },
       objectHittedSpeedStep: {
         def: 1,
-        min: 0.1,
+        min: 0.01,
         max: 2,
-        step: 0.1,
+        step: 0.01,
         ui: "slider",
         cat: "speed",
         desc: "Geschwindigkeitserhöhung von getroffenen Spiel-Objekten"
@@ -179,6 +179,24 @@ define([],
         cat: "leap",
         desc: "Y: Abtastmittelpunkt der vertikalen Achse"
       },
+      objectHittedScaleExplodes: {
+        def: 1.8,
+        min: 0.1,
+        max: 3,
+        step: 0.01,
+        ui: "slider",
+        cat: "scale",
+        desc: "Skalier-Maximum von getroffenen Spiel-Objekten vor Explosion"
+      },
+      objectNormalSpeedStep: {
+        def: 1,
+        min: 0.01,
+        max: 2,
+        step: 0.01,
+        ui: "slider",
+        cat: "speed",
+        desc: "Geschwindigkeitsabnahme von normalen Spiel-Objekten"
+      }
     };
   }
 );

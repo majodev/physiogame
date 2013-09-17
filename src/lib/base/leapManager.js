@@ -36,12 +36,14 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
         }
       }
 
-      for (handId, handCount = handsLength; handId != handCount; handId += 1) {
+      if(handsAvailable) {
+        hand = frame.hands[0];
 
-        hand = frame.hands[handId];
-
-        x = parseInt(hand.palmPosition[0], 10);
-        y = parseInt(hand.palmPosition[1], 10);
+        //x = parseInt(hand.palmPosition[0], 10);
+        //y = parseInt(hand.palmPosition[1], 10);
+        //
+        x = hand.palmPosition[0];
+        y = hand.palmPosition[1];
 
         events.trigger("handFrameNormalized", {
           position: {
@@ -49,8 +51,10 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
             y: (displayHeight * leapToDisplayY - (y * leapYModifier))
           }
         });
-
       }
+
+      //for (handId, handCount = handsLength; handId != handCount; handId += 1) {
+      //}
 
       frameCount += 1;
     });

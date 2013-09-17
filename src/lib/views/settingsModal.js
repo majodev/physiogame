@@ -1,7 +1,7 @@
 define(["log", "jquery", "views/GameConfigView",
-  "text!views/templates/settingsModal.html", "bootstrap"],
-  function(log, $, GameConfigView,
-    modalHTML) {
+    "text!views/templates/settingsModal.html", "gameConfig", "bootstrap"
+  ],
+  function(log, $, GameConfigView, modalHTML, gameConfig) {
 
     var initialized = false,
       gameConfigView,
@@ -12,6 +12,18 @@ define(["log", "jquery", "views/GameConfigView",
       $("#settingsModal").append(modalHTML);
       gameConfigView = new GameConfigView({
         el: $("#gameConfig")
+      });
+
+      $("#resetToStandard").click(function(e) {
+        log.debug("resetting all to standard values!");
+        gameConfig.resetToDefaultValues();
+
+        // then reset the scenes...
+        require(["base/sceneManager"], function(sceneManager) {
+          //console.dir(sceneManager);
+          sceneManager.resetCurrentScene();
+        });
+
       });
 
       initialized = true;

@@ -17,7 +17,7 @@ define(["Backbone", "jquery", "log", "gameConfig", "underscore",
         log.debug("ObjectsConfigView: initialize");
 
         Handlebars.registerPartial("gameConfigItemPartial", gameConfigItemPartial);
-
+        
         this.listenTo(this.model, "change", this.render);
         this.render();
       },
@@ -32,7 +32,6 @@ define(["Backbone", "jquery", "log", "gameConfig", "underscore",
         $("input.parameterSlider").slider();
         $(".slider-horizontal").css("width", "150px");
 
-        // Focus the first tab...
         $(function () {
           // try to show the last visible tab...
           $('#myTab a[href="' + currentTabHash + '"]').tab('show');

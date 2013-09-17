@@ -24,7 +24,9 @@ define(["display/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       objectNormalScaleCap,
       objectNormalScaleBeforeCap,
       objectNormalScaleAfterCap,
-      objectNormalSpeedMin;
+      objectNormalSpeedMin,
+      objectHittedScaleExplodes,
+      objectNormalSpeedStep;
 
 
     layer.onActivate = function() {
@@ -42,6 +44,8 @@ define(["display/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       objectNormalAlphaMin = gameConfig.get("objectNormalAlphaMin");
       objectNormalAlphaStep = gameConfig.get("objectNormalAlphaStep");
       objectNormalSpeedMin = gameConfig.get("objectNormalSpeedMin");
+      objectHittedScaleExplodes = gameConfig.get("objectHittedScaleExplodes");
+      objectNormalSpeedStep = gameConfig.get("objectNormalSpeedStep");
 
       createAliens();
 
@@ -199,11 +203,11 @@ define(["display/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
             }
 
             if (alien.speed > objectNormalSpeedMin) {
-              alien.speed -= 1;
+              alien.speed -= objectNormalSpeedStep;
             }
           }
 
-          if (alien.scale.x > 1.8) { // boom
+          if (alien.scale.x > objectHittedScaleExplodes) { // boom
             alien.visible = false;
 
             var explosion = new PIXI.MovieClip(textures.atlas.explosions);

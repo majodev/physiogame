@@ -47,6 +47,15 @@ define(["Backbone", "underscore", "gameConfigMap"],
           leap: this.generateKeyValuePairs("leap")
         };
       },
+      resetToDefaultValues: function () {
+        var json = this.toJSON();
+        var keyArray = _.keys(json);
+        var i = 0,
+          len = keyArray.length;
+        for (i; i < len; i += 1) {
+          this.set(keyArray[i], gameConfigMap[keyArray[i]].def);
+        }
+      },
 
       // randomizeSettings: function() {
       //   var json = this.toJSON();
@@ -79,7 +88,9 @@ define(["Backbone", "underscore", "gameConfigMap"],
         leapXModifier: gameConfigMap.leapXModifier.def,
         leapYModifier: gameConfigMap.leapYModifier.def,
         leapToDisplayX: gameConfigMap.leapToDisplayX.def,
-        leapToDisplayY: gameConfigMap.leapToDisplayY.def
+        leapToDisplayY: gameConfigMap.leapToDisplayY.def,
+        objectHittedScaleExplodes: gameConfigMap.objectHittedScaleExplodes.def,
+        objectNormalSpeedStep: gameConfigMap.objectNormalSpeedStep.def
       }
     });
 
