@@ -2,7 +2,7 @@ define([],
   function() {
     return {
       objectsToSpawn: {
-        def: 30,
+        def: 15,
         min: 2,
         max: 100,
         step: 1,
@@ -11,7 +11,7 @@ define([],
         desc: "Anzahl der Spiel-Objekte",
       },
       cloudsToGenerate: {
-        def: 25,
+        def: 5,
         min: 0,
         max: 100,
         step: 1,
@@ -74,7 +74,7 @@ define([],
         desc: "Minimale Geschwindigkeit von normalen Spiel-Objekten"
       },
       objectNormalAlphaMin: {
-        def: 0.5,
+        def: 0.8,
         min: 0.1,
         max: 1,
         step: 0.01,
@@ -137,7 +137,7 @@ define([],
         desc: "Skalier-Abnahme von normalen Spiel-Objekten nach Grenze"
       },
       objectTexture: {
-        def: "aliens",
+        def: "balloons",
         opt: ["aliens", "balloons"],
         ui: "dropdown",
         cat: "general",

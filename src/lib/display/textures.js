@@ -8,7 +8,9 @@ define(["PIXI", "appConfig", "utils/zeroPad", "log"],
         explosions: [],
         clouds: [],
         buttonBGs: [],
-        balloons: []
+        balloons: [],
+        fhjoanneumlogo: undefined,
+        majodevicon: undefined
       };
 
     // will be called when all preloading of pictures and json has finished!
@@ -22,6 +24,12 @@ define(["PIXI", "appConfig", "utils/zeroPad", "log"],
 
       // add crosshair
       atlas.crosshair = getTextureByName("assets/crosshair.png");
+
+      // add fh joanneum logo
+      atlas.fhjoanneumlogo = getTextureByName("assets/fh-joanneum-logo.png");
+
+      // add fh joanneum logo
+      atlas.majodevicon = getTextureByName("assets/majodev-icon.png");
 
       // add alien textures
       parseTexturesByNames(atlas.aliens, [
