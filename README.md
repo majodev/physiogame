@@ -3,12 +3,10 @@ This is a master thesis project by me Mario Ranftl (@majodev). I'm trying to bui
 
 The online version is always available on my server <a href="https://majodev.com/pixi">here</a>.
 
-<h2>How it looks</h2>
-
-
 <h2>Setup</h2>
-
+Fire up your http-server in project root, e.g. <a href="https://npmjs.org/package/http-server">simple http-server for node</a>
 `http-server -c-1`
+
 Go to `localhost:8080/build` and enjoy
 
 <h2>Building</h2>
@@ -16,18 +14,24 @@ Go to `localhost:8080/build` and enjoy
 `bower install -d`
 `grunt build`
 
-Some libraries in src/vendor might need to be build manually. Trace the error through the r.js optimization script if you encounter any errors.
+Some libraries in src/vendor might need to be build manually (e.g. <a href="https://github.com/typekit/webfontloader">webfontloader</a>). Trace the error through the r.js optimization script if you encounter any errors.
 
-<h2>Links</h2>
-<a href="http://majodev.com/pixi">Online version of the game</a>
+<h2>Testing</h2>
+needs <a href="http://phantomjs.org/">phantomjs</a> bin in path!
+`grunt` or 
+`grunt watch`
 
 <h2>Issues</h2>
 Only german texts for now.
-Performance optimization needed to steamlessly work on mobile devices.
+More performance optimization needed to steamlessly work on mobile devices (iPhone 4 slow, iPad mini is great!).
+
+<h2>Links</h2>
+<a href="https://github.com/majodev/leap-requirejs-optimization-error">resolving r.js and leapjs error</a>
 
 <h2>Credits</h2>
 practical part of my master thesis for FH JOANNEUM, Graz, Austria (no kangaroos)
-advanced information management master degree program 
+FH JOANNEUM advanced information management master degree program
+in cooperation with FH JOANNEUM occupational therapy and physiotherapy
 
 I would like to thank these artists for using their assets:  
 
