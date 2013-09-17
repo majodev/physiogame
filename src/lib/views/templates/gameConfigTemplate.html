@@ -1,42 +1,90 @@
-<div class="table-responsive">
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>Parameter</th>
-        <th>Standard</th>
-        <th>Konfiguration</th>
-        <th>Wert</th>
-        
-      </tr>
-    </thead>
-    <tbody>
-      {{#keyValues}}
-        <tr>
-          <td>{{objectDesc}}</td>
-          <td>{{objectDef}}</td>
-          {{#if uiSlider}}
-            <td><input id="{{objectKey}}" type="text" class="parameterSlider col-md-12"
-              value="{{objectValue}}" data-slider-min="{{objectMin}}" data-slider-max="{{objectMax}}"
-              data-slider-step="{{objectStep}}" data-slider-value="{{objectValue}}"
-              data-slider-selection="after" data-slider-tooltip="hide"></td>
-          {{/if}}
-          {{#if uiDropdown}}
-            <td><div class="btn-group btn-group-sm">
-              <button type="button" class="btn btn-primary dropdown-toggle parameterButton" data-toggle="dropdown">
-                {{objectValue}} <span class="caret"></span>
-              </button>
-              <ul id="{{objectKey}}" class="dropdown-menu" role="menu">
-                {{#each objectOpt}}
-                  <li><a id="{{this}}" href="#">{{this}}</a></li>
-                {{/each}}
-              </ul>
-            </div></td>
-          {{/if}}
-          <td id="{{objectKey}}-value">{{objectValue}}</td>
-        </tr>
-      {{/keyValues}}
-    </tbody>
-  </table>
+<ul class="nav nav-tabs" id="myTab">
+  <li><a href="#general">Allgemein</a></li>
+  <li><a href="#scale">Skalierung</a></li>
+  <li><a href="#speed">Geschwindigkeit</a></li>
+  <li><a href="#alpha">Durchsichtigkeit</a></li>
+</ul>
+
+<div id="tabcontainer" class="tab-content">
+  <div class="tab-pane fade" id="general">
+    <div class="table-responsive">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Standard</th>
+            <th>Konfiguration</th>
+            <th>Wert</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#general.keyValues}}
+            {{> gameConfigItemPartial}}
+          {{/general.keyValues}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="scale">
+    <div class="table-responsive">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Standard</th>
+            <th>Konfiguration</th>
+            <th>Wert</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#scale.keyValues}}
+            {{> gameConfigItemPartial}}
+          {{/scale.keyValues}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="speed">
+    <div class="table-responsive">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Standard</th>
+            <th>Konfiguration</th>
+            <th>Wert</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#speed.keyValues}}
+            {{> gameConfigItemPartial}}
+          {{/speed.keyValues}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="alpha">
+    <div class="table-responsive">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Standard</th>
+            <th>Konfiguration</th>
+            <th>Wert</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#alpha.keyValues}}
+            {{> gameConfigItemPartial}}
+          {{/alpha.keyValues}}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
+
+
+
 
 

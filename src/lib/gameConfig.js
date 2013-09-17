@@ -2,7 +2,7 @@ define(["Backbone", "underscore", "gameConfigMap"],
   function(Backbone, _, gameConfigMap) {
 
     var AppConfig = Backbone.Model.extend({
-      generateKeyValuePairs: function() {
+      generateKeyValuePairs: function(filterCategory) { // optional filter
         var json = this.toJSON();
         var keyArray = _.keys(json);
         var returnArray = [];
@@ -10,29 +10,43 @@ define(["Backbone", "underscore", "gameConfigMap"],
           len = keyArray.length;
 
         for (i; i < len; i += 1) {
-
-          returnArray.push({
-            objectKey: keyArray[i],
-            objectValue: (_.isNumber(keyArray[i])) ? (Math.round(json[keyArray[i]] * 1000) / 1000) : json[keyArray[i]],
-            objectMin: gameConfigMap[keyArray[i]].min,
-            objectMax: gameConfigMap[keyArray[i]].max,
-            objectStep: gameConfigMap[keyArray[i]].step,
-            objectDef: gameConfigMap[keyArray[i]].def,
-            objectDesc: gameConfigMap[keyArray[i]].desc,
-            objectOpt: gameConfigMap[keyArray[i]].opt,
-            uiSlider: (gameConfigMap[keyArray[i]].ui === "slider") ? true : false,
-            uiDropdown: (gameConfigMap[keyArray[i]].ui === "dropdown") ? true : false,
-            uiCheckbox: (gameConfigMap[keyArray[i]].ui === "checkbox") ? true : false,
-            uiText: (gameConfigMap[keyArray[i]].ui === "text") ? true : false
-          });
+          if (_.isUndefined(filterCategory) === false) {
+            if(filterCategory === gameConfigMap[keyArray[i]].cat) {
+              returnArray.push(this.getKeyValuePair(keyArray[i], json));
+            }
+          } else {
+            returnArray.push(this.getKeyValuePair(keyArray[i], json));
+          }          
         }
-
-        //console.dir(returnArray);
-
         return {
           keyValues: returnArray
         };
       },
+      getKeyValuePair: function(key, json) {
+        return {
+          objectKey: key,
+          objectValue: (_.isNumber(key)) ? (Math.round(json[key] * 1000) / 1000) : json[key],
+          objectMin: gameConfigMap[key].min,
+          objectMax: gameConfigMap[key].max,
+          objectStep: gameConfigMap[key].step,
+          objectDef: gameConfigMap[key].def,
+          objectDesc: gameConfigMap[key].desc,
+          objectOpt: gameConfigMap[key].opt,
+          uiSlider: (gameConfigMap[key].ui === "slider") ? true : false,
+          uiDropdown: (gameConfigMap[key].ui === "dropdown") ? true : false,
+          uiCheckbox: (gameConfigMap[key].ui === "checkbox") ? true : false,
+          uiText: (gameConfigMap[key].ui === "text") ? true : false
+        };
+      },
+      getKeyValueCategoryPairs: function () {
+        return {
+          general: this.generateKeyValuePairs("general"),
+          scale: this.generateKeyValuePairs("scale"),
+          speed: this.generateKeyValuePairs("speed"),
+          alpha: this.generateKeyValuePairs("alpha")
+        };
+      },
+
       // randomizeSettings: function() {
       //   var json = this.toJSON();
       //   var keyArray = _.keys(json);
@@ -65,7 +79,7 @@ define(["Backbone", "underscore", "gameConfigMap"],
     });
 
     var appConfig = new AppConfig();
-  
+
 
     return appConfig;
   }

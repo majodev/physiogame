@@ -28,7 +28,7 @@ define(["PIXI", "utils/publisher", "display/textures"],
 
     display.mousedown = display.touchstart = function(data) {
       // stop the default event...
-      data.originalEvent.preventDefault();
+      //data.originalEvent.preventDefault();
       display.buttonMode = true;
     };
 

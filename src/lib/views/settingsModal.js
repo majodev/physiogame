@@ -13,6 +13,7 @@ define(["log", "jquery", "views/GameConfigView",
       gameConfigView = new GameConfigView({
         el: $("#gameConfig")
       });
+
       initialized = true;
     }
 

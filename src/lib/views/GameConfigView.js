@@ -1,19 +1,50 @@
 define(["Backbone", "jquery", "log", "gameConfig", "underscore",
-    "hbars!views/templates/gameConfigTemplate", "bootstrap-slider"
+    "hbars!views/templates/gameConfigTemplate", 
+    "hbars!views/templates/gameConfigItemPartial",
+    "Handlebars",
+    "bootstrap-slider"
   ],
-  function(Backbone, $, log, gameConfig, _, gameConfigTemplate) {
+  function(Backbone, $, log, gameConfig, _,
+    gameConfigTemplate,
+    gameConfigItemPartial,
+    Handlebars) {
+
+    // first tab
+    var currentTabHash = "#general";
 
     var ObjectsConfigView = Backbone.View.extend({
       initialize: function() {
         log.debug("ObjectsConfigView: initialize");
+
+        Handlebars.registerPartial("gameConfigItemPartial", gameConfigItemPartial);
+
         this.listenTo(this.model, "change", this.render);
         this.render();
       },
       model: gameConfig,
       render: function() {
-        this.$el.html(gameConfigTemplate(this.model.generateKeyValuePairs()));
+        // render the template
+        //this.$el.html(gameConfigTemplate(this.model.generateKeyValuePairs()));
+        
+        this.$el.html(gameConfigTemplate(this.model.getKeyValueCategoryPairs()));
+        
+        // add the slider functionality (each time needed!)
         $("input.parameterSlider").slider();
         $(".slider-horizontal").css("width", "150px");
+
+        // Focus the first tab...
+        $(function () {
+          // try to show the last visible tab...
+          $('#myTab a[href="' + currentTabHash + '"]').tab('show');
+        });
+
+        // Add clickhandler for tab bar...
+        $('#myTab a').click(function (e) {
+          e.preventDefault();
+          currentTabHash = e.currentTarget.hash;
+          $(this).tab('show');
+        });
+
         return this; // for chaining
       },
       events: {

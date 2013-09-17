@@ -23,11 +23,16 @@
     window.require = undefined;
   }
 
+  // dont allow to select text
+  document.onselectstart = function() {
+    return false;
+  };
+
   console.log("app.js: (browser): initializing requirejs startup script...");
   // finally append requirejs script to document and start deps pipeline
   var script = document.createElement("script");
   script.type = "text/javascript";
-  script.src = "physioshooter-0.0.2.min.js"; // link to require.js
+  script.src = "physiogame-0.1.0.min.js"; // link to require.js
   document.body.appendChild(script);
 
 }()); // immediately executed.

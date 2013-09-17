@@ -23,6 +23,11 @@
     window.require = undefined;
   }
 
+  // dont allow to select text
+  document.onselectstart = function() {
+    return false;
+  };
+
   console.log("app.js: (browser): initializing requirejs startup script...");
   // finally append requirejs script to document and start deps pipeline
   var script = document.createElement("script");

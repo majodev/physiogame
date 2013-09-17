@@ -2,19 +2,21 @@ define([],
   function() {
     return {
       objectsToSpawn: {
-        def: 100,
+        def: 30,
         min: 2,
-        max: 400,
+        max: 100,
         step: 1,
         ui: "slider",
-        desc: "Anzahl der Spiel-Objekte"
+        cat: "general",
+        desc: "Anzahl der Spiel-Objekte",
       },
       cloudsToGenerate: {
-        def: 50,
+        def: 25,
         min: 0,
-        max: 500,
+        max: 100,
         step: 1,
         ui: "slider",
+        cat: "general",
         desc: "Anzahl der Wolken-Objekte"
       },
       objectHittedScaleCap: {
@@ -23,6 +25,7 @@ define([],
         max: 2,
         step: 0.1,
         ui: "slider",
+        cat: "scale",
         desc: "Skalier-Grenze von getroffenen Spiel-Objekten"
       },
       objectHittedScaleBeforeCap: {
@@ -31,6 +34,7 @@ define([],
         max: 0.3,
         step: 0.01,
         ui: "slider",
+        cat: "scale",
         desc: "Skalier-Zunahme von getroffenen Spiel-Objekten bevor Grenze"
       },
       objectHittedScaleAfterCap: {
@@ -39,6 +43,7 @@ define([],
         max: 0.3,
         step: 0.01,
         ui: "slider",
+        cat: "scale",
         desc: "Skalier-Zunahme von getroffenen Spiel-Objekten nach Grenze"
       },
       objectHittedSpeedMax: {
@@ -47,6 +52,7 @@ define([],
         max: 10,
         step: 0.1,
         ui: "slider",
+        cat: "speed",
         desc: "Maximale Geschwindigkeit von getroffenen Spiel-Objekten"
       },
       objectHittedSpeedStep: {
@@ -55,6 +61,7 @@ define([],
         max: 2,
         step: 0.1,
         ui: "slider",
+        cat: "speed",
         desc: "Geschwindigkeitserhöhung von getroffenen Spiel-Objekten"
       },
       objectNormalSpeedMin: {
@@ -63,6 +70,7 @@ define([],
         max: 5,
         step: 0.1,
         ui: "slider",
+        cat: "speed",
         desc: "Minimale Geschwindigkeit von normalen Spiel-Objekten"
       },
       objectNormalAlphaMin: {
@@ -71,6 +79,7 @@ define([],
         max: 1,
         step: 0.01,
         ui: "slider",
+        cat: "alpha",
         desc: "Minimale Durchsichtigkeit von normalen Spiel-Objekten"
       },
       objectHittedAlphaStep: {
@@ -79,6 +88,7 @@ define([],
         max: 0.4,
         step: 0.01,
         ui: "slider",
+        cat: "alpha",
         desc: "Durchsichtigkeitserhöhung von getroffenen Spiel-Objekten"
       },
       objectNormalAlphaStep: {
@@ -87,6 +97,7 @@ define([],
         max: 0.1,
         step: 0.01,
         ui: "slider",
+        cat: "alpha",
         desc: "Durchsichtigkeitsverringerung von normalen Spiel-Objekten"
       },
       objectNormalScaleMin: {
@@ -95,6 +106,7 @@ define([],
         max: 1.5,
         step: 0.01,
         ui: "slider",
+        cat: "scale",
         desc: "Minimale Skalierung von normalen Spiel-Objekten"
       },
       objectNormalScaleCap: {
@@ -103,6 +115,7 @@ define([],
         max: 1,
         step: 0.01,
         ui: "slider",
+        cat: "scale",
         desc: "Skalier-Grenze von normalen Spiel-Objekten"
       },
       objectNormalScaleBeforeCap: {
@@ -111,6 +124,7 @@ define([],
         max: 0.1,
         step: 0.01,
         ui: "slider",
+        cat: "scale",
         desc: "Skalier-Abnahme von normalen Spiel-Objekten bevor Grenze"
       },
       objectNormalScaleAfterCap: {
@@ -119,12 +133,14 @@ define([],
         max: 0.02,
         step: 0.001,
         ui: "slider",
+        cat: "scale",
         desc: "Skalier-Abnahme von normalen Spiel-Objekten nach Grenze"
       },
       objectTexture: {
         def: "aliens",
         opt: ["aliens", "balloons"],
         ui: "dropdown",
+        cat: "general",
         desc: "Texturpacket der Spiel-Objekte"
       }
     };
