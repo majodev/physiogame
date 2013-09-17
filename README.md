@@ -1,4 +1,4 @@
-<h1>physio-ergo-leap-master</h1>
+<h1>physiogame</h1>
 This is a master thesis project by me Mario Ranftl (@majodev). I'm trying to build a full-blown game that's playable in Browsers (even mobile) and can also be packaged via node-webkit for desktop use. Currently the target is to create a funny and simple game, that's suited for therapeutic exercises. 
 
 <a href="https://majodev.com/pixi">The LATEST online version is available HERE.</a>
