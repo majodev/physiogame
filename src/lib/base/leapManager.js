@@ -1,5 +1,5 @@
-define(["log", "Leap", "appConfig", "utils/publisher", "Poll"],
-  function(log, Leap, appConfig, publisher, Poll) {
+define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
+  function(log, Leap, appConfig, publisher, Poll, gameConfig) {
 
     // private 
     var controller = new Leap.Controller(),
@@ -8,9 +8,14 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll"],
       handsLength = 0,
       events = publisher.make(),
       displayWidth = appConfig.get("width"),
-      displayHeight = appConfig.get("height");
+      displayHeight = appConfig.get("height"),
+      leapXModifier = gameConfig.get("leapXModifier"),
+      leapYModifier = gameConfig.get("leapYModifier"),
+      leapToDisplayX = gameConfig.get("leapToDisplayX"),
+      leapToDisplayY = gameConfig.get("leapToDisplayY");
 
     appConfig.on("change", appConfigChanged);
+    gameConfig.on("change", gameConfigChanged);
 
     // per frame from leap
     controller.on("frame", function(frame) {
@@ -40,8 +45,8 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll"],
 
         events.trigger("handFrameNormalized", {
           position: {
-            x: (displayWidth / 2 + (x * 2.5)),
-            y: ((displayHeight / 3) * 4 - (y * 2))
+            x: (displayWidth / leapToDisplayX + (x * leapXModifier)),
+            y: (displayHeight * leapToDisplayY - (y * leapYModifier))
           }
         });
 
@@ -68,6 +73,13 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll"],
       });
 
       events.trigger("init");
+    }
+
+    function gameConfigChanged(model, options) {
+      leapXModifier = gameConfig.get("leapXModifier");
+      leapYModifier = gameConfig.get("leapYModifier");
+      leapToDisplayX = gameConfig.get("leapToDisplayX");
+      leapToDisplayY = gameConfig.get("leapToDisplayY");
     }
 
     function appConfigChanged(model, options) {

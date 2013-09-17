@@ -3,6 +3,7 @@
   <li><a href="#scale">Skalierung</a></li>
   <li><a href="#speed">Geschwindigkeit</a></li>
   <li><a href="#alpha">Durchsichtigkeit</a></li>
+  <li><a href="#leap">Leap Motion</a></li>
 </ul>
 
 <div id="tabcontainer" class="tab-content">
@@ -82,9 +83,23 @@
       </table>
     </div>
   </div>
+  <div class="tab-pane fade" id="leap">
+    <div class="table-responsive">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Standard</th>
+            <th>Konfiguration</th>
+            <th>Wert</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#leap.keyValues}}
+            {{> gameConfigItemPartial}}
+          {{/leap.keyValues}}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-
-
-
-
-

@@ -25,7 +25,7 @@ define(["Backbone", "underscore", "gameConfigMap"],
       getKeyValuePair: function(key, json) {
         return {
           objectKey: key,
-          objectValue: (_.isNumber(key)) ? (Math.round(json[key] * 1000) / 1000) : json[key],
+          objectValue: (_.isNumber(json[key])) ? (Math.round(json[key] * 1000) / 1000) : json[key],
           objectMin: gameConfigMap[key].min,
           objectMax: gameConfigMap[key].max,
           objectStep: gameConfigMap[key].step,
@@ -43,7 +43,8 @@ define(["Backbone", "underscore", "gameConfigMap"],
           general: this.generateKeyValuePairs("general"),
           scale: this.generateKeyValuePairs("scale"),
           speed: this.generateKeyValuePairs("speed"),
-          alpha: this.generateKeyValuePairs("alpha")
+          alpha: this.generateKeyValuePairs("alpha"),
+          leap: this.generateKeyValuePairs("leap")
         };
       },
 
@@ -74,7 +75,11 @@ define(["Backbone", "underscore", "gameConfigMap"],
         objectHittedSpeedStep: gameConfigMap.objectHittedSpeedStep.def,
         objectNormalAlphaMin: gameConfigMap.objectNormalAlphaMin.def,
         objectNormalAlphaStep: gameConfigMap.objectNormalAlphaStep.def,
-        objectHittedAlphaStep: gameConfigMap.objectHittedAlphaStep.def
+        objectHittedAlphaStep: gameConfigMap.objectHittedAlphaStep.def,
+        leapXModifier: gameConfigMap.leapXModifier.def,
+        leapYModifier: gameConfigMap.leapYModifier.def,
+        leapToDisplayX: gameConfigMap.leapToDisplayX.def,
+        leapToDisplayY: gameConfigMap.leapToDisplayY.def
       }
     });
 

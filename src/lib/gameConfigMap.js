@@ -142,7 +142,43 @@ define([],
         ui: "dropdown",
         cat: "general",
         desc: "Texturpacket der Spiel-Objekte"
-      }
+      },
+      leapXModifier: {
+        def: 3.8,
+        min: 2,
+        max: 18,
+        step: 0.2,
+        ui: "slider",
+        cat: "leap",
+        desc: "X: Größe der abgetasteten horizontalen Achse"
+      },
+      leapYModifier: {
+        def: 3.8,
+        min: 1.5,
+        max: 10,
+        step: 0.02,
+        ui: "slider",
+        cat: "leap",
+        desc: "Y: Größe der abgetasteten vertikalen Achse"
+      },
+      leapToDisplayX: {
+        def: 2,
+        min: 1,
+        max: 4,
+        step: 0.02,
+        ui: "slider",
+        cat: "leap",
+        desc: "X: Abtastmittelpunkt der horizontalen Achse "
+      },
+      leapToDisplayY: {
+        def: 2,
+        min: 1.5,
+        max: 4,
+        step: 0.02,
+        ui: "slider",
+        cat: "leap",
+        desc: "Y: Abtastmittelpunkt der vertikalen Achse"
+      },
     };
   }
 );
