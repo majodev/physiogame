@@ -11,8 +11,8 @@ define(["classes/Layer", "PIXI", "display/textures"],
       fhlogo = new PIXI.Sprite(textures.atlas.fhjoanneumlogo);
 
       fhlogo.anchor = {
-        x: 0.5,
-        y: 0.5
+        x: 1,
+        y: 1
       };
 
       fhlogo.scale = {
@@ -21,15 +21,15 @@ define(["classes/Layer", "PIXI", "display/textures"],
       };
 
       fhlogo.position = {
-        x: this.width/2,
-        y: this.height/4 - 40
+        x: this.width - 10,
+        y: this.height - 10
       };
 
       majodevlogo = new PIXI.Sprite(textures.atlas.majodevicon);
 
       majodevlogo.anchor = {
-        x: 0.5,
-        y: 0.5
+        x: 1,
+        y: 0
       };
 
       majodevlogo.scale = {
@@ -38,18 +38,18 @@ define(["classes/Layer", "PIXI", "display/textures"],
       };
 
       majodevlogo.position = {
-        x: this.width/2,
-        y: 30
+        x: this.width - 10,
+        y: 0 + 10
       };
 
 
       this.addChild(majodevlogo);
       this.addChild(fhlogo);
 
-      creditsText = new PIXI.Text("Mario Ranftl, BSc. (@majodev)\n" +
+      creditsText = new PIXI.Text("Mario Ranftl, BSc. (@majodev)\n\n" +
         "practical part of my master thesis for FH JOANNEUM, Graz, Austria (no kangaroos)\n" +
-        "advanced information management master degree program\n\n" +
-        "\nIn cooperation with FH JOANNEUM occupational therapy and physiotherapy\n\n" +
+        "FH JOANNEUM advanced information management master degree program\n" +
+        "in cooperation with FH JOANNEUM occupational therapy and physiotherapy\n\n" +
         "I would like to thank these artists for using their assets: \n" +
         "\nBalloons Vectors by Stuart Bainbridge\n" +
         "Creative Commons Attribution-Share Alike 3.0 License.\n\n" +
