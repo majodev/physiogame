@@ -1,5 +1,5 @@
-define(["log", "Howler", "appConfig", "utils/publisher"],
-  function(log, Howler, appConfig, publisher) {
+define(["log", "Howler", "appConfig", "utils/publisher", "loaders/status"],
+  function(log, Howler, appConfig, publisher, status) {
 
     var sounds = {},
       events = publisher.make(),
@@ -41,6 +41,8 @@ define(["log", "Howler", "appConfig", "utils/publisher"],
     function onSoundLoaded(sound) {
       log.debug("sound loaded: " + sound.name + " volume: " + sound.volume);
       soundsLoadedCount += 1;
+
+      status.write("sounds: loaded " + soundsLoadedCount + " of " + soundsToLoadLength);
 
       if(soundsToLoadLength === soundsLoadedCount) {
         // all sounds loaded!

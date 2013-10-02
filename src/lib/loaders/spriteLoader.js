@@ -1,5 +1,7 @@
-define(["log", "PIXI", "appConfig", "utils/publisher", "display/textures"],
-  function(log, PIXI, appConfig, publisher, textures) {
+define(["log", "PIXI", "appConfig", "utils/publisher", "display/textures",
+  "loaders/status"],
+  function(log, PIXI, appConfig, publisher, textures,
+    status) {
 
     var events = publisher.make(),
       pixiSpriteLoader = new PIXI.AssetLoader(appConfig.get("images")),
@@ -30,6 +32,9 @@ define(["log", "PIXI", "appConfig", "utils/publisher", "display/textures"],
 
     function onSpriteSheetProgress() {
       spritesSheetLoadedCount += 1;
+
+      status.write("sprites: loaded " + spritesSheetLoadedCount + " of " + spritesSheetToLoadLength);
+
       log.debug("spritesheet loaded: " + spritesSheetLoadedCount + " of " + spritesSheetToLoadLength);
     }
 

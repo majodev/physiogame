@@ -19,10 +19,21 @@ canvas { /* To remove the scrollbars */
   /*vertical-align:center; */
 }
 
+#preloaderContainer {
+  width: 100%;
+  height: 100%
+}
+
 #preloaderSpinner {
   width: 100%;
-  height: 100%;
+  height: 120px;
   background: #000;
+}
+
+#preloaderStatus {
+  width: 100%;
+  text-align: center;
+  color: white;
 }
 
 .parameterButton {

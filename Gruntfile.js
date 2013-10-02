@@ -39,6 +39,56 @@ module.exports = function(grunt) {
         files: ["src/lib/**/*.js", "src/spec/**/*.js"],
         tasks: ["shell:mocha-phantomjs"]
       }
+    },
+    modernizr: {
+
+      // [REQUIRED] Path to the build you're using for development.
+      "devFile": "src/modernizr/modernizr_dev_v2_6_2.js",
+
+      // [REQUIRED] Path to save out the built file.
+      "outputFile": "src/modernizr/modernizr_custom_build_grunt.js",
+
+      // Based on default settings on http://modernizr.com/download/
+      "extra": {
+        "shiv": true,
+        "printshiv": false,
+        "load": true,
+        "mq": false,
+        "cssclasses": true
+      },
+
+      // Based on default settings on http://modernizr.com/download/
+      "extensibility": {
+        "addtest": false,
+        "prefixed": false,
+        "teststyles": false,
+        "testprops": false,
+        "testallprops": false,
+        "hasevents": false,
+        "prefixes": false,
+        "domprefixes": false
+      },
+
+      // By default, source is uglified before saving
+      "uglify": false,
+
+      // Define any tests you want to implicitly include.
+      "tests": [],
+
+      // By default, this task will crawl your project for references to Modernizr tests.
+      // Set to false to disable.
+      "parseFiles": true,
+
+      // When parseFiles = true, this task will crawl all *.js, *.css, *.scss files, except files that are in node_modules/.
+      // You can override this by defining a "files" array below.
+      "files": ["src/lib/**/*.js"],
+
+      // When parseFiles = true, matchCommunityTests = true will attempt to
+      // match user-contributed tests.
+      "matchCommunityTests": false,
+
+      // Have custom Modernizr tests? Add paths to their location here.
+      "customTests": []
     }
   });
 
@@ -47,9 +97,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-cssmin");
   grunt.loadNpmTasks("grunt-contrib-concat");
+  grunt.loadNpmTasks("grunt-modernizr");
 
   grunt.registerTask("default", "shell:mocha-phantomjs");
-  grunt.registerTask("build", ["shell:build-requirejs", "copy:assets", "cssmin"]);
+  grunt.registerTask("build", ["modernizr", "shell:build-requirejs", "copy:assets", "cssmin"]);
 };
 
 // 1. make sure a http-server is running:

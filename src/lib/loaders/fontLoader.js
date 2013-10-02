@@ -1,5 +1,7 @@
-define(["log", "WebFont", "utils/publisher", "appConfig", "underscore"],
-  function(log, WebFont, publisher, appConfig, _) {
+define(["log", "WebFont", "utils/publisher", "appConfig", "underscore",
+  "loaders/status"],
+  function(log, WebFont, publisher, appConfig, _,
+    status) {
 
     var events = publisher.make(),
       fontConfig = _.extend(appConfig.get("fonts"), {
@@ -18,6 +20,7 @@ define(["log", "WebFont", "utils/publisher", "appConfig", "underscore"],
         },
         fontactive: function(familyName, fvd) {
           log.debug("font loaded: " + familyName + ", " + fvd);
+          status.write("fonts: loaded " + familyName + ", " + fvd);
         },
         fontinactive: function(familyName, fvd) {
           //log.debug("fonts: fontinactive " + familyName);

@@ -17,9 +17,16 @@ require.config({
     "text": "../vendor/text/text",
     "Handlebars": "../vendor/handlebars/handlebars",
     "hbars": "../vendor/requirejs-handlebars/hbars",
-    "bootstrap-slider": "../vendor/bootstrap-slider/js/bootstrap-slider"
+    "bootstrap-slider": "../vendor/bootstrap-slider/js/bootstrap-slider",
+    "Modernizr": "../modernizr/modernizr_custom_build_grunt"
   },
   shim: {
+    "Modernizr": {
+      exports: "Modernizr",
+      init: function () {
+        console.log("init Modernizr");
+      }
+    },
     "Poll": {
       exports: "Poll",
       init: function () { // Poll must reside globally to work

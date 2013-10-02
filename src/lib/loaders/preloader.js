@@ -1,7 +1,9 @@
 define(["log", "utils/publisher",
-  "loaders/fontLoader", "loaders/soundLoader", "loaders/spriteLoader"],
+  "loaders/fontLoader", "loaders/soundLoader", "loaders/spriteLoader",
+  "loaders/status"],
   function(log, publisher,
-    fontLoader, soundLoader, spriteLoader) {
+    fontLoader, soundLoader, spriteLoader,
+    status) {
 
     var spritesloaded = false,
       fontsloaded = false,
@@ -24,6 +26,7 @@ define(["log", "utils/publisher",
       log.debug("preloader: preloadedSprites");
       spritesloaded = true;
       events.trigger("preloadedSprites");
+      status.write("all sprites loaded!");
       checkAllLoaded();
     }
 
@@ -31,6 +34,7 @@ define(["log", "utils/publisher",
       log.debug("preloader: preloadedSounds");
       soundsloaded = true;
       events.trigger("preloadedSounds");
+      status.write("all sounds loaded!");
       checkAllLoaded();
     }
 
@@ -38,6 +42,7 @@ define(["log", "utils/publisher",
       log.debug("preloader: preloadedFonts");
       fontsloaded = true;
       events.trigger("preloadedFonts");
+      status.write("all fonts loaded!");
       checkAllLoaded();
     }
 
