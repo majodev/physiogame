@@ -1,33 +1,13 @@
 define(["appConfig", "log", "loaders/preloader", "loaders/indicator",
-    "loaders/featureDetection", "loaders/status"
-  ],
+  "loaders/status"],
   function(appConfig, log, preloader, indicator,
-    featureDetection, status) {
+    status) {
 
     (function preloading() {
 
-      console.log(featureDetection.report());
-      console.log(featureDetection.reportDetails());
-
-      // Feature Detection takes places before...
-      if (featureDetection.supported() === false) {
-        
-        // write report from feature detection...
-        status.write(featureDetection.report());
-
-        log.error("environment not supported, doing nothing.");
-
-        // write more details from report...
-        status.write("\ndetails:" + featureDetection.reportDetails());
-
-        // finally kill further loading!
-        return;
-      } else {
-        // write loading...
-        status.write("preloading...\n");
-      }
-
+      status.write("preloading...");
       indicator.enable();
+
       log.setLevel(appConfig.get("logLevel"));
       log.debug("self executing startup function - preloading, logLevel is " +
         appConfig.get("logLevel"));

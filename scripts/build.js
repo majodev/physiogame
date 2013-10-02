@@ -19,8 +19,9 @@ var config = {
         return contents;
     }
   },
-  preserveLicenseComments: true,
-  include: ["requireLib", "base/gameManager"], // heads up: game is loaded via "load" dynamically, hence include!
+  preserveLicenseComments: false,
+  // heads up: app init and gameManager is loaded via require dynamically, hence include!
+  include: ["requireLib", "base/gameManager"], 
   logLevel: 0,
   waitSeconds: 7,
   name: "appInitializer", // Name of script to start building from

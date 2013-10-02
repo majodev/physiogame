@@ -41,7 +41,7 @@ define(["Backbone"],
       },
       spinnerTargetID: "preloaderSpinner",
       spinnerClassName: "spinner",
-      logLevel: 0, // 0 trace, 1 debug, 2 info, 3 warn, 4 error, 5 silent
+      logLevel: 0 // 0 trace, 1 debug, 2 info, 3 warn, 4 error, 5 silent
     });
     return appConfig;
   }

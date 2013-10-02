@@ -33,7 +33,7 @@ define(["log", "PIXI", "appConfig", "utils/publisher", "display/textures",
     function onSpriteSheetProgress() {
       spritesSheetLoadedCount += 1;
 
-      status.write("sprites: loaded " + spritesSheetLoadedCount + " of " + spritesSheetToLoadLength);
+      //status.write("sprites: loaded " + spritesSheetLoadedCount + " of " + spritesSheetToLoadLength);
 
       log.debug("spritesheet loaded: " + spritesSheetLoadedCount + " of " + spritesSheetToLoadLength);
     }

@@ -20,7 +20,7 @@ define(["log", "WebFont", "utils/publisher", "appConfig", "underscore",
         },
         fontactive: function(familyName, fvd) {
           log.debug("font loaded: " + familyName + ", " + fvd);
-          status.write("fonts: loaded " + familyName + ", " + fvd);
+          //status.write("fonts: loaded " + familyName + ", " + fvd);
         },
         fontinactive: function(familyName, fvd) {
           //log.debug("fonts: fontinactive " + familyName);

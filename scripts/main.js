@@ -17,8 +17,7 @@ require.config({
     "text": "../vendor/text/text",
     "Handlebars": "../vendor/handlebars/handlebars",
     "hbars": "../vendor/requirejs-handlebars/hbars",
-    "bootstrap-slider": "../vendor/bootstrap-slider/js/bootstrap-slider",
-    "Modernizr": "../modernizr/modernizr_custom_build_grunt"
+    "bootstrap-slider": "../vendor/bootstrap-slider/js/bootstrap-slider"
   },
   shim: {
     "Modernizr": {

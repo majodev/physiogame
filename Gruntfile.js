@@ -23,6 +23,12 @@ module.exports = function(grunt) {
           src: ["assets/**/*.json", "assets/**/*.png", "assets/**/*.mp3", "assets/**/*.ogg", "assets/**/*.m4a"],
           dest: "build/"
         }]
+      },
+      "modernizr": {
+        files: [{
+          src: ["src/hooks/modernizer_custom.js"],
+          dest: "build/modernizer_custom.min.js"
+        }]
       }
     },
     cssmin: {
@@ -43,10 +49,10 @@ module.exports = function(grunt) {
     modernizr: {
 
       // [REQUIRED] Path to the build you're using for development.
-      "devFile": "src/modernizr/modernizr_dev_v2_6_2.js",
+      "devFile": "src/hooks/modernizr/modernizr_dev_v2_6_2.js",
 
       // [REQUIRED] Path to save out the built file.
-      "outputFile": "src/modernizr/modernizr_custom_build_grunt.js",
+      "outputFile": "src/hooks/modernizer_custom.js",
 
       // Based on default settings on http://modernizr.com/download/
       "extra": {
@@ -70,7 +76,7 @@ module.exports = function(grunt) {
       },
 
       // By default, source is uglified before saving
-      "uglify": false,
+      "uglify": true,
 
       // Define any tests you want to implicitly include.
       "tests": [],
@@ -81,7 +87,7 @@ module.exports = function(grunt) {
 
       // When parseFiles = true, this task will crawl all *.js, *.css, *.scss files, except files that are in node_modules/.
       // You can override this by defining a "files" array below.
-      "files": ["src/lib/**/*.js"],
+      "files": ["app.js", "src/lib/**/*.js"],
 
       // When parseFiles = true, matchCommunityTests = true will attempt to
       // match user-contributed tests.
@@ -100,7 +106,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-modernizr");
 
   grunt.registerTask("default", "shell:mocha-phantomjs");
-  grunt.registerTask("build", ["modernizr", "shell:build-requirejs", "copy:assets", "cssmin"]);
+  grunt.registerTask("build", ["modernizr", "shell:build-requirejs", "copy:assets", "copy:modernizr", "cssmin"]);
 };
 
 // 1. make sure a http-server is running:

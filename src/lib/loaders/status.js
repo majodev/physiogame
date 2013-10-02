@@ -5,6 +5,8 @@ define([],
       statusNode = document.getElementById("preloaderStatus"),
       lines = [];
 
+    lines.push(statusNode.innerHTML);
+
     function write(text) {
       var fullText = "",
         linesLength = lines.length + 1;
