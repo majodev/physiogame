@@ -42,6 +42,7 @@ define(["log", "Howler", "appConfig", "utils/publisher", "loaders/status"],
       log.debug("sound loaded: " + sound.name + " volume: " + sound.volume);
       soundsLoadedCount += 1;
 
+      status.touch();
       //status.write("sounds: loaded " + soundsLoadedCount + " of " + soundsToLoadLength);
 
       if(soundsToLoadLength === soundsLoadedCount) {

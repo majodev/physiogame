@@ -5,7 +5,7 @@ define(["appConfig", "log", "loaders/preloader", "loaders/indicator",
 
     (function preloading() {
 
-      status.write("preloading...");
+      status.write("\nPreloading");
       indicator.enable();
 
       log.setLevel(appConfig.get("logLevel"));
@@ -19,7 +19,7 @@ define(["appConfig", "log", "loaders/preloader", "loaders/indicator",
     function preloadingFinished() {
 
       log.debug("preloadingFinished");
-      status.write("\n initializing application...");
+      status.write("\n\nInitializing");
 
       // dynamic require! - dont forget to INCLUDE within build options
       // THIS IS NOT SEEN BY THE R.JS OPTIMIZER!

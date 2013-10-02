@@ -15,12 +15,22 @@ define([],
 
       for (var i = 0; i < linesLength; i++) {
 
-        if(i > (linesLength-MAX_LINES)) {
+        if(linesLength >= MAX_LINES) {
+          if(i > (linesLength-MAX_LINES)) {
+            fullText = fullText + lines[i];
+          }
+        } else {
           fullText = fullText + lines[i];
         }
+
       }
 
       statusNode.innerHTML = fullText;
+    }
+
+    function touch() {
+      statusNode.innerHTML = statusNode.innerHTML + ".";
+      lines[lines.length-1] = lines[lines.length-1] + ".";
     }
 
     function clear() {
@@ -29,7 +39,8 @@ define([],
 
     return {
       write: write,
-      clear: clear
+      clear: clear,
+      touch: touch
     };
   }
 );
