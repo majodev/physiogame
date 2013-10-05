@@ -49,7 +49,7 @@ define(["log", "PIXI", "appConfig", "utils/resizeWatcher", "utils/publisher", "d
       // publish renderFrame event to subscribers
       events.trigger("renderFrame");
 
-      // finally render the stage
+      // render the stage and update count for debug purposes
       renderer.render(stage);
       frameCount += 1;
     }

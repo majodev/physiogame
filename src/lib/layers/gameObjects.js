@@ -45,11 +45,11 @@ define(["display/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
       createGameObjects();
 
-      crosshairGO.events.on("crosshairActive", detectCrosshairHitsAlien);
+      crosshairGO.events.on("crosshairActive", detectPointerHitsGameObject);
     };
 
     layer.onDeactivate = function() {
-      crosshairGO.events.off("crosshairActive", detectCrosshairHitsAlien);
+      crosshairGO.events.off("crosshairActive", detectPointerHitsGameObject);
 
       gameObjects = [];
       killAnimationsToRemove = [];
@@ -61,10 +61,10 @@ define(["display/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     };
 
     layer.onHandFrame = function(coordinates) {
-      detectCrosshairHitsAlien(coordinates);
+      detectPointerHitsGameObject(coordinates);
     };
 
-    function detectCrosshairHitsAlien(coordinates) {
+    function detectPointerHitsGameObject(coordinates) {
       var i = 0,
         hitted = false,
         max = gameObjects.length,
