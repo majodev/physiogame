@@ -5,7 +5,7 @@ define([],
         def: true,
         ui: "toggle",
         cat: "general",
-        desc: "Zeige Debug-Layer"
+        desc: "Sichtbarkeit des Debug-Layers"
       },
       objectTexture: {
         def: "balloons",
@@ -42,7 +42,7 @@ define([],
         desc: "Skalier-Grenze von getroffenen Spiel-Objekten"
       },
       objectHittedScaleBeforeCap: {
-        def: 0.12,
+        def: 0.04,
         min: 0.01,
         max: 0.3,
         step: 0.01,
@@ -51,7 +51,7 @@ define([],
         desc: "Skalier-Zunahme von getroffenen Spiel-Objekten bevor Grenze"
       },
       objectHittedScaleAfterCap: {
-        def: 0.08,
+        def: 0.01,
         min: 0.01,
         max: 0.3,
         step: 0.01,
@@ -114,7 +114,7 @@ define([],
         desc: "Geschwindigkeitsschritt von normalen Spiel-Objekten"
       },
       objectNormalAlphaMin: {
-        def: 0.8,
+        def: 0.6,
         min: 0.1,
         max: 1,
         step: 0.01,
@@ -123,16 +123,16 @@ define([],
         desc: "Minimale Durchsichtigkeit von normalen Spiel-Objekten"
       },
       objectHittedAlphaStep: {
-        def: 0.2,
+        def: 0.05,
         min: 0.01,
-        max: 0.4,
+        max: 0.1,
         step: 0.01,
         ui: "slider",
         cat: "alpha",
         desc: "Durchsichtigkeitserhöhung von getroffenen Spiel-Objekten"
       },
       objectNormalAlphaStep: {
-        def: 0.01,
+        def: 0.05,
         min: 0.01,
         max: 0.1,
         step: 0.01,

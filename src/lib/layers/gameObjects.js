@@ -77,13 +77,49 @@ define(["display/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
           }
         });
 
-      for (i; i < max; i += 1) {
+      resetAllHittedToFalse();
+
+      for (i = max-1; i >= 0; i -= 1) {
         if (gameObjects[i].visible === true) {
           hitted = hittest(gameObjects[i], hitCord);
           if (gameObjects[i].hitted !== hitted) {
             soundManager.hit();
           }
           gameObjects[i].hitted = hitted;
+          if(hitted === true) {
+            swapGameObjectToTop(gameObjects[i], i, max);
+            return;
+          }
+        }
+      }
+    }
+
+    function swapGameObjectToTop(gameObject, arrayPosition, arrayLength) {
+      var top = layer.pixiLayer.getChildAt(layer.pixiLayer.children.length-1),
+        topArray = gameObjects[arrayLength-1];
+
+      // swap in display
+      if(top !== gameObject) {
+        // Swapchildren is currently unsupported in pixi -.-
+        // ugly approach:
+        layer.pixiLayer.removeChild(gameObject);
+        layer.pixiLayer.addChild(gameObject);
+      }
+
+      // swap in array
+      if(topArray !== gameObject) {
+        gameObjects[arrayPosition] = topArray;
+        gameObjects[arrayLength-1] = gameObject;
+      }
+
+    }
+
+    function resetAllHittedToFalse() {
+      var i = 0,
+        len = gameObjects.length;
+      for (i; i < len; i += 1) {
+        if(gameObjects[i].visible === true) {
+          gameObjects[i].hitted = false;
         }
       }
     }
