@@ -34,7 +34,7 @@ define(["Backbone", "underscore", "gameConfigMap"],
           objectOpt: gameConfigMap[key].opt,
           uiSlider: (gameConfigMap[key].ui === "slider") ? true : false,
           uiDropdown: (gameConfigMap[key].ui === "dropdown") ? true : false,
-          uiCheckbox: (gameConfigMap[key].ui === "checkbox") ? true : false,
+          uiToggle: (gameConfigMap[key].ui === "toggle") ? true : false,
           uiText: (gameConfigMap[key].ui === "text") ? true : false
         };
       },
@@ -70,6 +70,7 @@ define(["Backbone", "underscore", "gameConfigMap"],
       // },
       defaults: {
         objectTexture: gameConfigMap.objectTexture.def,
+        debugLayerVisible: gameConfigMap.debugLayerVisible.def,
         objectsToSpawn: gameConfigMap.objectsToSpawn.def,
         cloudsToGenerate: gameConfigMap.cloudsToGenerate.def,
         objectNormalScaleMin: gameConfigMap.objectNormalScaleMin.def,

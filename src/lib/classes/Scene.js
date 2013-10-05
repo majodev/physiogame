@@ -4,8 +4,6 @@ define(["underscore", "PIXI", "utils/publisher"],
 
     var Scene = function(options) {
 
-
-
       this.running = false;
       this.pixiScene = new PIXI.DisplayObjectContainer();
       this.events = publisher.make();

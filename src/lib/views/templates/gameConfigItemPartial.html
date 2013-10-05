@@ -19,5 +19,18 @@
       </ul>
     </div></td>
   {{/if}}
-  <td id="{{objectKey}}-value">{{objectValue}}</td>
+  {{#if uiToggle}}
+    {{#if objectValue}}
+      <td><button id="{{objectKey}}" type="button" class="btn btn-xs btn-primary toggleButton active" data-toggle="button">aktiviert</button></td>
+      <!--<td><input type="checkbox" name="{{objectKey}}" checked/></td>-->
+    {{else}}
+      <!--<td><input type="checkbox" name="{{objectKey}}" /></td>-->
+      <td><button id="{{objectKey}}" type="button" class="btn btn-xs btn-danger toggleButton" data-toggle="button">deaktiviert</button></td>
+    {{/if}}
+  {{/if}}
+  {{#if objectValue}}
+    <td id="{{objectKey}}-value">{{{objectValue}}}</td>
+  {{else}}
+    <td id="{{objectKey}}-value">false</td>
+  {{/if}}
 </tr>

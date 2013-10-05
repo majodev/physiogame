@@ -1,6 +1,19 @@
 define([],
   function() {
     return {
+      debugLayerVisible: {
+        def: true,
+        ui: "toggle",
+        cat: "general",
+        desc: "Zeige Debug-Layer"
+      },
+      objectTexture: {
+        def: "balloons",
+        opt: ["aliens", "balloons"],
+        ui: "dropdown",
+        cat: "general",
+        desc: "Texturpacket der Spiel-Objekte"
+      },
       objectsToSpawn: {
         def: 15,
         min: 2,
@@ -162,13 +175,6 @@ define([],
         ui: "slider",
         cat: "scale",
         desc: "Skalier-Abnahme von normalen Spiel-Objekten nach Grenze"
-      },
-      objectTexture: {
-        def: "balloons",
-        opt: ["aliens", "balloons"],
-        ui: "dropdown",
-        cat: "general",
-        desc: "Texturpacket der Spiel-Objekte"
       },
       leapXModifier: {
         def: 3.8,

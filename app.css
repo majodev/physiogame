@@ -44,6 +44,11 @@ canvas { /* To remove the scrollbars */
   width: 150px;
 }
 
+.toggleButton {
+  width: 150px;
+}
+
+
 .modal-dialog {
   width: 85%;
 }

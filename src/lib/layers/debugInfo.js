@@ -1,5 +1,8 @@
-define(["PIXI", "underscore", "classes/Layer", "base/displayManager", "base/leapManager"],
-  function(PIXI, _, Layer, displayManager, leapManager) {
+define(["PIXI", "underscore", "classes/Layer", "base/displayManager",
+    "base/leapManager", "gameConfig"
+  ],
+  function(PIXI, _, Layer, displayManager,
+    leapManager, gameConfig) {
 
     var layer = new Layer(),
       debugDisplay,
@@ -7,29 +10,31 @@ define(["PIXI", "underscore", "classes/Layer", "base/displayManager", "base/leap
       debugTextLeapManager = "leap: received 0 frames @ 0fps";
 
     layer.onActivate = function() {
-      if (_.isUndefined(debugDisplay) === true) {
+      if (gameConfig.get("debugLayerVisible") === true) {
+        if (_.isUndefined(debugDisplay) === true) {
 
-        debugDisplay = new PIXI.Text("observing fps...", {
-          font: "bold 15px Arvo",
-          fill: "#3344bb",
-          align: "left",
-          stroke: "#AAAAFF",
-          strokeThickness: 1,
-          wordWrap: false,
-          wordWrapWidth: 100
-        });
+          debugDisplay = new PIXI.Text("observing fps...", {
+            font: "bold 15px Arvo",
+            fill: "#3344bb",
+            align: "left",
+            stroke: "#AAAAFF",
+            strokeThickness: 1,
+            wordWrap: false,
+            wordWrapWidth: 100
+          });
 
+        }
+
+        debugDisplay.position = {
+          x: 15,
+          y: 15
+        };
+
+        displayManager.events.on("debugInfo", displayDebug);
+        leapManager.events.on("debugInfo", leapDebug);
+
+        this.addChild(debugDisplay);
       }
-
-      debugDisplay.position = {
-        x: 15,
-        y: 15
-      };
-
-      displayManager.events.on("debugInfo", displayDebug);
-      leapManager.events.on("debugInfo", leapDebug);
-
-      this.addChild(debugDisplay);
     };
 
     function displayDebug(text) {

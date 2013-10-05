@@ -50,9 +50,9 @@ define(["Backbone", "jquery", "log", "gameConfig", "underscore",
         // "slideStart input.parameterSlider": "sliderStart",
         "slide input.parameterSlider": "sliding",
         "slideStop input.parameterSlider": "sliderEnd",
-        "click .dropdown-menu a": "dropdownClick"
+        "click .dropdown-menu a": "dropdownClick",
+        "click button.toggleButton": "toggleClick"
       },
-      // sliderStart: function(event) {},
       dropdownClick: function(event) {
         //console.dir(event.currentTarget.parentNode.parentNode.id + " - " + event.currentTarget.id);
         this.setModelValue(event.currentTarget.parentNode.parentNode.id, event.currentTarget.id);
@@ -63,6 +63,11 @@ define(["Backbone", "jquery", "log", "gameConfig", "underscore",
       },
       sliderEnd: function(event) {
         this.setModelValue(event.currentTarget.id, event.value);
+      },
+      toggleClick: function(event) {
+        //console.log(event);
+        this.setModelValue(event.currentTarget.id,
+          !this.model.get(event.currentTarget.id));
       },
       setModelValue: function(key, value) {
         this.model.set(key, value);
