@@ -19,7 +19,8 @@
   } else {
     // failed feature detection!
     writeStatus(":(<br /><br />Sorry, your browser is too old.<br />" +
-      "Please update to the LATEST version of IE, Firefox, Chrome, Safari or Opera!<br />");
+      "Please update to the LATEST version of IE, Firefox, Chrome, Safari or Opera!<br /><br />" +
+      "<a href=\"http://www.google.at/intl/de/chrome/\">Best played in Google Chrome</a>");
     // stop immetiately with further processing!
     return;
   }
