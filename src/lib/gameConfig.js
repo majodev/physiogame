@@ -80,6 +80,9 @@ define(["Backbone", "underscore", "gameConfigMap"],
         objectHittedScaleBeforeCap: gameConfigMap.objectHittedScaleBeforeCap.def,
         objectHittedScaleAfterCap: gameConfigMap.objectHittedScaleAfterCap.def,
         objectNormalSpeedMin: gameConfigMap.objectNormalSpeedMin.def,
+        objectNormalSpeedMax: gameConfigMap.objectNormalSpeedMax.def,
+        objectNormalSpeedStep: gameConfigMap.objectNormalSpeedStep.def,
+        objectHittedSpeedMin: gameConfigMap.objectHittedSpeedMin.def,
         objectHittedSpeedMax: gameConfigMap.objectHittedSpeedMax.def,
         objectHittedSpeedStep: gameConfigMap.objectHittedSpeedStep.def,
         objectNormalAlphaMin: gameConfigMap.objectNormalAlphaMin.def,
@@ -89,8 +92,7 @@ define(["Backbone", "underscore", "gameConfigMap"],
         leapYModifier: gameConfigMap.leapYModifier.def,
         leapToDisplayX: gameConfigMap.leapToDisplayX.def,
         leapToDisplayY: gameConfigMap.leapToDisplayY.def,
-        objectHittedScaleExplodes: gameConfigMap.objectHittedScaleExplodes.def,
-        objectNormalSpeedStep: gameConfigMap.objectNormalSpeedStep.def
+        objectHittedScaleExplodes: gameConfigMap.objectHittedScaleExplodes.def
       }
     });
 

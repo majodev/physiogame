@@ -16,16 +16,15 @@ define(["log", "base/displayManager", "base/leapManager", "base/sceneManager", "
       leapManager.init();
 
       sceneManager.events.on("pushedScene", onSceneChanged);
-      sceneManager.pushScene("startscreen");
+
+      // definition of startscene of game
+      //sceneManager.pushScene("startscreen");
+      sceneManager.pushScene("shooting");
     }
 
     function onSceneChanged(newSceneName) {
       log.info("onSceneChanged: new scene id=" + newSceneName);
     }
-
-    key('enter', function() {
-      toggleScene();
-    });
 
     key('esc', function() {
       if (settingsModal.getShowing() === false) {
@@ -34,15 +33,6 @@ define(["log", "base/displayManager", "base/leapManager", "base/sceneManager", "
         settingsModal.hide();
       }
     });
-
-    function toggleScene() {
-
-      if(sceneManager.getCurrentSceneID() === "shooting") {
-        sceneManager.pushScene("startscreen");
-      } else {
-        sceneManager.pushScene("shooting");
-      }
-    }
 
     function logDebugText(debugText) {
       log.debug(debugText);

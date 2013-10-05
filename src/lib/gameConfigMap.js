@@ -46,9 +46,18 @@ define([],
         cat: "scale",
         desc: "Skalier-Zunahme von getroffenen Spiel-Objekten nach Grenze"
       },
+      objectHittedSpeedMin: {
+        def: 0,
+        min: 0,
+        max: 3,
+        step: 0.1,
+        ui: "slider",
+        cat: "speed",
+        desc: "Minimale Geschwindigkeit von getroffenen Spiel-Objekten"
+      },
       objectHittedSpeedMax: {
         def: 5,
-        min: 0.1,
+        min: 0,
         max: 20,
         step: 0.1,
         ui: "slider",
@@ -56,22 +65,40 @@ define([],
         desc: "Maximale Geschwindigkeit von getroffenen Spiel-Objekten"
       },
       objectHittedSpeedStep: {
-        def: 1,
-        min: 0.01,
+        def: -0.16,
+        min: -2,
         max: 2,
         step: 0.01,
         ui: "slider",
         cat: "speed",
-        desc: "Geschwindigkeitserhöhung von getroffenen Spiel-Objekten"
+        desc: "Geschwindigkeitsschritt von getroffenen Spiel-Objekten"
       },
       objectNormalSpeedMin: {
-        def: 1,
-        min: 0.1,
+        def: 0.6,
+        min: 0,
         max: 5,
         step: 0.1,
         ui: "slider",
         cat: "speed",
         desc: "Minimale Geschwindigkeit von normalen Spiel-Objekten"
+      },
+      objectNormalSpeedMax: {
+        def: 1.4,
+        min: 0,
+        max: 5,
+        step: 0.1,
+        ui: "slider",
+        cat: "speed",
+        desc: "Maximale Geschwindigkeit von normalen Spiel-Objekten"
+      },
+      objectNormalSpeedStep: {
+        def: 0.19,
+        min: -2,
+        max: 2,
+        step: 0.01,
+        ui: "slider",
+        cat: "speed",
+        desc: "Geschwindigkeitsschritt von normalen Spiel-Objekten"
       },
       objectNormalAlphaMin: {
         def: 0.8,
@@ -187,15 +214,6 @@ define([],
         ui: "slider",
         cat: "scale",
         desc: "Skalier-Maximum von getroffenen Spiel-Objekten vor Explosion"
-      },
-      objectNormalSpeedStep: {
-        def: 1,
-        min: 0.01,
-        max: 2,
-        step: 0.01,
-        ui: "slider",
-        cat: "speed",
-        desc: "Geschwindigkeitsabnahme von normalen Spiel-Objekten"
       }
     };
   }
