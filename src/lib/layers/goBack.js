@@ -1,5 +1,5 @@
 define(["classes/Layer", "classes/Button"],
-  function(Layer, Button, sceneManager) {
+  function(Layer, Button) {
 
     var layer = new Layer(),
       goBackButton;

@@ -10,7 +10,9 @@ define(["PIXI", "appConfig", "utils/zeroPad", "log"],
         buttonBGs: [],
         balloons: [],
         fhjoanneumlogo: undefined,
-        majodevicon: undefined
+        majodevicon: undefined,
+        leapNoHand: undefined,
+        leapOutside: undefined
       };
 
     // will be called when all preloading of pictures and json has finished!
@@ -30,6 +32,10 @@ define(["PIXI", "appConfig", "utils/zeroPad", "log"],
 
       // add fh joanneum logo
       atlas.majodevicon = getTextureByName("assets/majodev-icon.png");
+
+      // leaps
+      atlas.leapNoHand = getTextureByName("leap-nohand.png");
+      atlas.leapOutside = getTextureByName("leap-outside.png");
 
       // add alien textures
       parseTexturesByNames(atlas.aliens, [

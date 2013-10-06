@@ -19,7 +19,8 @@ define(["Backbone"],
         "assets/SpriteSheetBalloons.json",
         "assets/crosshair.png",
         "assets/fh-joanneum-logo.png",
-        "assets/majodev-icon.png"
+        "assets/majodev-icon.png",
+        "assets/leap-indicators.json"
       ],
       soundBaseDir: "assets/sound/",
       sounds: [{
