@@ -48,6 +48,12 @@ canvas { /* To remove the scrollbars */
   width: 150px;
 }
 
+.modal-header {
+  padding-top: 15px;
+  padding-right: 15px;
+  padding-bottom: 0px;
+  padding-left: 15px;
+}
 
 .modal-dialog {
   width: 85%;

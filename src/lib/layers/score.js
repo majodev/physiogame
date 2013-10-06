@@ -19,12 +19,15 @@ define(["log", "PIXI", "game/scoreEntity",
       scoreTimerRunning = false,
       introTimerCount = 0,
       introTimerRunning = true,
+      introTimerLength,
       retryButton;
 
     layer.onActivate = function() {
       scoreEntity.resetScore();
 
       log.debug("score: activate");
+
+      introTimerLength = gameConfig.get("introTimerLength") / 100;
 
       textsCreated = false;
 
@@ -51,6 +54,8 @@ define(["log", "PIXI", "game/scoreEntity",
 
       introText.position.x = layer.width / 2;
       introText.position.y = layer.height / 2;
+      introText.scale.x = 0;
+      introText.scale.y = 0;
       introText.anchor.x = 0.5;
       introText.anchor.y = 0.5;
 
@@ -59,19 +64,20 @@ define(["log", "PIXI", "game/scoreEntity",
       this.pixiLayer.addChild(introText);
 
       Poll.start({
-        name: "textUpdater",
+        name: "introTimer",
+        interval: 100,
+        action: function() {
+          introTimerCount += 1;
+        }
+      });
+
+      Poll.start({
+        name: "scoreTimer",
         interval: 100,
         action: function() {
           if (scoreTimerRunning) {
             scoreTimerCount += 1;
             timerText.setText("Zeit: " + scoreTimerCount / 10);
-          }
-          if (introTimerRunning) {
-            introTimerCount += 1;
-            if (introTimerCount > 60) {
-              introTimerRunning = false;
-              introText.visible = false;
-            }
           }
         }
       });
@@ -81,11 +87,31 @@ define(["log", "PIXI", "game/scoreEntity",
     };
 
     layer.onRender = function() {
-      //onRenderDisableIntroAnimation();
+      animateIntroText();
     };
 
+    function animateIntroText() {
+      if (introTimerRunning && introTimerCount < introTimerLength) {
+        if (introText.scale.x < 1) {
+          introText.scale.x += 0.05;
+          introText.scale.y += 0.05;
+        }
+      }
+      if (introTimerRunning && introTimerCount > introTimerLength) {
+        if (introText.scale.x > 0) {
+          introText.scale.x -= 0.05;
+          introText.scale.y -= 0.05;
+        } else {
+          introText.visible = false;
+          introTimerRunning = false;
+          Poll.stop("introTimer");
+        }
+      }
+    }
+
     layer.onDeactivate = function() {
-      Poll.stop("textUpdater");
+      Poll.stop("introTimer");
+      Poll.stop("scoreTimer");
 
       scoreEntity.off("change", scoreChanged);
     };
@@ -103,15 +129,13 @@ define(["log", "PIXI", "game/scoreEntity",
           stroke: "#FFAAAA",
           strokeThickness: 5
         });
-        introText = new PIXI.Text("Mach den Bildschirm von diesen " + gameConfig.get("objectsToSpawn") +
-          " Objekten frei!\n\n\nMaus: Taste gedrückt halten\n" +
-          "Touchscreen: gedrückt halten\nLeap Motion: einfach zielen", {
-            font: "bold 35px Arvo",
-            fill: "#3344bb",
-            align: "center",
-            stroke: "#AAAAFF",
-            strokeThickness: 5
-          });
+        introText = new PIXI.Text("Mach den Bildschirm frei!", {
+          font: "bold 80px Arvo",
+          fill: "#3344bb",
+          align: "center",
+          stroke: "#AAAAFF",
+          strokeThickness: 5
+        });
         winningText = new PIXI.Text("Fertig!", {
           font: "bold 35px Arvo",
           fill: "#3344bb",
@@ -130,15 +154,6 @@ define(["log", "PIXI", "game/scoreEntity",
         textsCreated = true;
       }
     }
-
-    // function onRenderDisableIntroAnimation() {
-    //   //if (introText.alpha > 0) {
-    //     //if (introTimerRunning === false && introText.alpha > 0) {
-    //       //introText.alpha -= 0.02;
-    //       //introText.visible = false;
-    //     //}
-    //   //}
-    // }
 
     function scoreChanged(model, options) {
       var tempWinText,
@@ -168,22 +183,6 @@ define(["log", "PIXI", "game/scoreEntity",
           scoreEntity.get("aliensKilled") + " Objekte in " + scoreTimerCount / 10 + " Sekunden abgeschossen!\n" +
           "GRATULATION!\n\n\n\n";
 
-        // if (scoreTimerCount >= 2000) {
-        //   tempRankText = "D, sufficiant!\n -- Yaa *eehhm* training for mastery...";
-        // }
-        // if (scoreTimerCount < 2000) {
-        //   tempRankText = "C, good!\n -- You know your weapons young soldier...";
-        // }
-        // if (scoreTimerCount < 1300) {
-        //   tempRankText = "B, nice!\n -- You have laser eyes and fast reflexes...";
-        // }
-        // if (scoreTimerCount < 600) {
-        //   tempRankText = "A, aWeSoMe!\n -- I'm tha lase33r. ALL RIGHT!";
-        // }
-        // if (scoreTimerCount < 400) {
-        //   tempRankText = "A+, WAT WAT WAT!\n -- Batman!";
-        // }
-
         winningText.setText(tempWinText + "\nDanke fürs Spielen!");
 
         countingText.visible = false;
@@ -193,7 +192,7 @@ define(["log", "PIXI", "game/scoreEntity",
 
         // RETRY BUTTON HINZUFUEGEN...
         // 
-        
+
         retryButton = new Button({
           style: {
             font: "bold 23px Arvo"
@@ -205,8 +204,8 @@ define(["log", "PIXI", "game/scoreEntity",
         });
 
         retryButton.display.position = {
-          x: layer.width/2,
-          y: layer.height*0.87
+          x: layer.width / 2,
+          y: layer.height * 0.87
         };
 
         retryButton.display.scale = {

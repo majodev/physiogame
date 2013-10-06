@@ -7,6 +7,15 @@ define([],
         cat: "general",
         desc: "Sichtbarkeit des Debug-Layers"
       },
+      introTimerLength: {
+        def: 3000,
+        min: 500,
+        max: 10000,
+        step: 100,
+        ui: "slider",
+        cat: "general",
+        desc: "Aufbauzeit vor Spielstart in ms"
+      },
       objectTexture: {
         def: "balloons",
         opt: ["aliens", "balloons"],
@@ -17,7 +26,7 @@ define([],
       objectsToSpawn: {
         def: 15,
         min: 2,
-        max: 100,
+        max: 200,
         step: 1,
         ui: "slider",
         cat: "general",
@@ -39,7 +48,10 @@ define([],
         step: 0.1,
         ui: "slider",
         cat: "scale",
-        desc: "Skalier-Grenze von getroffenen Spiel-Objekten"
+        desc: "Skalier-Grenze von getroffenen Spiel-Objekten",
+        check: {
+          max: "objectHittedScaleExplodes"
+        }
       },
       objectHittedScaleBeforeCap: {
         def: 0.04,
@@ -66,7 +78,10 @@ define([],
         step: 0.1,
         ui: "slider",
         cat: "speed",
-        desc: "Minimale Geschwindigkeit von getroffenen Spiel-Objekten"
+        desc: "Minimale Geschwindigkeit von getroffenen Spiel-Objekten",
+        check: {
+          max: "objectHittedSpeedMax"
+        }
       },
       objectHittedSpeedMax: {
         def: 5,
@@ -75,7 +90,10 @@ define([],
         step: 0.1,
         ui: "slider",
         cat: "speed",
-        desc: "Maximale Geschwindigkeit von getroffenen Spiel-Objekten"
+        desc: "Maximale Geschwindigkeit von getroffenen Spiel-Objekten",
+        check: {
+          min: "objectHittedSpeedMin"
+        }
       },
       objectHittedSpeedStep: {
         def: -0.16,
@@ -93,7 +111,10 @@ define([],
         step: 0.1,
         ui: "slider",
         cat: "speed",
-        desc: "Minimale Geschwindigkeit von normalen Spiel-Objekten"
+        desc: "Minimale Geschwindigkeit von normalen Spiel-Objekten",
+        check: {
+          max: "objectNormalSpeedMax"
+        }
       },
       objectNormalSpeedMax: {
         def: 1.4,
@@ -102,7 +123,10 @@ define([],
         step: 0.1,
         ui: "slider",
         cat: "speed",
-        desc: "Maximale Geschwindigkeit von normalen Spiel-Objekten"
+        desc: "Maximale Geschwindigkeit von normalen Spiel-Objekten",
+        check: {
+          min: "objectNormalSpeedMin"
+        }
       },
       objectNormalSpeedStep: {
         def: 0.19,
@@ -147,7 +171,10 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Minimale Skalierung von normalen Spiel-Objekten"
+        desc: "Minimale Skalierung von normalen Spiel-Objekten",
+        check: {
+          max: "objectNormalScaleCap"
+        }
       },
       objectNormalScaleCap: {
         def: 0.9,
@@ -156,7 +183,10 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Skalier-Grenze von normalen Spiel-Objekten"
+        desc: "Skalier-Grenze von normalen Spiel-Objekten",
+        check: {
+          max: "objectHittedScaleExplodes"
+        }
       },
       objectNormalScaleBeforeCap: {
         def: 0.02,

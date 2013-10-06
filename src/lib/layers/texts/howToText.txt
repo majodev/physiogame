@@ -1,0 +1,3 @@
+Maus: Taste gedrückt halten
+Touchscreen: gedrückt halten
+Leap Motion: einfach zielen

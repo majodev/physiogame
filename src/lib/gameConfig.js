@@ -11,12 +11,12 @@ define(["Backbone", "underscore", "gameConfigMap"],
 
         for (i; i < len; i += 1) {
           if (_.isUndefined(filterCategory) === false) {
-            if(filterCategory === gameConfigMap[keyArray[i]].cat) {
+            if (filterCategory === gameConfigMap[keyArray[i]].cat) {
               returnArray.push(this.getKeyValuePair(keyArray[i], json));
             }
           } else {
             returnArray.push(this.getKeyValuePair(keyArray[i], json));
-          }          
+          }
         }
         return {
           keyValues: returnArray
@@ -25,7 +25,7 @@ define(["Backbone", "underscore", "gameConfigMap"],
       getKeyValuePair: function(key, json) {
         return {
           objectKey: key,
-          objectValue: (_.isNumber(json[key])) ? (Math.round(json[key] * 1000) / 1000) : json[key],
+          objectValue: formatOut(json[key]),
           objectMin: gameConfigMap[key].min,
           objectMax: gameConfigMap[key].max,
           objectStep: gameConfigMap[key].step,
@@ -38,7 +38,7 @@ define(["Backbone", "underscore", "gameConfigMap"],
           uiText: (gameConfigMap[key].ui === "text") ? true : false
         };
       },
-      getKeyValueCategoryPairs: function () {
+      getKeyValueCategoryPairs: function() {
         return {
           general: this.generateKeyValuePairs("general"),
           scale: this.generateKeyValuePairs("scale"),
@@ -47,7 +47,7 @@ define(["Backbone", "underscore", "gameConfigMap"],
           leap: this.generateKeyValuePairs("leap")
         };
       },
-      resetToDefaultValues: function () {
+      resetToDefaultValues: function() {
         var json = this.toJSON();
         var keyArray = _.keys(json);
         var i = 0,
@@ -56,21 +56,55 @@ define(["Backbone", "underscore", "gameConfigMap"],
           this.set(keyArray[i], gameConfigMap[keyArray[i]].def);
         }
       },
+      validate: function(attrs, options) {
+        var attrKeys = _.keys(attrs),
+          i = 0,
+          len = attrKeys.length;
 
-      // randomizeSettings: function() {
-      //   var json = this.toJSON();
-      //   var keyArray = _.keys(json);
-      //   var i = 0,
-      //     len = keyArray.length;
+        for (i; i < len; i += 1) {
 
-      //   for (i; i < len; i += 1) {
+          // check if range within defined minimum
+          if (_.isUndefined(gameConfigMap[attrKeys[i]].min) === false) {
+            if (this.get(attrKeys[i]) < gameConfigMap[attrKeys[i]].min) {
+              return gameConfigMap[attrKeys[i]].desc + " ist " +
+                formatOut(this.get(attrKeys[i])) + " muss größer sein als " +
+                formatOut(gameConfigMap[attrKeys[i]].min);
+            }
+          }
 
-      //     //this.set(keyArray[i], _.random());
-      //   }
-      // },
+          // check if range within defined maximum
+          if (_.isUndefined(gameConfigMap[attrKeys[i]].max) === false) {
+            if (this.get(attrKeys[i]) > gameConfigMap[attrKeys[i]].max) {
+              return gameConfigMap[attrKeys[i]].desc + " ist " +
+                formatOut(this.get(attrKeys[i])) + " muss kleiner sein als " +
+                formatOut(gameConfigMap[attrKeys[i]].max);
+            }
+          }
+
+          // check cross-variable-checks defined in gameConfigMap
+          if (_.isUndefined(gameConfigMap[attrKeys[i]].check) === false) {
+            if (_.isUndefined(gameConfigMap[attrKeys[i]].check.min) === false) {
+              if (this.get(attrKeys[i]) <= this.get(gameConfigMap[attrKeys[i]].check.min)) {
+                return gameConfigMap[attrKeys[i]].desc + " ist " + formatOut(this.get(attrKeys[i])) + " muss größer sein als " +
+                  formatOut(this.get(gameConfigMap[attrKeys[i]].check.min)) + "(" +
+                  gameConfigMap[gameConfigMap[attrKeys[i]].check.min].desc + ")";
+              }
+            }
+            if (_.isUndefined(gameConfigMap[attrKeys[i]].check.max) === false) {
+              if (this.get(attrKeys[i]) >= this.get(gameConfigMap[attrKeys[i]].check.max)) {
+                return gameConfigMap[attrKeys[i]].desc + " ist " + formatOut(this.get(attrKeys[i])) + " muss kleiner sein als " +
+                  formatOut(this.get(gameConfigMap[attrKeys[i]].check.max)) + " (" +
+                  gameConfigMap[gameConfigMap[attrKeys[i]].check.max].desc + ")";
+              }
+            }
+
+          }
+        }
+      },
       defaults: {
         objectTexture: gameConfigMap.objectTexture.def,
         debugLayerVisible: gameConfigMap.debugLayerVisible.def,
+        introTimerLength: gameConfigMap.introTimerLength.def,
         objectsToSpawn: gameConfigMap.objectsToSpawn.def,
         cloudsToGenerate: gameConfigMap.cloudsToGenerate.def,
         objectNormalScaleMin: gameConfigMap.objectNormalScaleMin.def,
@@ -99,7 +133,11 @@ define(["Backbone", "underscore", "gameConfigMap"],
 
     var appConfig = new AppConfig();
 
+    // helper to format for printable
+    function formatOut(value) {
+      return (_.isNumber(value)) ? (Math.round(value * 1000) / 1000) : value;
+    }
+
 
     return appConfig;
-  }
-);
+  });

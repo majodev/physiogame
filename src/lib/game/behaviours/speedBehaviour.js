@@ -7,14 +7,12 @@ define(["utils/applyStepInRange"],
         gameObject.speed = applyStepInRange(gameObject.speed,
           opt.objectHittedSpeedMin, opt.objectHittedSpeedMax,
           opt.objectHittedSpeedStep);
-
       } else {
 
         // apply speed normal in defined ranges.
         gameObject.speed = applyStepInRange(gameObject.speed,
           opt.objectNormalSpeedMin, opt.objectNormalSpeedMax,
           opt.objectNormalSpeedStep);
-
       }
     }
 
