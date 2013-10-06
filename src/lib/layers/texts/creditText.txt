@@ -1,0 +1,27 @@
+Mario Ranftl, BSc. (@majodev)
+
+practical part of my master thesis for FH JOANNEUM, Graz, Austria (no kangaroos)
+FH JOANNEUM advanced information management master degree program
+in cooperation with FH JOANNEUM occupational therapy and physiotherapy
+
+I would like to thank these artists for using their assets:
+
+Balloons Vectors by Stuart Bainbridge
+Creative Commons Attribution-Share Alike 3.0 License.
+
+Aliens and explosion animation by PIXI.js team
+MIT License
+
+Webfont Arvo by Anton Koovit
+SIL Open Font License, 1.1
+
+TOOLS: node-webkit, Flash, Texture Packer, Audacity, cfxr, Otomata, ImageOptim, ImageAlpha
+
+FRAMEWORKS and LIBRARIES: requirejs, r.js, bootstrap, handlebars, howler, jquery, keymaster
+leapjs, loglevel, pixi, polljs, spinjs, text, webfontloader, backbone, grunt, lodash, mocha, chai 
+
+All other assets are by Mario Ranftl, BSc. (@majodev)
+MIT License
+
+A special THANK YOU goes to:
+@jrburke, @nischi, C.A.F. and NICI <3

@@ -1,4 +1,4 @@
-define(["PIXI", "utils/publisher", "display/textures"],
+define(["PIXI", "utils/publisher", "game/textures"],
   function(PIXI, publisher, textures) {
 
     var display = new PIXI.Sprite(textures.atlas.crosshair),

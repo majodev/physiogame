@@ -1,4 +1,4 @@
-define(["log", "PIXI", "appConfig", "utils/publisher", "display/textures",
+define(["log", "PIXI", "appConfig", "utils/publisher", "game/textures",
   "loaders/status"],
   function(log, PIXI, appConfig, publisher, textures,
     status) {

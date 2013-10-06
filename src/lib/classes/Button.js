@@ -1,4 +1,4 @@
-define(["PIXI", "display/textures", "underscore"],
+define(["PIXI", "game/textures", "underscore"],
   function(PIXI, textures, _) {
 
     var Button = function(options) {

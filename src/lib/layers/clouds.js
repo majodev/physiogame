@@ -1,4 +1,4 @@
-define(["log", "display/textures",
+define(["log", "game/textures",
     "PIXI", "underscore", "classes/Layer", "gameConfig"
   ],
   function(log, textures, PIXI, _, Layer, gameConfig) {

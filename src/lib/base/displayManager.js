@@ -1,4 +1,4 @@
-define(["log", "PIXI", "appConfig", "utils/resizeWatcher", "utils/publisher", "display/textures", "Poll"],
+define(["log", "PIXI", "appConfig", "utils/resizeWatcher", "utils/publisher", "game/textures", "Poll"],
   function(log, PIXI, appConfig, resizeWatcher, publisher, textures, Poll) {
 
     // private

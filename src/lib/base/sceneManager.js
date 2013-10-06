@@ -1,5 +1,5 @@
 define(["log", "utils/publisher", "base/displayManager", "underscore",
-    "factories/sceneMap"
+    "game/sceneMap"
   ],
   function(log, publisher, displayManager, _,
     sceneMap) {

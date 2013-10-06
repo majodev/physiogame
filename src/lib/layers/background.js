@@ -1,4 +1,4 @@
-define(["display/textures", "PIXI", "underscore", "classes/Layer"],
+define(["game/textures", "PIXI", "underscore", "classes/Layer"],
   function(textures, PIXI, _, Layer) {
 
     var layer = new Layer(),

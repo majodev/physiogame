@@ -1,4 +1,4 @@
-define(["log", "PIXI", "entities/scoreEntity",
+define(["log", "PIXI", "game/scoreEntity",
     "gameConfig", "Poll", "classes/Layer", "classes/Button"
   ],
   function(log, PIXI, scoreEntity, gameConfig, Poll, Layer, Button) {

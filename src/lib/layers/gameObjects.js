@@ -1,12 +1,12 @@
-define(["display/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
-    "entities/scoreEntity", "base/soundManager", "gameObjects/crosshairGO", "classes/Layer",
-    "behaviours/targetBehaviour", "behaviours/alphaBehaviour", "behaviours/scaleBehaviour",
-    "behaviours/speedBehaviour"
+define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
+    "game/scoreEntity", "base/soundManager", "game/crosshairGO", "classes/Layer",
+    "game/behaviours/targetBehaviour", "game/behaviours/alphaBehaviour",
+    "game/behaviours/scaleBehaviour", "game/behaviours/speedBehaviour"
   ],
   function(textures, gameConfig, hittest, _, PIXI,
     scoreEntity, soundManager, crosshairGO, Layer,
-    targetBehaviour, alphaBehaviour, scaleBehaviour,
-    speedBehaviour) {
+    targetBehaviour, alphaBehaviour,
+    scaleBehaviour, speedBehaviour) {
 
     var layer = new Layer({
       listeners: {

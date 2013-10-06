@@ -1,5 +1,5 @@
 define(["base/displayManager", "base/leapManager",
-  "PIXI", "utils/publisher", "classes/Layer", "gameObjects/crosshairGO"],
+  "PIXI", "utils/publisher", "classes/Layer", "game/crosshairGO"],
   function(displayManager, leapManager, PIXI, publisher,
     Layer, crosshairGO) {
 
