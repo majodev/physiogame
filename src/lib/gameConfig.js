@@ -23,13 +23,31 @@ define(["Backbone", "underscore", "gameConfigMap"],
         };
       },
       getKeyValuePair: function(key, json) {
+
+        
+        var showValue = formatOut(json[key]),
+          showDefault = gameConfigMap[key].def;
+
+        // handle objectValues different if target is a uiDropDown
+        if(gameConfigMap[key].ui === "dropdown") {
+          // get the desc from the opt array of the current value...
+          for (var i = 0; i < gameConfigMap[key].opt.length; i += 1) {
+            if(showValue === gameConfigMap[key].opt[i].id) {
+              showValue = gameConfigMap[key].opt[i].desc;
+            }
+            if(showDefault === gameConfigMap[key].opt[i].id) {
+              showDefault = gameConfigMap[key].opt[i].desc;
+            }
+          }
+        }
+
         return {
           objectKey: key,
-          objectValue: formatOut(json[key]),
+          objectValue: showValue,
           objectMin: gameConfigMap[key].min,
           objectMax: gameConfigMap[key].max,
           objectStep: gameConfigMap[key].step,
-          objectDef: gameConfigMap[key].def,
+          objectDef: showDefault,
           objectDesc: gameConfigMap[key].desc,
           objectOpt: gameConfigMap[key].opt,
           uiSlider: (gameConfigMap[key].ui === "slider") ? true : false,

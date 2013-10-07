@@ -18,7 +18,13 @@ define([],
       },
       objectTexture: {
         def: "balloons",
-        opt: ["aliens", "balloons"],
+        opt: [{
+          id: "aliens",
+          desc: "Alienpacket"
+        }, {
+          id: "balloons",
+          desc: "Luftballonpacket"
+        }],
         ui: "dropdown",
         cat: "general",
         desc: "Texturpacket der Spiel-Objekte"
