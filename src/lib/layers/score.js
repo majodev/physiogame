@@ -20,10 +20,19 @@ define(["log", "PIXI", "game/scoreEntity",
       introTimerCount = 0,
       introTimerRunning = true,
       introTimerLength,
+      gameModeTime = false,
+      maxTime = 0,
       retryButton;
 
     layer.onActivate = function() {
       scoreEntity.resetScore();
+
+      if (gameConfig.get("gameMode") === "clearInTime") {
+        gameModeTime = true;
+        maxTime = gameConfig.get("gameMaxTime") * 60;
+      } else {
+        gameModeTime = false;
+      }
 
       log.debug("score: activate");
 
@@ -44,7 +53,7 @@ define(["log", "PIXI", "game/scoreEntity",
       introTimerRunning = true;
 
       countingText.position.x = layer.width - 15;
-      countingText.position.y = 0;
+      countingText.position.y = 15;
       countingText.anchor.x = 1;
 
       timerText.position.x = layer.width - 15;
@@ -77,10 +86,20 @@ define(["log", "PIXI", "game/scoreEntity",
         action: function() {
           if (scoreTimerRunning) {
             scoreTimerCount += 1;
-            timerText.setText("Zeit: " + scoreTimerCount / 10);
+            if (gameModeTime === true) {
+              timerText.setText(formatSeconds(scoreTimerCount / 10) + 
+                " von " + formatSeconds(maxTime));
+              if ((scoreTimerCount / 10) >= maxTime) {
+                showWinningText();
+              }
+            } else {
+              timerText.setText(formatSeconds(scoreTimerCount / 10));
+            }
           }
         }
       });
+
+      setStartupTexts();
 
       scoreEntity.on("change", scoreChanged);
 
@@ -89,6 +108,39 @@ define(["log", "PIXI", "game/scoreEntity",
     layer.onRender = function() {
       animateIntroText();
     };
+
+    // helper to format the seconds into something displayable
+    function formatSeconds(secs) {
+      var sec_num = parseInt(secs, 10); // don't forget the second parm
+      var hours = Math.floor(sec_num / 3600);
+      var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+      var seconds = sec_num - (hours * 3600) - (minutes * 60);
+      //var milli = Math.floor((secs - sec_num) * 10);
+
+      var time = "0:00.0";
+
+      // if (minutes < 10) {
+      //   minutes = "0" + minutes;
+      // }
+      if (seconds < 10) {
+        seconds = "0" + seconds;
+      }
+      
+      time = minutes + ":" + seconds;
+      return time;
+    }
+
+    function setStartupTexts() {
+      if (gameModeTime === true) {
+        countingText.setText(scoreEntity.get("aliensKilled"));
+        introText.setText("Schaffe soviel wie möglich in\n" + formatSeconds(maxTime) + " Minuten");
+        timerText.setText("0:00 von " + formatSeconds(maxTime));
+      } else {
+        countingText.setText(scoreEntity.get("aliensKilled") + " von " + gameConfig.get("objectsToSpawn"));
+        introText.setText("Mach den Bildschirm frei!");
+        timerText.setText("0:00");
+      }
+    }
 
     function animateIntroText() {
       if (introTimerRunning && introTimerCount < introTimerLength) {
@@ -123,7 +175,7 @@ define(["log", "PIXI", "game/scoreEntity",
 
 
         countingText = new PIXI.Text("0 von " + gameConfig.get("objectsToSpawn"), {
-          font: "bold italic 20px Arvo",
+          font: "bold 20px Arvo",
           fill: "#bb4433",
           align: "right",
           stroke: "#FFAAAA",
@@ -144,7 +196,7 @@ define(["log", "PIXI", "game/scoreEntity",
           strokeThickness: 5
         });
         timerText = new PIXI.Text("0.0", {
-          font: "bold 30px Arvo",
+          font: "bold 20px Arvo",
           fill: "#bb4433",
           align: "right",
           stroke: "#FFAAAA",
@@ -163,12 +215,21 @@ define(["log", "PIXI", "game/scoreEntity",
       introText.visible = false;
 
       scoreTimerRunning = true;
-      countingText.setText(model.get("aliensKilled") + " von " + gameConfig.get("objectsToSpawn"));
 
-      //log.warn("scoreChange");
+      if (gameModeTime === true) {
+        countingText.setText(model.get("aliensKilled"));
+      } else {
+        countingText.setText(model.get("aliensKilled") + " von " + gameConfig.get("objectsToSpawn"));
+      }
 
-      if (winningAdded === false && gameConfig.get("objectsToSpawn") <= model.get("aliensKilled")) {
-        // win, displayManager the text
+      if (gameModeTime === false && gameConfig.get("objectsToSpawn") <= model.get("aliensKilled")) {
+        showWinningText();
+      }
+    }
+
+    function showWinningText() {
+      if (winningAdded === false) {
+        // win, display the text
 
         winningText.position.x = layer.width / 2;
         winningText.position.y = layer.height / 2;
@@ -180,7 +241,7 @@ define(["log", "PIXI", "game/scoreEntity",
         scoreTimerRunning = false;
 
         tempWinText = "Fertig!\nDu hast " +
-          scoreEntity.get("aliensKilled") + " Objekte in " + scoreTimerCount / 10 + " Sekunden abgeschossen!\n" +
+          scoreEntity.get("aliensKilled") + " Objekte in " + formatSeconds(scoreTimerCount/10) + " Minuten abgeschossen!\n" +
           "GRATULATION!\n\n\n\n";
 
         winningText.setText(tempWinText + "\nDanke fürs Spielen!");
@@ -220,7 +281,6 @@ define(["log", "PIXI", "game/scoreEntity",
         };
 
         layer.addChild(retryButton.display);
-
       }
     }
 

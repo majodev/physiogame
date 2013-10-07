@@ -41,6 +41,9 @@ define(["Backbone", "jquery", "log", "gameConfig", "underscore",
         $(function() {
           // try to show the last visible tab...
           $('#myTab a[href="' + currentTabHash + '"]').tab('show');
+
+          // append the fade class
+          $(currentTabHash).addClass("fade in");
         });
 
         // Add clickhandler for tab bar...
@@ -55,21 +58,36 @@ define(["Backbone", "jquery", "log", "gameConfig", "underscore",
           $("#statusNotification").append('<div class="alert alert-danger"><small>' + 
             '<strong>Fehler:</strong> ' +
             validationError + '</small></div>');
-        } else {
-          $("#statusNotification").append('<div class="alert alert-success"><small>' +
-            '<strong>Status:</strong> ' +
-            'Die Einstellungen sind gültig.' +
-            '</small></div>');
         }
+        // else {
+        //   $("#statusNotification").append('<div class="alert alert-success"><small>' +
+        //     '<strong>Status:</strong> ' +
+        //     'Die Einstellungen sind gültig.' +
+        //     '</small></div>');
+        // }
 
         return this; // for chaining
       },
+
+      // $("#resetToStandard").click(function(e) {
+      //   log.debug("resetting all to standard values!");
+      //   gameConfig.resetToDefaultValues();
+
+      //   // then reset the scenes...
+      //   require(["base/sceneManager"], function(sceneManager) {
+      //     //console.dir(sceneManager);
+      //     sceneManager.resetCurrentScene();
+      //   });
+
+      // });
+
       events: {
         // "slideStart input.parameterSlider": "sliderStart",
         "slide input.parameterSlider": "sliding",
         "slideStop input.parameterSlider": "sliderEnd",
         "click .dropdown-menu a": "dropdownClick",
-        "click button.toggleButton": "toggleClick"
+        "click button.toggleButton": "toggleClick",
+        "click #resetToStandard": "resetAllToStandard"
       },
       dropdownClick: function(event) {
         this.setModelValue(event.currentTarget.parentNode.parentNode.id, event.currentTarget.id);
@@ -86,15 +104,20 @@ define(["Backbone", "jquery", "log", "gameConfig", "underscore",
       toggleClick: function(event) {
         this.setModelValue(event.currentTarget.id, !this.model.get(event.currentTarget.id));
       },
+      resetAllToStandard: function (event) {
+        log.debug("resetAllToStandard!");
+        this.model.resetToDefaultValues();
+        refreshGameWithNewValues();
+      },
       setModelValue: function(key, value) {
         this.model.set(key, value);
-        this.model.isValid();
+        //this.model.isValid();
         refreshGameWithNewValues();
       },
       alertModelNotValid: function(model, error) {
         // TODO: show error in interface!
         validationError = error;
-        console.log(error);
+        log.warn("validation error: " + error);
       }
     });
 

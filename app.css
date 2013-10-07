@@ -56,5 +56,34 @@ canvas { /* To remove the scrollbars */
 }
 
 .modal-dialog {
-  width: 85%;
+  width: 760px;
+}
+
+.settingsConfigValue {
+  width: 160px;
+}
+
+.settingsValue {
+  width: 170px;
+}
+
+.settingsDefaultValue {
+  color: #757474;
+}
+
+.lead {
+  margin-bottom: 5px;
+}
+
+.alert {
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.modal-body {
+  padding-top: 5px;
+}
+
+.helpContainer {
+  padding-top: 15px;
 }

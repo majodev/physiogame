@@ -1,14 +1,13 @@
 <tr>
-  <td>{{objectDesc}}</td>
-  <td>{{objectDef}}</td>
+  <td class="settingsDescription">{{objectDesc}}</td>
   {{#if uiSlider}}
-    <td><input id="{{objectKey}}" type="text" class="parameterSlider col-md-12"
+    <td class="settingsConfigValue"><input id="{{objectKey}}" type="text" class="parameterSlider col-md-12"
       value="{{objectValue}}" data-slider-min="{{objectMin}}" data-slider-max="{{objectMax}}"
       data-slider-step="{{objectStep}}" data-slider-value="{{objectValue}}"
       data-slider-selection="after" data-slider-tooltip="hide"></td>
   {{/if}}
   {{#if uiDropdown}}
-    <td><div class="btn-group btn-group-sm">
+    <td class="settingsConfigValue"><div class="btn-group btn-group-sm">
       <button type="button" class="btn btn-primary dropdown-toggle parameterButton" data-toggle="dropdown">
         {{objectValue}} <span class="caret"></span>
       </button>
@@ -21,16 +20,23 @@
   {{/if}}
   {{#if uiToggle}}
     {{#if objectValue}}
-      <td><button id="{{objectKey}}" type="button" class="btn btn-xs btn-primary toggleButton active" data-toggle="button">aktiviert</button></td>
+      <td class="settingsConfigValue"><button id="{{objectKey}}" type="button" class="btn btn-xs btn-primary toggleButton active" data-toggle="button">aktiviert</button></td>
       <!--<td><input type="checkbox" name="{{objectKey}}" checked/></td>-->
     {{else}}
       <!--<td><input type="checkbox" name="{{objectKey}}" /></td>-->
-      <td><button id="{{objectKey}}" type="button" class="btn btn-xs btn-danger toggleButton" data-toggle="button">deaktiviert</button></td>
+      <td class="settingsConfigValue"><button id="{{objectKey}}" type="button" class="btn btn-xs btn-danger toggleButton" data-toggle="button">deaktiviert</button></td>
     {{/if}}
   {{/if}}
-  {{#if objectValue}}
-    <td id="{{objectKey}}-value">{{{objectValue}}}</td>
+
+  <td class="settingsValue">
+    <div id="{{objectKey}}-value">{{{objectValue}}}</div>
+    <div id="{{objectKey}}-default" class="settingsDefaultValue"><small>Standard: {{objectDef}}</small></div>
+  </td>
+
+  <!--{{#if objectValue}}
+    <td id="{{objectKey}}-value" class="settingsValue">{{{objectValue}}}</td>
   {{else}}
-    <td id="{{objectKey}}-value">false</td>
+    <td id="{{objectKey}}-value" class="settingsValue"><small>false or 0</small></td>
   {{/if}}
+  <td class="settingsDefaultValue"><small>{{objectDef}}</small></td>-->
 </tr>

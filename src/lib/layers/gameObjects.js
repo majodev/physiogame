@@ -20,14 +20,21 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     var gameObjects = [],
       killAnimationsToRemove = [],
       allGameObjectsCreated = false,
+      ingameObjectCreatorRunning = false,
+      ingameObjectCreatorTimeElapsed = 0,
       opt;
 
 
     layer.onActivate = function() {
 
+      ingameObjectCreatorTimeElapsed = 0;
+
       // opt holds all current options from the gameConfig that are relevant for this layer
       // get the current set options from the model
       opt = {
+        gameMode: gameConfig.get("gameMode"),
+        gameMaxTime: gameConfig.get("gameMaxTime"),
+        gameReattachObjectAfterMs: gameConfig.get("gameReattachObjectAfterMs"),
         objectsToSpawn: gameConfig.get("objectsToSpawn"),
         texturePackage: textures.atlas[gameConfig.get("objectTexture")],
         textureCount: textures.atlas[gameConfig.get("objectTexture")].length,
@@ -54,25 +61,47 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
       Poll.start({
         name: "gameObjectCreator",
-        interval: opt.introTimerLength/opt.objectsToSpawn,
+        interval: opt.introTimerLength / opt.objectsToSpawn,
         action: function() {
-          if(gameObjects.length < opt.objectsToSpawn) {
+          if (gameObjects.length < opt.objectsToSpawn) {
             attachNewGameObject(gameObjects.length);
           } else {
-
-            // all done, make them interactive...
+            // all done, make it interactive...
             crosshairGO.events.on("crosshairActive", detectPointerHitsGameObject);
             Poll.stop("gameObjectCreator"); // kill this poll.
             allGameObjectsCreated = true;
+
+            attachInGameObjectAdder();
           }
         }
-      });      
+      });
     };
+
+    function attachInGameObjectAdder() {
+      if (opt.gameMode === "clearInTime") {
+        Poll.start({
+          name: "inGameObjectCreator",
+          interval: opt.gameReattachObjectAfterMs,
+          action: function() {
+            ingameObjectCreatorRunning = true;
+            if (ingameObjectCreatorTimeElapsed >= (opt.gameMaxTime * 60 * 1000)) {
+              // don't add more, it's finished!
+              ingameObjectCreatorRunning = false;
+              Poll.stop("inGameObjectCreator");
+            } else {
+              ingameObjectCreatorTimeElapsed += opt.gameReattachObjectAfterMs;
+              // add if an object is missing.
+              if (gameObjects.length < opt.objectsToSpawn) {
+                attachNewGameObject(gameObjects.length);
+              }
+            }
+          }
+        });
+      }
+    }
 
     function attachNewGameObject(i) {
       var gameObject = new PIXI.Sprite(opt.texturePackage[i % opt.textureCount]);
-
-      
 
       // set its initial values...
       gameObject.anchor.x = 0.5;
@@ -84,15 +113,11 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       gameObject.speed = opt.objectNormalSpeedMin; // extra
 
       // set positions and targets accordingliy...
-      
-      gameObject.position.x = _.random(gameObject.width/2, layer.width-gameObject.width/2);
-      gameObject.position.y = _.random(gameObject.height/2, layer.height-gameObject.height/2);
-      gameObject.targetX = _.random(gameObject.width/2, layer.width-gameObject.width/2);
-      gameObject.targetY = _.random(gameObject.height/2, layer.height-gameObject.height/2);
-      // gameObject.position.x = parseInt(Math.random() * layer.width, 10);
-      // gameObject.position.y = parseInt(Math.random() * layer.height, 10);
-      // gameObject.targetX = parseInt(Math.random() * layer.width, 10); // extra
-      // gameObject.targetY = parseInt(Math.random() * layer.height, 10); // extra
+
+      gameObject.position.x = _.random(gameObject.width / 2, layer.width - gameObject.width / 2);
+      gameObject.position.y = _.random(gameObject.height / 2, layer.height - gameObject.height / 2);
+      gameObject.targetX = _.random(gameObject.width / 2, layer.width - gameObject.width / 2);
+      gameObject.targetY = _.random(gameObject.height / 2, layer.height - gameObject.height / 2);
 
       gameObjects.push(gameObject);
       layer.addChild(gameObjects[i]);
@@ -101,7 +126,13 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     layer.onDeactivate = function() {
       crosshairGO.events.off("crosshairActive", detectPointerHitsGameObject);
 
-      Poll.stop("gameObjectCreator"); // kill creator poll if still running...
+      if (allGameObjectsCreated === false) {
+        Poll.stop("gameObjectCreator"); // kill creator poll if still running...
+      }
+
+      if (ingameObjectCreatorRunning === true) {
+        Poll.stop("inGameObjectCreator");
+      }
 
       allGameObjectsCreated = false;
       gameObjects = [];
@@ -109,7 +140,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     };
 
     layer.onRender = function() {
-      if(allGameObjectsCreated) {
+      if (allGameObjectsCreated) {
         onRenderMove();
         onRenderClearExplosions();
       }
@@ -236,6 +267,12 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
             layer.addChild(explosion);
 
             scoreEntity.raiseScore();
+
+            // finally clear the gameObject from the array and kill the gameObject
+            layer.removeChild(gameObject);
+            gameObjects.splice(i, 1);
+            i -= 1;
+            max -= 1;
           }
         }
 

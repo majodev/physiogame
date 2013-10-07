@@ -29,6 +29,45 @@ define([],
         cat: "general",
         desc: "Texturpacket der Spiel-Objekte"
       },
+      gameMode: {
+        def: "clearInTime",
+        opt: [{
+          id: "clearAllObjects",
+          desc: "nach Anzahl"
+        }, {
+          id: "clearInTime",
+          desc: "nach Zeit"
+        }],
+        ui: "dropdown",
+        cat: "general",
+        desc: "Spielmodus"
+      },
+      gameMaxTime: {
+        def: 1,
+        min: 1,
+        max: 20,
+        step: 1,
+        ui: "slider",
+        cat: "general",
+        desc: "Spielzeit in Minuten",
+        enabled: {
+          id: "gameMode",
+          value: "clearInTime"
+        }
+      },
+      gameReattachObjectAfterMs: {
+        def: 2500,
+        min: 100,
+        max: 20000,
+        step: 100,
+        ui: "slider",
+        cat: "general",
+        desc: "Ein Spiel-Objekt wieder hinzufügen nach ms",
+        enabled: {
+          id: "gameMode",
+          value: "clearInTime"
+        }
+      },
       objectsToSpawn: {
         def: 15,
         min: 2,

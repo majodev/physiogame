@@ -7,15 +7,22 @@ define(["Backbone", "underscore", "gameConfigMap"],
         var keyArray = _.keys(json);
         var returnArray = [];
         var i = 0,
-          len = keyArray.length;
+          len = keyArray.length,
+          value;
 
         for (i; i < len; i += 1) {
           if (_.isUndefined(filterCategory) === false) {
             if (filterCategory === gameConfigMap[keyArray[i]].cat) {
-              returnArray.push(this.getKeyValuePair(keyArray[i], json));
+              value = this.getKeyValuePair(keyArray[i], json);
+              if (value !== false) {
+                returnArray.push(value);
+              }
             }
           } else {
-            returnArray.push(this.getKeyValuePair(keyArray[i], json));
+            value = this.getKeyValuePair(keyArray[i], json);
+            if (value !== false) {
+              returnArray.push(value);
+            }
           }
         }
         return {
@@ -24,18 +31,28 @@ define(["Backbone", "underscore", "gameConfigMap"],
       },
       getKeyValuePair: function(key, json) {
 
-        
+
         var showValue = formatOut(json[key]),
           showDefault = gameConfigMap[key].def;
 
+        // check if variable should be even returned (enabled flag in gameConfigMap)
+        if(_.isUndefined(gameConfigMap[key].enabled) === false) {
+
+          // check if this configItem should be returned
+          if(this.get(gameConfigMap[key].enabled.id) !== gameConfigMap[key].enabled.value) {
+            // enabled flag condition not passed, deinclude this configItem!
+            return false;
+          }
+        }
+
         // handle objectValues different if target is a uiDropDown
-        if(gameConfigMap[key].ui === "dropdown") {
+        if (gameConfigMap[key].ui === "dropdown") {
           // get the desc from the opt array of the current value...
           for (var i = 0; i < gameConfigMap[key].opt.length; i += 1) {
-            if(showValue === gameConfigMap[key].opt[i].id) {
+            if (showValue === gameConfigMap[key].opt[i].id) {
               showValue = gameConfigMap[key].opt[i].desc;
             }
-            if(showDefault === gameConfigMap[key].opt[i].id) {
+            if (showDefault === gameConfigMap[key].opt[i].id) {
               showDefault = gameConfigMap[key].opt[i].desc;
             }
           }
@@ -120,11 +137,14 @@ define(["Backbone", "underscore", "gameConfigMap"],
         }
       },
       defaults: {
+        gameMode: gameConfigMap.gameMode.def,
+        gameMaxTime: gameConfigMap.gameMaxTime.def,
+        gameReattachObjectAfterMs: gameConfigMap.gameReattachObjectAfterMs.def,
         objectTexture: gameConfigMap.objectTexture.def,
-        debugLayerVisible: gameConfigMap.debugLayerVisible.def,
-        introTimerLength: gameConfigMap.introTimerLength.def,
         objectsToSpawn: gameConfigMap.objectsToSpawn.def,
         cloudsToGenerate: gameConfigMap.cloudsToGenerate.def,
+        introTimerLength: gameConfigMap.introTimerLength.def,
+        debugLayerVisible: gameConfigMap.debugLayerVisible.def,
         objectNormalScaleMin: gameConfigMap.objectNormalScaleMin.def,
         objectNormalScaleCap: gameConfigMap.objectNormalScaleCap.def,
         objectNormalScaleBeforeCap: gameConfigMap.objectNormalScaleBeforeCap.def,
@@ -153,6 +173,7 @@ define(["Backbone", "underscore", "gameConfigMap"],
     var appConfig = new AppConfig();
 
     // helper to format for printable
+
     function formatOut(value) {
       return (_.isNumber(value)) ? (Math.round(value * 1000) / 1000) : value;
     }

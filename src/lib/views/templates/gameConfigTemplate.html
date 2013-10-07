@@ -1,11 +1,11 @@
 <div id="statusNotification"></div>
-
 <ul class="nav nav-tabs" id="myTab">
   <li><a href="#general">Allgemein</a></li>
   <li><a href="#scale">Skalierung</a></li>
   <li><a href="#speed">Geschwindigkeit</a></li>
   <li><a href="#alpha">Durchsichtigkeit</a></li>
-  <li><a href="#leap">Leap Motion</a></li>
+  <li><a href="#leap">Leap</a></li>
+  <li><a href="#help">Hilfe</a></li>
 </ul>
 
 <div id="tabcontainer" class="tab-content">
@@ -15,10 +15,10 @@
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th>Parameter</th>
-            <th>Standard</th>
-            <th>Konfiguration</th>
-            <th>Wert</th>
+            <th class="settingsDescription">Parameter</th>
+            <th class="settingsConfigValue">Konfiguration</th>
+            <th class="settingsValue">Wert</th>
+            <!-- <th class="settingsDefaultValue"><small>Standard</small></th> -->
           </tr>
         </thead>
         <tbody>
@@ -34,10 +34,10 @@
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th>Parameter</th>
-            <th>Standard</th>
-            <th>Konfiguration</th>
-            <th>Wert</th>
+            <th class="settingsDescription">Parameter</th>
+            <th class="settingsConfigValue">Konfiguration</th>
+            <th class="settingsValue">Wert</th>
+            <!-- <th class="settingsDefaultValue"><small>Standard</small></th> -->
           </tr>
         </thead>
         <tbody>
@@ -53,10 +53,10 @@
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th>Parameter</th>
-            <th>Standard</th>
-            <th>Konfiguration</th>
-            <th>Wert</th>
+            <th class="settingsDescription">Parameter</th>
+            <th class="settingsConfigValue">Konfiguration</th>
+            <th class="settingsValue">Wert</th>
+            <!-- <th class="settingsDefaultValue"><small>Standard</small></th> -->
           </tr>
         </thead>
         <tbody>
@@ -72,10 +72,10 @@
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th>Parameter</th>
-            <th>Standard</th>
-            <th>Konfiguration</th>
-            <th>Wert</th>
+            <th class="settingsDescription">Parameter</th>
+            <th class="settingsConfigValue">Konfiguration</th>
+            <th class="settingsValue">Wert</th>
+            <!-- <th class="settingsDefaultValue"><small>Standard</small></th> -->
           </tr>
         </thead>
         <tbody>
@@ -91,10 +91,10 @@
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th>Parameter</th>
-            <th>Standard</th>
-            <th>Konfiguration</th>
-            <th>Wert</th>
+            <th class="settingsDescription">Parameter</th>
+            <th class="settingsConfigValue">Konfiguration</th>
+            <th class="settingsValue">Wert</th>
+            <!-- <th class="settingsDefaultValue"><small>Standard</small></th> -->
           </tr>
         </thead>
         <tbody>
@@ -104,6 +104,11 @@
         </tbody>
       </table>
     </div>
+  </div>
+  <div class="tab-pane fade" id="help">
+    <div class="helpContainer">
+      <button id="resetToStandard" type="button" class="btn btn-danger btn-xs">Alle Standard-Werte wiederherstellen</button>
+    </div>    
   </div>
   
 </div>

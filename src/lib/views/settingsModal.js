@@ -14,18 +14,6 @@ define(["log", "jquery", "views/GameConfigView",
         el: $("#gameConfig")
       });
 
-      $("#resetToStandard").click(function(e) {
-        log.debug("resetting all to standard values!");
-        gameConfig.resetToDefaultValues();
-
-        // then reset the scenes...
-        require(["base/sceneManager"], function(sceneManager) {
-          //console.dir(sceneManager);
-          sceneManager.resetCurrentScene();
-        });
-
-      });
-
       initialized = true;
     }
 
