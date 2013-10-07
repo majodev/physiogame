@@ -206,6 +206,12 @@ define([],
         cat: "scale",
         desc: "Skalier-Abnahme von normalen Spiel-Objekten nach Grenze"
       },
+      leapShowIndicatorLayer: {
+        def: true,
+        ui: "toggle",
+        cat: "leap",
+        desc: "Zeige visuelle Leap Hinweise während des Spieles"
+      },
       leapXModifier: {
         def: 3.8,
         min: 2,

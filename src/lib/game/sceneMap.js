@@ -15,8 +15,8 @@ define(["log", "classes/Scene",
       }),
       new Scene({
         id: "shooting",
-        layers: [background, clouds, debugInfo, gameObjects, crosshair, score,
-          leapIndicator, goBack
+        layers: [background, clouds, debugInfo, gameObjects, crosshair,
+          leapIndicator, score, goBack
         ]
       }),
       new Scene({

@@ -89,7 +89,7 @@ define(["PIXI", "underscore", "base/displayManager",
         throw new Error("onRender has to be overridden when listeners.render === true");
       },
       onHandFrame: function(coordinates) {
-        throw new Error("onHandFrame has to be overridden when listeners.render === true");
+        throw new Error("onHandFrame has to be overridden when listeners.leap === true");
       }
     };
 

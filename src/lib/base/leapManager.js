@@ -5,7 +5,9 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
     var controller = new Leap.Controller(),
       frameCount = 0,
       handsAvailable = false,
+      outsideScreen,
       handsLength = 0,
+      attachedListeners = false,
       events = publisher.make(),
       displayWidth = appConfig.get("width"),
       displayHeight = appConfig.get("height"),
@@ -17,12 +19,38 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
     appConfig.on("change", appConfigChanged);
     gameConfig.on("change", gameConfigChanged);
 
-    // per frame from leap
-    controller.on("frame", function(frame) {
+    controller.on("ready", function() {
+      log.debug("leap: ready");
+      attachListeners();
+    });
+    controller.on("deviceConnected", function() {
+      log.debug("leap: deviceConnected");
+      attachListeners();
+    });
+    controller.on("deviceDisconnected", function() {
+      log.debug("leap: deviceDisconnected");
+      deattachListeners();
+    });
 
+    function attachListeners() {
+      if(attachedListeners === false) {
+        // attach per frame Eventlistener
+        controller.on("frame", perFrame);
+        attachedListeners = true;
+      }
+    }
+
+    function deattachListeners() {
+      if(attachedListeners === true) {
+        // dettach per frame Eventlistener
+        controller.removeListener("frame", perFrame);
+        attachedListeners = false;
+      }
+    }
+
+    function perFrame(frame) {
       var handId = 0,
-        x = 0,
-        y = 0,
+        position,
         hand;
 
       if (frame.hands === undefined) {
@@ -36,28 +64,52 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
         }
       }
 
-      if(handsAvailable) {
+      if (handsAvailable) {
         hand = frame.hands[0];
 
-        //x = parseInt(hand.palmPosition[0], 10);
-        //y = parseInt(hand.palmPosition[1], 10);
-        //
-        x = hand.palmPosition[0];
-        y = hand.palmPosition[1];
+        position = computePosition(hand.palmPosition[0],
+          hand.palmPosition[1]);
 
         events.trigger("handFrameNormalized", {
-          position: {
-            x: (displayWidth / leapToDisplayX + (x * leapXModifier)),
-            y: (displayHeight * leapToDisplayY - (y * leapYModifier))
-          }
+          position: position
         });
       }
 
-      //for (handId, handCount = handsLength; handId != handCount; handId += 1) {
-      //}
-
       frameCount += 1;
-    });
+    }
+
+    function computePosition(x, y) {
+
+      var position = {
+        x: (displayWidth / leapToDisplayX + (x * leapXModifier)),
+        y: (displayHeight * leapToDisplayY - (y * leapYModifier))
+      };
+
+      outsideScreen = {
+        left: false,
+        right: false,
+        top: false,
+        bottom: false
+      };
+
+      if (position.x < 0) {
+        outsideScreen.left = true;
+      }
+
+      if (position.x > displayWidth) {
+        outsideScreen.right = true;
+      }
+
+      if (position.y < 0) {
+        outsideScreen.top = true;
+      }
+
+      if (position.y > displayHeight) {
+        outsideScreen.bottom = true;
+      }
+
+      return position;
+    }
 
     function init() {
       log.debug("leapController: init");
@@ -68,9 +120,12 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
         interval: 2000,
         action: function() {
           var time = frameCount / 2,
-            // debugText = "leap: " + frameCount + " frames @ " +
-            //   time + "fps.";
             debugText = "leap @ " + time + "fps";
+
+          if(attachedListeners === false) {
+            debugText = "no leap connected.";
+          }
+
           events.trigger("debugInfo", debugText);
           frameCount = 0;
         }
@@ -80,10 +135,10 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
     }
 
     function gameConfigChanged(model, options) {
-      leapXModifier = gameConfig.get("leapXModifier");
-      leapYModifier = gameConfig.get("leapYModifier");
-      leapToDisplayX = gameConfig.get("leapToDisplayX");
-      leapToDisplayY = gameConfig.get("leapToDisplayY");
+      leapXModifier = model.get("leapXModifier");
+      leapYModifier = model.get("leapYModifier");
+      leapToDisplayX = model.get("leapToDisplayX");
+      leapToDisplayY = model.get("leapToDisplayY");
     }
 
     function appConfigChanged(model, options) {
@@ -99,11 +154,21 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
       return handsLength;
     }
 
+    function getOutsideScreen() {
+      return outsideScreen;
+    }
+
+    function getLeapConnected() {
+      return attachedListeners;
+    }
+
     // public
     return {
       init: init,
+      getLeapConnected: getLeapConnected,
       getHandsAvailable: getHandsAvailable,
       getHandsLength: getHandsLength,
+      getOutsideScreen: getOutsideScreen,
       events: events
     };
   }
