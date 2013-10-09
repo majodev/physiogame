@@ -68,19 +68,6 @@ define(["Backbone", "jquery", "log", "gameConfig", "underscore",
 
         return this; // for chaining
       },
-
-      // $("#resetToStandard").click(function(e) {
-      //   log.debug("resetting all to standard values!");
-      //   gameConfig.resetToDefaultValues();
-
-      //   // then reset the scenes...
-      //   require(["base/sceneManager"], function(sceneManager) {
-      //     //console.dir(sceneManager);
-      //     sceneManager.resetCurrentScene();
-      //   });
-
-      // });
-
       events: {
         // "slideStart input.parameterSlider": "sliderStart",
         "slide input.parameterSlider": "sliding",
