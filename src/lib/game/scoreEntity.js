@@ -2,7 +2,7 @@ define(["classes/ScoreModel"],
   function(ScoreModel) {
 
     var score = new ScoreModel({
-      aliensKilled: 0
+      objectsCatched: 0
     });
 
     return score;

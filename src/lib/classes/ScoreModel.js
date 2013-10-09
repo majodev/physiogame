@@ -3,18 +3,18 @@ define(["log", "Backbone"],
     
     var ScoreModel = Backbone.Model.extend({
       raiseScore: function() {
-        var currentScore = this.get("aliensKilled");
+        var currentScore = this.get("objectsCatched");
         currentScore += 1;
 
-        this.set("aliensKilled", currentScore);
+        this.set("objectsCatched", currentScore);
         //log.trace("raiseScore to " + currentScore);
       },
       resetScore: function() {
-        this.set("aliensKilled", 0);
-        log.debug("resetScore to " + this.get("aliensKilled"));
+        this.set("objectsCatched", 0);
+        log.debug("resetScore to " + this.get("objectsCatched"));
       },
       defaults: {
-        aliensKilled: 0
+        objectsCatched: 0
       }
     });
 

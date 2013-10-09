@@ -114,11 +114,11 @@ define(["log", "PIXI", "game/scoreEntity",
 
     function setStartupTexts() {
       if (gameModeTime === true) {
-        countingText.setText(scoreEntity.get("aliensKilled"));
+        countingText.setText(scoreEntity.get("objectsCatched"));
         introText.setText("Schaffe soviel wie möglich in\n" + timeFormatter.formatSeconds(maxTime) + " Minuten");
         timerText.setText("0:00 von " + timeFormatter.formatSeconds(maxTime));
       } else {
-        countingText.setText(scoreEntity.get("aliensKilled") + " von " + gameConfig.get("objectsToSpawn"));
+        countingText.setText(scoreEntity.get("objectsCatched") + " von " + gameConfig.get("objectsToSpawn"));
         introText.setText("Mach den Bildschirm frei!");
         timerText.setText("0:00");
       }
@@ -199,12 +199,12 @@ define(["log", "PIXI", "game/scoreEntity",
       scoreTimerRunning = true;
 
       if (gameModeTime === true) {
-        countingText.setText(model.get("aliensKilled"));
+        countingText.setText(model.get("objectsCatched"));
       } else {
-        countingText.setText(model.get("aliensKilled") + " von " + gameConfig.get("objectsToSpawn"));
+        countingText.setText(model.get("objectsCatched") + " von " + gameConfig.get("objectsToSpawn"));
       }
 
-      if (gameModeTime === false && gameConfig.get("objectsToSpawn") <= model.get("aliensKilled")) {
+      if (gameModeTime === false && gameConfig.get("objectsToSpawn") <= model.get("objectsCatched")) {
         showWinningText();
       }
     }
@@ -223,7 +223,7 @@ define(["log", "PIXI", "game/scoreEntity",
         scoreTimerRunning = false;
 
         tempWinText = "Fertig!\nDu hast " +
-          scoreEntity.get("aliensKilled") + " Objekte in " + timeFormatter.formatSeconds(scoreTimerCount/10) + " Minuten abgeschossen!\n" +
+          scoreEntity.get("objectsCatched") + " Objekte in " + timeFormatter.formatSeconds(scoreTimerCount/10) + " Minuten abgeschossen!\n" +
           "GRATULATION!\n\n\n\n";
 
         winningText.setText(tempWinText + "\nDanke fürs Spielen!");
