@@ -5,7 +5,7 @@ define([],
         def: true,
         ui: "toggle",
         cat: "general",
-        desc: "Sichtbarkeit des Debug-Layers"
+        desc: "Visuell: Zeige Debug-Hinweise"
       },
       introTimerLength: {
         def: 3000,
@@ -14,8 +14,10 @@ define([],
         step: 100,
         ui: "slider",
         cat: "general",
-        desc: "Aufbauzeit vor Spielstart",
-        time: "milli"
+        desc: "Visuell: Aufbauzeit vor Spielstart",
+        format: {
+          time: "milli"
+        }
       },
       objectTexture: {
         def: "balloons",
@@ -28,7 +30,7 @@ define([],
         }],
         ui: "dropdown",
         cat: "general",
-        desc: "Texturpacket der Spiel-Objekte"
+        desc: "Visuell: Texturpacket der Spiel-Objekte"
       },
       gameMode: {
         def: "clearInTime",
@@ -41,7 +43,7 @@ define([],
         }],
         ui: "dropdown",
         cat: "general",
-        desc: "Spielmodus"
+        desc: "Spielmodus: Hauptspielmodus"
       },
       gameMaxTime: {
         def: 15,
@@ -50,12 +52,14 @@ define([],
         step: 15,
         ui: "slider",
         cat: "general",
-        desc: "Spielzeit",
+        desc: "nach Zeit: Spielzeit eines Durchlaufes",
         enabled: {
           id: "gameMode",
           value: "clearInTime"
         },
-        time: "sec"
+        format: {
+          time: "sec"
+        }
       },
       gameReattachObjectAfterMs: {
         def: 2500,
@@ -64,12 +68,33 @@ define([],
         step: 100,
         ui: "slider",
         cat: "general",
-        desc: "Spiel-Objekt spätestens hinzufügen",
+        desc: "nach Zeit: Spiel-Objekte wieder hinzuzufügen nach",
         enabled: {
           id: "gameMode",
           value: "clearInTime"
         },
-        time: "milli"
+        format: {
+          time: "milli"
+        }
+      },
+      gameReattachObjectMax: {
+        def: 1,
+        min: 1,
+        max: 50,
+        step: 1,
+        ui: "slider",
+        cat: "general",
+        desc: "nach Zeit: Maximale Anzahl spätere Spiel-Objekte",
+        enabled: {
+          id: "gameMode",
+          value: "clearInTime"
+        },
+        check: {
+          max: "objectsToSpawn"
+        },
+        format: {
+          post: "Objekte"
+        }
       },
       objectsToSpawn: {
         def: 15,
@@ -78,7 +103,10 @@ define([],
         step: 1,
         ui: "slider",
         cat: "general",
-        desc: "Anzahl der Spiel-Objekte",
+        desc: "Spielmodus: Anzahl der Spiel-Objekte",
+        format: {
+          post: "Objekte"
+        }
       },
       cloudsToGenerate: {
         def: 5,
@@ -87,7 +115,10 @@ define([],
         step: 1,
         ui: "slider",
         cat: "general",
-        desc: "Anzahl der Wolken-Objekte"
+        desc: "Visuell: Anzahl der Wolken-Objekte",
+        format: {
+          post: "Objekte"
+        }
       },
       objectHittedScaleCap: {
         def: 1,
@@ -99,6 +130,10 @@ define([],
         desc: "Getroffen: Skalier-Grenze",
         check: {
           max: "objectHittedScaleExplodes"
+        },
+        format: {
+          percent: true,
+          post: "%"
         }
       },
       objectHittedScaleBeforeCap: {
@@ -108,7 +143,11 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Getroffen: Skalier-Zunahme vor Grenze"
+        desc: "Getroffen: Skalier-Zunahme vor Grenze",
+        format: {
+          percent: true,
+          post: "% / fps"
+        }
       },
       objectHittedScaleAfterCap: {
         def: 0.01,
@@ -117,7 +156,11 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Getroffen: Skalier-Zunahme nach Grenze"
+        desc: "Getroffen: Skalier-Zunahme nach Grenze",
+        format: {
+          percent: true,
+          post: "% / fps"
+        }
       },
       objectHittedSpeedMin: {
         def: 0,
@@ -129,6 +172,9 @@ define([],
         desc: "Getroffen: Minimale Geschwindigkeit",
         check: {
           max: "objectHittedSpeedMax"
+        },
+        format: {
+          post: "Pixel / fps"
         }
       },
       objectHittedSpeedMax: {
@@ -141,6 +187,9 @@ define([],
         desc: "Getroffen: Maximale Geschwindigkeit",
         check: {
           min: "objectHittedSpeedMin"
+        },
+        format: {
+          post: "Pixel / fps"
         }
       },
       objectHittedSpeedStep: {
@@ -150,7 +199,10 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "speed",
-        desc: "Getroffen: Geschwindigkeitsschritt"
+        desc: "Getroffen: Geschwindigkeitsschritt",
+        format: {
+          post: "Pixel / fps"
+        }
       },
       objectNormalSpeedMin: {
         def: 0.6,
@@ -162,6 +214,9 @@ define([],
         desc: "Normal: Minimale Geschwindigkeit",
         check: {
           max: "objectNormalSpeedMax"
+        },
+        format: {
+          post: "Pixel / fps"
         }
       },
       objectNormalSpeedMax: {
@@ -174,6 +229,9 @@ define([],
         desc: "Normal: Maximale Geschwindigkeit",
         check: {
           min: "objectNormalSpeedMin"
+        },
+        format: {
+          post: "Pixel / fps"
         }
       },
       objectNormalSpeedStep: {
@@ -183,7 +241,10 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "speed",
-        desc: "Normal: Geschwindigkeitsschritt"
+        desc: "Normal: Geschwindigkeitsschritt",
+        format: {
+          post: "Pixel / fps"
+        }
       },
       objectNormalAlphaMin: {
         def: 0.6,
@@ -192,7 +253,11 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "alpha",
-        desc: "Normal: Minimale Durchsichtigkeit"
+        desc: "Normal: Minimale Durchsichtigkeit",
+        format: {
+          percent: true,
+          post: "%"
+        }
       },
       objectHittedAlphaStep: {
         def: 0.05,
@@ -201,7 +266,11 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "alpha",
-        desc: "Getroffen: Durchsichtigkeitserhöhung"
+        desc: "Getroffen: Durchsichtigkeitserhöhung",
+        format: {
+          percent: true,
+          post: "% / fps"
+        }
       },
       objectNormalAlphaStep: {
         def: 0.05,
@@ -210,7 +279,11 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "alpha",
-        desc: "Normal: Durchsichtigkeitsverringerung"
+        desc: "Normal: Durchsichtigkeitsverringerung",
+        format: {
+          percent: true,
+          post: "% / fps"
+        }
       },
       objectNormalScaleMin: {
         def: 0.7,
@@ -222,6 +295,10 @@ define([],
         desc: "Normal: Minimale Skalierung",
         check: {
           max: "objectNormalScaleCap"
+        },
+        format: {
+          percent: true,
+          post: "%"
         }
       },
       objectNormalScaleCap: {
@@ -234,6 +311,10 @@ define([],
         desc: "Normal: Skalier-Grenze",
         check: {
           max: "objectHittedScaleExplodes"
+        },
+        format: {
+          percent: true,
+          post: "%"
         }
       },
       objectNormalScaleBeforeCap: {
@@ -243,7 +324,11 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Normal: Skalier-Abnahme vor Grenze"
+        desc: "Normal: Skalier-Abnahme vor Grenze",
+        format: {
+          percent: true,
+          post: "% / fps"
+        }
       },
       objectNormalScaleAfterCap: {
         def: 0.003,
@@ -252,13 +337,17 @@ define([],
         step: 0.001,
         ui: "slider",
         cat: "scale",
-        desc: "Normal: Skalier-Abnahme nach Grenze"
+        desc: "Normal: Skalier-Abnahme nach Grenze",
+        format: {
+          percent: true,
+          post: "% / fps"
+        }
       },
       leapShowIndicatorLayer: {
         def: true,
         ui: "toggle",
         cat: "leap",
-        desc: "Zeige visuelle Leap Hinweise während des Spieles"
+        desc: "Visuell: Zeige Leap-Hinweise"
       },
       leapXModifier: {
         def: 3.8,
@@ -267,7 +356,10 @@ define([],
         step: 0.2,
         ui: "slider",
         cat: "leap",
-        desc: "X: Größe der abgetasteten horizontalen Achse"
+        desc: "Tracking: Verkleinerung der horizontalen Achse (x)",
+        format: {
+          post: "fach"
+        }
       },
       leapYModifier: {
         def: 3.8,
@@ -276,7 +368,10 @@ define([],
         step: 0.02,
         ui: "slider",
         cat: "leap",
-        desc: "Y: Größe der abgetasteten vertikalen Achse"
+        desc: "Tracking: Verkleinerung der vertikalen Achse (y)",
+        format: {
+          post: "fach"
+        }
       },
       leapToDisplayX: {
         def: 2,
@@ -285,7 +380,10 @@ define([],
         step: 0.02,
         ui: "slider",
         cat: "leap",
-        desc: "X: Abtastmittelpunkt der horizontalen Achse "
+        desc: "Tracking: Mittelpunkt der horizontalen Achse (x)",
+        format: {
+          pre: "Produkt von"
+        }
       },
       leapToDisplayY: {
         def: 2,
@@ -294,7 +392,10 @@ define([],
         step: 0.02,
         ui: "slider",
         cat: "leap",
-        desc: "Y: Abtastmittelpunkt der vertikalen Achse"
+        desc: "Tracking: Mittelpunkt der vertikalen Achse (y)",
+        format: {
+          pre: "Produkt von"
+        }
       },
       objectHittedScaleExplodes: {
         def: 1.8,
@@ -303,7 +404,11 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Getroffen: Skalier-Maximum vor Explosion"
+        desc: "Getroffen: Skalier-Maximum vor Explosion",
+        format: {
+          percent: true,
+          post: "%"
+        }
       }
     };
   }

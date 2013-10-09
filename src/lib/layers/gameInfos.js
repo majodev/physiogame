@@ -37,8 +37,6 @@ define(["log", "PIXI", "game/scoreEntity",
         gameModeTime = false;
       }
 
-      log.debug("score: activate");
-
       introTimerLength = gameConfig.get("introTimerLength") / 100;
 
       textsCreated = false;
@@ -115,11 +113,11 @@ define(["log", "PIXI", "game/scoreEntity",
     function setStartupTexts() {
       if (gameModeTime === true) {
         countingText.setText(scoreEntity.get("objectsCatched"));
-        introText.setText("Schaffe soviel wie möglich in\n" + timeFormatter.formatSeconds(maxTime) + " Minuten");
+        introText.setText("Erwische soviele wie möglich!\nZeit: " + timeFormatter.formatSeconds(maxTime));
         timerText.setText("0:00 von " + timeFormatter.formatSeconds(maxTime));
       } else {
         countingText.setText(scoreEntity.get("objectsCatched") + " von " + gameConfig.get("objectsToSpawn"));
-        introText.setText("Mach den Bildschirm frei!");
+        introText.setText("Erwische alle Objekte!");
         timerText.setText("0:00");
       }
     }
@@ -153,31 +151,28 @@ define(["log", "PIXI", "game/scoreEntity",
     function createTextButtons() {
       if (textsCreated === false) {
 
-        log.debug("createTextButtons");
-
-
-        countingText = new PIXI.Text("0 von " + gameConfig.get("objectsToSpawn"), {
+        countingText = new PIXI.Text("NOTHING", {
           font: "bold 20px Arvo",
           fill: "#bb4433",
           align: "right",
           stroke: "#FFAAAA",
           strokeThickness: 5
         });
-        introText = new PIXI.Text("Mach den Bildschirm frei!", {
+        introText = new PIXI.Text("NOTHING", {
           font: "bold 80px Arvo",
           fill: "#3344bb",
           align: "center",
           stroke: "#AAAAFF",
           strokeThickness: 5
         });
-        winningText = new PIXI.Text("Fertig!", {
+        winningText = new PIXI.Text("NOTHING", {
           font: "bold 35px Arvo",
           fill: "#3344bb",
           align: "center",
           stroke: "#AAAAFF",
           strokeThickness: 5
         });
-        timerText = new PIXI.Text("0.0", {
+        timerText = new PIXI.Text("NOTHING", {
           font: "bold 20px Arvo",
           fill: "#bb4433",
           align: "right",
@@ -234,7 +229,6 @@ define(["log", "PIXI", "game/scoreEntity",
 
 
         // RETRY BUTTON HINZUFUEGEN...
-        // 
 
         retryButton = new Button({
           style: {

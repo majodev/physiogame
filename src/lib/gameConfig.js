@@ -1,5 +1,6 @@
 define(["Backbone", "underscore", "gameConfigMap",
-  "utils/timeFormatter"],
+    "utils/timeFormatter"
+  ],
   function(Backbone, _, gameConfigMap,
     timeFormatter) {
 
@@ -38,18 +39,22 @@ define(["Backbone", "underscore", "gameConfigMap",
           formattedValue = this.getFormattedValueIfNeeded(key, showValue);
 
         // if a formatted value was received apply it also the the default
-        if(formattedValue !== false) {
+        if (formattedValue !== false) {
           showDefault = this.getFormattedValueIfNeeded(key, showDefault);
         }
 
         // check if variable should be even returned (enabled flag in gameConfigMap)
-        if(_.isUndefined(gameConfigMap[key].enabled) === false) {
+        // if(_.isUndefined(gameConfigMap[key].enabled) === false) {
 
-          // check if this configItem should be returned
-          if(this.get(gameConfigMap[key].enabled.id) !== gameConfigMap[key].enabled.value) {
-            // enabled flag condition not passed, deinclude this configItem!
-            return false;
-          }
+        //   // check if this configItem should be returned
+        //   if(this.get(gameConfigMap[key].enabled.id) !== gameConfigMap[key].enabled.value) {
+        //     // enabled flag condition not passed, deinclude this configItem!
+        //     return false;
+        //   }
+        // }
+
+        if (this.checkKeyIsEnabled(key) === false) {
+          return false;
         }
 
         // handle objectValues different if target is a uiDropDown
@@ -81,16 +86,60 @@ define(["Backbone", "underscore", "gameConfigMap",
           uiText: (gameConfigMap[key].ui === "text") ? true : false
         };
       },
-      getFormattedValueIfNeeded: function (key, valueToFormat) {
+      checkKeyIsEnabled: function(key) {
+
+        // check if variable should be even returned (enabled flag in gameConfigMap)
+        if (_.isUndefined(gameConfigMap[key].enabled) === false) {
+
+          // check if this configItem should be returned
+          if (this.get(gameConfigMap[key].enabled.id) !== gameConfigMap[key].enabled.value) {
+            // enabled flag condition not passed, deinclude this configItem!
+            return false;
+          }
+        }
+
+        return true;
+      },
+      getFormattedValueIfNeeded: function(key, valueToFormat) {
         var formattedValue = false;
 
-        // handle time values which need to be formatted differently
-        if(_.isUndefined(gameConfigMap[key].time) === false) {
-          if(gameConfigMap[key].time === "sec") {
-            formattedValue = timeFormatter.formatSeconds(valueToFormat);
+        // toggle ui elements have automatically formatted values...
+        if(gameConfigMap[key].ui === "toggle") {
+          if(valueToFormat === true) {
+            formattedValue = "aktiviert";
+          } else {
+            formattedValue = "deaktiviert";
           }
-          if(gameConfigMap[key].time === "milli") {
-            formattedValue = timeFormatter.formatMilliseconds(valueToFormat);
+        }
+
+        // check the format parameter if formatting for output must be applied
+        if (_.isUndefined(gameConfigMap[key].format) === false) {
+
+          formattedValue = valueToFormat;
+          
+          // time formatting...
+          if (_.isUndefined(gameConfigMap[key].format.time) === false) {
+            if (gameConfigMap[key].format.time === "sec") {
+              formattedValue = timeFormatter.formatSeconds(formattedValue);
+            }
+            if (gameConfigMap[key].format.time === "milli") {
+              formattedValue = timeFormatter.formatMilliseconds(formattedValue);
+            }
+          }
+
+          // percent formatting...
+          if (_.isUndefined(gameConfigMap[key].format.percent) === false) {
+            formattedValue = stripNumberPrecision(formattedValue*100);
+          }
+
+          // pre value...
+          if (_.isUndefined(gameConfigMap[key].format.pre) === false) {
+            formattedValue = gameConfigMap[key].format.pre + " " + formattedValue;
+          }
+
+          // post value...
+          if (_.isUndefined(gameConfigMap[key].format.post) === false) {
+            formattedValue = formattedValue + " " + gameConfigMap[key].format.post;
           }
         }
 
@@ -121,50 +170,53 @@ define(["Backbone", "underscore", "gameConfigMap",
 
         for (i; i < len; i += 1) {
 
-          // check if range within defined minimum
-          if (_.isUndefined(gameConfigMap[attrKeys[i]].min) === false) {
-            if (this.get(attrKeys[i]) < gameConfigMap[attrKeys[i]].min) {
-              return gameConfigMap[attrKeys[i]].desc + " ist " +
-                stripNumberPrecision(this.get(attrKeys[i])) + " muss größer sein als " +
-                stripNumberPrecision(gameConfigMap[attrKeys[i]].min);
-            }
-          }
-
-          // check if range within defined maximum
-          if (_.isUndefined(gameConfigMap[attrKeys[i]].max) === false) {
-            if (this.get(attrKeys[i]) > gameConfigMap[attrKeys[i]].max) {
-              return gameConfigMap[attrKeys[i]].desc + " ist " +
-                stripNumberPrecision(this.get(attrKeys[i])) + " muss kleiner sein als " +
-                stripNumberPrecision(gameConfigMap[attrKeys[i]].max);
-            }
-          }
-
-          // check cross-variable-checks defined in gameConfigMap
-          if (_.isUndefined(gameConfigMap[attrKeys[i]].check) === false) {
-            if (_.isUndefined(gameConfigMap[attrKeys[i]].check.min) === false) {
-              if (this.get(attrKeys[i]) <= this.get(gameConfigMap[attrKeys[i]].check.min)) {
-                return gameConfigMap[attrKeys[i]].desc + " ist " + stripNumberPrecision(this.get(attrKeys[i])) + " muss größer sein als " +
-                  stripNumberPrecision(this.get(gameConfigMap[attrKeys[i]].check.min)) + "(" +
-                  gameConfigMap[gameConfigMap[attrKeys[i]].check.min].desc + ")";
-              }
-            }
-            if (_.isUndefined(gameConfigMap[attrKeys[i]].check.max) === false) {
-              if (this.get(attrKeys[i]) >= this.get(gameConfigMap[attrKeys[i]].check.max)) {
-                return gameConfigMap[attrKeys[i]].desc + " ist " + stripNumberPrecision(this.get(attrKeys[i])) + " muss kleiner sein als " +
-                  stripNumberPrecision(this.get(gameConfigMap[attrKeys[i]].check.max)) + " (" +
-                  gameConfigMap[gameConfigMap[attrKeys[i]].check.max].desc + ")";
+          // first check if key is even needed to be validated.
+          if (this.checkKeyIsEnabled(attrKeys[i]) === true) {
+            // check if range within defined minimum
+            if (_.isUndefined(gameConfigMap[attrKeys[i]].min) === false) {
+              if (this.get(attrKeys[i]) < gameConfigMap[attrKeys[i]].min) {
+                return gameConfigMap[attrKeys[i]].desc + " ist " +
+                  stripNumberPrecision(this.get(attrKeys[i])) + " muss größer sein als " +
+                  stripNumberPrecision(gameConfigMap[attrKeys[i]].min);
               }
             }
 
+            // check if range within defined maximum
+            if (_.isUndefined(gameConfigMap[attrKeys[i]].max) === false) {
+              if (this.get(attrKeys[i]) > gameConfigMap[attrKeys[i]].max) {
+                return gameConfigMap[attrKeys[i]].desc + " ist " +
+                  stripNumberPrecision(this.get(attrKeys[i])) + " muss kleiner sein als " +
+                  stripNumberPrecision(gameConfigMap[attrKeys[i]].max);
+              }
+            }
+
+            // check cross-variable-checks defined in gameConfigMap
+            if (_.isUndefined(gameConfigMap[attrKeys[i]].check) === false) {
+              if (_.isUndefined(gameConfigMap[attrKeys[i]].check.min) === false) {
+                if (this.get(attrKeys[i]) <= this.get(gameConfigMap[attrKeys[i]].check.min)) {
+                  return gameConfigMap[attrKeys[i]].desc + " ist " + stripNumberPrecision(this.get(attrKeys[i])) + " muss größer sein als " +
+                    stripNumberPrecision(this.get(gameConfigMap[attrKeys[i]].check.min)) + "(" +
+                    gameConfigMap[gameConfigMap[attrKeys[i]].check.min].desc + ")";
+                }
+              }
+              if (_.isUndefined(gameConfigMap[attrKeys[i]].check.max) === false) {
+                if (this.get(attrKeys[i]) >= this.get(gameConfigMap[attrKeys[i]].check.max)) {
+                  return gameConfigMap[attrKeys[i]].desc + " ist " + stripNumberPrecision(this.get(attrKeys[i])) + " muss kleiner sein als " +
+                    stripNumberPrecision(this.get(gameConfigMap[attrKeys[i]].check.max)) + " (" +
+                    gameConfigMap[gameConfigMap[attrKeys[i]].check.max].desc + ")";
+                }
+              }
+            }
           }
         }
       },
       defaults: {
+        objectsToSpawn: gameConfigMap.objectsToSpawn.def,
         gameMode: gameConfigMap.gameMode.def,
         gameMaxTime: gameConfigMap.gameMaxTime.def,
         gameReattachObjectAfterMs: gameConfigMap.gameReattachObjectAfterMs.def,
+        gameReattachObjectMax: gameConfigMap.gameReattachObjectMax.def,
         objectTexture: gameConfigMap.objectTexture.def,
-        objectsToSpawn: gameConfigMap.objectsToSpawn.def,
         cloudsToGenerate: gameConfigMap.cloudsToGenerate.def,
         introTimerLength: gameConfigMap.introTimerLength.def,
         debugLayerVisible: gameConfigMap.debugLayerVisible.def,

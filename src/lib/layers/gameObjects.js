@@ -35,6 +35,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
         gameMode: gameConfig.get("gameMode"),
         gameMaxTime: gameConfig.get("gameMaxTime"),
         gameReattachObjectAfterMs: gameConfig.get("gameReattachObjectAfterMs"),
+        gameReattachObjectMax: gameConfig.get("gameReattachObjectMax"),
         objectsToSpawn: gameConfig.get("objectsToSpawn"),
         texturePackage: textures.atlas[gameConfig.get("objectTexture")],
         textureCount: textures.atlas[gameConfig.get("objectTexture")].length,
@@ -83,17 +84,37 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
           name: "inGameObjectCreator",
           interval: opt.gameReattachObjectAfterMs,
           action: function() {
+
+            var gameObjectsLength = gameObjects.length,
+              missingObjectCount = opt.objectsToSpawn - gameObjectsLength,
+              i = 0;
+
+            // signal its still running.
             ingameObjectCreatorRunning = true;
+
+
             if (ingameObjectCreatorTimeElapsed >= (opt.gameMaxTime * 1000)) {
               // don't add more, it's finished!
               ingameObjectCreatorRunning = false;
               Poll.stop("inGameObjectCreator");
             } else {
+
+              // increase elapsed timer...
               ingameObjectCreatorTimeElapsed += opt.gameReattachObjectAfterMs;
-              // add if an object is missing.
-              if (gameObjects.length < opt.objectsToSpawn) {
-                attachNewGameObject(gameObjects.length);
+
+              // add missing objects but comply with gameReattachObjectMax
+              if (missingObjectCount > opt.gameReattachObjectMax) {
+                missingObjectCount = opt.gameReattachObjectMax;
               }
+
+              // attach the count needed.
+              for (i; i < missingObjectCount; i += 1) {
+                attachNewGameObject(gameObjectsLength + i);
+              }
+
+              // if (missingObjectCount > 0) {
+              //   attachNewGameObject(gameObjects.length);
+              // }
             }
           }
         });
