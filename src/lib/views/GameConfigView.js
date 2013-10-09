@@ -81,8 +81,14 @@ define(["Backbone", "jquery", "log", "gameConfig", "underscore",
       },
       sliding: function(event) {
         // only update the text while sliding...
-        var newValue = Math.round(event.value * 1000) / 1000;
-        $("#" + event.currentTarget.id + "-value").text(newValue);
+        var newValue = Math.round(event.value * 1000) / 1000,
+          formattedValue = this.model.getFormattedValueIfNeeded(event.currentTarget.id, newValue);
+
+        if(formattedValue !== false) {
+          $("#" + event.currentTarget.id + "-value").text(formattedValue);
+        } else {
+          $("#" + event.currentTarget.id + "-value").text(newValue);
+        }
       },
       sliderEnd: function(event) {
         // set when finished with sliding...

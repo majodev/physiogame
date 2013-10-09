@@ -1,7 +1,10 @@
 define(["log", "PIXI", "game/scoreEntity",
-    "gameConfig", "Poll", "classes/Layer", "classes/Button"
+    "gameConfig", "Poll", "classes/Layer", "classes/Button",
+    "utils/timeFormatter"
   ],
-  function(log, PIXI, scoreEntity, gameConfig, Poll, Layer, Button) {
+  function(log, PIXI, scoreEntity,
+    gameConfig, Poll, Layer, Button,
+    timeFormatter) {
 
     var layer = new Layer({
       listeners: {
@@ -29,7 +32,7 @@ define(["log", "PIXI", "game/scoreEntity",
 
       if (gameConfig.get("gameMode") === "clearInTime") {
         gameModeTime = true;
-        maxTime = gameConfig.get("gameMaxTime") * 60;
+        maxTime = gameConfig.get("gameMaxTime");
       } else {
         gameModeTime = false;
       }
@@ -87,13 +90,13 @@ define(["log", "PIXI", "game/scoreEntity",
           if (scoreTimerRunning) {
             scoreTimerCount += 1;
             if (gameModeTime === true) {
-              timerText.setText(formatSeconds(scoreTimerCount / 10) + 
-                " von " + formatSeconds(maxTime));
+              timerText.setText(timeFormatter.formatSeconds(scoreTimerCount / 10) + 
+                " von " + timeFormatter.formatSeconds(maxTime));
               if ((scoreTimerCount / 10) >= maxTime) {
                 showWinningText();
               }
             } else {
-              timerText.setText(formatSeconds(scoreTimerCount / 10));
+              timerText.setText(timeFormatter.formatSeconds(scoreTimerCount / 10));
             }
           }
         }
@@ -109,32 +112,11 @@ define(["log", "PIXI", "game/scoreEntity",
       animateIntroText();
     };
 
-    // helper to format the seconds into something displayable
-    function formatSeconds(secs) {
-      var sec_num = parseInt(secs, 10); // don't forget the second parm
-      var hours = Math.floor(sec_num / 3600);
-      var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-      var seconds = sec_num - (hours * 3600) - (minutes * 60);
-      //var milli = Math.floor((secs - sec_num) * 10);
-
-      var time = "0:00.0";
-
-      // if (minutes < 10) {
-      //   minutes = "0" + minutes;
-      // }
-      if (seconds < 10) {
-        seconds = "0" + seconds;
-      }
-      
-      time = minutes + ":" + seconds;
-      return time;
-    }
-
     function setStartupTexts() {
       if (gameModeTime === true) {
         countingText.setText(scoreEntity.get("aliensKilled"));
-        introText.setText("Schaffe soviel wie möglich in\n" + formatSeconds(maxTime) + " Minuten");
-        timerText.setText("0:00 von " + formatSeconds(maxTime));
+        introText.setText("Schaffe soviel wie möglich in\n" + timeFormatter.formatSeconds(maxTime) + " Minuten");
+        timerText.setText("0:00 von " + timeFormatter.formatSeconds(maxTime));
       } else {
         countingText.setText(scoreEntity.get("aliensKilled") + " von " + gameConfig.get("objectsToSpawn"));
         introText.setText("Mach den Bildschirm frei!");
@@ -241,7 +223,7 @@ define(["log", "PIXI", "game/scoreEntity",
         scoreTimerRunning = false;
 
         tempWinText = "Fertig!\nDu hast " +
-          scoreEntity.get("aliensKilled") + " Objekte in " + formatSeconds(scoreTimerCount/10) + " Minuten abgeschossen!\n" +
+          scoreEntity.get("aliensKilled") + " Objekte in " + timeFormatter.formatSeconds(scoreTimerCount/10) + " Minuten abgeschossen!\n" +
           "GRATULATION!\n\n\n\n";
 
         winningText.setText(tempWinText + "\nDanke fürs Spielen!");

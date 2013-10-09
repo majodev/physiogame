@@ -84,7 +84,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
           interval: opt.gameReattachObjectAfterMs,
           action: function() {
             ingameObjectCreatorRunning = true;
-            if (ingameObjectCreatorTimeElapsed >= (opt.gameMaxTime * 60 * 1000)) {
+            if (ingameObjectCreatorTimeElapsed >= (opt.gameMaxTime * 1000)) {
               // don't add more, it's finished!
               ingameObjectCreatorRunning = false;
               Poll.stop("inGameObjectCreator");

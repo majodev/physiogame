@@ -14,7 +14,8 @@ define([],
         step: 100,
         ui: "slider",
         cat: "general",
-        desc: "Aufbauzeit vor Spielstart in ms"
+        desc: "Aufbauzeit vor Spielstart",
+        time: "milli"
       },
       objectTexture: {
         def: "balloons",
@@ -43,17 +44,18 @@ define([],
         desc: "Spielmodus"
       },
       gameMaxTime: {
-        def: 1,
-        min: 1,
-        max: 20,
-        step: 1,
+        def: 15,
+        min: 15,
+        max: 1200,
+        step: 15,
         ui: "slider",
         cat: "general",
-        desc: "Spielzeit in Minuten",
+        desc: "Spielzeit",
         enabled: {
           id: "gameMode",
           value: "clearInTime"
-        }
+        },
+        time: "sec"
       },
       gameReattachObjectAfterMs: {
         def: 2500,
@@ -62,11 +64,12 @@ define([],
         step: 100,
         ui: "slider",
         cat: "general",
-        desc: "Ein Spiel-Objekt wieder hinzufügen nach ms",
+        desc: "Spiel-Objekt spätestens hinzufügen",
         enabled: {
           id: "gameMode",
           value: "clearInTime"
-        }
+        },
+        time: "milli"
       },
       objectsToSpawn: {
         def: 15,
@@ -93,7 +96,7 @@ define([],
         step: 0.1,
         ui: "slider",
         cat: "scale",
-        desc: "Skalier-Grenze von getroffenen Spiel-Objekten",
+        desc: "Getroffen: Skalier-Grenze",
         check: {
           max: "objectHittedScaleExplodes"
         }
@@ -105,7 +108,7 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Skalier-Zunahme von getroffenen Spiel-Objekten bevor Grenze"
+        desc: "Getroffen: Skalier-Zunahme vor Grenze"
       },
       objectHittedScaleAfterCap: {
         def: 0.01,
@@ -114,7 +117,7 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Skalier-Zunahme von getroffenen Spiel-Objekten nach Grenze"
+        desc: "Getroffen: Skalier-Zunahme nach Grenze"
       },
       objectHittedSpeedMin: {
         def: 0,
@@ -123,7 +126,7 @@ define([],
         step: 0.1,
         ui: "slider",
         cat: "speed",
-        desc: "Minimale Geschwindigkeit von getroffenen Spiel-Objekten",
+        desc: "Getroffen: Minimale Geschwindigkeit",
         check: {
           max: "objectHittedSpeedMax"
         }
@@ -135,7 +138,7 @@ define([],
         step: 0.1,
         ui: "slider",
         cat: "speed",
-        desc: "Maximale Geschwindigkeit von getroffenen Spiel-Objekten",
+        desc: "Getroffen: Maximale Geschwindigkeit",
         check: {
           min: "objectHittedSpeedMin"
         }
@@ -147,7 +150,7 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "speed",
-        desc: "Geschwindigkeitsschritt von getroffenen Spiel-Objekten"
+        desc: "Getroffen: Geschwindigkeitsschritt"
       },
       objectNormalSpeedMin: {
         def: 0.6,
@@ -156,7 +159,7 @@ define([],
         step: 0.1,
         ui: "slider",
         cat: "speed",
-        desc: "Minimale Geschwindigkeit von normalen Spiel-Objekten",
+        desc: "Normal: Minimale Geschwindigkeit",
         check: {
           max: "objectNormalSpeedMax"
         }
@@ -168,7 +171,7 @@ define([],
         step: 0.1,
         ui: "slider",
         cat: "speed",
-        desc: "Maximale Geschwindigkeit von normalen Spiel-Objekten",
+        desc: "Normal: Maximale Geschwindigkeit",
         check: {
           min: "objectNormalSpeedMin"
         }
@@ -180,7 +183,7 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "speed",
-        desc: "Geschwindigkeitsschritt von normalen Spiel-Objekten"
+        desc: "Normal: Geschwindigkeitsschritt"
       },
       objectNormalAlphaMin: {
         def: 0.6,
@@ -189,7 +192,7 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "alpha",
-        desc: "Minimale Durchsichtigkeit von normalen Spiel-Objekten"
+        desc: "Normal: Minimale Durchsichtigkeit"
       },
       objectHittedAlphaStep: {
         def: 0.05,
@@ -198,7 +201,7 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "alpha",
-        desc: "Durchsichtigkeitserhöhung von getroffenen Spiel-Objekten"
+        desc: "Getroffen: Durchsichtigkeitserhöhung"
       },
       objectNormalAlphaStep: {
         def: 0.05,
@@ -207,7 +210,7 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "alpha",
-        desc: "Durchsichtigkeitsverringerung von normalen Spiel-Objekten"
+        desc: "Normal: Durchsichtigkeitsverringerung"
       },
       objectNormalScaleMin: {
         def: 0.7,
@@ -216,7 +219,7 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Minimale Skalierung von normalen Spiel-Objekten",
+        desc: "Normal: Minimale Skalierung",
         check: {
           max: "objectNormalScaleCap"
         }
@@ -228,7 +231,7 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Skalier-Grenze von normalen Spiel-Objekten",
+        desc: "Normal: Skalier-Grenze",
         check: {
           max: "objectHittedScaleExplodes"
         }
@@ -240,7 +243,7 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Skalier-Abnahme von normalen Spiel-Objekten bevor Grenze"
+        desc: "Normal: Skalier-Abnahme vor Grenze"
       },
       objectNormalScaleAfterCap: {
         def: 0.003,
@@ -249,7 +252,7 @@ define([],
         step: 0.001,
         ui: "slider",
         cat: "scale",
-        desc: "Skalier-Abnahme von normalen Spiel-Objekten nach Grenze"
+        desc: "Normal: Skalier-Abnahme nach Grenze"
       },
       leapShowIndicatorLayer: {
         def: true,
@@ -300,7 +303,7 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Skalier-Maximum von getroffenen Spiel-Objekten vor Explosion"
+        desc: "Getroffen: Skalier-Maximum vor Explosion"
       }
     };
   }

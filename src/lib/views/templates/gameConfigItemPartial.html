@@ -1,10 +1,12 @@
 <tr>
   <td class="settingsDescription">{{objectDesc}}</td>
   {{#if uiSlider}}
-    <td class="settingsConfigValue"><input id="{{objectKey}}" type="text" class="parameterSlider col-md-12"
+    <td class="settingsConfigValue">
+      <input id="{{objectKey}}" type="text" class="parameterSlider col-md-12"
       value="{{objectValue}}" data-slider-min="{{objectMin}}" data-slider-max="{{objectMax}}"
       data-slider-step="{{objectStep}}" data-slider-value="{{objectValue}}"
-      data-slider-selection="after" data-slider-tooltip="hide"></td>
+      data-slider-selection="after" data-slider-tooltip="hide">
+    </td>
   {{/if}}
   {{#if uiDropdown}}
     <td class="settingsConfigValue"><div class="btn-group btn-group-sm">
@@ -29,7 +31,11 @@
   {{/if}}
 
   <td class="settingsValue">
-    <div id="{{objectKey}}-value">{{{objectValue}}}</div>
+    {{#if objectFormattedValue}}
+      <div id="{{objectKey}}-value">{{{objectFormattedValue}}}</div>
+    {{else}}
+      <div id="{{objectKey}}-value">{{{objectValue}}}</div>
+    {{/if}}
     <div id="{{objectKey}}-default" class="settingsDefaultValue"><small>Standard: {{objectDef}}</small></div>
   </td>
 

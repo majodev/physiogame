@@ -1,5 +1,7 @@
-define(["Backbone", "underscore", "gameConfigMap"],
-  function(Backbone, _, gameConfigMap) {
+define(["Backbone", "underscore", "gameConfigMap",
+  "utils/timeFormatter"],
+  function(Backbone, _, gameConfigMap,
+    timeFormatter) {
 
     var AppConfig = Backbone.Model.extend({
       generateKeyValuePairs: function(filterCategory) { // optional filter
@@ -31,9 +33,14 @@ define(["Backbone", "underscore", "gameConfigMap"],
       },
       getKeyValuePair: function(key, json) {
 
+        var showValue = stripNumberPrecision(json[key]),
+          showDefault = gameConfigMap[key].def,
+          formattedValue = this.getFormattedValueIfNeeded(key, showValue);
 
-        var showValue = formatOut(json[key]),
-          showDefault = gameConfigMap[key].def;
+        // if a formatted value was received apply it also the the default
+        if(formattedValue !== false) {
+          showDefault = this.getFormattedValueIfNeeded(key, showDefault);
+        }
 
         // check if variable should be even returned (enabled flag in gameConfigMap)
         if(_.isUndefined(gameConfigMap[key].enabled) === false) {
@@ -61,6 +68,7 @@ define(["Backbone", "underscore", "gameConfigMap"],
         return {
           objectKey: key,
           objectValue: showValue,
+          objectFormattedValue: formattedValue,
           objectMin: gameConfigMap[key].min,
           objectMax: gameConfigMap[key].max,
           objectStep: gameConfigMap[key].step,
@@ -72,6 +80,21 @@ define(["Backbone", "underscore", "gameConfigMap"],
           uiToggle: (gameConfigMap[key].ui === "toggle") ? true : false,
           uiText: (gameConfigMap[key].ui === "text") ? true : false
         };
+      },
+      getFormattedValueIfNeeded: function (key, valueToFormat) {
+        var formattedValue = false;
+
+        // handle time values which need to be formatted differently
+        if(_.isUndefined(gameConfigMap[key].time) === false) {
+          if(gameConfigMap[key].time === "sec") {
+            formattedValue = timeFormatter.formatSeconds(valueToFormat);
+          }
+          if(gameConfigMap[key].time === "milli") {
+            formattedValue = timeFormatter.formatMilliseconds(valueToFormat);
+          }
+        }
+
+        return formattedValue;
       },
       getKeyValueCategoryPairs: function() {
         return {
@@ -102,8 +125,8 @@ define(["Backbone", "underscore", "gameConfigMap"],
           if (_.isUndefined(gameConfigMap[attrKeys[i]].min) === false) {
             if (this.get(attrKeys[i]) < gameConfigMap[attrKeys[i]].min) {
               return gameConfigMap[attrKeys[i]].desc + " ist " +
-                formatOut(this.get(attrKeys[i])) + " muss größer sein als " +
-                formatOut(gameConfigMap[attrKeys[i]].min);
+                stripNumberPrecision(this.get(attrKeys[i])) + " muss größer sein als " +
+                stripNumberPrecision(gameConfigMap[attrKeys[i]].min);
             }
           }
 
@@ -111,8 +134,8 @@ define(["Backbone", "underscore", "gameConfigMap"],
           if (_.isUndefined(gameConfigMap[attrKeys[i]].max) === false) {
             if (this.get(attrKeys[i]) > gameConfigMap[attrKeys[i]].max) {
               return gameConfigMap[attrKeys[i]].desc + " ist " +
-                formatOut(this.get(attrKeys[i])) + " muss kleiner sein als " +
-                formatOut(gameConfigMap[attrKeys[i]].max);
+                stripNumberPrecision(this.get(attrKeys[i])) + " muss kleiner sein als " +
+                stripNumberPrecision(gameConfigMap[attrKeys[i]].max);
             }
           }
 
@@ -120,15 +143,15 @@ define(["Backbone", "underscore", "gameConfigMap"],
           if (_.isUndefined(gameConfigMap[attrKeys[i]].check) === false) {
             if (_.isUndefined(gameConfigMap[attrKeys[i]].check.min) === false) {
               if (this.get(attrKeys[i]) <= this.get(gameConfigMap[attrKeys[i]].check.min)) {
-                return gameConfigMap[attrKeys[i]].desc + " ist " + formatOut(this.get(attrKeys[i])) + " muss größer sein als " +
-                  formatOut(this.get(gameConfigMap[attrKeys[i]].check.min)) + "(" +
+                return gameConfigMap[attrKeys[i]].desc + " ist " + stripNumberPrecision(this.get(attrKeys[i])) + " muss größer sein als " +
+                  stripNumberPrecision(this.get(gameConfigMap[attrKeys[i]].check.min)) + "(" +
                   gameConfigMap[gameConfigMap[attrKeys[i]].check.min].desc + ")";
               }
             }
             if (_.isUndefined(gameConfigMap[attrKeys[i]].check.max) === false) {
               if (this.get(attrKeys[i]) >= this.get(gameConfigMap[attrKeys[i]].check.max)) {
-                return gameConfigMap[attrKeys[i]].desc + " ist " + formatOut(this.get(attrKeys[i])) + " muss kleiner sein als " +
-                  formatOut(this.get(gameConfigMap[attrKeys[i]].check.max)) + " (" +
+                return gameConfigMap[attrKeys[i]].desc + " ist " + stripNumberPrecision(this.get(attrKeys[i])) + " muss kleiner sein als " +
+                  stripNumberPrecision(this.get(gameConfigMap[attrKeys[i]].check.max)) + " (" +
                   gameConfigMap[gameConfigMap[attrKeys[i]].check.max].desc + ")";
               }
             }
@@ -174,7 +197,7 @@ define(["Backbone", "underscore", "gameConfigMap"],
 
     // helper to format for printable
 
-    function formatOut(value) {
+    function stripNumberPrecision(value) {
       return (_.isNumber(value)) ? (Math.round(value * 1000) / 1000) : value;
     }
 
