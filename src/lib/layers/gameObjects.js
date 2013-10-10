@@ -112,9 +112,6 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
                 attachNewGameObject(gameObjectsLength + i);
               }
 
-              // if (missingObjectCount > 0) {
-              //   attachNewGameObject(gameObjects.length);
-              // }
             }
           }
         });
@@ -127,11 +124,12 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       // set its initial values...
       gameObject.anchor.x = 0.5;
       gameObject.anchor.y = 0.5;
-      gameObject.scale.x = opt.objectNormalScaleMin;
-      gameObject.scale.y = opt.objectNormalScaleMin;
+      gameObject.scale.x = 0; // will be set to minNormal after introduced!
+      gameObject.scale.y = 0; // will be set to minNormal after introduced!
       gameObject.hitted = false; // extra
-      gameObject.alpha = opt.objectNormalAlphaMin;
+      gameObject.alpha = 0; // will be set to minNormal after introduced!
       gameObject.speed = opt.objectNormalSpeedMin; // extra
+      gameObject.introducing = true; // signales that its being introduced and not hitable
 
       // set positions and targets accordingliy...
 
@@ -161,10 +159,10 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     };
 
     layer.onRender = function() {
-      if (allGameObjectsCreated) {
-        onRenderMove();
+      //if (allGameObjectsCreated) {
+        onRenderAnimateGameObjects();
         onRenderClearExplosions();
-      }
+      //}
     };
 
     layer.onHandFrame = function(coordinates) {
@@ -245,7 +243,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       }
     }
 
-    function onRenderMove() {
+    function onRenderAnimateGameObjects() {
       var i = 0,
         max = gameObjects.length,
         gameObject;
@@ -254,7 +252,8 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
         gameObject = gameObjects[i];
 
-        if (gameObject.visible === true) {
+        // gameObject must be introduced...
+        if (gameObject.introducing === false) {
 
           // change gameObject parameters via behaviours
           targetBehaviour.update(layer, gameObject, opt);
@@ -295,8 +294,34 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
             i -= 1;
             max -= 1;
           }
-        }
+        } else {
+          // gameObject wasn't introduced till here.
+          
+          // alpha to minimum
+          if(gameObject.alpha < opt.objectNormalAlphaMin) {
+            gameObject.alpha += 0.01;
+            if(gameObject.alpha > opt.objectNormalAlphaMin) {
+              gameObject.alpha = opt.objectNormalAlphaMin;
+            }
+          }
 
+          // scale to minimum
+          if(gameObject.scale.x < opt.objectNormalScaleMin) {
+            gameObject.scale.x += 0.01;
+            gameObject.scale.y += 0.01;
+            if(gameObject.scale.x > opt.objectNormalScaleMin) {
+              gameObject.scale.x = opt.objectNormalScaleMin;
+              gameObject.scale.y = opt.objectNormalScaleMin;
+            }
+          }
+
+          // after conditions for introducing are met, its indroduced and handled!
+          if(gameObject.alpha === opt.objectNormalAlphaMin &&
+            gameObject.scale.x === opt.objectNormalScaleMin) {
+
+            gameObject.introducing = false;
+          }
+        }
       }
     }
 
