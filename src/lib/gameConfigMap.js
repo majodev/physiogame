@@ -43,7 +43,7 @@ define([],
         }],
         ui: "dropdown",
         cat: "general",
-        desc: "Spielmodus: Hauptspielmodus"
+        desc: "Modus: Hauptspielmodus"
       },
       gameMaxTime: {
         def: 15,
@@ -52,7 +52,7 @@ define([],
         step: 15,
         ui: "slider",
         cat: "general",
-        desc: "nach Zeit: Spielzeit eines Durchlaufes",
+        desc: "Modus: Spielzeit eines Durchlaufes",
         enabled: {
           id: "gameMode",
           value: "clearInTime"
@@ -68,7 +68,7 @@ define([],
         step: 100,
         ui: "slider",
         cat: "general",
-        desc: "nach Zeit: Spiel-Objekte wieder hinzuzufügen nach",
+        desc: "Modus: Spiel-Objekte wieder hinzuzufügen nach",
         enabled: {
           id: "gameMode",
           value: "clearInTime"
@@ -84,7 +84,7 @@ define([],
         step: 1,
         ui: "slider",
         cat: "general",
-        desc: "nach Zeit: Maximale Anzahl spätere Spiel-Objekte",
+        desc: "Modus: Anzahl Objekte gleichzeitig hinzuzufügen",
         enabled: {
           id: "gameMode",
           value: "clearInTime"
@@ -103,7 +103,7 @@ define([],
         step: 1,
         ui: "slider",
         cat: "general",
-        desc: "Spielmodus: Anzahl der Spiel-Objekte",
+        desc: "Modus: Anzahl der Spiel-Objekte",
         format: {
           post: "Objekte"
         }
@@ -146,7 +146,7 @@ define([],
         desc: "Getroffen: Skalier-Zunahme vor Grenze",
         format: {
           percent: true,
-          post: "% / fps"
+          post: "%/Frame"
         }
       },
       objectHittedScaleAfterCap: {
@@ -159,7 +159,7 @@ define([],
         desc: "Getroffen: Skalier-Zunahme nach Grenze",
         format: {
           percent: true,
-          post: "% / fps"
+          post: "%/Frame"
         }
       },
       objectHittedSpeedMin: {
@@ -174,7 +174,7 @@ define([],
           max: "objectHittedSpeedMax"
         },
         format: {
-          post: "Pixel / fps"
+          post: "Pixel/Frame"
         }
       },
       objectHittedSpeedMax: {
@@ -189,7 +189,7 @@ define([],
           min: "objectHittedSpeedMin"
         },
         format: {
-          post: "Pixel / fps"
+          post: "Pixel/Frame"
         }
       },
       objectHittedSpeedStep: {
@@ -201,7 +201,7 @@ define([],
         cat: "speed",
         desc: "Getroffen: Geschwindigkeitsschritt",
         format: {
-          post: "Pixel / fps"
+          post: "Pixel/Frame"
         }
       },
       objectNormalSpeedMin: {
@@ -216,7 +216,7 @@ define([],
           max: "objectNormalSpeedMax"
         },
         format: {
-          post: "Pixel / fps"
+          post: "Pixel/Frame"
         }
       },
       objectNormalSpeedMax: {
@@ -231,7 +231,7 @@ define([],
           min: "objectNormalSpeedMin"
         },
         format: {
-          post: "Pixel / fps"
+          post: "Pixel/Frame"
         }
       },
       objectNormalSpeedStep: {
@@ -243,7 +243,7 @@ define([],
         cat: "speed",
         desc: "Normal: Geschwindigkeitsschritt",
         format: {
-          post: "Pixel / fps"
+          post: "Pixel/Frame"
         }
       },
       objectNormalAlphaMin: {
@@ -269,7 +269,7 @@ define([],
         desc: "Getroffen: Durchsichtigkeitserhöhung",
         format: {
           percent: true,
-          post: "% / fps"
+          post: "%/Frame"
         }
       },
       objectNormalAlphaStep: {
@@ -282,7 +282,7 @@ define([],
         desc: "Normal: Durchsichtigkeitsverringerung",
         format: {
           percent: true,
-          post: "% / fps"
+          post: "%/Frame"
         }
       },
       objectNormalScaleMin: {
@@ -327,7 +327,7 @@ define([],
         desc: "Normal: Skalier-Abnahme vor Grenze",
         format: {
           percent: true,
-          post: "% / fps"
+          post: "%/Frame"
         }
       },
       objectNormalScaleAfterCap: {
@@ -340,7 +340,7 @@ define([],
         desc: "Normal: Skalier-Abnahme nach Grenze",
         format: {
           percent: true,
-          post: "% / fps"
+          post: "%/Frame"
         }
       },
       leapShowIndicatorLayer: {

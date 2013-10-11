@@ -44,15 +44,6 @@ define(["Backbone", "underscore", "gameConfigMap",
         }
 
         // check if variable should be even returned (enabled flag in gameConfigMap)
-        // if(_.isUndefined(gameConfigMap[key].enabled) === false) {
-
-        //   // check if this configItem should be returned
-        //   if(this.get(gameConfigMap[key].enabled.id) !== gameConfigMap[key].enabled.value) {
-        //     // enabled flag condition not passed, deinclude this configItem!
-        //     return false;
-        //   }
-        // }
-
         if (this.checkKeyIsEnabled(key) === false) {
           return false;
         }
@@ -99,6 +90,9 @@ define(["Backbone", "underscore", "gameConfigMap",
         }
 
         return true;
+      },
+      getFormatted: function(key) {
+
       },
       getFormattedValueIfNeeded: function(key, valueToFormat) {
         var formattedValue = false;
