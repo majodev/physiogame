@@ -19,6 +19,9 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
         displayManager.stage.removeChild(currentScene.object.getScene());
       }
 
+      // notify before pushing
+      events.trigger("pushingScene", newID);
+
       // reset current Scene
       currentScene = {
         id: newID,
@@ -29,7 +32,7 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
       currentScene.object.activate();
       displayManager.stage.addChild(currentScene.object.getScene());
 
-      // notify
+      // notify after push complete.
       events.trigger("pushedScene", getCurrentSceneID());
     }
 

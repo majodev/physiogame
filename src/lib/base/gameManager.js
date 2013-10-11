@@ -1,8 +1,10 @@
-define(["log", "base/displayManager", "base/leapManager", "base/sceneManager", "key",
-  "base/soundManager", "views/settingsModal"
+define(["log", "base/displayManager", "base/leapManager",
+  "base/sceneManager", "key",
+  "base/soundManager", "views/settingsModal", "game/stats"
   ],
-  function(log, displayManager, leapManager, sceneManager, key,
-    soundManager, settingsModal) {
+  function(log, displayManager, leapManager,
+    sceneManager, key,
+    soundManager, settingsModal, stats) {
 
     // private
     var showDebug = false;
@@ -16,10 +18,20 @@ define(["log", "base/displayManager", "base/leapManager", "base/sceneManager", "
       leapManager.init();
 
       sceneManager.events.on("pushedScene", onSceneChanged);
+      sceneManager.events.on("pushingScene", onBeforeSceneChanged);
 
       // definition of startscene of game
       sceneManager.pushScene("startscreen");
       //sceneManager.pushScene("shooting");
+    }
+
+    function onBeforeSceneChanged(newSceneName) {
+      // if a new shooting scene will be build, make a new StatModel instance
+      if(newSceneName === "shooting") {
+        log.debug("onBeforeSceneChanged: new scene id=" + newSceneName);
+        console.dir(stats.toJSON());
+        stats.getNew();
+      }
     }
 
     function onSceneChanged(newSceneName) {

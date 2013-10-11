@@ -1,12 +1,12 @@
 define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
-    "game/scoreEntity", "base/soundManager", "game/crosshairGO", "classes/Layer",
-    "Poll",
+    "base/soundManager", "game/crosshairGO", "classes/Layer",
+    "Poll", "game/stats",
     "game/behaviours/targetBehaviour", "game/behaviours/alphaBehaviour",
     "game/behaviours/scaleBehaviour", "game/behaviours/speedBehaviour"
   ],
   function(textures, gameConfig, hittest, _, PIXI,
-    scoreEntity, soundManager, crosshairGO, Layer,
-    Poll,
+    soundManager, crosshairGO, Layer,
+    Poll, stats,
     targetBehaviour, alphaBehaviour,
     scaleBehaviour, speedBehaviour) {
 
@@ -286,7 +286,8 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
             layer.addChild(explosion);
 
-            scoreEntity.raiseScore();
+
+            stats.getCurrent().raiseScore();
 
             // finally clear the gameObject from the array and kill the gameObject
             layer.removeChild(gameObject);

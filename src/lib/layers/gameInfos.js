@@ -1,10 +1,10 @@
-define(["log", "PIXI", "game/scoreEntity",
+define(["log", "PIXI", 
     "gameConfig", "Poll", "classes/Layer", "classes/Button",
-    "utils/timeFormatter"
+    "utils/timeFormatter", "game/stats"
   ],
-  function(log, PIXI, scoreEntity,
+  function(log, PIXI, 
     gameConfig, Poll, Layer, Button,
-    timeFormatter) {
+    timeFormatter, stats) {
 
     var layer = new Layer({
       listeners: {
@@ -25,10 +25,12 @@ define(["log", "PIXI", "game/scoreEntity",
       introTimerLength,
       gameModeTime = false,
       maxTime = 0,
-      retryButton;
+      retryButton,
+      currentStats;
 
     layer.onActivate = function() {
-      scoreEntity.resetScore();
+
+      currentStats = stats.getCurrent();
 
       if (gameConfig.get("gameMode") === "clearInTime") {
         gameModeTime = true;
@@ -102,7 +104,7 @@ define(["log", "PIXI", "game/scoreEntity",
 
       setStartupTexts();
 
-      scoreEntity.on("change", scoreChanged);
+      currentStats.on("change", scoreChanged);
 
     };
 
@@ -112,11 +114,11 @@ define(["log", "PIXI", "game/scoreEntity",
 
     function setStartupTexts() {
       if (gameModeTime === true) {
-        countingText.setText(scoreEntity.get("objectsCatched"));
+        countingText.setText(currentStats.get("objectsCatched"));
         introText.setText("Erwische soviele wie möglich!\nZeit: " + timeFormatter.formatSeconds(maxTime));
         timerText.setText("0:00 von " + timeFormatter.formatSeconds(maxTime));
       } else {
-        countingText.setText(scoreEntity.get("objectsCatched") + " von " + gameConfig.get("objectsToSpawn"));
+        countingText.setText(currentStats.get("objectsCatched") + " von " + gameConfig.get("objectsToSpawn"));
         introText.setText("Erwische alle Objekte!");
         timerText.setText("0:00");
       }
@@ -145,7 +147,7 @@ define(["log", "PIXI", "game/scoreEntity",
       Poll.stop("introTimer");
       Poll.stop("scoreTimer");
 
-      scoreEntity.off("change", scoreChanged);
+      currentStats.off("change", scoreChanged);
     };
 
     function createTextButtons() {
@@ -185,6 +187,7 @@ define(["log", "PIXI", "game/scoreEntity",
     }
 
     function scoreChanged(model, options) {
+
       var tempWinText,
         tempRankText;
 
@@ -218,7 +221,7 @@ define(["log", "PIXI", "game/scoreEntity",
         scoreTimerRunning = false;
 
         tempWinText = "Fertig!\nDu hast " +
-          scoreEntity.get("objectsCatched") + " Objekte in " + timeFormatter.formatSeconds(scoreTimerCount/10) + " Minuten abgeschossen!\n" +
+          currentStats.get("objectsCatched") + " Objekte in " + timeFormatter.formatSeconds(scoreTimerCount/10) + " Minuten abgeschossen!\n" +
           "GRATULATION!\n\n\n\n";
 
         winningText.setText(tempWinText + "\nDanke fürs Spielen!");
