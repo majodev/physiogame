@@ -1,4 +1,4 @@
-define(["Backbone", "display/factory"],
+define(["backbone", "display/factory"],
   function(Backbone, factory) {
 
     var SceneModel = Backbone.Model.extend({

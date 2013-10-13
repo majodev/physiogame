@@ -4,7 +4,8 @@ require.config({
   paths: {
     "underscore": "../../node_modules/lodash/lodash", // watch out: registers _ itself (noConflict!)
     "log": "../vendor/loglevel/lib/loglevel", // watch out: registers itself as log!
-    "Backbone": "../../node_modules/backbone/backbone",
+    "backbone": "../../node_modules/backbone/backbone",
+    "backbone.localStorage": "../vendor/Backbone.localStorage/backbone.localStorage",
     "PIXI": "../vendor/pixi/bin/pixi.dev",
     "Leap": "../vendor/leapjs/leap",
     "key": "../vendor/keymaster/keymaster",
@@ -56,20 +57,29 @@ require.config({
         console.log("init bootstrap");
       }
     },
-    "Backbone": {
+    "backbone": {
       deps: ["underscore", "jquery"],
       exports: "Backbone",
       init: function(_, $) {
         //console.log("requireconfig: init (AMD) underscore with noConflict");
         _.noConflict(); // remove underscore from global scope
 
-        console.log("requireconfig: init (AMD) jquery with noConflict");
+        //console.log("requireconfig: init (AMD) jquery with noConflict");
         $.noConflict(false); // remove jquery from global scope
 
         //console.log("requireconfig: init (shim) Backbone with noConflict");
         return Backbone.noConflict();
+        //return Backbone;
       }
     },
+    // "localstorage": {
+    //   deps: ["underscore", "jquery", "Backbone"],
+    //   exports: "Backbone",
+    //   init: function(_, $, Backbone) {
+    //     console.log("requireconfig: init localstorage");
+    //     return Backbone;
+    //   }
+    // },
     "PIXI": {
       exports: "PIXI",
       init: function() {

@@ -4,11 +4,14 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore"],
     var statsCollection = new StatsCollection(),
       current;
     
+    // fetch previous stats from LocalStorage
+    statsCollection.fetch();
+
     // returns an instance of a new StatModel in the Collection
     function getNew() {
       current = new StatModel();
       statsCollection.push(current);
-      log.debug("stats: new StatModel, id=" + current.cid);
+      log.debug("stats: getNew id=" + current.cid);
       return current;
     }
 
@@ -17,6 +20,13 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore"],
         newStat();
       }
       return current;
+    }
+
+    function saveCurrent() {
+      if(_.isUndefined(current) === false) {
+        log.debug("stats: saveCurrent id=" + current.cid);
+        current.save();
+      }
     }
 
     function toJSON() {
@@ -30,6 +40,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore"],
     return {
       getNew: getNew,
       getCurrent: getCurrent,
+      saveCurrent: saveCurrent,
       toJSON: toJSON,
       debug: debug
     };

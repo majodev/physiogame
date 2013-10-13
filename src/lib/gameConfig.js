@@ -1,4 +1,4 @@
-define(["Backbone", "underscore", "gameConfigMap",
+define(["backbone", "underscore", "gameConfigMap",
     "utils/timeFormatter"
   ],
   function(Backbone, _, gameConfigMap,

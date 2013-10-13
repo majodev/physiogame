@@ -44,7 +44,10 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
 
     function resetCurrentScene() {
       if (typeof currentScene.object !== 'undefined') {
+        // notify before resetting
+        events.trigger("resettingScene", currentScene.id);
         currentScene.object.reset();
+        events.trigger("resettedScene", currentScene.id);
       }
     }
 

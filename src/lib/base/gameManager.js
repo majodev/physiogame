@@ -18,24 +18,28 @@ define(["log", "base/displayManager", "base/leapManager",
       leapManager.init();
 
       sceneManager.events.on("pushedScene", onSceneChanged);
-      sceneManager.events.on("pushingScene", onBeforeSceneChanged);
+      sceneManager.events.on("resettedScene", onSceneChanged);
+      
+      sceneManager.events.on("pushingScene", onSceneChanging);
+      sceneManager.events.on("resettingScene", onSceneChanging);
 
       // definition of startscene of game
       sceneManager.pushScene("startscreen");
       //sceneManager.pushScene("shooting");
     }
 
-    function onBeforeSceneChanged(newSceneName) {
+    function onSceneChanging(sceneID) {
       // if a new shooting scene will be build, make a new StatModel instance
-      if(newSceneName === "shooting") {
-        log.debug("onBeforeSceneChanged: new scene id=" + newSceneName);
+      if(sceneID === "shooting") {
+        log.debug("onSceneChanging: new scene id=" + sceneID);
         console.dir(stats.debug());
+        stats.saveCurrent();
         stats.getNew();
       }
     }
 
-    function onSceneChanged(newSceneName) {
-      log.info("onSceneChanged: new scene id=" + newSceneName);
+    function onSceneChanged(sceneID) {
+      log.info("onSceneChanged: new scene id=" + sceneID);
     }
 
     key('esc', function() {

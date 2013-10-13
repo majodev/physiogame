@@ -1,4 +1,4 @@
-define(["Backbone", "jquery", "log", "gameConfig", "underscore",
+define(["backbone", "jquery", "log", "gameConfig", "underscore",
     "hbars!views/templates/gameConfigTemplate",
     "hbars!views/templates/gameConfigItemPartial",
     "Handlebars",

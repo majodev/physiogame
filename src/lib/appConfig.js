@@ -1,4 +1,4 @@
-define(["Backbone"],
+define(["backbone"],
   function(Backbone) {
     var appConfig = new Backbone.Model({
       applicationName: "Physiogame",

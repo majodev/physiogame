@@ -1,4 +1,4 @@
-define(["log", "Backbone"],
+define(["log", "backbone"],
   function(log, Backbone) {
     
     var ScoreModel = Backbone.Model.extend({
