@@ -21,7 +21,7 @@ define(["log", "jquery", "views/GameConfigView",
       if (!initialized) {
         init();
       }
-      $("#myModal").modal("show");
+      $("#settingsModalHolder").modal("show");
       showing = true;
     }
 
@@ -29,7 +29,7 @@ define(["log", "jquery", "views/GameConfigView",
       if (!initialized) {
         init();
       }
-      $("#myModal").modal("hide");
+      $("#settingsModalHolder").modal("hide");
       showing = false;
     }
 
