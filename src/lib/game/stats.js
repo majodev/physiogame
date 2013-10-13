@@ -30,7 +30,8 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore"],
     return {
       getNew: getNew,
       getCurrent: getCurrent,
-      toJSON: toJSON
+      toJSON: toJSON,
+      debug: debug
     };
   }
 );

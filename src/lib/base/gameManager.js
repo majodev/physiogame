@@ -29,7 +29,7 @@ define(["log", "base/displayManager", "base/leapManager",
       // if a new shooting scene will be build, make a new StatModel instance
       if(newSceneName === "shooting") {
         log.debug("onBeforeSceneChanged: new scene id=" + newSceneName);
-        console.dir(stats.toJSON());
+        console.dir(stats.debug());
         stats.getNew();
       }
     }
