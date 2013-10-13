@@ -1,10 +1,8 @@
 <div id="statusNotification"></div>
 <ul class="nav nav-tabs" id="settingsMainTab">
   <li><a href="#general">Allgemein</a></li>
-  <li><a href="#scale">Skalierung</a></li>
-  <li><a href="#speed">Geschwindigkeit</a></li>
-  <li><a href="#alpha">Durchsichtigkeit</a></li>
-  <li><a href="#leap">Leap</a></li>
+  <li><a href="#behaviour" class="mainWithSubTab">Verhalten</a></li>
+  <li><a href="#leap">Leap Motion</a></li>
   <li><a href="#help">Hilfe</a></li>
 </ul>
 
@@ -28,60 +26,72 @@
       </table>
     </div>
   </div>
-  <div class="tab-pane fade" id="scale">
-    <div class="table-responsive">
-      <table class="table table-condensed">
-        <thead>
-          <tr>
-            <th class="settingsDescription">Parameter</th>
-            <th class="settingsConfigValue">Konfiguration</th>
-            <th class="settingsValue">Wert</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#scale.keyValues}}
-            {{> gameConfigItemPartial}}
-          {{/scale.keyValues}}
-        </tbody>
-      </table>
+
+  <div class="tab-pane fade" id="behaviour">
+    <ul class="nav nav-tabs subTabBar" id="settingsBehaviourTab">
+      <li><a href="#speed" class="subTab">Geschwindigkeit</a></li>
+      <li><a href="#scale" class="subTab">Skalierung</a></li>
+      <li><a href="#alpha" class="subTab">Durchsichtigkeit</a></li>
+    </ul>
+    <div id="subBehaviourTabContainer" class="tab-content">
+      <div class="tab-pane fade" id="scale">
+        <div class="table-responsive">
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="settingsDescription">Parameter</th>
+                <th class="settingsConfigValue">Konfiguration</th>
+                <th class="settingsValue">Wert</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#scale.keyValues}}
+                {{> gameConfigItemPartial}}
+              {{/scale.keyValues}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="speed">
+        <div class="table-responsive">
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="settingsDescription">Parameter</th>
+                <th class="settingsConfigValue">Konfiguration</th>
+                <th class="settingsValue">Wert</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#speed.keyValues}}
+                {{> gameConfigItemPartial}}
+              {{/speed.keyValues}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="alpha">
+        <div class="table-responsive">
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="settingsDescription">Parameter</th>
+                <th class="settingsConfigValue">Konfiguration</th>
+                <th class="settingsValue">Wert</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#alpha.keyValues}}
+                {{> gameConfigItemPartial}}
+              {{/alpha.keyValues}}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="tab-pane fade" id="speed">
-    <div class="table-responsive">
-      <table class="table table-condensed">
-        <thead>
-          <tr>
-            <th class="settingsDescription">Parameter</th>
-            <th class="settingsConfigValue">Konfiguration</th>
-            <th class="settingsValue">Wert</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#speed.keyValues}}
-            {{> gameConfigItemPartial}}
-          {{/speed.keyValues}}
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="tab-pane fade" id="alpha">
-    <div class="table-responsive">
-      <table class="table table-condensed">
-        <thead>
-          <tr>
-            <th class="settingsDescription">Parameter</th>
-            <th class="settingsConfigValue">Konfiguration</th>
-            <th class="settingsValue">Wert</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#alpha.keyValues}}
-            {{> gameConfigItemPartial}}
-          {{/alpha.keyValues}}
-        </tbody>
-      </table>
-    </div>
-  </div>
+
+  
   <div class="tab-pane fade" id="leap">
     <div class="table-responsive">
       <table class="table table-condensed">

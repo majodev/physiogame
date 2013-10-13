@@ -87,3 +87,35 @@ canvas { /* To remove the scrollbars */
 .helpContainer {
   padding-top: 15px;
 }
+
+.subTabBar {
+  font-size: 12px;
+}
+
+.nav-tabs {
+  border: 0px !important;
+}
+
+/*.subTab {
+  border: 0px !important;
+}*/
+
+.nav-tabs > li > a {
+  border: 0px !important;
+}
+
+/* center all tabs... */
+/*.subTabBar > li, .nav-pills > li {
+  float:none;
+  display:inline-block;
+  *display: inline;
+  *zoom:1;
+
+}
+.subTabBar {
+  text-align:center; 
+}*/
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  background: #EEEEEE;
+}

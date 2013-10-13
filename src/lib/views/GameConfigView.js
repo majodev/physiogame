@@ -10,7 +10,8 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
     Handlebars) {
 
     // first tab
-    var currentTabHash = "#general",
+    var currentMainTab = "#general",
+      currentSubBehaviourTab = "#scale",
       validationError;
 
     var ObjectsConfigView = Backbone.View.extend({
@@ -39,17 +40,30 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
         $(".slider-horizontal").css("width", "150px");
 
         $(function() {
-          // try to show the last visible tab...
-          $('#settingsMainTab a[href="' + currentTabHash + '"]').tab('show');
+          // try to show the last visible main tab...
+          $('#settingsMainTab a[href="' + currentMainTab + '"]').tab('show');
 
-          // append the fade class
-          $(currentTabHash).addClass("fade in");
+          // try to show the last visible sub behaviour tab...
+          $('#settingsBehaviourTab a[href="' + currentSubBehaviourTab + '"]').tab('show');
+
+          // append the fade class to main
+          $(currentMainTab).addClass("fade in");
+
+          // append the fade class to sub
+          $(currentSubBehaviourTab).addClass("fade in");
         });
 
-        // Add clickhandler for tab bar...
+        // Add clickhandler for main tab bar...
         $('#settingsMainTab a').click(function(e) {
           e.preventDefault();
-          currentTabHash = e.currentTarget.hash;
+          currentMainTab = e.currentTarget.hash;
+          $(this).tab('show');
+        });
+
+        // Add clickhandler for sub behaviour tab bar...
+        $('#settingsBehaviourTab a').click(function(e) {
+          e.preventDefault();
+          currentSubBehaviourTab = e.currentTarget.hash;
           $(this).tab('show');
         });
 
