@@ -40,14 +40,14 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
 
         $(function() {
           // try to show the last visible tab...
-          $('#myTab a[href="' + currentTabHash + '"]').tab('show');
+          $('#settingsMainTab a[href="' + currentTabHash + '"]').tab('show');
 
           // append the fade class
           $(currentTabHash).addClass("fade in");
         });
 
         // Add clickhandler for tab bar...
-        $('#myTab a').click(function(e) {
+        $('#settingsMainTab a').click(function(e) {
           e.preventDefault();
           currentTabHash = e.currentTarget.hash;
           $(this).tab('show');
