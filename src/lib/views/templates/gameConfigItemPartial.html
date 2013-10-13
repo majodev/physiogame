@@ -23,9 +23,7 @@
   {{#if uiToggle}}
     {{#if objectValue}}
       <td class="settingsConfigValue"><button id="{{objectKey}}" type="button" class="btn btn-xs btn-primary toggleButton active" data-toggle="button">aktiviert</button></td>
-      <!--<td><input type="checkbox" name="{{objectKey}}" checked/></td>-->
     {{else}}
-      <!--<td><input type="checkbox" name="{{objectKey}}" /></td>-->
       <td class="settingsConfigValue"><button id="{{objectKey}}" type="button" class="btn btn-xs btn-danger toggleButton" data-toggle="button">deaktiviert</button></td>
     {{/if}}
   {{/if}}
@@ -38,11 +36,4 @@
     {{/if}}
     <div id="{{objectKey}}-default" class="settingsDefaultValue"><small>Standard: {{objectDef}}</small></div>
   </td>
-
-  <!--{{#if objectValue}}
-    <td id="{{objectKey}}-value" class="settingsValue">{{{objectValue}}}</td>
-  {{else}}
-    <td id="{{objectKey}}-value" class="settingsValue"><small>false or 0</small></td>
-  {{/if}}
-  <td class="settingsDefaultValue"><small>{{objectDef}}</small></td>-->
 </tr>

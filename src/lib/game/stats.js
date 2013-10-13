@@ -29,6 +29,11 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore"],
       }
     }
 
+    function clearAllStats() {
+      localStorage.clear("StatsCollection");
+      statsCollection.fetch();
+    }
+
     function toJSON() {
       return statsCollection.toJSON();
     }
@@ -41,6 +46,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore"],
       getNew: getNew,
       getCurrent: getCurrent,
       saveCurrent: saveCurrent,
+      clearAllStats: clearAllStats,
       toJSON: toJSON,
       debug: debug
     };

@@ -9,10 +9,10 @@ define(["log", "backbone"],
         this.set("objectsCatched", currentScore);
         //log.trace("raiseScore to " + currentScore);
       },
-      resetScore: function() {
-        this.set("objectsCatched", 0);
-        log.debug("resetScore to " + this.get("objectsCatched"));
-      },
+      // resetScore: function() {
+      //   this.set("objectsCatched", 0);
+      //   log.debug("resetScore to " + this.get("objectsCatched"));
+      // },
       defaults: {
         objectsCatched: 0
       }
