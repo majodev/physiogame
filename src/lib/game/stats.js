@@ -35,18 +35,15 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
 
     function clearLocalStorage() {
       localStorage.clear("StatsCollection");
+      current = undefined;
       statsCollection.fetch();
-    }
-
-    function toJSON() {
-      return statsCollection.toJSON();
     }
 
     function toCSV() {
       return csv(JSON.stringify(statsCollection), ";", true);
     }
 
-    function debug() {
+    function toJSONStrings() {
       return JSON.stringify(statsCollection);
     }
 
@@ -55,19 +52,24 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     }
 
     function downloadCSV() {
-      // try {
-      //   var isFileSaverSupported = !! new Blob();
-      // } catch (e) {
-      //   console.log("FileSaver is not Supported!");
-      // }
-
-      var text = toCSV();
-      var blob = new Blob([text], {
+      saveAs(new Blob([toCSV()], {
         type: "text/plain;charset=utf-8"
+      }), "stats.csv");
+    }
+
+    function downloadJSON() {
+      saveAs(new Blob([toJSONStrings()], {
+        type: "text/plain;charset=utf-8"
+      }), "stats.json");
+    }
+
+    function loadFromJSON(jsonObject) {
+      //clearLocalStorage(); // no we will keep the locals! :)
+      statsCollection.add(jsonObject);
+
+      _.forEach(statsCollection.models, function(model) {
+        model.save();
       });
-      saveAs(blob, "stats.csv");
-      
-      //console.log(saveAs);
     }
 
     return {
@@ -76,10 +78,9 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
       getCurrent: getCurrent,
       saveCurrent: saveCurrent,
       clearLocalStorage: clearLocalStorage,
-      toJSON: toJSON,
-      toCSV: toCSV,
-      debug: debug,
-      downloadCSV: downloadCSV
+      downloadCSV: downloadCSV,
+      downloadJSON: downloadJSON,
+      loadFromJSON: loadFromJSON
     };
   }
 );

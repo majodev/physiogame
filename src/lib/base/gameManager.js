@@ -33,7 +33,6 @@ define(["log", "base/displayManager", "base/leapManager",
     function onSceneChanging(sceneID) {
       // everytime before the scene changes, try to save the current stats
       stats.saveCurrent();
-      log.debug(stats.debug());
 
       // if a new shooting scene will be build, make a new StatModel instance
       if(sceneID === "shooting") {
