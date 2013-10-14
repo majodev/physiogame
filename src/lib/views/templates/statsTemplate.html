@@ -1,9 +1,17 @@
+<div class="row buttonStatBar">
+  <button id="downloadJSON" type="button" class="btn btn-primary btn-xs">Speichern (JSON)</button>
+  <button id="downloadCSV" type="button" class="btn btn-primary btn-xs">Exportieren (CSV)</button>
+  <span id="loadJSON" class="btn btn-xs btn-success btn-file">Laden (JSON) <input type="file"></span>
+  <button id="clearStorage" type="button" class="btn btn-danger btn-xs pull-right">&times; Alle löschen</button>
+</div>
+
 <div class="table-responsive">
   <table class="table table-condensed statsTable">
     <thead>
       <tr>
-        <th>id</th>
-        <th>objectsCatched</th>
+        <th>Eindeutige ID</th>
+        <th>Spielmodus</th>
+        <th>Gefangene Objekte</th>
         <th>Aktion</th>
       </tr>
     </thead>
@@ -11,13 +19,14 @@
       {{#each stats}}
         <tr>
           {{#if id}}
-            <td>{{id}}</td>
+            <td><small>{{id}}</small></td>
           {{else}}
             <td>Neu</td>
           {{/if}}
+          <td>{{gameMode}}</td>
           <td>{{objectsCatched}}</td>
           {{#if id}}
-            <td><button id="remove-{{id}}" data-id="{{id}}" type="button" class="btn btn-danger btn-xs removeItem">&times;</button></td>
+            <td><button id="remove-{{id}}" data-id="{{id}}" type="button" class="btn btn-danger btn-xs removeItem pull-right">&times;</button></td>
           {{else}}
             <td>--</td>
           {{/if}}
@@ -25,11 +34,4 @@
       {{/each}}
     </tbody>
   </table>
-</div>
-
-<div class="row">
-  <button id="downloadCSV" type="button" class="btn btn-primary btn-xs">Exportieren (CSV)</button>
-  <button id="downloadJSON" type="button" class="btn btn-primary btn-xs">Speichern (JSON)</button>
-  <span id="loadJSON" class="btn btn-xs btn-success btn-file">Laden (JSON) <input type="file"></span>
-  <button id="clearStorage" type="button" class="btn btn-danger btn-xs">Alle verwerfen</button>
 </div>

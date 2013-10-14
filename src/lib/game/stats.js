@@ -1,8 +1,8 @@
 define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
-    "csv", "saveAs"
+    "csv", "saveAs", "gameConfig"
   ],
   function(log, StatsCollection, StatModel, _,
-    csv, saveAs) {
+    csv, saveAs, gameConfig) {
 
     var statsCollection = new StatsCollection(),
       current;
@@ -13,7 +13,9 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     // returns an instance of a new StatModel in the Collection
 
     function getNew() {
-      current = new StatModel();
+      current = new StatModel({
+        gameMode: gameConfig.getFormattedValue("gameMode")
+      });
       statsCollection.push(current);
       log.debug("stats: getNew id=" + current.cid);
       return current;

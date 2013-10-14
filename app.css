@@ -120,6 +120,15 @@ canvas { /* To remove the scrollbars */
   background: #EEEEEE;
 }
 
+.buttonStatBar {
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  background: #EEEEEE;
+  padding: 7px;
+}
+
 
 /* style input file buttons to something similar as bootstrap... */
 

@@ -49,17 +49,17 @@ define(["backbone", "underscore", "gameConfigMap",
         }
 
         // handle objectValues different if target is a uiDropDown
-        if (gameConfigMap[key].ui === "dropdown") {
-          // get the desc from the opt array of the current value...
-          for (var i = 0; i < gameConfigMap[key].opt.length; i += 1) {
-            if (showValue === gameConfigMap[key].opt[i].id) {
-              showValue = gameConfigMap[key].opt[i].desc;
-            }
-            if (showDefault === gameConfigMap[key].opt[i].id) {
-              showDefault = gameConfigMap[key].opt[i].desc;
-            }
-          }
-        }
+        // if (gameConfigMap[key].ui === "dropdown") {
+        //   // get the desc from the opt array of the current value...
+        //   for (var i = 0; i < gameConfigMap[key].opt.length; i += 1) {
+        //     if (showValue === gameConfigMap[key].opt[i].id) {
+        //       showValue = gameConfigMap[key].opt[i].desc;
+        //     }
+        //     if (showDefault === gameConfigMap[key].opt[i].id) {
+        //       showDefault = gameConfigMap[key].opt[i].desc;
+        //     }
+        //   }
+        // }
 
         return {
           objectKey: key,
@@ -91,18 +91,35 @@ define(["backbone", "underscore", "gameConfigMap",
 
         return true;
       },
-      getFormatted: function(key) {
+      getFormattedValue: function(key) {
+        var normal = stripNumberPrecision(this.get(key));
+        var formatted = this.getFormattedValueIfNeeded(key, normal);
 
+        if(formatted !== false) {
+          return formatted;
+        } else {
+          return normal;
+        }
       },
       getFormattedValueIfNeeded: function(key, valueToFormat) {
         var formattedValue = false;
 
-        // toggle ui elements have automatically formatted values...
+        // uiToggle elements have manually formatted values
         if(gameConfigMap[key].ui === "toggle") {
           if(valueToFormat === true) {
             formattedValue = "aktiviert";
           } else {
             formattedValue = "deaktiviert";
+          }
+        }
+
+        // uiDropDown needs different handling for getting formatted values...
+        if (gameConfigMap[key].ui === "dropdown") {
+          // get the desc from the opt array of the current value...
+          for (var i = 0; i < gameConfigMap[key].opt.length; i += 1) {
+            if (valueToFormat === gameConfigMap[key].opt[i].id) {
+              formattedValue = gameConfigMap[key].opt[i].desc;
+            }
           }
         }
 
