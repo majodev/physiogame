@@ -7,10 +7,10 @@ define(["PIXI", "classes/Layer", "appConfig"],
     layer.onActivate = function () {
       welcomeText = new PIXI.Text(appConfig.get("applicationName"), {
         font: "bold italic 80px Arvo",
-        fill: "#bb4433",
+        fill: "#3344bb",
         align: "center",
-        stroke: "#FFAAAA",
-        strokeThickness: 5
+        stroke: "#AAAAFF",
+        strokeThickness: 10
       });
 
       welcomeText.position.x = this.width / 2;

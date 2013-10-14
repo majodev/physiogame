@@ -4,13 +4,23 @@
       <tr>
         <th>id</th>
         <th>objectsCatched</th>
+        <th>Aktion</th>
       </tr>
     </thead>
     <tbody>
       {{#each stats}}
         <tr>
-          <td>{{id}}</td>
+          {{#if id}}
+            <td>{{id}}</td>
+          {{else}}
+            <td>Neu</td>
+          {{/if}}
           <td>{{objectsCatched}}</td>
+          {{#if id}}
+            <td><button id="remove-{{id}}" data-id="{{id}}" type="button" class="btn btn-danger btn-xs removeItem">&times;</button></td>
+          {{else}}
+            <td>--</td>
+          {{/if}}
         </tr>
       {{/each}}
     </tbody>

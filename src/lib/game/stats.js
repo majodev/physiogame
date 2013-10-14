@@ -72,6 +72,18 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
       });
     }
 
+    function removeByID(id) {
+      var model = statsCollection.get(id);
+      if(_.isUndefined(model) === false) {
+
+        if(model === current) {
+          current = undefined;
+        }
+
+        model.destroy();
+      }
+    }
+
     return {
       getCollection: getCollection,
       getNew: getNew,
@@ -80,7 +92,8 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
       clearLocalStorage: clearLocalStorage,
       downloadCSV: downloadCSV,
       downloadJSON: downloadJSON,
-      loadFromJSON: loadFromJSON
+      loadFromJSON: loadFromJSON,
+      removeByID: removeByID
     };
   }
 );

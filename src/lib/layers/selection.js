@@ -1,11 +1,16 @@
-define(["classes/Layer", "classes/Button", "views/gameConfigModal", "base/soundManager"],
-  function(Layer, Button, gameConfigModal, soundManager) {
+define(["classes/Layer", "classes/Button",
+  "views/gameConfigModal", "views/statsModal",
+  "base/soundManager"],
+  function(Layer, Button,
+    gameConfigModal, statsModal,
+    soundManager) {
 
     var layer = new Layer(),
       shootingButton,
       creditsButton,
       settingsButton,
-      soundButton;
+      soundButton,
+      statsButton;
 
     layer.onActivate = function() {
 
@@ -17,8 +22,8 @@ define(["classes/Layer", "classes/Button", "views/gameConfigModal", "base/soundM
       });
 
       shootingButton.display.position = {
-        x: this.width * 0.33,
-        y: this.height * 0.75
+        x: this.width * 0.5,
+        y: this.height * 0.7
       };
 
       shootingButton.onClick = function() {
@@ -43,8 +48,8 @@ define(["classes/Layer", "classes/Button", "views/gameConfigModal", "base/soundM
       });
 
       settingsButton.display.position = {
-        x: this.width * 0.66,
-        y: this.height * 0.75
+        x: this.width * 0.58,
+        y: this.height * 0.87
       };
 
       settingsButton.onClick = function() {
@@ -52,8 +57,32 @@ define(["classes/Layer", "classes/Button", "views/gameConfigModal", "base/soundM
       };
 
       settingsButton.display.scale = {
-        x: 1.5,
-        y: 1.5
+        x: 0.7,
+        y: 0.7
+      };
+
+      statsButton = new Button({
+        style: {
+          font: "bold 30px Arvo"
+        },
+        texts: {
+          normal: "Statistiken",
+          mouseover: "Statistiken!",
+        }
+      });
+
+      statsButton.display.position = {
+        x: this.width * 0.42,
+        y: this.height * 0.87
+      };
+
+      statsButton.onClick = function() {
+        statsModal.show();
+      };
+
+      statsButton.display.scale = {
+        x: 0.7,
+        y: 0.7
       };
 
       creditsButton = new Button({
@@ -108,6 +137,7 @@ define(["classes/Layer", "classes/Button", "views/gameConfigModal", "base/soundM
       this.addChild(shootingButton.display);
       this.addChild(creditsButton.display);
       this.addChild(soundButton.display);
+      this.addChild(statsButton.display);
     };
 
     function setSoundButtons() {

@@ -34,7 +34,8 @@ define(["backbone", "jquery", "log", "underscore",
         "click #downloadCSV": "downloadCSV",
         "click #downloadJSON": "downloadJSON",
         "click #clearStorage": "clearStorage",
-        "change #loadJSON :file": "loadJSON"
+        "change #loadJSON :file": "loadJSON",
+        "click .removeItem": "removeItem"
       },
       downloadCSV: function(e) {
         stats.downloadCSV();
@@ -46,11 +47,13 @@ define(["backbone", "jquery", "log", "underscore",
         stats.clearLocalStorage();
       },
       loadJSON: function(e) {
-
         // add bootstrap loading prop, so it can't be clicked another time...
-        $("#loadJSON").prop("data-loading-text", "Lade...");
-
         parseLocalFile(e.target.files[0]);
+      },
+      removeItem: function(e) {
+        var id = $("#"+e.currentTarget.id).data("id");
+        stats.removeByID(id);
+
       }
     });
 
@@ -65,7 +68,6 @@ define(["backbone", "jquery", "log", "underscore",
           JsonObj = e.target.result;
           var parsedJSON = JSON.parse(JsonObj);
           stats.loadFromJSON(parsedJSON);
-          $("#loadJSON").removeProp("data-loading-text");
         };
       })(file);
 
