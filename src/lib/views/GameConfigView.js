@@ -11,7 +11,7 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
 
     // first tab
     var currentMainTab = "#general",
-      currentSubBehaviourTab = "#scale",
+      currentSubBehaviourTab = "#speed",
       validationError;
 
     var ObjectsConfigView = Backbone.View.extend({

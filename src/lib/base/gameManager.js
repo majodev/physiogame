@@ -1,10 +1,12 @@
 define(["log", "base/displayManager", "base/leapManager",
   "base/sceneManager", "key",
-  "base/soundManager", "views/settingsModal", "game/stats"
+  "base/soundManager", "views/gameConfigModal",
+  "game/stats", "views/statsModal"
   ],
   function(log, displayManager, leapManager,
     sceneManager, key,
-    soundManager, settingsModal, stats) {
+    soundManager, gameConfigModal,
+    stats, statsModal) {
 
     // private
     var showDebug = false;
@@ -45,10 +47,18 @@ define(["log", "base/displayManager", "base/leapManager",
     }
 
     key('esc', function() {
-      if (settingsModal.getShowing() === false) {
-        settingsModal.show();
+      if (gameConfigModal.getShowing() === false) {
+        gameConfigModal.show();
       } else {
-        settingsModal.hide();
+        gameConfigModal.hide();
+      }
+    });
+
+    key('s', function() {
+      if (statsModal.getShowing() === false) {
+        statsModal.show();
+      } else {
+        statsModal.hide();
       }
     });
 

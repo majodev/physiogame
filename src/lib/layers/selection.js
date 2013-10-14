@@ -1,5 +1,5 @@
-define(["classes/Layer", "classes/Button", "views/settingsModal", "base/soundManager"],
-  function(Layer, Button, settingsModal, soundManager) {
+define(["classes/Layer", "classes/Button", "views/gameConfigModal", "base/soundManager"],
+  function(Layer, Button, gameConfigModal, soundManager) {
 
     var layer = new Layer(),
       shootingButton,
@@ -48,7 +48,7 @@ define(["classes/Layer", "classes/Button", "views/settingsModal", "base/soundMan
       };
 
       settingsButton.onClick = function() {
-        settingsModal.show();
+        gameConfigModal.show();
       };
 
       settingsButton.display.scale = {

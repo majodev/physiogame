@@ -1,7 +1,7 @@
 define(["log", "jquery", "views/GameConfigView",
-    "text!views/templates/settingsModal.html", "gameConfig", "bootstrap"
+    "text!views/templates/gameConfigModal.html", "bootstrap"
   ],
-  function(log, $, GameConfigView, modalHTML, gameConfig) {
+  function(log, $, GameConfigView, modalHTML) {
 
     var initialized = false,
       gameConfigView,
@@ -12,6 +12,10 @@ define(["log", "jquery", "views/GameConfigView",
       $("#settingsModal").append(modalHTML);
       gameConfigView = new GameConfigView({
         el: $("#gameConfig")
+      });
+
+      $('#settingsModalHolder').on('hide.bs.modal', function() {
+        showing = false;
       });
 
       initialized = true;

@@ -16,6 +16,7 @@
     "handlebars": "~1.0.0",
     "requirejs-handlebars": "https://github.com/jfparadis/requirejs-handlebars.git",
     "bootstrap-slider": "https://github.com/seiyria/bootstrap-slider.git",
-    "Backbone.localStorage": "~1.1.7"
+    "Backbone.localStorage": "~1.1.7",
+    "csv": "~0.1.2"
   }
 }

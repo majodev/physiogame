@@ -18,72 +18,56 @@ require.config({
     "text": "../vendor/text/text",
     "Handlebars": "../vendor/handlebars/handlebars",
     "hbars": "../vendor/requirejs-handlebars/hbars",
-    "bootstrap-slider": "../vendor/bootstrap-slider/js/bootstrap-slider"
+    "bootstrap-slider": "../vendor/bootstrap-slider/js/bootstrap-slider",
+    "csv": "../vendor/csv/lib/csv"
   },
   shim: {
-    "Modernizr": {
-      exports: "Modernizr",
-      init: function () {
-        console.log("init Modernizr");
-      }
-    },
     "Poll": {
       exports: "Poll",
       init: function () { // Poll must reside globally to work
-        //console.log("init Poll");
+        console.log("r_shim: Poll");
       }
     },
     "Spinner": {
       exports: "Spinner",
       init: function() {
-        console.log("init spinner");
+        console.log("r_shim: spinner");
       }
     },
     "Handlebars": {
       exports: "Handlebars",
       init: function() {
-        console.log("init Handlebars");
+        console.log("r_shim: Handlebars");
       }
     },
     "bootstrap-slider": {
       deps: ["jquery", "bootstrap"],
       init : function($) {
-        console.log("init bootstrap-slider");
+        console.log("r_shim: bootstrap-slider");
       }
     },
     "bootstrap": {
       deps: ["jquery"],
       init: function($) {
-        console.log("init bootstrap");
+        console.log("r_shim: bootstrap");
       }
     },
     "backbone": {
       deps: ["underscore", "jquery"],
       exports: "Backbone",
       init: function(_, $) {
-        //console.log("requireconfig: init (AMD) underscore with noConflict");
+
+        console.log("r_shim: backbone (noConflict including jQuery and underscore)");
+
         _.noConflict(); // remove underscore from global scope
-
-        //console.log("requireconfig: init (AMD) jquery with noConflict");
         $.noConflict(false); // remove jquery from global scope
-
-        //console.log("requireconfig: init (shim) Backbone with noConflict");
         return Backbone.noConflict();
-        //return Backbone;
       }
     },
-    // "localstorage": {
-    //   deps: ["underscore", "jquery", "Backbone"],
-    //   exports: "Backbone",
-    //   init: function(_, $, Backbone) {
-    //     console.log("requireconfig: init localstorage");
-    //     return Backbone;
-    //   }
-    // },
     "PIXI": {
       exports: "PIXI",
       init: function() {
-        //console.log("requireconfig: init (shim) PIXI and remove from global scope");
+        console.log("r_shim: PIXI");
         var pixiLib = PIXI;
         PIXI = undefined;
         return pixiLib;
@@ -92,7 +76,7 @@ require.config({
     "Leap": {
       exports: "Leap",
       init: function() {
-        //console.log("requireconfig: init (shim) Leap and remove from global scope");
+        console.log("r_shim: Leap");
         var leapLib = Leap;
         Leap = undefined;
         return leapLib;
@@ -101,14 +85,14 @@ require.config({
     "key": {
       exports: "key",
       init: function() {
-        //console.log("requireconfig: init (shim) key with noConflict");
+        console.log("r_shim: key");
         return key.noConflict();
       }
     },
     "WebFont": {
       exports: "WebFont",
       init: function() {
-        //console.log("requireconfig: init (shim) WebFont and remove from global scope");
+        console.log("r_shim: WebFont");
         var WebFontLib = WebFont;
         WebFont = undefined;
         return WebFontLib;
