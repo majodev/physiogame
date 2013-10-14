@@ -26,8 +26,17 @@ define(["backbone", "jquery", "log", "underscore",
         }
       },
       render: function () {
-
         this.$el.html(statsTemplate({stats: this.collection.toJSON()}));
+      },
+      events: {
+        "click #downloadCSV": "downloadCSV",
+        "click #clearStorage": "clearStorage"
+      },
+      downloadCSV: function (e) {
+        stats.downloadCSV();
+      },
+      clearStorage: function (e) {
+        stats.clearLocalStorage();
       }
     });
 

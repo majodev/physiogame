@@ -14,8 +14,12 @@ define(["log", "jquery", "views/GameConfigView",
         el: $("#gameConfig")
       });
 
-      $('#settingsModalHolder').on('hide.bs.modal', function() {
+      $('#settingsModalHolder').on('hidden.bs.modal', function() {
         showing = false;
+      });
+
+      $('#settingsModalHolder').on('shown.bs.modal', function() {
+        showing = true;
       });
 
       initialized = true;
@@ -25,16 +29,18 @@ define(["log", "jquery", "views/GameConfigView",
       if (!initialized) {
         init();
       }
-      $("#settingsModalHolder").modal("show");
-      showing = true;
+      if(showing === false) {
+        $("#settingsModalHolder").modal("show");
+      }
     }
 
     function hide() {
       if (!initialized) {
         init();
       }
-      $("#settingsModalHolder").modal("hide");
-      showing = false;
+      if(showing === true) {
+        $("#settingsModalHolder").modal("hide");
+      }
     }
 
     function getShowing() {

@@ -19,7 +19,8 @@ require.config({
     "Handlebars": "../vendor/handlebars/handlebars",
     "hbars": "../vendor/requirejs-handlebars/hbars",
     "bootstrap-slider": "../vendor/bootstrap-slider/js/bootstrap-slider",
-    "csv": "../vendor/csv/lib/csv"
+    "csv": "../vendor/csv/lib/csv",
+    "saveAs": "../vendor/FileSaver/FileSaver"
   },
   shim: {
     "Poll": {
@@ -96,6 +97,13 @@ require.config({
         var WebFontLib = WebFont;
         WebFont = undefined;
         return WebFontLib;
+      }
+    },
+    "saveAs": {
+      exports: "saveAs",
+      init: function() {
+        console.log("r_shim: saveAs");
+        return saveAs;
       }
     }
   }

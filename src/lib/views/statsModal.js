@@ -16,9 +16,14 @@ define(["log", "jquery", "views/StatsView",
         el: $("#statsView")
       });
 
-      $('#statsModalHolder').on('hide.bs.modal', function() {
+      $('#statsModalHolder').on('hidden.bs.modal', function() {
         showing = false;
         statsView.visible = false;
+      });
+
+      $('#statsModalHolder').on('shown.bs.modal', function() {
+        showing = true;
+        statsView.visible = true;
       });
 
       initialized = true;
@@ -28,20 +33,19 @@ define(["log", "jquery", "views/StatsView",
       if (!initialized) {
         init();
       }
-      $("#statsModalHolder").modal("show");
-      showing = true;
-      statsView.visible = true;
-
-      statsView.render();
+      if(showing === false) {
+        $("#statsModalHolder").modal("show");
+        statsView.render();
+      }
     }
 
     function hide() {
       if (!initialized) {
         init();
       }
-      $("#statsModalHolder").modal("hide");
-      showing = false;
-      statsView.visible = false;
+      if(showing === true) {
+        $("#statsModalHolder").modal("hide");
+      }
     }
 
     function getShowing() {

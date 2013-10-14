@@ -1,8 +1,8 @@
 define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
-    "csv"
+    "csv", "saveAs"
   ],
   function(log, StatsCollection, StatModel, _,
-    csv) {
+    csv, saveAs) {
 
     var statsCollection = new StatsCollection(),
       current;
@@ -33,7 +33,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
       }
     }
 
-    function clearAllStats() {
+    function clearLocalStorage() {
       localStorage.clear("StatsCollection");
       statsCollection.fetch();
     }
@@ -43,7 +43,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     }
 
     function toCSV() {
-      return csv(JSON.stringify(statsCollection));
+      return csv(JSON.stringify(statsCollection), ";", true);
     }
 
     function debug() {
@@ -54,15 +54,32 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
       return statsCollection;
     }
 
+    function downloadCSV() {
+      // try {
+      //   var isFileSaverSupported = !! new Blob();
+      // } catch (e) {
+      //   console.log("FileSaver is not Supported!");
+      // }
+
+      var text = toCSV();
+      var blob = new Blob([text], {
+        type: "text/plain;charset=utf-8"
+      });
+      saveAs(blob, "stats.csv");
+      
+      //console.log(saveAs);
+    }
+
     return {
       getCollection: getCollection,
       getNew: getNew,
       getCurrent: getCurrent,
       saveCurrent: saveCurrent,
-      clearAllStats: clearAllStats,
+      clearLocalStorage: clearLocalStorage,
       toJSON: toJSON,
       toCSV: toCSV,
-      debug: debug
+      debug: debug,
+      downloadCSV: downloadCSV
     };
   }
 );
