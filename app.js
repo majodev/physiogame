@@ -39,14 +39,17 @@
     console.log("app.js (node-webkit): initializing nw.gui and storing window...");
     // requires from node-webkit must take place before executing requirejs app
     var nwgui = require('nw.gui');
+    window.nwgui = nwgui;
     window.nwWindow = nwgui.Window.get();    
 
-    console.log("app.js (node-webkit): moving require to requirenw");
+    console.log("app.js (node-webkit): moving require to requirenw (appending version)");
     // remove require from node from global namespace and append to requirenw
     // solves name-conflict with require statement from requirejs
-    var requirenw = window.require;
-    window.requirenw = requirenw;
-    window.require = undefined;
+    window.requirenw = window.require;
+    delete window.require;
+   
+    window.requirenw.version = process.versions.node;
+    delete process.versions.node;
   }
 
   // CUSTOM HOOKS that need to be executed before...

@@ -113,7 +113,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-modernizr");
 
   grunt.registerTask("default", "shell:mocha-phantomjs");
-  grunt.registerTask("build", ["modernizr", "shell:build-requirejs", "copy:assets", "copy:modernizr", "cssmin"]);
+  grunt.registerTask("build", ["modernizr", "shell:build-requirejs", "shell:build-almond", "copy:assets", "copy:modernizr", "cssmin"]);
 };
 
 // 1. make sure a http-server is running:

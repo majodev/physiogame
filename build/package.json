@@ -11,9 +11,7 @@
     "width": 1280,
     "height": 720,
     "min_width": 640,
-    "min_height": 360,
-    "kiosk": false,
-    "fullscreen": false
+    "min_height": 360
   },
   "private": true
 }
