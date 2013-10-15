@@ -15,6 +15,13 @@ module.exports = function(grunt) {
           stdout: true,
           stderr: true
         }
+      },
+      "build-almond": {
+        command: "node scripts/build-almond.js",
+        options: {
+          stdout: true,
+          stderr: true
+        }
       }
     },
     copy: {

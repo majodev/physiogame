@@ -5,7 +5,7 @@
   "window": {
     "title": "physiogame",
     "show": true,
-    "toolbar": true,
+    "toolbar": false,
     "frame": true,
     "position": "center",
     "width": 1280,
@@ -15,6 +15,5 @@
     "kiosk": false,
     "fullscreen": false
   },
-  "private": true,
-  "nodejs": false
+  "private": true
 }

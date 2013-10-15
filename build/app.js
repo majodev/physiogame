@@ -39,7 +39,7 @@
     console.log("app.js (node-webkit): initializing nw.gui and storing window...");
     // requires from node-webkit must take place before executing requirejs app
     var nwgui = require('nw.gui');
-    window.nwWindow = nwgui.Window.get();
+    window.nwWindow = nwgui.Window.get();    
 
     console.log("app.js (node-webkit): moving require to requirenw");
     // remove require from node from global namespace and append to requirenw
@@ -59,7 +59,7 @@
   // finally append requirejs script to document and start deps pipeline
   var script = document.createElement("script");
   script.type = "text/javascript";
-  script.src = "physiogame-0.1.0.min.js"; // link to require.js
+  script.src = "physiogame-0.1.0-almond.min.js"; // link to require.js
   document.body.appendChild(script);
 
 }()); // immediately executed.

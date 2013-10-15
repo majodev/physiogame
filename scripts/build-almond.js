@@ -8,9 +8,6 @@ var pjson = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../package.json"
 var config = {
   baseUrl: "src/lib/", // Base URL
   mainConfigFile: "scripts/main.js", // include all dependencies from main
-  paths: { // requireLib will be included and optimized
-    "requireLib": "../../node_modules/requirejs/require"
-  },
   optimize: "uglify2",
   onBuildRead: function(id, url, contents) {
     if (id === 'Leap') { // handling bad Leap browserify style during optimization
@@ -21,12 +18,12 @@ var config = {
   },
   preserveLicenseComments: false,
   // heads up: app init and gameManager is loaded via require dynamically, hence include!
-  include: ["requireLib", "base/gameManager"],
+  include: ["appInitializer", "base/gameManager"],
   logLevel: 0,
   waitSeconds: 7,
-  name: "appInitializer", // Name of script to start building from
+  name: "../../node_modules/almond/almond", // Name of script to start building from
   insertRequire: ["appInitializer"],
-  out: 'build/' + pjson.name + '-' + pjson.version + '.min.js' // Where to output
+  out: 'build/' + pjson.name + '-' + pjson.version + '-almond.min.js' // Where to output
 };
 
 // Optimize our script
