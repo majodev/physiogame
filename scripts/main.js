@@ -61,7 +61,7 @@ require.config({
 
         console.log("r_shim: backbone (noConflict including jQuery and underscore)");
 
-        _.noConflict(); // remove underscore from global scope
+        //_.noConflict(); // remove underscore from global scope
         $.noConflict(false); // remove jquery from global scope
         return Backbone.noConflict();
       }
