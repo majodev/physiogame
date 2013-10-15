@@ -4,8 +4,8 @@ define([],
       debugLayerVisible: {
         def: true,
         ui: "toggle",
-        cat: "general",
-        desc: "Visuell: Zeige Debug-Hinweise"
+        cat: "visual",
+        desc: "Zeige Debug Hinweise"
       },
       introTimerLength: {
         def: 3000,
@@ -13,8 +13,8 @@ define([],
         max: 10000,
         step: 100,
         ui: "slider",
-        cat: "general",
-        desc: "Visuell: Aufbauzeit vor Spielstart",
+        cat: "visual",
+        desc: "Aufbauzeit vor Spielstart",
         format: {
           time: "milli"
         }
@@ -29,8 +29,8 @@ define([],
           desc: "Luftballonpacket"
         }],
         ui: "dropdown",
-        cat: "general",
-        desc: "Visuell: Texturpacket der Spiel-Objekte"
+        cat: "visual",
+        desc: "Texturpacket der Spiel-Objekte"
       },
       gameMode: {
         def: "clearInTime",
@@ -43,7 +43,7 @@ define([],
         }],
         ui: "dropdown",
         cat: "general",
-        desc: "Modus: Hauptspielmodus"
+        desc: "Hauptspielmodus"
       },
       gameMaxTime: {
         def: 15,
@@ -52,7 +52,7 @@ define([],
         step: 15,
         ui: "slider",
         cat: "general",
-        desc: "Modus: Spielzeit eines Durchlaufes",
+        desc: "Spielzeit eines Durchlaufes",
         enabled: {
           id: "gameMode",
           value: "clearInTime"
@@ -68,7 +68,7 @@ define([],
         step: 100,
         ui: "slider",
         cat: "general",
-        desc: "Modus: Spiel-Objekte wieder hinzuzufügen nach",
+        desc: "Spiel-Objekte wieder hinzuzufügen nach",
         enabled: {
           id: "gameMode",
           value: "clearInTime"
@@ -84,7 +84,7 @@ define([],
         step: 1,
         ui: "slider",
         cat: "general",
-        desc: "Modus: Anzahl Objekte gleichzeitig hinzuzufügen",
+        desc: "Anzahl Objekte gleichzeitig hinzuzufügen",
         enabled: {
           id: "gameMode",
           value: "clearInTime"
@@ -103,7 +103,7 @@ define([],
         step: 1,
         ui: "slider",
         cat: "general",
-        desc: "Modus: Anzahl der Spiel-Objekte",
+        desc: "Anzahl der Spiel-Objekte",
         format: {
           post: "Objekte"
         }
@@ -114,8 +114,8 @@ define([],
         max: 100,
         step: 1,
         ui: "slider",
-        cat: "general",
-        desc: "Visuell: Anzahl der Wolken-Objekte",
+        cat: "visual",
+        desc: "Anzahl der Wolken-Objekte",
         format: {
           post: "Objekte"
         }
@@ -346,8 +346,8 @@ define([],
       leapShowIndicatorLayer: {
         def: true,
         ui: "toggle",
-        cat: "leap",
-        desc: "Visuell: Zeige Leap-Hinweise"
+        cat: "visual",
+        desc: "Zeige Leap Motion Hinweise"
       },
       leapXModifier: {
         def: 3.8,
@@ -356,7 +356,7 @@ define([],
         step: 0.2,
         ui: "slider",
         cat: "leap",
-        desc: "Tracking: Verkleinerung der horizontalen Achse (x)",
+        desc: "Tracking-Verkleinerung der horizontalen Achse (x)",
         format: {
           post: "fach"
         }
@@ -368,7 +368,7 @@ define([],
         step: 0.02,
         ui: "slider",
         cat: "leap",
-        desc: "Tracking: Verkleinerung der vertikalen Achse (y)",
+        desc: "Tracking-Verkleinerung der vertikalen Achse (y)",
         format: {
           post: "fach"
         }
@@ -380,7 +380,7 @@ define([],
         step: 0.02,
         ui: "slider",
         cat: "leap",
-        desc: "Tracking: Mittelpunkt der horizontalen Achse (x)",
+        desc: "Tracking-Mittelpunkt der horizontalen Achse (x)",
         format: {
           pre: "Produkt von"
         }
@@ -392,7 +392,7 @@ define([],
         step: 0.02,
         ui: "slider",
         cat: "leap",
-        desc: "Tracking: Mittelpunkt der vertikalen Achse (y)",
+        desc: "Tracking-Mittelpunkt der vertikalen Achse (y)",
         format: {
           pre: "Produkt von"
         }
