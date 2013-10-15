@@ -20,7 +20,8 @@ require.config({
     "hbars": "../vendor/requirejs-handlebars/hbars",
     "bootstrap-slider": "../vendor/bootstrap-slider/js/bootstrap-slider",
     "csv": "../vendor/csv/lib/csv",
-    "saveAs": "../vendor/FileSaver/FileSaver"
+    "saveAs": "../vendor/FileSaver/FileSaver",
+    "moment": "../vendor/momentjs/moment"
   },
   shim: {
     "Poll": {

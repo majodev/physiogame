@@ -1,11 +1,11 @@
 <div class="row buttonStatBar">
   {{#if stats}}
-    <span id="loadJSON" class="btn btn-xs btn-success btn-file">Laden (JSON) <input type="file"></span>
-    <button id="downloadJSON" type="button" class="btn btn-primary btn-xs">Speichern (JSON)</button>
-    <button id="downloadCSV" type="button" class="btn btn-primary btn-xs">Exportieren (CSV)</button>
-    <button id="clearStorage" type="button" class="btn btn-danger btn-xs pull-right">&times; Alle löschen</button>
+    <span id="loadJSON" class="btn btn-success btn-file">Laden (JSON) <input type="file"></span>
+    <button id="downloadJSON" type="button" class="btn btn-primary">Speichern (JSON)</button>
+    <button id="downloadCSV" type="button" class="btn btn-primary">Exportieren (CSV)</button>
+    <button id="clearStorage" type="button" class="btn btn-danger pull-right">&times; Alle löschen</button>
   {{else}}
-    <span id="loadJSON" class="btn btn-xs btn-success btn-file">Laden (JSON) <input type="file"></span>
+    <span id="loadJSON" class="btn btn-success btn-file">Laden (JSON) <input type="file"></span>
   {{/if}}
 </div>
 
@@ -13,13 +13,17 @@
   <table class="table table-condensed statsTable">
     <thead>
       <tr>
-        <th>Gefangene Objekte</th>
+        <th>Spielstart</th>
+        <th>Spielende</th>
+        <th>Gefangen</th>
         <th>Aktion</th>
       </tr>
     </thead>
     <tbody>
       {{#each stats}}
         <tr>
+          <td>{{startDate}}</td>
+          <td>{{endDate}}</td>
           <td>{{objectsCatched}}</td>
           {{#if id}}
             <td>

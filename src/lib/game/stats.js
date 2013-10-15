@@ -1,8 +1,8 @@
 define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
-    "csv", "saveAs", "gameConfig"
+    "csv", "saveAs", "gameConfig", "moment"
   ],
   function(log, StatsCollection, StatModel, _,
-    csv, saveAs, gameConfig) {
+    csv, saveAs, gameConfig, moment) {
 
     var statsCollection = new StatsCollection(),
       current;
@@ -14,6 +14,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
 
     function getNew() {
       current = new StatModel({
+        startDate: moment().format("DD.MM.YYYY  hh:mm:ss"), //TODO: take out and only use at csv export!
         gameConfig: gameConfig.toJSON()
       });
       statsCollection.push(current);
@@ -31,6 +32,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     function saveCurrent() {
       if (_.isUndefined(current) === false) {
         log.debug("stats: saveCurrent id=" + current.cid);
+        current.set("endDate", moment().format("DD.MM.YYYY  hh:mm:ss"));
         current.save();
       }
     }
@@ -56,13 +58,17 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     function downloadCSV() {
       saveAs(new Blob([toCSV()], {
         type: "text/plain;charset=utf-8"
-      }), "stats.csv");
+      }), getFileName("stats_", ".csv"));
     }
 
     function downloadJSON() {
       saveAs(new Blob([toJSONStrings()], {
         type: "text/plain;charset=utf-8"
-      }), "stats.json");
+      }), getFileName("stats_", ".json"));
+    }
+
+    function getFileName(pre, post) {
+      return pre + moment().format("YYYY_MM_DD__hh_mm_ss") + post;
     }
 
     function loadFromJSON(jsonObject) {
