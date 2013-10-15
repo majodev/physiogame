@@ -101,6 +101,29 @@ define(["backbone", "underscore", "gameConfigMap",
           return normal;
         }
       },
+      getFormattedCustomValue: function(key, value) {
+        var normal = stripNumberPrecision(value);
+        var formatted = this.getFormattedValueIfNeeded(key, normal);
+
+        if(formatted !== false) {
+          return formatted;
+        } else {
+          return normal;
+        }
+      },
+      getValueNeededInCustomJSON: function(key, json) {
+        // check if variable should be even returned (enabled flag in gameConfigMap)
+        if (_.isUndefined(gameConfigMap[key].enabled) === false) {
+
+          // check if this configItem should be returned
+          if (json[gameConfigMap[key].enabled.id] !== gameConfigMap[key].enabled.value) {
+            // enabled flag condition not passed, deinclude this configItem!
+            return 0;
+          }
+        }
+
+        return json[key];
+      },
       getFormattedValueIfNeeded: function(key, valueToFormat) {
         var formattedValue = false;
 

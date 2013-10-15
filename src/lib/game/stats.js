@@ -7,14 +7,29 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     var statsCollection = new StatsCollection(),
       current;
 
-    // fetch previous stats from LocalStorage
-    statsCollection.fetch();
+    
+
+    (function startup() {
+      log.debug("stats: startup fetch()");
+
+      // fetch previous stats from LocalStorage
+      statsCollection.fetch();
+
+      // if length > 0 reset gameConfig to the last tracked settings...
+      if(statsCollection.length > 0) {
+        try {
+          applyPreviousSettings(statsCollection.models[statsCollection.length-1].id);
+          log.debug("stats: startup applied last known gameConfig!");
+        } catch (e) {
+          log.error("stats: startup error, cannot apply last known settings e=" + e);
+        }
+      }
+    }()); // self executing only at startup
 
     // returns an instance of a new StatModel in the Collection
-
     function getNew() {
       current = new StatModel({
-        startDate: moment().format("DD.MM.YYYY  hh:mm:ss"), //TODO: take out and only use at csv export!
+        startDate: moment().toDate(), //TODO: take out and only use at csv export!
         gameConfig: gameConfig.toJSON()
       });
       statsCollection.push(current);
@@ -32,7 +47,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     function saveCurrent() {
       if (_.isUndefined(current) === false) {
         log.debug("stats: saveCurrent id=" + current.cid);
-        current.set("endDate", moment().format("DD.MM.YYYY  hh:mm:ss"));
+        current.set("endDate", moment().toDate());
         current.save();
       }
     }
@@ -44,7 +59,27 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     }
 
     function toCSV() {
-      return csv(JSON.stringify(statsCollection), ";", true);
+
+      var settingsJSON = statsCollection.toJSON(),
+        convertedCollection = [],
+        i = 0,
+        len = settingsJSON.length;
+
+      for (i; i < len; i += 1) {
+        convertedCollection.push({
+          id: settingsJSON[i].id,
+          startDate_date: formatDate(settingsJSON[i].startDate),
+          endDate_date: formatDate(settingsJSON[i].endDate),
+          catched_count: settingsJSON[i].objectsCatched,
+          config_gameMode_string: gameConfig.getFormattedCustomValue("gameMode", settingsJSON[i].gameConfig.gameMode),
+          config_gameMaxTime_sec: gameConfig.getValueNeededInCustomJSON("gameMaxTime", settingsJSON[i].gameConfig),
+          config_objectsToSpawn_count: settingsJSON[i].gameConfig.objectsToSpawn
+        });
+      }
+
+      console.log(convertedCollection);
+
+      return csv(JSON.stringify(convertedCollection), ";", true);
     }
 
     function toJSONStrings() {
@@ -68,7 +103,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     }
 
     function getFileName(pre, post) {
-      return pre + moment().format("YYYY_MM_DD__hh_mm_ss") + post;
+      return pre + moment().format("YYYY_MM_DD__HH_mm_ss") + post;
     }
 
     function loadFromJSON(jsonObject) {
@@ -110,14 +145,17 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
       var i = 0,
         len = collectionJSON.length;
       for (i; i < len; i += 1) {
+        collectionJSON[i].startDate = formatDate(collectionJSON[i].startDate);
+        collectionJSON[i].endDate = formatDate(collectionJSON[i].endDate);
+        collectionJSON[i].objectsCatched = collectionJSON[i].objectsCatched;
         collectionJSON[i].gameConfig = gameConfig.generateKeyValuePairs(undefined, collectionJSON[i].gameConfig);
       }
 
-      //console.log(collectionJSON);
-
       return collectionJSON;
+    }
 
-      //
+    function formatDate(date) {
+      return moment(date).format("DD.MM.YYYY  HH:mm:ss");
     }
 
     return {
