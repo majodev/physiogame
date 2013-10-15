@@ -1,7 +1,7 @@
 <h1>physiogame</h1>
 This is a master thesis project by me Mario Ranftl (@majodev). I'm trying to build a full-blown game that's playable in Browsers (even mobile) and can also be packaged via node-webkit for desktop use. Currently the target is to create a funny and simple game, that's suited for therapeutic exercises. 
 
-<a href="https://majodev.com/pixi">The LATEST online version is available HERE.</a>
+<a href="http://majodev.com/pixi">The LATEST online version is available HERE.</a>
 
 <h2>Setup</h2>
 Fire up your http-server in project root, e.g. <a href="https://npmjs.org/package/http-server">simple http-server for node</a>
