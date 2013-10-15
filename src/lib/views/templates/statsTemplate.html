@@ -9,43 +9,49 @@
   {{/if}}
 </div>
 
-<div class="table-responsive">
-  <table class="table table-condensed statsTable">
-    <thead>
-      <tr>
-        <th>Spielstart</th>
-        <th>Spielende</th>
-        <th>Gefangen</th>
-        <th>Aktion</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each stats}}
+{{#if stats}}
+  <div class="table-responsive">
+    <table class="table table-condensed statsTable">
+      <thead>
         <tr>
-          <td>{{startDate}}</td>
-          <td>{{endDate}}</td>
-          <td>{{objectsCatched}}</td>
-          {{#if id}}
-            <td>
-              <small><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{{id}}}">Erweitert</a></small>
-              <button id="remove-{{id}}" data-id="{{id}}" type="button" class="btn btn-danger btn-xs removeItem pull-right">&times;</button></td>
-          {{else}}
-            <td><small>Läuft noch</small></td>
-          {{/if}}
+          <th>Benutzer</th>
+          <th>Spielstart</th>
+          <th>Spielende</th>
+          <th>Gefangen</th>
+          <th>Aktion</th>
         </tr>
-        <tr id="collapse-{{{id}}}" class="panel-collapse collapse">
-          <td colspan="4">
-            <button id="apply-{{id}}" data-id="{{id}}" type="button" data-loading-text="Lade..." class="btn btn-warning btn-xs applySettings pull-right">Diese Einstellungen wiederherstellen</button>
-              <div><strong>Einstellungen </strong><small>({{id}})</small></div>
-            <div class="statHistoryConfig">
-              
-              {{#each gameConfig.keyValues}}
-                <div class="col-xs-6"><p><small>{{objectDesc}}: </small><strong>{{objectFormattedValue}}</strong></p></div>
-              {{/each}}
-            </div>
-          </td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+        {{#each stats}}
+          <tr>
+            <td>{{userName}}</td>
+            <td>{{startDate}}</td>
+            <td>{{endDate}}</td>
+            <td>{{objectsCatched}}</td>
+            {{#if id}}
+              <td>
+                <small><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{{id}}}">Erweitert</a></small>
+                <button id="remove-{{id}}" data-id="{{id}}" type="button" class="btn btn-danger btn-xs removeItem pull-right">&times;</button></td>
+            {{else}}
+              <td><small>Läuft noch</small></td>
+            {{/if}}
+          </tr>
+          <tr id="collapse-{{{id}}}" class="panel-collapse collapse">
+            <td colspan="5">
+              <button id="apply-{{id}}" data-id="{{id}}" type="button" data-loading-text="Lade..." class="btn btn-warning btn-xs applySettings pull-right">Einstellungen dieses Spiels wiederherstellen</button>
+                <div><strong>Einstellungen </strong><small>({{id}})</small></div>
+              <div class="statHistoryConfig">
+                
+                {{#each gameConfig.keyValues}}
+                  <div class="col-xs-6"><p><small>{{objectDesc}}: </small><strong>{{objectFormattedValue}}</strong></p></div>
+                {{/each}}
+              </div>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+{{else}}
+  <div class="stats-no-games"><p>:(</p><p>Keine früheren Spiele gefunden.</p></div>
+{{/if}}

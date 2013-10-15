@@ -12,6 +12,7 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
     // first tab
     var currentMainTab = "#general",
       currentSubBehaviourTab = "#speed",
+      lastFocusedChild,
       validationError;
 
     var ObjectsConfigView = Backbone.View.extend({
@@ -67,6 +68,13 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
           $(this).tab('show');
         });
 
+        // when text was last focused reset it to there...
+        if(_.isUndefined(lastFocusedChild) === false) {
+          //$( "#" + lastFocusedChild ).select();
+          $( "#" + lastFocusedChild ).prop("selectionStart", $( "#" + lastFocusedChild ).val().length).focus();
+          lastFocusedChild = undefined;
+        }
+
         // finally validate current configuration and show results
         if(this.model.isValid() === false) {
           $("#statusNotification").append('<div class="alert alert-danger"><small>' + 
@@ -88,7 +96,8 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
         "slideStop input.parameterSlider": "sliderEnd",
         "click .dropdown-menu a": "dropdownClick",
         "click button.toggleButton": "toggleClick",
-        "click #resetToStandard": "resetAllToStandard"
+        "click #resetToStandard": "resetAllToStandard",
+        "input .textInputField": "textInputChange"
       },
       dropdownClick: function(event) {
         this.setModelValue(event.currentTarget.parentNode.parentNode.id, event.currentTarget.id);
@@ -117,19 +126,26 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
         refreshGameWithNewValues();
         alertModal.show({
           head: "Standard-Werte wiederhergestellt!",
-          text: "Alle Einstellungen wurden auf die Standard-Werte zurückgesetzt.",
-          autoDismiss: 5000
+          text: "Alle Werte auf Standard zurückgesetzt. Benutzername ist nun \"" +
+            gameConfig.getFormattedValue("userName") + "\".",
+          autoDismiss: 2500
         });
       },
-      setModelValue: function(key, value) {
+      setModelValue: function(key, value, dontRefresh) {
         this.model.set(key, value);
         //this.model.isValid();
-        refreshGameWithNewValues();
+        if(_.isUndefined(dontRefresh) || dontRefresh === false) {
+          refreshGameWithNewValues();
+        }
       },
       alertModelNotValid: function(model, error) {
         // TODO: show error in interface!
         validationError = error;
         log.warn("validation error: " + error);
+      },
+      textInputChange: function (event) {
+        lastFocusedChild = event.currentTarget.id;
+        this.setModelValue(event.currentTarget.id, event.currentTarget.value, true);
       }
     });
 

@@ -1,4 +1,5 @@
-Mario Ranftl, BSc. (@majodev)
+Physiogame
+by Mario Ranftl, BSc. (@majodev)
 
 practical part of my master thesis for FH JOANNEUM, Graz, Austria (no kangaroos)
 FH JOANNEUM advanced information management master degree program

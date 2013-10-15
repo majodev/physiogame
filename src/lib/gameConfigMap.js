@@ -1,6 +1,12 @@
 define([],
   function() {
     return {
+      userName: {
+        def: "Anonym",
+        ui: "text",
+        cat: "general",
+        desc: "Benutzername"
+      },
       debugLayerVisible: {
         def: true,
         ui: "toggle",

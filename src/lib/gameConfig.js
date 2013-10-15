@@ -146,6 +146,15 @@ define(["backbone", "underscore", "gameConfigMap",
           }
         }
 
+        // uiText needs different handling for getting formatted values...
+        if (gameConfigMap[key].ui === "text") {
+          if(valueToFormat === "") {
+            formattedValue = gameConfigMap[key].def;
+          } else {
+            formattedValue = valueToFormat;
+          }
+        }
+
         // check the format parameter if formatting for output must be applied
         if (_.isUndefined(gameConfigMap[key].format) === false) {
 
@@ -257,6 +266,7 @@ define(["backbone", "underscore", "gameConfigMap",
         }
       },
       defaults: {
+        userName: gameConfigMap.userName.def,
         objectsToSpawn: gameConfigMap.objectsToSpawn.def,
         gameMode: gameConfigMap.gameMode.def,
         gameMaxTime: gameConfigMap.gameMaxTime.def,

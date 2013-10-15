@@ -59,6 +59,15 @@ canvas { /* To remove the scrollbars */
   width: 760px;
 }
 
+.modal-alert-dialog {
+  width: 450px;
+  padding-top: 40px;
+}
+
+.stats-no-games {
+  text-align: center;
+}
+
 .settingsConfigValue {
   width: 160px;
 }
@@ -131,6 +140,10 @@ canvas { /* To remove the scrollbars */
   margin-top: 5px;
   background: #EEEEEE;
   padding: 7px;
+}
+
+.textInputField {
+  font-size: 11px;
 }
 
 

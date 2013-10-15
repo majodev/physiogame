@@ -5,7 +5,10 @@ define([],
       statusNode = document.getElementById("preloaderStatus"),
       lines = [];
 
-    lines.push(statusNode.innerHTML);
+    //(function startup() {
+      //push old infos...
+      //lines.push(statusNode.innerHTML);
+    //}());
 
     function write(text) {
       var fullText = "",

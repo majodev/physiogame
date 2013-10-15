@@ -1,12 +1,12 @@
 define(["backbone", "jquery", "log", "underscore",
     "Handlebars", "game/stats",
     "hbars!views/templates/statsTemplate",
-    "views/alertModal"
+    "views/alertModal", "gameConfig"
   ],
   function(Backbone, $, log, _,
     Handlebars, stats,
     statsTemplate,
-    alertModal) {
+    alertModal, gameConfig) {
 
     var StatsView = Backbone.View.extend({
       visible: false,
@@ -66,9 +66,9 @@ define(["backbone", "jquery", "log", "underscore",
           btn.button("reset");
         }, 1500);
         alertModal.show({
-          head: "Einstellungen zurückgesetzt!",
-          text: "Die Einstellungen der ausgewählten Statistik wurden wiederhergestellt.",
-          autoDismiss: 5000
+          head: "Einstellungen wiederhergestellt!",
+          text: "Die Einstellungen von \"" + gameConfig.getFormattedValue("userName") + "\" sind nun aktiv.",
+          autoDismiss: 2500
         });
       }
     });

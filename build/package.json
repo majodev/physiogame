@@ -13,7 +13,7 @@
     "min_width": 640,
     "min_height": 360,
     "kiosk": false,
-    "fullscreen": false
+    "fullscreen": true
   },
   "nodejs": false
 }

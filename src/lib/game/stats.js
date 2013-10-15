@@ -20,9 +20,9 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
           applyPreviousSettings(statsCollection.models[statsCollection.length - 1].id);
           log.debug("stats: startup applied last known gameConfig!");
           alertModal.show({
-            head: "Willkommen zurück bei Physiogame!",
-            text: "Die Einstellungen der zuletzt aufgezeichneten Statistik wurden wiederhergestellt.",
-            autoDismiss: 5000
+            head: "Willkommen zurück " + gameConfig.getFormattedValue("userName") + "!",
+            text: "Einstellungen deines letzten Spiels wiederhergestellt.",
+            autoDismiss: 4000
           });
         } catch (e) {
           log.error("stats: startup error, cannot apply last known settings e=" + e);
@@ -34,7 +34,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
 
     function getNew() {
       current = new StatModel({
-        startDate: moment().toDate(), //TODO: take out and only use at csv export!
+        startDate: moment().toDate(),
         gameConfig: gameConfig.toJSON()
       });
       statsCollection.push(current);
@@ -73,6 +73,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
       for (i; i < len; i += 1) {
         convertedCollection.push({
           id: settingsJSON[i].id,
+          config_userName_string: gameConfig.getFormattedCustomValue("userName", settingsJSON[i].gameConfig.userName),
           startDate_date: formatDate(settingsJSON[i].startDate),
           endDate_date: formatDate(settingsJSON[i].endDate),
           catched_count: settingsJSON[i].objectsCatched,
@@ -150,6 +151,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
       var i = 0,
         len = collectionJSON.length;
       for (i; i < len; i += 1) {
+        collectionJSON[i].userName = gameConfig.getFormattedCustomValue("userName", collectionJSON[i].gameConfig.userName);
         collectionJSON[i].startDate = formatDate(collectionJSON[i].startDate);
         collectionJSON[i].endDate = formatDate(collectionJSON[i].endDate);
         collectionJSON[i].objectsCatched = collectionJSON[i].objectsCatched;

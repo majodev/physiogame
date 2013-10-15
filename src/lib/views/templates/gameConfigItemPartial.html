@@ -27,7 +27,11 @@
       <td class="settingsConfigValue"><button id="{{objectKey}}" type="button" class="btn btn-xs btn-danger toggleButton" data-toggle="button">deaktiviert</button></td>
     {{/if}}
   {{/if}}
-
+  {{#if uiText}}
+    <td class="settingsConfigValue">
+      <input id="{{objectKey}}" maxlength="20" type="text" class="form-control textInputField" placeholder="{{objectDef}}" value="{{objectValue}}">
+    </td>
+  {{/if}}
   <td class="settingsValue">
     {{#if objectFormattedValue}}
       <div id="{{objectKey}}-value">{{{objectFormattedValue}}}</div>
