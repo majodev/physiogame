@@ -11,7 +11,7 @@ var config = {
   paths: { // requireLib will be included and optimized
     "requireLib": "../../node_modules/requirejs/require"
   },
-  optimize: "uglify2",
+  optimize: "none",
   onBuildRead: function(id, url, contents) {
     if (id === 'Leap') { // handling bad Leap browserify style during optimization
         return 'define(\'Leap\', [], function() {var define;\n ' + contents + ' return Leap; });';

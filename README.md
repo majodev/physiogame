@@ -17,7 +17,7 @@ Go to `localhost:8080/build` and enjoy
 
 `grunt build`
 
-Some libraries in src/vendor might need to be build manually (e.g. <a href="https://github.com/typekit/webfontloader">webfontloader</a>). Trace the error through the r.js optimization script if you encounter any errors.
+Some libraries in src/vendor might need to be build manually (e.g. <a href="https://github.com/typekit/webfontloader">webfontloader</a> via rake). Trace the error through the r.js optimization script if you encounter any errors.
 
 <h2>Testing</h2>
 needs <a href="http://phantomjs.org/">phantomjs</a> bin in path!

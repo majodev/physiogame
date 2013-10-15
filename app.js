@@ -36,11 +36,12 @@
   // CHECKING FOR NODE-WEBKIT...
   if (window && window.require) {
 
-    console.log("app.js (node-webkit): initializing nw.gui...");
+    console.log("app.js (node-webkit): initializing nw.gui and storing window...");
     // requires from node-webkit must take place before executing requirejs app
-    window.nwgui = require('nw.gui');
+    var nwgui = require('nw.gui');
+    window.nwWindow = nwgui.Window.get();    
 
-    console.log("app.js (node-webkit): removing require from global object...");
+    console.log("app.js (node-webkit): moving require to requirenw");
     // remove require from node from global namespace and append to requirenw
     // solves name-conflict with require statement from requirejs
     var requirenw = window.require;
