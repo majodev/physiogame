@@ -1,10 +1,12 @@
 define(["backbone", "jquery", "log", "underscore",
     "Handlebars", "game/stats",
-    "hbars!views/templates/statsTemplate"
+    "hbars!views/templates/statsTemplate",
+    "views/alertModal"
   ],
   function(Backbone, $, log, _,
     Handlebars, stats,
-    statsTemplate) {
+    statsTemplate,
+    alertModal) {
 
     var StatsView = Backbone.View.extend({
       visible: false,
@@ -52,17 +54,22 @@ define(["backbone", "jquery", "log", "underscore",
         parseLocalFile(e.target.files[0]);
       },
       removeItem: function(e) {
-        var id = $("#"+e.currentTarget.id).data("id");
+        var id = $("#" + e.currentTarget.id).data("id");
         stats.removeByID(id);
       },
       applySettings: function(e) {
-        var btn = $("#"+e.currentTarget.id);
+        var btn = $("#" + e.currentTarget.id);
         var id = btn.data("id");
         btn.button("loading");
         stats.applyPreviousSettings(id);
-        setTimeout(function () {
+        setTimeout(function() {
           btn.button("reset");
         }, 1500);
+        alertModal.show({
+          head: "Einstellungen zurückgesetzt!",
+          text: "Die Einstellungen der ausgewählten Statistik wurden wiederhergestellt.",
+          autoDismiss: 5000
+        });
       }
     });
 

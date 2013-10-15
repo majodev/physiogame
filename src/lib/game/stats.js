@@ -1,13 +1,12 @@
 define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
-    "csv", "saveAs", "gameConfig", "moment"
+    "csv", "saveAs", "gameConfig", "moment", "views/alertModal"
   ],
   function(log, StatsCollection, StatModel, _,
-    csv, saveAs, gameConfig, moment) {
+    csv, saveAs, gameConfig, moment, alertModal) {
 
     var statsCollection = new StatsCollection(),
       current;
 
-    
 
     (function startup() {
       log.debug("stats: startup fetch()");
@@ -16,10 +15,15 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
       statsCollection.fetch();
 
       // if length > 0 reset gameConfig to the last tracked settings...
-      if(statsCollection.length > 0) {
+      if (statsCollection.length > 0) {
         try {
-          applyPreviousSettings(statsCollection.models[statsCollection.length-1].id);
+          applyPreviousSettings(statsCollection.models[statsCollection.length - 1].id);
           log.debug("stats: startup applied last known gameConfig!");
+          alertModal.show({
+            head: "Willkommen zurück bei Physiogame!",
+            text: "Die Einstellungen der zuletzt aufgezeichneten Statistik wurden wiederhergestellt.",
+            autoDismiss: 5000
+          });
         } catch (e) {
           log.error("stats: startup error, cannot apply last known settings e=" + e);
         }
@@ -27,6 +31,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     }()); // self executing only at startup
 
     // returns an instance of a new StatModel in the Collection
+
     function getNew() {
       current = new StatModel({
         startDate: moment().toDate(), //TODO: take out and only use at csv export!
@@ -117,9 +122,9 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
 
     function removeByID(id) {
       var model = statsCollection.get(id);
-      if(_.isUndefined(model) === false) {
+      if (_.isUndefined(model) === false) {
 
-        if(model === current) {
+        if (model === current) {
           current = undefined;
         }
 
@@ -129,11 +134,11 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
 
     function applyPreviousSettings(id) {
       var model = statsCollection.get(id);
-      if(_.isUndefined(model) === false) {
+      if (_.isUndefined(model) === false) {
         gameConfig.resetToJSON(model.get("gameConfig"));
 
         // ATTENTION, dynamic require!
-        require(["base/sceneManager"], function (sceneManager) {
+        require(["base/sceneManager"], function(sceneManager) {
           sceneManager.resetCurrentScene();
         });
       }

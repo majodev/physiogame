@@ -1,13 +1,13 @@
 define(["backbone", "jquery", "log", "gameConfig", "underscore",
     "hbars!views/templates/gameConfigTemplate",
     "hbars!views/templates/gameConfigItemPartial",
-    "Handlebars",
+    "Handlebars", "views/alertModal",
     "bootstrap-slider"
   ],
   function(Backbone, $, log, gameConfig, _,
     gameConfigTemplate,
     gameConfigItemPartial,
-    Handlebars) {
+    Handlebars, alertModal) {
 
     // first tab
     var currentMainTab = "#general",
@@ -115,6 +115,11 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
         log.debug("resetAllToStandard!");
         this.model.resetToDefaultValues();
         refreshGameWithNewValues();
+        alertModal.show({
+          head: "Standard-Werte wiederhergestellt!",
+          text: "Alle Einstellungen wurden auf die Standard-Werte zurückgesetzt.",
+          autoDismiss: 5000
+        });
       },
       setModelValue: function(key, value) {
         this.model.set(key, value);

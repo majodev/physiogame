@@ -10,6 +10,7 @@ define(["log", "jquery", "views/GameConfigView",
     function init() {
       log.debug("settingsModal: init");
       $("#settingsModal").append(modalHTML);
+
       gameConfigView = new GameConfigView({
         el: $("#gameConfig")
       });
