@@ -82,7 +82,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
         });
       }
 
-      console.log(convertedCollection);
+      //console.log(convertedCollection);
 
       return csv(JSON.stringify(convertedCollection), ";", true);
     }
