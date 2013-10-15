@@ -1,16 +1,18 @@
 <div class="row buttonStatBar">
-  <button id="downloadJSON" type="button" class="btn btn-primary btn-xs">Speichern (JSON)</button>
-  <button id="downloadCSV" type="button" class="btn btn-primary btn-xs">Exportieren (CSV)</button>
-  <span id="loadJSON" class="btn btn-xs btn-success btn-file">Laden (JSON) <input type="file"></span>
-  <button id="clearStorage" type="button" class="btn btn-danger btn-xs pull-right">&times; Alle löschen</button>
+  {{#if stats}}
+    <span id="loadJSON" class="btn btn-xs btn-success btn-file">Laden (JSON) <input type="file"></span>
+    <button id="downloadJSON" type="button" class="btn btn-primary btn-xs">Speichern (JSON)</button>
+    <button id="downloadCSV" type="button" class="btn btn-primary btn-xs">Exportieren (CSV)</button>
+    <button id="clearStorage" type="button" class="btn btn-danger btn-xs pull-right">&times; Alle löschen</button>
+  {{else}}
+    <span id="loadJSON" class="btn btn-xs btn-success btn-file">Laden (JSON) <input type="file"></span>
+  {{/if}}
 </div>
 
 <div class="table-responsive">
   <table class="table table-condensed statsTable">
     <thead>
       <tr>
-        <th>Eindeutige ID</th>
-        <th>Spielmodus</th>
         <th>Gefangene Objekte</th>
         <th>Aktion</th>
       </tr>
@@ -18,18 +20,27 @@
     <tbody>
       {{#each stats}}
         <tr>
-          {{#if id}}
-            <td><small>{{id}}</small></td>
-          {{else}}
-            <td>Neu</td>
-          {{/if}}
-          <td>{{gameMode}}</td>
           <td>{{objectsCatched}}</td>
           {{#if id}}
-            <td><button id="remove-{{id}}" data-id="{{id}}" type="button" class="btn btn-danger btn-xs removeItem pull-right">&times;</button></td>
+            <td>
+              <small><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{{id}}}">Erweitert</a></small>
+              <!-- <button id="config-{{id}}" data-id="{{id}}" type="button" class="btn btn-primary btn-xs showConfig">zeige Einstellung</button><button id="apply-{{id}}" data-id="{{id}}" type="button" class="btn btn-primary btn-xs applySettings">setze Einstellung</button> -->
+              <button id="remove-{{id}}" data-id="{{id}}" type="button" class="btn btn-danger btn-xs removeItem pull-right">&times;</button></td>
           {{else}}
-            <td>--</td>
+            <td><small>Läuft noch</small></td>
           {{/if}}
+        </tr>
+        <tr id="collapse-{{{id}}}" class="panel-collapse collapse">
+          <td colspan="4">
+            <button id="apply-{{id}}" data-id="{{id}}" type="button" data-loading-text="Lade..." class="btn btn-warning btn-xs applySettings pull-right">Diese Einstellungen wiederherstellen</button>
+              <div><strong>Einstellungen </strong><small>({{id}})</small></div>
+            <div class="statHistoryConfig">
+              
+              {{#each gameConfig.keyValues}}
+                <div class="col-xs-6"><p><small>{{objectDesc}}: </small><strong>{{objectFormattedValue}}</strong></p></div>
+              {{/each}}
+            </div>
+          </td>
         </tr>
       {{/each}}
     </tbody>

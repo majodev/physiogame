@@ -120,6 +120,10 @@ canvas { /* To remove the scrollbars */
   background: #EEEEEE;
 }
 
+.statHistoryConfig {
+  font-size: 11px;
+}
+
 .buttonStatBar {
   margin-left: 0px;
   margin-right: 0px;

@@ -4,9 +4,9 @@ define(["backbone", "underscore", "gameConfigMap",
   function(Backbone, _, gameConfigMap,
     timeFormatter) {
 
-    var AppConfig = Backbone.Model.extend({
-      generateKeyValuePairs: function(filterCategory) { // optional filter
-        var json = this.toJSON();
+    var GameConfig = Backbone.Model.extend({
+      generateKeyValuePairs: function(filterCategory, customJSON) { // optional filter
+        var json = (_.isUndefined(customJSON) === true) ? this.toJSON() : customJSON;
         var keyArray = _.keys(json);
         var returnArray = [];
         var i = 0,
@@ -174,6 +174,17 @@ define(["backbone", "underscore", "gameConfigMap",
           this.set(keyArray[i], gameConfigMap[keyArray[i]].def);
         }
       },
+      resetToJSON: function (json) {
+        // resets all values to the supplied json object.
+        var keyArray = _.keys(json);
+        var i = 0,
+          len = keyArray.length;
+
+        for (i; i < len; i += 1) {
+          //console.log("keyArray[i]=" + keyArray[i] + " is now :" + json[keyArray[i]]);
+          this.set(keyArray[i], json[keyArray[i]]);
+        }
+      },
       validate: function(attrs, options) {
         var attrKeys = _.keys(attrs),
           i = 0,
@@ -256,7 +267,7 @@ define(["backbone", "underscore", "gameConfigMap",
       }
     });
 
-    var appConfig = new AppConfig();
+    var gameConfig = new GameConfig();
 
     // helper to format for printable
 
@@ -265,5 +276,5 @@ define(["backbone", "underscore", "gameConfigMap",
     }
 
 
-    return appConfig;
+    return gameConfig;
   });

@@ -27,7 +27,8 @@ define(["backbone", "jquery", "log", "underscore",
       },
       render: function() {
         this.$el.html(statsTemplate({
-          stats: this.collection.toJSON()
+          // stats: this.collection.toJSON()
+          stats: stats.getFormattedJSON()
         }));
       },
       events: {
@@ -35,7 +36,8 @@ define(["backbone", "jquery", "log", "underscore",
         "click #downloadJSON": "downloadJSON",
         "click #clearStorage": "clearStorage",
         "change #loadJSON :file": "loadJSON",
-        "click .removeItem": "removeItem"
+        "click .removeItem": "removeItem",
+        "click .applySettings": "applySettings"
       },
       downloadCSV: function(e) {
         stats.downloadCSV();
@@ -47,13 +49,20 @@ define(["backbone", "jquery", "log", "underscore",
         stats.clearLocalStorage();
       },
       loadJSON: function(e) {
-        // add bootstrap loading prop, so it can't be clicked another time...
         parseLocalFile(e.target.files[0]);
       },
       removeItem: function(e) {
         var id = $("#"+e.currentTarget.id).data("id");
         stats.removeByID(id);
-
+      },
+      applySettings: function(e) {
+        var btn = $("#"+e.currentTarget.id);
+        var id = btn.data("id");
+        btn.button("loading");
+        stats.applyPreviousSettings(id);
+        setTimeout(function () {
+          btn.button("reset");
+        }, 1500);
       }
     });
 
@@ -72,7 +81,7 @@ define(["backbone", "jquery", "log", "underscore",
       })(file);
 
       // Read in JSON as a data URL.
-      reader.readAsText(file, 'UTF-8');
+      reader.readAsText(file, "UTF-8");
     }
 
     return StatsView;

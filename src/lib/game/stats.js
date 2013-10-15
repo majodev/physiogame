@@ -14,7 +14,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
 
     function getNew() {
       current = new StatModel({
-        gameMode: gameConfig.getFormattedValue("gameMode")
+        gameConfig: gameConfig.toJSON()
       });
       statsCollection.push(current);
       log.debug("stats: getNew id=" + current.cid);
@@ -86,6 +86,34 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
       }
     }
 
+    function applyPreviousSettings(id) {
+      var model = statsCollection.get(id);
+      if(_.isUndefined(model) === false) {
+        gameConfig.resetToJSON(model.get("gameConfig"));
+
+        // ATTENTION, dynamic require!
+        require(["base/sceneManager"], function (sceneManager) {
+          sceneManager.resetCurrentScene();
+        });
+      }
+    }
+
+    function getFormattedJSON() {
+      var collectionJSON = statsCollection.toJSON();
+
+      var i = 0,
+        len = collectionJSON.length;
+      for (i; i < len; i += 1) {
+        collectionJSON[i].gameConfig = gameConfig.generateKeyValuePairs(undefined, collectionJSON[i].gameConfig);
+      }
+
+      //console.log(collectionJSON);
+
+      return collectionJSON;
+
+      //
+    }
+
     return {
       getCollection: getCollection,
       getNew: getNew,
@@ -95,7 +123,9 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
       downloadCSV: downloadCSV,
       downloadJSON: downloadJSON,
       loadFromJSON: loadFromJSON,
-      removeByID: removeByID
+      removeByID: removeByID,
+      applyPreviousSettings: applyPreviousSettings,
+      getFormattedJSON: getFormattedJSON
     };
   }
 );
