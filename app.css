@@ -19,6 +19,10 @@ canvas { /* To remove the scrollbars */
   /*vertical-align:center; */
 }
 
+.modalNoOverflow {
+  overflow-y: hidden;
+}
+
 #preloaderContainer {
   width: 100%;
   height: 100%
