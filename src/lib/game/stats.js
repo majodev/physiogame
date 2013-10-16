@@ -18,7 +18,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
       if (statsCollection.length > 0) {
         try {
           applyPreviousSettings(statsCollection.models[statsCollection.length - 1].id);
-          log.debug("stats: startup applied last known gameConfig!");
+          //log.debug("stats: startup applied last known gameConfig!");
           alertModal.show({
             head: "Willkommen zurück " + gameConfig.getFormattedValue("userName") + "!",
             text: "Einstellungen deines letzten Spiels wiederhergestellt.",
@@ -38,7 +38,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
         gameConfig: gameConfig.toJSON()
       });
       statsCollection.push(current);
-      log.debug("stats: getNew id=" + current.cid);
+      //log.debug("stats: getNew id=" + current.cid);
       return current;
     }
 
@@ -52,7 +52,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     function saveCurrent() {
       if (_.isUndefined(current) === false) {
         if (current.get("finished") === false) {
-          log.debug("stats: saveCurrent id=" + current.cid);
+          //log.debug("stats: saveCurrent id=" + current.cid);
           current.set("endDate", moment().toDate());
           current.set("finished", true);
           current.save();

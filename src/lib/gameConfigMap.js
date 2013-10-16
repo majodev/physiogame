@@ -27,9 +27,9 @@ define([],
       },
       introTimerLength: {
         def: 3000,
-        min: 500,
+        min: 1000,
         max: 10000,
-        step: 100,
+        step: 500,
         ui: "slider",
         cat: "visual",
         desc: "Aufbauzeit vor Spielstart",
@@ -48,7 +48,7 @@ define([],
         }],
         ui: "dropdown",
         cat: "visual",
-        desc: "Texturpacket der Spiel-Objekte"
+        desc: "Texturpaket der Spiel-Objekte"
       },
       gameMode: {
         def: "clearInTime",

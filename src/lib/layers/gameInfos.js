@@ -1,10 +1,10 @@
-define(["log", "PIXI", 
+define(["log", "PIXI",
     "gameConfig", "Poll", "classes/Layer", "classes/Button",
-    "utils/timeFormatter", "game/stats"
+    "utils/timeFormatter", "game/stats", "game/timerRound", "game/timerIntro"
   ],
-  function(log, PIXI, 
+  function(log, PIXI,
     gameConfig, Poll, Layer, Button,
-    timeFormatter, stats) {
+    timeFormatter, stats, timerRound, timerIntro) {
 
     var layer = new Layer({
       listeners: {
@@ -18,10 +18,6 @@ define(["log", "PIXI",
       timerText,
       textsCreated = false,
       winningAdded = false,
-      scoreTimerCount = 0,
-      scoreTimerRunning = false,
-      introTimerCount = 0,
-      introTimerRunning = true,
       introTimerLength,
       gameModeTime = false,
       maxTime = 0,
@@ -39,7 +35,7 @@ define(["log", "PIXI",
         gameModeTime = false;
       }
 
-      introTimerLength = gameConfig.get("introTimerLength") / 100;
+      introTimerLength = gameConfig.get("introTimerLength");
 
       textsCreated = false;
 
@@ -50,10 +46,6 @@ define(["log", "PIXI",
       introText.visible = true;
       winningText.visible = false;
       winningAdded = false;
-      scoreTimerCount = 0;
-      scoreTimerRunning = false;
-      introTimerCount = 0;
-      introTimerRunning = true;
 
       countingText.position.x = layer.width - 15;
       countingText.position.y = 15;
@@ -75,38 +67,31 @@ define(["log", "PIXI",
       this.pixiLayer.addChild(timerText);
       this.pixiLayer.addChild(introText);
 
-      Poll.start({
-        name: "introTimer",
-        interval: 100,
-        action: function() {
-          introTimerCount += 1;
-        }
-      });
-
-      Poll.start({
-        name: "scoreTimer",
-        interval: 100,
-        action: function() {
-          if (scoreTimerRunning) {
-            scoreTimerCount += 1;
-            if (gameModeTime === true) {
-              timerText.setText(timeFormatter.formatSeconds(scoreTimerCount / 10) + 
-                " von " + timeFormatter.formatSeconds(maxTime));
-              if ((scoreTimerCount / 10) >= maxTime) {
-                showWinningText();
-              }
-            } else {
-              timerText.setText(timeFormatter.formatSeconds(scoreTimerCount / 10));
-            }
-          }
-        }
-      });
+      timerRound.events.on("roundTickSecond", onTimerRoundTickSecond);
+      timerRound.events.on("roundEnd", onTimerRoundEnd);
+      timerIntro.events.on("introEnd", onTimerIntroEnd);
 
       setStartupTexts();
 
       currentStats.on("change", scoreChanged);
 
     };
+
+    function onTimerRoundTickSecond(tick) {
+      if (gameModeTime === true) {
+        timerText.setText(timeFormatter.formatSeconds(tick / 1000) + " von " + timeFormatter.formatSeconds(maxTime));
+      } else {
+        timerText.setText(timeFormatter.formatSeconds(tick / 1000));
+      }
+    }
+
+    function onTimerRoundEnd(tick) {
+      showWinningText();
+    }
+
+    function onTimerIntroEnd(tick) {
+      introText.visible = false;
+    }
 
     layer.onRender = function() {
       animateIntroText();
@@ -125,27 +110,27 @@ define(["log", "PIXI",
     }
 
     function animateIntroText() {
-      if (introTimerRunning && introTimerCount < introTimerLength) {
-        if (introText.scale.x < 1) {
-          introText.scale.x += 0.05;
-          introText.scale.y += 0.05;
+      if(introText.visible === true) {
+        if (timerIntro.getIntroTick() < introTimerLength / 2) {
+          if (introText.scale.x < 1) {
+            introText.scale.x += 0.05;
+            introText.scale.y += 0.05;
+          }
         }
-      }
-      if (introTimerRunning && introTimerCount > introTimerLength) {
-        if (introText.scale.x > 0) {
-          introText.scale.x -= 0.05;
-          introText.scale.y -= 0.05;
-        } else {
-          introText.visible = false;
-          introTimerRunning = false;
-          Poll.stop("introTimer");
+        if (timerIntro.getIntroTick() > introTimerLength / 2) {
+          if (introText.scale.x > 0) {
+            introText.scale.x -= 0.05;
+            introText.scale.y -= 0.05;
+          }
         }
       }
     }
 
     layer.onDeactivate = function() {
-      Poll.stop("introTimer");
-      Poll.stop("scoreTimer");
+
+      timerRound.events.off("roundTickSecond", onTimerRoundTickSecond);
+      timerRound.events.off("roundEnd", onTimerRoundEnd);
+      timerIntro.events.off("introEnd", onTimerIntroEnd);
 
       currentStats.off("change", scoreChanged);
     };
@@ -191,11 +176,6 @@ define(["log", "PIXI",
       var tempWinText,
         tempRankText;
 
-      introTimerRunning = false;
-      introText.visible = false;
-
-      scoreTimerRunning = true;
-
       if (gameModeTime === true) {
         countingText.setText(model.get("objectsCatched"));
       } else {
@@ -222,10 +202,14 @@ define(["log", "PIXI",
 
         layer.pixiLayer.addChild(winningText);
         winningAdded = true;
-        scoreTimerRunning = false;
+        //scoreTimerRunning = false;
+
+
+        // stop the timerround
+        // timerRound.stop();
 
         tempWinText = "Fertig!\nDu hast " +
-          currentStats.get("objectsCatched") + " Objekte in " + timeFormatter.formatSeconds(scoreTimerCount/10) + " Minuten abgeschossen!\n" +
+          currentStats.get("objectsCatched") + " Objekte in " + timeFormatter.formatSeconds(timerRound.getRoundTick() / 1000) + " Minuten abgeschossen!\n" +
           "GRATULATION!\n\n\n\n";
 
         winningText.setText(tempWinText + "\nDanke fürs Spielen!");
