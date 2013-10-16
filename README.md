@@ -1,5 +1,7 @@
 <h1>physiogame</h1>
-This is a master thesis project by me Mario Ranftl (@majodev). I'm trying to build a full-blown game that's playable in Browsers (even mobile) and can also be packaged via node-webkit for desktop use. Currently the target is to create a funny and simple game, that's suited for therapeutic exercises. 
+This is a master thesis project by me Mario Ranftl (@majodev). I'm trying to build a full-blown game that's playable in Browsers (even mobile should be possible) and can also be packaged via node-webkit. The target is to create a funny and simple game, that's suited for therapeutic exercises.
+
+The idea is to track the progress of users and provide statistics "Statistiken" that can be exported to csv and json. Furthermore the behaviour "Verhalten" of the game and its objects can be fully customized through the settings "Einstellungen" menu. Last but not least, playing via mouse/touchscreens is possible, however, it's the target to use Leap Motion as primary input device.
 
 <a href="http://majodev.com/pixi">The LATEST online version is available HERE.</a>
 
@@ -8,7 +10,7 @@ Fire up your http-server in project root, e.g. <a href="https://npmjs.org/packag
 
 `http-server -c-1`
 
-Go to `localhost:8080/build` and enjoy
+Go to `localhost:8080` and enjoy
 
 <h2>Building</h2>
 `npm install -d`
@@ -27,8 +29,7 @@ needs <a href="http://phantomjs.org/">phantomjs</a> bin in path!
 `grunt watch`
 
 <h2>Issues</h2>
-Only german texts for now.
-More performance optimization needed to steamlessly work on mobile devices (iPhone 4 slow, iPad mini is great!).
+No internationalization! - only german texts for now.
 
 <h2>Links</h2>
 <a href="https://github.com/majodev/leap-requirejs-optimization-error">resolving r.js and leapjs error</a>
