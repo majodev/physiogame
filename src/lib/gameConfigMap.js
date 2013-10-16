@@ -41,10 +41,10 @@ define([],
         def: "balloons",
         opt: [{
           id: "aliens",
-          desc: "Alienpacket"
+          desc: "Alienpaket"
         }, {
           id: "balloons",
-          desc: "Luftballonpacket"
+          desc: "Luftballonpaket"
         }],
         ui: "dropdown",
         cat: "visual",
