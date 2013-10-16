@@ -1,23 +1,46 @@
-define(["game/stats", "game/timerRound", "game/timerIntro", "log"],
-  function(stats, timerRound, timerIntro, log) {
+define(["game/stats", "game/timerRound", "game/timerIntro", "log", "gameConfig",
+  "utils/publisher"],
+  function(stats, timerRound, timerIntro, log, gameConfig,
+    publisher) {
 
-    var sessionRunning = false;
+    var sessionRunning = false,
+      currentStat,
+      events = publisher.make();
 
     function newSession() {
-      if(sessionRunning === false) {
+      if (sessionRunning === false) {
+        events.trigger("newSession");
         log.debug("gameSession: newSession");
-        stats.getNew();
+        currentStat = stats.getNew();
+        setGameSuccessCondition();
         phase_1_intro();
         sessionRunning = true;
       }
     }
 
     function endSession() {
-      if(sessionRunning === true) {
+      if (sessionRunning === true) {
+        events.trigger("endSession");
         log.debug("gameSession: endSession");
-        stopAll();
+        clearSessionRuntimeSettings();
         stats.saveCurrent();
         sessionRunning = false;
+      }
+    }
+
+    function setGameSuccessCondition() {
+      var gameMode = gameConfig.get("gameMode");
+
+      switch (gameMode) {
+        case "clearInTime":
+          timerRound.events.on("roundEnd", endSession);
+          break;
+        case "clearAllObjects":
+          currentStat.on("allObjectsCatched", endSession);
+          break;
+        default:
+          log.error("gameSession: gameMode not supported!");
+          break;
       }
     }
 
@@ -33,16 +56,23 @@ define(["game/stats", "game/timerRound", "game/timerIntro", "log"],
       timerRound.start();
     }
 
-    function stopAll() {
-      //log.debug("gameSession: stopAll");
+    function clearSessionRuntimeSettings() {
+      // listeners from phases
       timerIntro.events.off("introEnd", phase_2_round);
+
+      // listeners from gameCondition
+      timerRound.events.off("roundEnd", endSession);
+      currentStat.off("allObjectsCatched", endSession);
+
+      // timers
       timerIntro.stop();
       timerRound.stop();
     }
 
     return {
       newSession: newSession,
-      endSession: endSession
+      endSession: endSession,
+      events: events
     };
 
   }

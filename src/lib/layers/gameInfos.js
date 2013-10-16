@@ -1,10 +1,14 @@
 define(["log", "PIXI",
     "gameConfig", "Poll", "classes/Layer", "classes/Button",
-    "utils/timeFormatter", "game/stats", "game/timerRound", "game/timerIntro"
+    "utils/timeFormatter", "game/stats",
+    "game/timerRound", "game/timerIntro",
+    "game/gameSession"
   ],
   function(log, PIXI,
     gameConfig, Poll, Layer, Button,
-    timeFormatter, stats, timerRound, timerIntro) {
+    timeFormatter, stats,
+    timerRound, timerIntro,
+    gameSession) {
 
     var layer = new Layer({
       listeners: {
@@ -68,8 +72,8 @@ define(["log", "PIXI",
       this.pixiLayer.addChild(introText);
 
       timerRound.events.on("roundTickSecond", onTimerRoundTickSecond);
-      timerRound.events.on("roundEnd", onTimerRoundEnd);
       timerIntro.events.on("introEnd", onTimerIntroEnd);
+      gameSession.events.on("endSession", showWinningText);
 
       setStartupTexts();
 
@@ -83,10 +87,6 @@ define(["log", "PIXI",
       } else {
         timerText.setText(timeFormatter.formatSeconds(tick / 1000));
       }
-    }
-
-    function onTimerRoundEnd(tick) {
-      showWinningText();
     }
 
     function onTimerIntroEnd(tick) {
@@ -129,8 +129,8 @@ define(["log", "PIXI",
     layer.onDeactivate = function() {
 
       timerRound.events.off("roundTickSecond", onTimerRoundTickSecond);
-      timerRound.events.off("roundEnd", onTimerRoundEnd);
       timerIntro.events.off("introEnd", onTimerIntroEnd);
+      gameSession.events.off("endSession", showWinningText);
 
       currentStats.off("change", scoreChanged);
     };
@@ -182,16 +182,13 @@ define(["log", "PIXI",
         countingText.setText(model.get("objectsCatched") + " von " + gameConfig.get("objectsToSpawn"));
       }
 
-      if (gameModeTime === false && gameConfig.get("objectsToSpawn") <= model.get("objectsCatched")) {
-        showWinningText();
-      }
+      //if (gameModeTime === false && gameConfig.get("objectsToSpawn") <= model.get("objectsCatched")) {
+      //  showWinningText();
+      //}
     }
 
     function showWinningText() {
       if (winningAdded === false) {
-
-        // save stats...
-        stats.saveCurrent();
 
         // win, display the text
 
@@ -203,10 +200,6 @@ define(["log", "PIXI",
         layer.pixiLayer.addChild(winningText);
         winningAdded = true;
         //scoreTimerRunning = false;
-
-
-        // stop the timerround
-        // timerRound.stop();
 
         tempWinText = "Fertig!\nDu hast " +
           currentStats.get("objectsCatched") + " Objekte in " + timeFormatter.formatSeconds(timerRound.getRoundTick() / 1000) + " Minuten abgeschossen!\n" +

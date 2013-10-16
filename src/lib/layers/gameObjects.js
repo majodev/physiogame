@@ -1,12 +1,12 @@
 define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     "base/soundBridge", "game/crosshairGO", "classes/Layer",
-    "Poll", "game/stats",
+    "Poll", "game/stats", 
     "game/behaviours/targetBehaviour", "game/behaviours/alphaBehaviour",
     "game/behaviours/scaleBehaviour", "game/behaviours/speedBehaviour"
   ],
   function(textures, gameConfig, hittest, _, PIXI,
     soundBridge, crosshairGO, Layer,
-    Poll, stats,
+    Poll, stats, 
     targetBehaviour, alphaBehaviour,
     scaleBehaviour, speedBehaviour) {
 

@@ -7,7 +7,11 @@ define(["log", "backbone", "gameConfig"],
         currentScore += 1;
 
         this.set("objectsCatched", currentScore);
-        //log.trace("raiseScore to " + currentScore);
+
+        if(currentScore >= gameConfig.get("objectsToSpawn")) {
+          this.trigger("allObjectsCatched", currentScore);
+        }
+
       },
       defaults: {
         objectsCatched: 0,
