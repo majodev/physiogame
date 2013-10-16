@@ -209,6 +209,10 @@ define(["log", "PIXI",
 
     function showWinningText() {
       if (winningAdded === false) {
+
+        // save stats...
+        stats.saveCurrent();
+
         // win, display the text
 
         winningText.position.x = layer.width / 2;

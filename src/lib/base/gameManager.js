@@ -1,11 +1,11 @@
 define(["log", "base/displayManager", "base/leapManager",
   "base/sceneManager", "key",
-  "base/soundManager", "views/gameConfigModal",
+  "base/soundBridge", "views/gameConfigModal",
   "game/stats", "views/statsModal"
   ],
   function(log, displayManager, leapManager,
     sceneManager, key,
-    soundManager, gameConfigModal,
+    soundBridge, gameConfigModal,
     stats, statsModal) {
 
     // private
@@ -15,7 +15,7 @@ define(["log", "base/displayManager", "base/leapManager",
       log.debug("gameController: init");
 
       displayManager.init();
-      soundManager.init();
+      //soundBridge.init();
       sceneManager.init();
       leapManager.init();
 
@@ -30,9 +30,11 @@ define(["log", "base/displayManager", "base/leapManager",
       //sceneManager.pushScene("shooting");
     }
 
-    function onSceneChanging(sceneID) {
-      // everytime before the scene changes, try to save the current stats
-      stats.saveCurrent();
+    function onSceneChanging(sceneID, oldSceneID) {
+      // everytime before the scene changes from shooting, try to save the current stats
+      if(oldSceneID === "shooting") {
+        stats.saveCurrent();
+      }
 
       // if a new shooting scene will be build, make a new StatModel instance
       if(sceneID === "shooting") {
@@ -41,7 +43,7 @@ define(["log", "base/displayManager", "base/leapManager",
       }
     }
 
-    function onSceneChanged(sceneID) {
+    function onSceneChanged(sceneID, oldSceneID) {
       log.info("onSceneChanged: new scene id=" + sceneID);
     }
 

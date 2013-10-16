@@ -10,7 +10,8 @@ define(["log", "backbone", "gameConfig"],
         //log.trace("raiseScore to " + currentScore);
       },
       defaults: {
-        objectsCatched: 0
+        objectsCatched: 0,
+        finished: false
       }
     });
 

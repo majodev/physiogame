@@ -12,6 +12,8 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
 
     function exchangeScene(newID, newScene) {
 
+      var oldID = currentScene.id;
+
       // disable previous Scene
       if (typeof currentScene.object !== 'undefined') {
         currentScene.object.events.off("sceneLayerEvent", onSceneLayerEvent);
@@ -20,7 +22,7 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
       }
 
       // notify before pushing
-      events.trigger("pushingScene", newID);
+      events.trigger("pushingScene", newID, oldID);
 
       // reset current Scene
       currentScene = {
@@ -33,7 +35,7 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
       displayManager.stage.addChild(currentScene.object.getScene());
 
       // notify after push complete.
-      events.trigger("pushedScene", getCurrentSceneID());
+      events.trigger("pushedScene", getCurrentSceneID(), oldID);
     }
 
     // syntactic sugar for exchangeScene public api

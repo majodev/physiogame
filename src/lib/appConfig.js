@@ -24,11 +24,17 @@ define(["backbone"],
       ],
       soundBaseDir: "assets/sound/",
       sounds: [{
+        name: "select",
+        volume: 0.1
+      }, {
+        name: "alert",
+        volume: 0.1
+      }, {
         name: "explosion",
         volume: 0.1
       }, {
         name: "hitted",
-        volume: 0.005
+        volume: 0.08
       }, {
         name: "bg",
         volume: 0.2,

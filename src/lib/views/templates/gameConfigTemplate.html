@@ -2,6 +2,7 @@
 <ul class="nav nav-tabs" id="settingsMainTab">
   <li><a href="#general">Allgemein</a></li>
   <li><a href="#visual">Anzeige</a></li>
+  <li><a href="#audio">Audio</a></li>
   <li><a href="#behaviour" class="mainWithSubTab">Verhalten</a></li>
   <li><a href="#leap">Leap Motion</a></li>
   <li><a href="#help">Hilfe</a></li>
@@ -42,6 +43,25 @@
           {{#visual.keyValues}}
             {{> gameConfigItemPartial}}
           {{/visual.keyValues}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-pane fade" id="audio">
+    <div class="table-responsive">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th class="settingsDescription">Parameter</th>
+            <th class="settingsConfigValue">Konfiguration</th>
+            <th class="settingsValue">Wert</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#audio.keyValues}}
+            {{> gameConfigItemPartial}}
+          {{/audio.keyValues}}
         </tbody>
       </table>
     </div>

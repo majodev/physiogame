@@ -1,6 +1,18 @@
 define([],
   function() {
     return {
+      audioEnabled: {
+        def: true,
+        ui: "toggle",
+        cat: "audio",
+        desc: "Audio-Effekte abspielen"
+      },
+      audioBackgroundEnabled: {
+        def: false,
+        ui: "toggle",
+        cat: "audio",
+        desc: "Audio-Hintergrund abspielen"
+      },
       userName: {
         def: "Anonym",
         ui: "text",

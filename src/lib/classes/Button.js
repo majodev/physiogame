@@ -1,5 +1,5 @@
-define(["PIXI", "game/textures", "underscore"],
-  function(PIXI, textures, _) {
+define(["PIXI", "game/textures", "underscore", "base/soundBridge"],
+  function(PIXI, textures, _, soundBridge) {
 
     var Button = function(options) {
 
@@ -102,12 +102,16 @@ define(["PIXI", "game/textures", "underscore"],
         this.setTexture(self.settings.textures[2]);
         self.buttonText.setText(self.settings.texts.click);
 
+        soundBridge.play("select");
+
         self.onClick();
       };
 
       this.buttonBG.tap = function(data) {
         this.setTexture(self.settings.textures[3]);
         self.buttonText.setText(self.settings.texts.tap);
+
+        soundBridge.play("select");
 
         self.onTap();
       };

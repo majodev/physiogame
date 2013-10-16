@@ -48,19 +48,6 @@ define(["backbone", "underscore", "gameConfigMap",
           return false;
         }
 
-        // handle objectValues different if target is a uiDropDown
-        // if (gameConfigMap[key].ui === "dropdown") {
-        //   // get the desc from the opt array of the current value...
-        //   for (var i = 0; i < gameConfigMap[key].opt.length; i += 1) {
-        //     if (showValue === gameConfigMap[key].opt[i].id) {
-        //       showValue = gameConfigMap[key].opt[i].desc;
-        //     }
-        //     if (showDefault === gameConfigMap[key].opt[i].id) {
-        //       showDefault = gameConfigMap[key].opt[i].desc;
-        //     }
-        //   }
-        // }
-
         return {
           objectKey: key,
           objectValue: showValue,
@@ -192,6 +179,7 @@ define(["backbone", "underscore", "gameConfigMap",
         return {
           general: this.generateKeyValuePairs("general"),
           visual: this.generateKeyValuePairs("visual"),
+          audio: this.generateKeyValuePairs("audio"),
           scale: this.generateKeyValuePairs("scale"),
           speed: this.generateKeyValuePairs("speed"),
           alpha: this.generateKeyValuePairs("alpha"),
@@ -277,6 +265,8 @@ define(["backbone", "underscore", "gameConfigMap",
         introTimerLength: gameConfigMap.introTimerLength.def,
         leapShowIndicatorLayer: gameConfigMap.leapShowIndicatorLayer.def,
         debugLayerVisible: gameConfigMap.debugLayerVisible.def,
+        audioEnabled: gameConfigMap.audioEnabled.def,
+        audioBackgroundEnabled: gameConfigMap.audioBackgroundEnabled.def,
         objectNormalScaleMin: gameConfigMap.objectNormalScaleMin.def,
         objectNormalScaleCap: gameConfigMap.objectNormalScaleCap.def,
         objectNormalScaleBeforeCap: gameConfigMap.objectNormalScaleBeforeCap.def,

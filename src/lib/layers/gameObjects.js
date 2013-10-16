@@ -1,11 +1,11 @@
 define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
-    "base/soundManager", "game/crosshairGO", "classes/Layer",
+    "base/soundBridge", "game/crosshairGO", "classes/Layer",
     "Poll", "game/stats",
     "game/behaviours/targetBehaviour", "game/behaviours/alphaBehaviour",
     "game/behaviours/scaleBehaviour", "game/behaviours/speedBehaviour"
   ],
   function(textures, gameConfig, hittest, _, PIXI,
-    soundManager, crosshairGO, Layer,
+    soundBridge, crosshairGO, Layer,
     Poll, stats,
     targetBehaviour, alphaBehaviour,
     scaleBehaviour, speedBehaviour) {
@@ -22,12 +22,14 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       allGameObjectsCreated = false,
       ingameObjectCreatorRunning = false,
       ingameObjectCreatorTimeElapsed = 0,
+      previousHitted,
       opt;
 
 
     layer.onActivate = function() {
 
       ingameObjectCreatorTimeElapsed = 0;
+      previousHitted = undefined;
 
       // opt holds all current options from the gameConfig that are relevant for this layer
       // get the current set options from the model
@@ -187,12 +189,16 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       for (i = max - 1; i >= 0; i -= 1) {
         if (gameObjects[i].visible === true) {
           hitted = hittest(gameObjects[i], hitCord);
-          if (gameObjects[i].hitted !== hitted) {
-            soundManager.hit();
-          }
+          // if (gameObjects[i].hitted !== hitted) {
+          //   soundBridge.play("hitted");
+          // }
           gameObjects[i].hitted = hitted;
           if (hitted === true) {
+            if(_.isUndefined(previousHitted) === false && previousHitted !== gameObjects[i]) {
+              soundBridge.play("hitted");
+            }
             swapGameObjectToTop(gameObjects[i], i, max);
+            previousHitted = gameObjects[i];
             return;
           }
         }
@@ -279,7 +285,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
             explosion.loop = false;
             explosion.gotoAndPlay(0);
 
-            soundManager.explode();
+            soundBridge.play("explosion");
 
             explosion.onComplete = onExplosionComplete;
 

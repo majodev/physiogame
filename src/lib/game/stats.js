@@ -51,9 +51,17 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
 
     function saveCurrent() {
       if (_.isUndefined(current) === false) {
-        log.debug("stats: saveCurrent id=" + current.cid);
-        current.set("endDate", moment().toDate());
-        current.save();
+        if (current.get("finished") === false) {
+          log.debug("stats: saveCurrent id=" + current.cid);
+          current.set("endDate", moment().toDate());
+          current.set("finished", true);
+          current.save();
+          alertModal.show({
+            head: "Speichern...",
+            text: gameConfig.getFormattedValue("userName") + ", dein Spiel wurde gespeichert!",
+            autoDismiss: 1200
+          });
+        }
       }
     }
 

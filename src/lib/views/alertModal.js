@@ -1,8 +1,9 @@
 define(["log", "jquery", "Handlebars", "underscore",
-    "hbars!views/templates/alertTemplate", "bootstrap"
+    "hbars!views/templates/alertTemplate", "base/soundBridge",
+    "bootstrap",
   ],
   function(log, $, Handlebars, _,
-    alertTemplate) {
+    alertTemplate, soundBridge) {
 
     var showing = false;
 
@@ -11,6 +12,7 @@ define(["log", "jquery", "Handlebars", "underscore",
         clearOldAndReshow(options);
       } else {
         appendNew(options);
+        soundBridge.play("alert");
       }
     }
 

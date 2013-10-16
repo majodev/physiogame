@@ -25,7 +25,7 @@ define(["PIXI", "classes/Layer", "appConfig", "utils/nwHelper", "classes/Button"
 
         quitButton.display.position = {
           x: this.width - quitButton.buttonBG.width / 4 - 10,
-          y: this.height - quitButton.buttonBG.height / 4 - 10
+          y: quitButton.buttonBG.height / 4 + 10
         };
 
         quitButton.onClick = function() {
@@ -47,7 +47,7 @@ define(["PIXI", "classes/Layer", "appConfig", "utils/nwHelper", "classes/Button"
 
         fullscreenButton.display.position = {
           x: this.width - quitButton.buttonBG.width / 2 - fullscreenButton.buttonBG.width / 4 - 20,
-          y: this.height - fullscreenButton.buttonBG.height / 4 - 10
+          y: fullscreenButton.buttonBG.height / 4 + 10
         };
 
         fullscreenButton.onClick = function() {
