@@ -62,7 +62,7 @@
   // finally append requirejs script to document and start deps pipeline
   var script = document.createElement("script");
   script.type = "text/javascript";
-  script.src = "physiogame-0.1.0-almond.min.js"; // link to require.js
+  script.src = "physiogame.min.js"; // link to require.js
   document.body.appendChild(script);
 
 }()); // immediately executed.

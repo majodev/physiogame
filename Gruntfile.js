@@ -27,15 +27,24 @@ module.exports = function(grunt) {
     copy: {
       "assets": {
         files: [{
-          src: ["assets/**/*.json", "assets/**/*.png", "assets/**/*.mp3", "assets/**/*.ogg", "assets/**/*.m4a", "!assets/sound/old/**/*.*"],
+          src: ["assets/**/*.json", "assets/**/*.png", "assets/**/*.mp3", "assets/**/*.ogg", "assets/**/*.m4a", "!assets/sounds/old/**/*.*", "!assets/sprites/old/**/*.*", "!assets/old/**/*.*"],
           dest: "build/"
         }]
       },
-      "modernizr": {
+      "build-templates": {
         files: [{
-          src: ["src/hooks/modernizer_custom.js"],
-          dest: "build/modernizer_custom.min.js"
+          expand: true,
+          cwd: "build-templates/",
+          src: ["**/*.json", "**/*.html"],
+          dest: "build/"
         }]
+      }
+    },
+    uglify: {
+      my_target: {
+        files: {
+          'build/app.min.js': ['src/hooks/modernizer_custom.js', 'build-templates/app.js']
+        }
       }
     },
     cssmin: {
@@ -109,11 +118,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-shell");
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-cssmin");
-  grunt.loadNpmTasks("grunt-contrib-concat");
   grunt.loadNpmTasks("grunt-modernizr");
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask("default", "shell:mocha-phantomjs");
-  grunt.registerTask("build", ["modernizr", "shell:build-requirejs", "shell:build-almond", "copy:assets", "copy:modernizr", "cssmin"]);
+  grunt.registerTask("build", ["modernizr", "shell:build-almond", "uglify" ,"copy:build-templates", "copy:assets", "cssmin"]);
 };
 
 // 1. make sure a http-server is running:

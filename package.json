@@ -1,6 +1,6 @@
 {
   "name": "physiogame",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "dependencies": {
     "bower": "latest",
     "requirejs": "~2.1.9",
@@ -19,8 +19,8 @@
     "grunt-shell": "~0.3.1",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-cssmin": "~0.6.1",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-modernizr": "~0.3.0"
+    "grunt-modernizr": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.4"
   },
   "main": "index.html",
   "window": {

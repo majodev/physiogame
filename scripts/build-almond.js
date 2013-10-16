@@ -23,7 +23,7 @@ var config = {
   waitSeconds: 7,
   name: "../../node_modules/almond/almond", // Name of script to start building from
   insertRequire: ["appInitializer"],
-  out: 'build/' + pjson.name + '-' + pjson.version + '-almond.min.js' // Where to output
+  out: 'build/physiogame.min.js' // Where to output
 };
 
 // Optimize our script

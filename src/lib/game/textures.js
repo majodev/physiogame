@@ -25,13 +25,13 @@ define(["PIXI", "appConfig", "utils/zeroPad", "log"],
       atlas.background = getTextureByName("bg/0000");
 
       // add crosshair
-      atlas.crosshair = getTextureByName("assets/crosshair.png");
+      atlas.crosshair = getTextureByName("assets/sprites/crosshair.png");
 
       // add fh joanneum logo
-      atlas.fhjoanneumlogo = getTextureByName("assets/fh-joanneum-logo.png");
+      atlas.fhjoanneumlogo = getTextureByName("assets/sprites/fh-joanneum-logo.png");
 
       // add fh joanneum logo
-      atlas.majodevicon = getTextureByName("assets/majodev-icon.png");
+      atlas.majodevicon = getTextureByName("assets/sprites/majodev-icon.png");
 
       // leaps
       atlas.leapNoHand = getTextureByName("leap-nohand.png");

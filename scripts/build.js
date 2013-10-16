@@ -26,7 +26,7 @@ var config = {
   waitSeconds: 7,
   name: "appInitializer", // Name of script to start building from
   insertRequire: ["appInitializer"],
-  out: 'build/' + pjson.name + '-' + pjson.version + '.min.js' // Where to output
+  out: 'build/physiogame.min.js' // Where to output
 };
 
 // Optimize our script
