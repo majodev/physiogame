@@ -23,6 +23,7 @@ define(["log", "PIXI",
       textsCreated = false,
       winningAdded = false,
       introTimerLength,
+      introComplete,
       gameModeTime = false,
       maxTime = 0,
       retryButton,
@@ -30,6 +31,7 @@ define(["log", "PIXI",
 
     layer.onActivate = function() {
 
+      introComplete = false;
       currentStats = stats.getCurrent();
 
       if (gameConfig.get("gameMode") === "clearInTime") {
@@ -90,7 +92,9 @@ define(["log", "PIXI",
     }
 
     function onTimerIntroEnd(tick) {
-      introText.visible = false;
+      log.debug("introend!");
+      introText.setText("Los!");
+      introComplete = true;
     }
 
     layer.onRender = function() {
@@ -111,18 +115,27 @@ define(["log", "PIXI",
 
     function animateIntroText() {
       if (introText.visible === true) {
-        if (timerIntro.getIntroTick() < introTimerLength / 2) {
+        if (introComplete === false) {
           if (introText.scale.x < 1) {
             introText.scale.x += 0.05;
             introText.scale.y += 0.05;
+            if(introText.scale.x > 1) {
+              introText.scale.x = 1;
+              introText.scale.y = 1;
+            }
           }
         }
-        if (timerIntro.getIntroTick() > introTimerLength / 2) {
+
+        if (introComplete === true) {
           if (introText.scale.x > 0) {
-            introText.scale.x -= 0.05;
-            introText.scale.y -= 0.05;
+            //log.debug(introText.scale.x);
+            introText.scale.x -= 0.02;
+            introText.scale.y -= 0.02;
+          } else {
+            introText.visible = false;
           }
         }
+
       }
     }
 
@@ -206,7 +219,7 @@ define(["log", "PIXI",
         winningAdded = true;
         //scoreTimerRunning = false;
 
-        tempWinText = "Du hast " +
+        tempWinText = gameConfig.getFormattedValue("userName") + ", du hast " +
           currentStats.get("objectsCatched") + " Objekte in " +
           timeFormatter.formatSeconds(currentStats.get("playTime") / 1000) +
           " abgeschossen!\n\n";

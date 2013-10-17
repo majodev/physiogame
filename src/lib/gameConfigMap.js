@@ -20,7 +20,7 @@ define([],
         desc: "Benutzername"
       },
       debugLayerVisible: {
-        def: true,
+        def: false,
         ui: "toggle",
         cat: "visual",
         desc: "Zeige Debug Hinweise"

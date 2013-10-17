@@ -1,7 +1,7 @@
 define(["game/stats", "game/timerRound", "game/timerIntro", "log", "gameConfig",
-  "utils/publisher", "game/leapSession", "moment"],
+  "utils/publisher", "game/leapSession", "moment", "base/soundBridge"],
   function(stats, timerRound, timerIntro, log, gameConfig,
-    publisher, leapSession, moment) {
+    publisher, leapSession, moment, soundBridge) {
 
     var sessionRunning = false,
       currentStat,
@@ -74,12 +74,14 @@ define(["game/stats", "game/timerRound", "game/timerIntro", "log", "gameConfig",
       //log.debug("gameSession: phase_1_intro");
       timerIntro.events.on("introEnd", phase_2_round);
       timerIntro.start();
+      soundBridge.play("roundintro");
     }
 
     function phase_2_round() {
       //log.debug("gameSession: phase_2_round");
       timerIntro.events.off("introEnd", phase_2_round);
       timerRound.start();
+      soundBridge.play("roundstart");
     }
 
     function clearSessionRuntimeSettings() {
