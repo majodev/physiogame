@@ -1,7 +1,7 @@
 define(["game/stats", "game/timerRound", "game/timerIntro", "log", "gameConfig",
-  "utils/publisher"],
+  "utils/publisher", "game/leapSession"],
   function(stats, timerRound, timerIntro, log, gameConfig,
-    publisher) {
+    publisher, leapSession) {
 
     var sessionRunning = false,
       currentStat,
@@ -13,6 +13,7 @@ define(["game/stats", "game/timerRound", "game/timerIntro", "log", "gameConfig",
         log.debug("gameSession: newSession");
         currentStat = stats.getNew();
         currentStat.start();
+        leapSession.startSession();
         setGameSuccessCondition();
         phase_1_intro();
         sessionRunning = true;
@@ -24,6 +25,8 @@ define(["game/stats", "game/timerRound", "game/timerIntro", "log", "gameConfig",
         events.trigger("endSession");
         log.debug("gameSession: endSession");
         clearSessionRuntimeSettings();
+        leapSession.endSession();
+        currentStat.setLeapStats(leapSession.getSessionStats());
         currentStat.end();
         stats.saveCurrent();
         sessionRunning = false;

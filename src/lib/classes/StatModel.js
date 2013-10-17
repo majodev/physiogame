@@ -35,7 +35,6 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
           this.set("endDate", moment().toDate());
           
           // compute times...
-
           gameTime = moment(this.get("endDate")).diff(moment(this.get("startDate")));
           this.set("gameTime", gameTime);
 
@@ -52,6 +51,16 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
           log.error("end: already finished or locked, not possible!");
         }
       },
+      setLeapStats: function (sessionStats) {
+        this.set("leapDetected", sessionStats.time.detected);
+        this.set("leapNotDetected", sessionStats.time.notDetected);
+        this.set("leapInside", sessionStats.time.inside);
+        this.set("leapOutside", sessionStats.time.outside.any);
+        this.set("leapOutsideLeft", sessionStats.time.outside.left);
+        this.set("leapOutsideRight", sessionStats.time.outside.right);
+        this.set("leapOutsideTop", sessionStats.time.outside.top);
+        this.set("leapOutsideBottom", sessionStats.time.outside.bottom);
+      },
       lock: function () {
         this.set("locked", true);
       },
@@ -67,12 +76,21 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
           catched_count: json.objectsCatched,
           config_gameMode_string: gameConfig.getFormattedCustomValue("gameMode", json.gameConfig.gameMode),
           config_gameMaxTime_sec: gameConfig.getValueNeededInCustomJSON("gameMaxTime", json.gameConfig),
-          config_objectsToSpawn_count: json.gameConfig.objectsToSpawn
+          config_objectsToSpawn_count: json.gameConfig.objectsToSpawn,
+          leap_detected_ms: json.leapDetected,
+          leap_notdetected_ms: json.leapNotDetected,
+          leap_inside_ms: json.leapInside,
+          leap_outside_ms: json.leapOutside,
+          leap_outsideLeft_ms: json.leapOutsideLeft,
+          leap_outsideRight_ms: json.leapOutsideRight,
+          leap_outsideTop_ms: json.leapOutsideTop,
+          leap_outsideBottom_ms: json.leapOutsideBottom
         };
       },
       convertToFormattedJSON: function() {
         var json = this.toJSON();
 
+        // table fields
         json.userName = gameConfig.getFormattedCustomValue("userName", json.gameConfig.userName);
         json.date = formatDateOnlyGerman(json.startDate);
         json.startDate = formatTimeOnlyGerman(json.startDate);
@@ -80,6 +98,17 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
         json.playTime = timeFormatter.formatMilliseconds(json.playTime);
         json.gameTime = timeFormatter.formatMilliseconds(json.gameTime);
         json.objectsCatched = json.objectsCatched;
+
+        // detail fields
+        json.leapDetected = timeFormatter.formatMilliseconds(json.leapDetected);
+        json.leapNotDetected = timeFormatter.formatMilliseconds(json.leapNotDetected);
+        json.leapInside = timeFormatter.formatMilliseconds(json.leapInside);
+        json.leapOutside = timeFormatter.formatMilliseconds(json.leapOutside);
+        json.leapOutsideLeft = timeFormatter.formatMilliseconds(json.leapOutsideLeft);
+        json.leapOutsideRight = timeFormatter.formatMilliseconds(json.leapOutsideRight);
+        json.leapOutsideTop = timeFormatter.formatMilliseconds(json.leapOutsideTop);
+        json.leapOutsideBottom = timeFormatter.formatMilliseconds(json.leapOutsideBottom);
+
         json.gameConfig = gameConfig.generateKeyValuePairs(undefined, json.gameConfig);
 
         return json;

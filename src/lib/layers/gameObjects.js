@@ -174,7 +174,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       resetAllHittedToFalse();
 
       for (i = max - 1; i >= 0; i -= 1) {
-        if (gameObjects[i].visible === true) {
+        if (gameObjects[i].visible === true && gameObjects[i].introducing === false) {
           hitted = hittest(gameObjects[i], hitCord);
           gameObjects[i].hitted = hitted;
           if (hitted === true) {
@@ -289,7 +289,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
           // alpha to minimum
           if (gameObject.alpha < opt.objectNormalAlphaMin) {
-            gameObject.alpha += 0.01;
+            gameObject.alpha += 0.009;
             if (gameObject.alpha > opt.objectNormalAlphaMin) {
               gameObject.alpha = opt.objectNormalAlphaMin;
             }
@@ -306,8 +306,10 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
           }
 
           // after conditions for introducing are met, its indroduced and handled!
-          if (gameObject.alpha === opt.objectNormalAlphaMin &&
-            gameObject.scale.x === opt.objectNormalScaleMin) {
+          if (gameObject.scale.x === opt.objectNormalScaleMin &&
+              gameObject.alpha === opt.objectNormalAlphaMin) {
+
+            gameObject.alpha = opt.objectNormalAlphaMin;
 
             gameObject.introducing = false;
           }

@@ -73,7 +73,14 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
         events.trigger("handFrameNormalized", {
           position: position
         });
+
+        
       }
+
+      events.trigger("frameStats", {
+        detected: handsAvailable,
+        outside: outsideScreen
+      });
 
       frameCount += 1;
     }
