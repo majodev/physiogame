@@ -99,19 +99,50 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
         json.gameTime = timeFormatter.formatMilliseconds(json.gameTime);
         json.objectsCatched = json.objectsCatched;
 
-        // detail fields
-        json.leapDetected = timeFormatter.formatMilliseconds(json.leapDetected);
-        json.leapNotDetected = timeFormatter.formatMilliseconds(json.leapNotDetected);
-        json.leapInside = timeFormatter.formatMilliseconds(json.leapInside);
-        json.leapOutside = timeFormatter.formatMilliseconds(json.leapOutside);
-        json.leapOutsideLeft = timeFormatter.formatMilliseconds(json.leapOutsideLeft);
-        json.leapOutsideRight = timeFormatter.formatMilliseconds(json.leapOutsideRight);
-        json.leapOutsideTop = timeFormatter.formatMilliseconds(json.leapOutsideTop);
-        json.leapOutsideBottom = timeFormatter.formatMilliseconds(json.leapOutsideBottom);
+        // leap detail fields
+        
+        json.leapStats = this.getLeapStatsKeyValues(json);
 
+        // json.leapDetected = timeFormatter.formatMilliseconds(json.leapDetected);
+        // json.leapNotDetected = timeFormatter.formatMilliseconds(json.leapNotDetected);
+        // json.leapInside = timeFormatter.formatMilliseconds(json.leapInside);
+        // json.leapOutside = timeFormatter.formatMilliseconds(json.leapOutside);
+        // json.leapOutsideLeft = timeFormatter.formatMilliseconds(json.leapOutsideLeft);
+        // json.leapOutsideRight = timeFormatter.formatMilliseconds(json.leapOutsideRight);
+        // json.leapOutsideTop = timeFormatter.formatMilliseconds(json.leapOutsideTop);
+        // json.leapOutsideBottom = timeFormatter.formatMilliseconds(json.leapOutsideBottom);
+
+        // gameConfig detail fields
         json.gameConfig = gameConfig.generateKeyValuePairs(undefined, json.gameConfig);
 
         return json;
+      },
+      getLeapStatsKeyValues: function (json) {
+        return {keyValues: [{
+          key: "Gesamtzeit Hand getrackt",
+          value: timeFormatter.formatMilliseconds(json.leapDetected)
+        }, {
+          key: "Gesamtzeit nicht getrackt",
+          value: timeFormatter.formatMilliseconds(json.leapNotDetected)
+        }, {
+          key: "Zeit Hand im erlaubten Bereich",
+          value: timeFormatter.formatMilliseconds(json.leapInside)
+        }, {
+          key: "Gesamtzeit Hand außerhalb des erlaubten Bereichs",
+          value: timeFormatter.formatMilliseconds(json.leapOutside)
+        }, {
+          key: "Zeit Hand außerhalb links",
+          value: timeFormatter.formatMilliseconds(json.leapOutsideLeft)
+        }, {
+          key: "Zeit Hand außerhalb rechts",
+          value: timeFormatter.formatMilliseconds(json.leapOutsideRight)
+        }, {
+          key: "Zeit Hand außerhalb oben",
+          value: timeFormatter.formatMilliseconds(json.leapOutsideTop)
+        }, {
+          key: "Zeit Hand außerhalb unten",
+          value: timeFormatter.formatMilliseconds(json.leapOutsideBottom)
+        }]};
       },
       defaults: {
         objectsCatched: 0,
