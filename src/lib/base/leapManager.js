@@ -1,14 +1,22 @@
-define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
-  function(log, Leap, appConfig, publisher, Poll, gameConfig) {
+define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
+    "underscore"
+  ],
+  function(log, Leap, appConfig, publisher, Poll, gameConfig,
+    _) {
 
     // private 
     var controller = new Leap.Controller(),
       frameCount = 0,
       handsAvailable = false,
       outsideScreen,
+      movement = {
+        x: 0,
+        y: 0
+      },
       handsLength = 0,
       attachedListeners = false,
       events = publisher.make(),
+      lastHand,
       displayWidth = appConfig.get("width"),
       displayHeight = appConfig.get("height"),
       leapXModifier = gameConfig.get("leapXModifier"),
@@ -33,7 +41,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
     });
 
     function attachListeners() {
-      if(attachedListeners === false) {
+      if (attachedListeners === false) {
         // attach per frame Eventlistener
         controller.on("frame", perFrame);
         attachedListeners = true;
@@ -41,7 +49,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
     }
 
     function deattachListeners() {
-      if(attachedListeners === true) {
+      if (attachedListeners === true) {
         // dettach per frame Eventlistener
         controller.removeListener("frame", perFrame);
         attachedListeners = false;
@@ -73,16 +81,67 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
         events.trigger("handFrameNormalized", {
           position: position
         });
-
-        
       }
 
+      validateOutsideScreen(handsAvailable);
+      computeMovement(handsAvailable, hand);
+
+      // hand over the stats for listeners to make work...
       events.trigger("frameStats", {
         detected: handsAvailable,
-        outside: outsideScreen
+        outside: outsideScreen,
+        movement: movement
       });
 
+      lastHand = hand;
       frameCount += 1;
+    }
+
+    function validateOutsideScreen(handsAvailable) {
+      if (handsAvailable === false) {
+        // when no hands were tracked, set outsideScreen to false as computePosition couldn't parse anything
+        outsideScreen = {
+          left: false,
+          right: false,
+          top: false,
+          bottom: false
+        };
+      }
+    }
+
+    function computeMovement(handsAvailable, hand) {
+
+      if (handsAvailable === true) {
+        if (_.isUndefined(lastHand) === false) {
+          // compute movement of hands in milimeters
+
+          // x movement, anchor at 0!
+          if (hand.palmPosition[0] < 0) {
+            if (lastHand.palmPosition[0] >= 0) { // new < 0 <= old
+              movement.x = Math.abs(hand.palmPosition[0]) + lastHand.palmPosition[0];
+            } else { // new < 0 && old < 0 
+              movement.x = Math.abs(Math.abs(hand.palmPosition[0]) - Math.abs(lastHand.palmPosition[0]));
+            }
+          } else {
+            if (lastHand.palmPosition[0] >= 0) { // new >= 0 && old >= 0
+              movement.x = Math.abs(hand.palmPosition[0] - lastHand.palmPosition[0]);
+            } else { // old < 0 <= new
+              movement.x = Math.abs(lastHand.palmPosition[0]) + hand.palmPosition[0];
+            }
+          }
+
+          // y movement, always positive!
+          movement.y = Math.abs(hand.palmPosition[1] - lastHand.palmPosition[1]);
+
+        } else {
+          movement = {
+            x: 0,
+            y: 0
+          };
+        }
+      }
+
+      //console.log(movement);
     }
 
     function computePosition(x, y) {
@@ -129,7 +188,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig"],
           var time = frameCount / 2,
             debugText = "leap @ " + time + "fps";
 
-          if(attachedListeners === false) {
+          if (attachedListeners === false) {
             debugText = "no leap connected.";
           }
 

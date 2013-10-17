@@ -36,11 +36,7 @@ define(["game/stats", "game/timerRound", "game/timerIntro", "log", "gameConfig",
       var endMoment;
       if (sessionRunning === true) {
 
-        // notify listeners and clear session runtime variables
-        events.trigger("endSession");
-        log.debug("gameSession: endSession");
-        clearSessionRuntimeSettings();
-
+        // the moment it ended
         endMoment = moment();
 
         // end the leap session and set the dates in currentStat and SAVE it
@@ -48,6 +44,11 @@ define(["game/stats", "game/timerRound", "game/timerIntro", "log", "gameConfig",
         currentStat.setLeapStats(leapSession.getSessionStats());
         currentStat.end(endMoment.toDate());
         stats.saveCurrent();
+
+        // notify listeners and clear session runtime variables
+        events.trigger("endSession");
+        log.debug("gameSession: endSession");
+        clearSessionRuntimeSettings();
 
         sessionRunning = false;
       }

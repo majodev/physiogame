@@ -7,7 +7,8 @@ define(["PIXI", "underscore", "classes/Layer", "base/displayManager",
     var layer = new Layer(),
       debugDisplay,
       debugTextDisplayManager = "display: received 0 frames @ 0fps",
-      debugTextLeapManager = "leap: received 0 frames @ 0fps";
+      debugTextLeapManager = "leap: received 0 frames @ 0fps",
+      debugTextGameSession = "gameSession: ";
 
     layer.onActivate = function() {
       if (gameConfig.get("debugLayerVisible") === true) {

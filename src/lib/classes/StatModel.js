@@ -14,7 +14,7 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
             this.trigger("allObjectsCatched", currentScore);
           }
         } else {
-          log.error("raiseScore: not started or already locked, not possible!");
+          log.warn("raiseScore: not started or already locked, not possible!");
         }
 
       },
@@ -24,7 +24,7 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
           this.set("gameConfig", gameConfig.toJSON());
           this.set("started", true);
         } else {
-          log.error("start: already started or locked, not possible!");
+          log.warn("start: already started or locked, not possible!");
         }
       },
       end: function(date) {
@@ -33,25 +33,25 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
 
         if (this.get("locked") === false && this.get("finished") === false && this.get("started") === true) {
           this.set("endDate", date);
-          
+
           // compute times...
           gameTime = moment(this.get("endDate")).diff(moment(this.get("startDate")));
           this.set("gameTime", gameTime);
 
           roundTime = gameTime - this.get("gameConfig").introTimerLength;
 
-          if(roundTime > 0) {
+          if (roundTime > 0) {
             this.set("playTime", roundTime);
           } else {
             this.set("playTime", 0);
-          }          
+          }
 
           this.set("finished", true);
         } else {
-          log.error("end: already finished or locked, not possible!");
+          log.warn("end: already finished or locked, not possible!");
         }
       },
-      setLeapStats: function (sessionStats) {
+      setLeapStats: function(sessionStats) {
         this.set("leapDetected", sessionStats.time.detected);
         this.set("leapNotDetected", sessionStats.time.notDetected);
         this.set("leapInside", sessionStats.time.inside);
@@ -60,8 +60,12 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
         this.set("leapOutsideRight", sessionStats.time.outside.right);
         this.set("leapOutsideTop", sessionStats.time.outside.top);
         this.set("leapOutsideBottom", sessionStats.time.outside.bottom);
+        this.set("leapMovementAllX", sessionStats.movement.all.x);
+        this.set("leapMovementAllY", sessionStats.movement.all.y);
+        this.set("leapMovementInsideX", sessionStats.movement.inside.x);
+        this.set("leapMovementInsideY", sessionStats.movement.inside.y);
       },
-      lock: function () {
+      lock: function() {
         this.set("locked", true);
       },
       convertToCSV: function() {
@@ -77,6 +81,10 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
           config_gameMode_string: gameConfig.getFormattedCustomValue("gameMode", json.gameConfig.gameMode),
           config_gameMaxTime_sec: gameConfig.getValueNeededInCustomJSON("gameMaxTime", json.gameConfig),
           config_objectsToSpawn_count: json.gameConfig.objectsToSpawn,
+          leap_movement_all_x_millimeter: json.leapMovementAllX,
+          leap_movement_all_y_millimeter: json.leapMovementAllY,
+          leap_movement_inside_x_millimeter: json.leapMovementInsideX,
+          leap_movement_inside_y_millimeter: json.leapMovementInsideY,
           leap_detected_ms: json.leapDetected,
           leap_notdetected_ms: json.leapNotDetected,
           leap_inside_ms: json.leapInside,
@@ -107,38 +115,52 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
 
         return json;
       },
-      getLeapStatsKeyValues: function (json) {
-        return {keyValues: [{
-          key: "Gesamtzeit Hand getrackt",
-          value: timeFormatter.formatMilliseconds(json.leapDetected)
-        }, {
-          key: "Gesamtzeit nicht getrackt",
-          value: timeFormatter.formatMilliseconds(json.leapNotDetected)
-        }, {
-          key: "Zeit Hand im erlaubten Bereich",
-          value: timeFormatter.formatMilliseconds(json.leapInside)
-        }, {
-          key: "Gesamtzeit Hand außerhalb des erlaubten Bereichs",
-          value: timeFormatter.formatMilliseconds(json.leapOutside)
-        }, {
-          key: "Zeit Hand außerhalb links",
-          value: timeFormatter.formatMilliseconds(json.leapOutsideLeft)
-        }, {
-          key: "Zeit Hand außerhalb rechts",
-          value: timeFormatter.formatMilliseconds(json.leapOutsideRight)
-        }, {
-          key: "Zeit Hand außerhalb oben",
-          value: timeFormatter.formatMilliseconds(json.leapOutsideTop)
-        }, {
-          key: "Zeit Hand außerhalb unten",
-          value: timeFormatter.formatMilliseconds(json.leapOutsideBottom)
-        }]};
+      getLeapStatsKeyValues: function(json) {
+        return {
+          keyValues: [{
+            key: "Gesamtlänge aller horizontalen Bewegungen (x)",
+            value: Math.floor(json.leapMovementAllX) + " mm"
+          }, {
+            key: "Gesamtlänge aller vertikalen Bewegungen (y)",
+            value: Math.floor(json.leapMovementAllY) + " mm"
+          }, {
+            key: "Länge horizontale Bewegungen (x) erlaubter Bereich",
+            value: Math.floor(json.leapMovementInsideX) + " mm"
+          }, {
+            key: "Länge vertikale Bewegungen (y) erlaubter Bereich",
+            value: Math.floor(json.leapMovementInsideY) + " mm"
+          }, {
+            key: "Gesamtzeit Hand getrackt",
+            value: timeFormatter.formatMilliseconds(json.leapDetected)
+          }, {
+            key: "Gesamtzeit nicht getrackt",
+            value: timeFormatter.formatMilliseconds(json.leapNotDetected)
+          }, {
+            key: "Zeit Hand im erlaubten Bereich",
+            value: timeFormatter.formatMilliseconds(json.leapInside)
+          }, {
+            key: "Gesamtzeit Hand außerhalb des erlaubten Bereichs",
+            value: timeFormatter.formatMilliseconds(json.leapOutside)
+          }, {
+            key: "Zeit Hand außerhalb links",
+            value: timeFormatter.formatMilliseconds(json.leapOutsideLeft)
+          }, {
+            key: "Zeit Hand außerhalb rechts",
+            value: timeFormatter.formatMilliseconds(json.leapOutsideRight)
+          }, {
+            key: "Zeit Hand außerhalb oben",
+            value: timeFormatter.formatMilliseconds(json.leapOutsideTop)
+          }, {
+            key: "Zeit Hand außerhalb unten",
+            value: timeFormatter.formatMilliseconds(json.leapOutsideBottom)
+          }]
+        };
       },
       defaults: {
         objectsCatched: 0,
         finished: false,
         started: false,
-        locked : false
+        locked: false
       }
     });
 

@@ -18,6 +18,16 @@ define(["base/leapManager", "moment"],
             any: 0
           },
           inside: 0
+        },
+        movement: {
+          all: {
+            x: 0,
+            y: 0
+          },
+          inside: {
+            x: 0,
+            y: 0
+          }
         }
       };
     }
@@ -49,7 +59,26 @@ define(["base/leapManager", "moment"],
     }
 
     function onLeapFrame(stat) {
+      computeOffsetTime(stat);
+      computeMovement(stat);
+    }
 
+    function computeMovement(stat) {
+      session.movement.all.x += stat.movement.x;
+      session.movement.all.y += stat.movement.y;
+
+      if (stat.outside.left === false &&
+        stat.outside.right === false &&
+        stat.outside.top === false &&
+        stat.outside.bottom === false) {
+
+        // inside
+        session.movement.inside.x += stat.movement.x;
+        session.movement.inside.y += stat.movement.y;
+      }
+    }
+
+    function computeOffsetTime(stat) {
       var currentFrameMoment = moment(),
         diffTimeToLastFrameMs = 0;
 
