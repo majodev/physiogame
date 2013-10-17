@@ -74,8 +74,9 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
         var json = this.toJSON();
 
         json.userName = gameConfig.getFormattedCustomValue("userName", json.gameConfig.userName);
-        json.startDate = formatDateGerman(json.startDate);
-        json.endDate = formatDateGerman(json.endDate);
+        json.date = formatDateOnlyGerman(json.startDate);
+        json.startDate = formatTimeOnlyGerman(json.startDate);
+        json.endDate = formatTimeOnlyGerman(json.endDate);
         json.playTime = timeFormatter.formatMilliseconds(json.playTime);
         json.gameTime = timeFormatter.formatMilliseconds(json.gameTime);
         json.objectsCatched = json.objectsCatched;
@@ -93,6 +94,14 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
 
     function formatDateGerman(date) {
       return moment(date).format("DD.MM.YYYY  HH:mm:ss");
+    }
+
+    function formatTimeOnlyGerman(date) {
+      return moment(date).format("HH:mm:ss");
+    }
+
+    function formatDateOnlyGerman(date) {
+      return moment(date).format("DD.MM.YYYY");
     }
 
     return ScoreModel;

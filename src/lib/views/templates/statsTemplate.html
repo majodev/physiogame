@@ -15,6 +15,7 @@
       <thead>
         <tr>
           <th>Benutzer</th>
+          <th>Datum</th>
           <th>Spielstart</th>
           <th>Spielende</th>
           <th>Spielzeit</th>
@@ -27,6 +28,7 @@
         {{#each stats}}
           <tr>
             <td>{{userName}}</td>
+            <td>{{date}}</td>
             <td>{{startDate}}</td>
             <td>{{endDate}}</td>
             <td>{{gameTime}}</td>
@@ -34,14 +36,15 @@
             <td>{{objectsCatched}}</td>
             {{#if id}}
               <td>
-                <small><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{{id}}}">Erweitert</a></small>
+                <a class="accordion-toggle btn btn-primary btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{{id}}}">?</a>
+                <!-- <button id="collape-{{id}}" data-id="{{id}}" type="button" class="accordion-toggle btn btn-primary btn-xs removeItem pull-right">Mehr</button></td> -->
                 <button id="remove-{{id}}" data-id="{{id}}" type="button" class="btn btn-danger btn-xs removeItem pull-right">&times;</button></td>
             {{else}}
               <td><small>Läuft noch</small></td>
             {{/if}}
           </tr>
           <tr id="collapse-{{{id}}}" class="panel-collapse collapse">
-            <td colspan="7">
+            <td colspan="8">
               <button id="apply-{{id}}" data-id="{{id}}" type="button" data-loading-text="Lade..." class="btn btn-warning btn-xs applySettings pull-right">Einstellungen dieses Spiels wiederherstellen</button>
                 <div><strong>Einstellungen </strong><small>({{id}})</small></div>
               <div class="statHistoryConfig">
