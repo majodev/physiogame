@@ -110,7 +110,7 @@ define(["log", "PIXI",
     }
 
     function animateIntroText() {
-      if(introText.visible === true) {
+      if (introText.visible === true) {
         if (timerIntro.getIntroTick() < introTimerLength / 2) {
           if (introText.scale.x < 1) {
             introText.scale.x += 0.05;
@@ -188,6 +188,11 @@ define(["log", "PIXI",
     }
 
     function showWinningText() {
+
+      var totalMovement;
+      var withinMovement;
+      var percentage;
+
       if (winningAdded === false) {
 
         // win, display the text
@@ -201,11 +206,29 @@ define(["log", "PIXI",
         winningAdded = true;
         //scoreTimerRunning = false;
 
-        tempWinText = "Fertig!\nDu hast " +
-          currentStats.get("objectsCatched") + " Objekte in " + timeFormatter.formatSeconds(timerRound.getRoundTick() / 1000) + " Minuten abgeschossen!\n" +
-          "GRATULATION!\n\n\n\n";
+        tempWinText = "Du hast " +
+          currentStats.get("objectsCatched") + " Objekte in " +
+          timeFormatter.formatSeconds(currentStats.get("playTime") / 1000) +
+          " abgeschossen!\n\n";
 
-        winningText.setText(tempWinText + "\nDanke fürs Spielen!");
+        totalMovement = Math.floor(currentStats.get("leapMovementAllX")) + Math.floor(currentStats.get("leapMovementAllY"));
+
+        if (totalMovement > 0) {
+          withinMovement = Math.floor(currentStats.get("leapMovementInsideX")) + Math.floor(currentStats.get("leapMovementInsideY"));
+          percentage = (withinMovement === 0) ? 0 : Math.floor((100 / totalMovement * withinMovement));
+
+          tempWinText += "Leap Motion sagt:\nDu hast dich insgesamt " +
+            (Math.floor(currentStats.get("leapMovementAllX")) + Math.floor(currentStats.get("leapMovementAllY"))) +
+            " mm bewegt und\n";
+
+          tempWinText += "warst zu " + percentage + " % innerhalb des Spielfeldes.\n";
+        } else {
+          tempWinText += "Leider hast du nicht mit Leap Motion gespielt\nsonst könnte ich dir noch mehr verraten...\n";
+        }
+
+
+
+        winningText.setText(tempWinText + "\nDanke fürs Spielen!\n");
 
         countingText.visible = false;
         timerText.visible = false;

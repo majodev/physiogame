@@ -21,6 +21,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
     var gameObjects = [],
       killAnimationsToRemove = [],
+      introSucceeded = false,
       previousHitted,
       opt;
 
@@ -28,6 +29,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     layer.onActivate = function() {
 
       previousHitted = undefined;
+      introSucceeded = false;
 
       // opt holds all current options from the gameConfig that are relevant for this layer
       // get the current set options from the model
@@ -69,25 +71,24 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     };
 
     function onTimerIntroEnd(tick) {
+      introSucceeded = true;
       crosshairGO.events.on("crosshairActive", detectPointerHitsGameObject);
     }
 
     function onTimerIntroTickSpawnObject(count) {
       var i = 0,
-        objectsLength = gameObjects.length,
         len = count;
 
       for (i; i < len; i += 1) {
-        if ((objectsLength + i) < opt.objectsToSpawn) {
-          attachNewGameObject(objectsLength + i);
+        if (gameObjects.length < opt.objectsToSpawn) {
+          attachNewGameObject(gameObjects.length);
         }
       }
 
     }
 
     function onTimerRoundReattach(tick) {
-      var gameObjectsLength = gameObjects.length,
-        missingObjectCount = opt.objectsToSpawn - gameObjectsLength,
+      var missingObjectCount = opt.objectsToSpawn - gameObjects.length,
         i = 0;
 
       // add missing objects but comply with gameReattachObjectMax
@@ -97,7 +98,9 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
       // attach the count needed.
       for (i; i < missingObjectCount; i += 1) {
-        attachNewGameObject(gameObjectsLength + i);
+        if (gameObjects.length < opt.objectsToSpawn) {
+          attachNewGameObject(gameObjects.length);
+        }
       }
     }
 
@@ -131,10 +134,11 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     }
 
     function removeAllGameObjects() {
-      var i = 0,
-        len = gameObjects.length;
-      for (i; i < len; i += 1) {
+      var len = gameObjects.length;
+
+      for (var i = len - 1; i >= 0; i -= 1) {
         gameObjects[i].visible = false;
+        gameObjects.splice(i, 1);
       }
     }
 
@@ -144,6 +148,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       timerIntro.events.off("introTickSpawnObject", onTimerIntroTickSpawnObject);
       timerIntro.events.off("introEnd", onTimerIntroEnd);
       timerRound.events.off("roundReattach", onTimerRoundReattach);
+      timerRound.events.off("roundEnd", onTimerRoundEnd);
 
       gameObjects = [];
       killAnimationsToRemove = [];
@@ -171,22 +176,25 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
           }
         });
 
-      resetAllHittedToFalse();
+      if(introSucceeded) {
+        resetAllHittedToFalse();
 
-      for (i = max - 1; i >= 0; i -= 1) {
-        if (gameObjects[i].visible === true && gameObjects[i].introducing === false) {
-          hitted = hittest(gameObjects[i], hitCord);
-          gameObjects[i].hitted = hitted;
-          if (hitted === true) {
-            if (_.isUndefined(previousHitted) === false && previousHitted !== gameObjects[i]) {
-              soundBridge.play("hitted");
+        for (i = max - 1; i >= 0; i -= 1) {
+          if (gameObjects[i].visible === true && gameObjects[i].introducing === false) {
+            hitted = hittest(gameObjects[i], hitCord);
+            gameObjects[i].hitted = hitted;
+            if (hitted === true) {
+              if (_.isUndefined(previousHitted) === false && previousHitted !== gameObjects[i]) {
+                soundBridge.play("hitted");
+              }
+              swapGameObjectToTop(gameObjects[i], i, max);
+              previousHitted = gameObjects[i];
+              return;
             }
-            swapGameObjectToTop(gameObjects[i], i, max);
-            previousHitted = gameObjects[i];
-            return;
           }
         }
       }
+
     }
 
     function swapGameObjectToTop(gameObject, arrayPosition, arrayLength) {
@@ -307,7 +315,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
           // after conditions for introducing are met, its indroduced and handled!
           if (gameObject.scale.x === opt.objectNormalScaleMin &&
-              gameObject.alpha === opt.objectNormalAlphaMin) {
+            gameObject.alpha === opt.objectNormalAlphaMin) {
 
             gameObject.alpha = opt.objectNormalAlphaMin;
 
