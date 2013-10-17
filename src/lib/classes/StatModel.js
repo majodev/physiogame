@@ -130,28 +130,28 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
             key: "Länge vertikale Bewegungen (y) erlaubter Bereich",
             value: Math.floor(json.leapMovementInsideY) + " mm"
           }, {
-            key: "Gesamtzeit Hand getrackt",
+            key: "Rundenzeit Hand getrackt",
             value: timeFormatter.formatMilliseconds(json.leapDetected)
           }, {
-            key: "Gesamtzeit nicht getrackt",
+            key: "Rundenzeit nicht getrackt",
             value: timeFormatter.formatMilliseconds(json.leapNotDetected)
           }, {
-            key: "Zeit Hand im erlaubten Bereich",
+            key: "Rundenzeit Hand im erlaubten Bereich",
             value: timeFormatter.formatMilliseconds(json.leapInside)
           }, {
-            key: "Gesamtzeit Hand außerhalb des erlaubten Bereichs",
+            key: "Rundenzeit Hand außerhalb des erlaubten Bereichs",
             value: timeFormatter.formatMilliseconds(json.leapOutside)
           }, {
-            key: "Zeit Hand außerhalb links",
+            key: "Rundenzeit Hand außerhalb links",
             value: timeFormatter.formatMilliseconds(json.leapOutsideLeft)
           }, {
-            key: "Zeit Hand außerhalb rechts",
+            key: "Rundenzeit Hand außerhalb rechts",
             value: timeFormatter.formatMilliseconds(json.leapOutsideRight)
           }, {
-            key: "Zeit Hand außerhalb oben",
+            key: "Rundenzeit Hand außerhalb oben",
             value: timeFormatter.formatMilliseconds(json.leapOutsideTop)
           }, {
-            key: "Zeit Hand außerhalb unten",
+            key: "Rundenzeit Hand außerhalb unten",
             value: timeFormatter.formatMilliseconds(json.leapOutsideBottom)
           }]
         };

@@ -81,6 +81,7 @@ define(["game/stats", "game/timerRound", "game/timerIntro", "log", "gameConfig",
       //log.debug("gameSession: phase_2_round");
       timerIntro.events.off("introEnd", phase_2_round);
       timerRound.start();
+      leapSession.startSessionRound();
       soundBridge.play("roundstart");
     }
 

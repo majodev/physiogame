@@ -1,8 +1,9 @@
-define(["base/leapManager", "moment"],
-  function(leapManager, moment) {
+define(["base/leapManager", "moment", "gameConfig"],
+  function(leapManager, moment, gameConfig) {
 
     var session = {},
-      running = false;
+      running = false,
+      roundRunning = false;
 
     function reset(startMoment) {
       session = {
@@ -33,18 +34,28 @@ define(["base/leapManager", "moment"],
     }
 
     function startSession(startMoment) {
+      var rountMoment = moment(startMoment.toDate());
       if (running === true) {
         endSession();
       }
 
+      rountMoment.add("milliseconds", gameConfig.get("introTimerLength"));
+
       // the lastFrameMoment = the startMoment in beginning!
-      reset(startMoment);
+      reset(rountMoment);
 
       leapManager.events.on("frameStats", onLeapFrame);
       running = true;
     }
 
+    function startSessionRound() {
+      if(running === true) {
+        roundRunning = true;
+      }
+    }
+
     function endSession(endMoment) {
+      roundRunning = false;
       var lastdiff = 0;
 
       // turn the events off to frame evaluation.
@@ -53,14 +64,22 @@ define(["base/leapManager", "moment"],
       // make the last time diff, with notDetected 
       // (when leap wasnt available, this sets it to the whole time!)
       lastdiff = endMoment.diff(session.lastFrameMoment);
+
+      if(lastdiff < 0) {
+        // was never in SessionRound!
+        lastdiff = 0;
+      }
+
       session.time.notDetected += lastdiff;
 
       running = false;
     }
 
     function onLeapFrame(stat) {
-      computeOffsetTime(stat);
-      computeMovement(stat);
+      if(roundRunning) {
+        computeOffsetTime(stat);
+        computeMovement(stat);
+      }
     }
 
     function computeMovement(stat) {
@@ -127,6 +146,7 @@ define(["base/leapManager", "moment"],
 
     return {
       startSession: startSession,
+      startSessionRound: startSessionRound,
       endSession: endSession,
       getSessionStats: getSessionStats
     };

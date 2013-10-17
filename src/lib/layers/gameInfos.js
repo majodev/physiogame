@@ -92,7 +92,7 @@ define(["log", "PIXI",
     }
 
     function onTimerIntroEnd(tick) {
-      log.debug("introend!");
+      //log.debug("introend!");
       introText.setText("Los!");
       introComplete = true;
     }
@@ -230,7 +230,7 @@ define(["log", "PIXI",
           withinMovement = Math.floor(currentStats.get("leapMovementInsideX")) + Math.floor(currentStats.get("leapMovementInsideY"));
           percentage = (withinMovement === 0) ? 0 : Math.floor((100 / totalMovement * withinMovement));
 
-          tempWinText += "Leap Motion sagt:\nDu hast dich insgesamt " +
+          tempWinText += "Leap Motion sagt:\nDu hast dich in dieser Runde " +
             (Math.floor(currentStats.get("leapMovementAllX")) + Math.floor(currentStats.get("leapMovementAllY"))) +
             " mm bewegt und\n";
 

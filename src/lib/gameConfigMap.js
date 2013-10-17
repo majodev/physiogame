@@ -98,7 +98,7 @@ define([],
       gameReattachObjectMax: {
         def: 1,
         min: 1,
-        max: 50,
+        max: 75,
         step: 1,
         ui: "slider",
         cat: "general",
@@ -107,17 +107,14 @@ define([],
           id: "gameMode",
           value: "clearInTime"
         },
-        check: {
-          max: "objectsToSpawn"
-        },
         format: {
           post: "Objekte"
         }
       },
       objectsToSpawn: {
         def: 15,
-        min: 2,
-        max: 200,
+        min: 1,
+        max: 150,
         step: 1,
         ui: "slider",
         cat: "general",
