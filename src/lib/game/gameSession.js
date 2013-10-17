@@ -12,6 +12,7 @@ define(["game/stats", "game/timerRound", "game/timerIntro", "log", "gameConfig",
         events.trigger("newSession");
         log.debug("gameSession: newSession");
         currentStat = stats.getNew();
+        currentStat.start();
         setGameSuccessCondition();
         phase_1_intro();
         sessionRunning = true;
@@ -23,6 +24,7 @@ define(["game/stats", "game/timerRound", "game/timerIntro", "log", "gameConfig",
         events.trigger("endSession");
         log.debug("gameSession: endSession");
         clearSessionRuntimeSettings();
+        currentStat.end();
         stats.saveCurrent();
         sessionRunning = false;
       }

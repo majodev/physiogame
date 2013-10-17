@@ -17,6 +17,8 @@
           <th>Benutzer</th>
           <th>Spielstart</th>
           <th>Spielende</th>
+          <th>Spielzeit</th>
+          <th>Rundenzeit</th>
           <th>Gefangen</th>
           <th>Aktion</th>
         </tr>
@@ -27,6 +29,8 @@
             <td>{{userName}}</td>
             <td>{{startDate}}</td>
             <td>{{endDate}}</td>
+            <td>{{gameTime}}</td>
+            <td>{{playTime}}</td>
             <td>{{objectsCatched}}</td>
             {{#if id}}
               <td>
@@ -37,7 +41,7 @@
             {{/if}}
           </tr>
           <tr id="collapse-{{{id}}}" class="panel-collapse collapse">
-            <td colspan="5">
+            <td colspan="7">
               <button id="apply-{{id}}" data-id="{{id}}" type="button" data-loading-text="Lade..." class="btn btn-warning btn-xs applySettings pull-right">Einstellungen dieses Spiels wiederherstellen</button>
                 <div><strong>Einstellungen </strong><small>({{id}})</small></div>
               <div class="statHistoryConfig">

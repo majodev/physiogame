@@ -2,7 +2,8 @@ define(["log", "loaders/soundLoader", "gameConfig"],
   function(log, soundLoader, gameConfig) {
 
     var audioEnabled = gameConfig.get("audioEnabled"),
-      audioBackgroundEnabled = gameConfig.get("audioBackgroundEnabled");
+      audioBackgroundEnabled = gameConfig.get("audioBackgroundEnabled"),
+      bgIsPlaying = false;
 
     gameConfig.on("change", function (model, options) {
       audioEnabled = gameConfig.get("audioEnabled");
@@ -12,10 +13,14 @@ define(["log", "loaders/soundLoader", "gameConfig"],
     });
 
     function setBackgroundAudio() {
-      if(audioBackgroundEnabled && audioEnabled) {
-        play("bg");
+      if(audioBackgroundEnabled) {
+        if(bgIsPlaying === false) {
+          play("bg");
+          bgIsPlaying = true;
+        }
       } else {
         stop("bg");
+        bgIsPlaying = false;
       }
     }
 

@@ -1,5 +1,5 @@
-define([],
-  function() {
+define(["underscore"],
+  function(_) {
     // helper to format the seconds into something displayable
     function formatSeconds(secs) {
       var sec_num = parseInt(secs, 10),
@@ -17,19 +17,23 @@ define([],
     }
 
     function formatMilliseconds(s) {
-      function addZ(n) {
-        return (n < 10 ? '0' : '') + n;
-        //return n;
+      if (_.isNumber(s) === true) {
+
+        var ms = s % 1000;
+        s = (s - ms) / 1000;
+        var secs = s % 60;
+        s = (s - secs) / 60;
+        var mins = s % 60;
+        //var hrs = (s - mins) / 60;
+
+        return addZero(mins) + ':' + addZero(secs) + '.' + ms;
+      } else {
+        return 0;
       }
+    }
 
-      var ms = s % 1000;
-      s = (s - ms) / 1000;
-      var secs = s % 60;
-      s = (s - secs) / 60;
-      var mins = s % 60;
-      //var hrs = (s - mins) / 60;
-
-      return addZ(mins) + ':' + addZ(secs) + '.' + ms;
+    function addZero(n) {
+      return (n < 10 ? '0' : '') + n;
     }
 
     return {

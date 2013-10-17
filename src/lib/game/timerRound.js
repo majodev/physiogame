@@ -87,7 +87,6 @@ define(["Poll", "utils/publisher", "gameConfig", "log"],
         Poll.stop("gameRoundTimer");
         events.trigger("roundEnd", roundTick); // trigger on end...
         
-
         resetTimerInternals();
       }
     }

@@ -33,10 +33,8 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     // returns an instance of a new StatModel in the Collection
 
     function getNew() {
-      current = new StatModel({
-        startDate: moment().toDate(),
-        gameConfig: gameConfig.toJSON()
-      });
+      current = new StatModel();
+      
       statsCollection.push(current);
       //log.debug("stats: getNew id=" + current.cid);
       return current;
@@ -51,10 +49,8 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
 
     function saveCurrent() {
       if (_.isUndefined(current) === false) {
-        if (current.get("finished") === false) {
-          //log.debug("stats: saveCurrent id=" + current.cid);
-          current.set("endDate", moment().toDate());
-          current.set("finished", true);
+        if (current.get("locked") === false) {
+          current.lock();
           current.save();
           alertModal.show({
             head: "Speichern...",
@@ -72,26 +68,12 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     }
 
     function toCSV() {
-
-      var settingsJSON = statsCollection.toJSON(),
-        convertedCollection = [],
-        i = 0,
-        len = settingsJSON.length;
-
+      var i = 0,
+        len = statsCollection.models.length,
+        convertedCollection = [];
       for (i; i < len; i += 1) {
-        convertedCollection.push({
-          id: settingsJSON[i].id,
-          config_userName_string: gameConfig.getFormattedCustomValue("userName", settingsJSON[i].gameConfig.userName),
-          startDate_date: formatDate(settingsJSON[i].startDate),
-          endDate_date: formatDate(settingsJSON[i].endDate),
-          catched_count: settingsJSON[i].objectsCatched,
-          config_gameMode_string: gameConfig.getFormattedCustomValue("gameMode", settingsJSON[i].gameConfig.gameMode),
-          config_gameMaxTime_sec: gameConfig.getValueNeededInCustomJSON("gameMaxTime", settingsJSON[i].gameConfig),
-          config_objectsToSpawn_count: settingsJSON[i].gameConfig.objectsToSpawn
-        });
+        convertedCollection.push(statsCollection.models[i].convertToCSV());
       }
-
-      //console.log(convertedCollection);
 
       return csv(JSON.stringify(convertedCollection), ";", true);
     }
@@ -154,23 +136,14 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     }
 
     function getFormattedJSON() {
-      var collectionJSON = statsCollection.toJSON();
-
       var i = 0,
-        len = collectionJSON.length;
+        len = statsCollection.models.length,
+        convertedCollection = [];
       for (i; i < len; i += 1) {
-        collectionJSON[i].userName = gameConfig.getFormattedCustomValue("userName", collectionJSON[i].gameConfig.userName);
-        collectionJSON[i].startDate = formatDate(collectionJSON[i].startDate);
-        collectionJSON[i].endDate = formatDate(collectionJSON[i].endDate);
-        collectionJSON[i].objectsCatched = collectionJSON[i].objectsCatched;
-        collectionJSON[i].gameConfig = gameConfig.generateKeyValuePairs(undefined, collectionJSON[i].gameConfig);
+        convertedCollection.push(statsCollection.models[i].convertToFormattedJSON());
       }
 
-      return collectionJSON;
-    }
-
-    function formatDate(date) {
-      return moment(date).format("DD.MM.YYYY  HH:mm:ss");
+      return convertedCollection;
     }
 
     return {
