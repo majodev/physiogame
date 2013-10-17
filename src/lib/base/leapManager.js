@@ -276,6 +276,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
       getHandsAvailable: getHandsAvailable,
       getHandsLength: getHandsLength,
       getOutsideScreen: getOutsideScreen,
+      getProjectionSizeInMillimeters: getProjectionSizeInMillimeters,
       events: events
     };
   }

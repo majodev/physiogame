@@ -31,6 +31,10 @@ define(["base/leapManager", "moment", "gameConfig"],
             y: 0,
             hyp: 0
           }
+        },
+        projection: {
+          width: 0,
+          height: 0
         }
       };
     }
@@ -45,6 +49,8 @@ define(["base/leapManager", "moment", "gameConfig"],
 
       // the lastFrameMoment = the startMoment in beginning!
       reset(rountMoment);
+
+      session.projection = leapManager.getProjectionSizeInMillimeters();
 
       leapManager.events.on("frameStats", onLeapFrame);
       running = true;
