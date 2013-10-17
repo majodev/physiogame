@@ -1,11 +1,11 @@
 define(["log", "PIXI",
-    "gameConfig", "Poll", "classes/Layer", "classes/Button",
+    "gameConfig", "classes/Layer", "classes/Button",
     "utils/timeFormatter", "game/stats",
     "game/timerRound", "game/timerIntro",
     "game/gameSession"
   ],
   function(log, PIXI,
-    gameConfig, Poll, Layer, Button,
+    gameConfig, Layer, Button,
     timeFormatter, stats,
     timerRound, timerIntro,
     gameSession) {

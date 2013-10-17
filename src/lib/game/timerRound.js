@@ -61,8 +61,9 @@ define(["Poll", "utils/publisher", "gameConfig", "log"],
               stop();
             }
 
-            if (reattachTick === config_reattachEveryMs) {
+            if (reattachTick >= config_reattachEveryMs) {
               events.trigger("roundReattach", roundTick);
+              reattachTick -= config_reattachEveryMs;
             }
           } else { // no limit...
             if (roundTick > 0) {

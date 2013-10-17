@@ -1,14 +1,16 @@
 define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     "base/soundBridge", "game/crosshairGO", "classes/Layer",
-    "Poll", "game/stats", 
+    "game/stats",
     "game/behaviours/targetBehaviour", "game/behaviours/alphaBehaviour",
-    "game/behaviours/scaleBehaviour", "game/behaviours/speedBehaviour"
+    "game/behaviours/scaleBehaviour", "game/behaviours/speedBehaviour",
+    "game/timerIntro", "game/timerRound"
   ],
   function(textures, gameConfig, hittest, _, PIXI,
     soundBridge, crosshairGO, Layer,
-    Poll, stats, 
+    stats,
     targetBehaviour, alphaBehaviour,
-    scaleBehaviour, speedBehaviour) {
+    scaleBehaviour, speedBehaviour,
+    timerIntro, timerRound) {
 
     var layer = new Layer({
       listeners: {
@@ -19,16 +21,12 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
     var gameObjects = [],
       killAnimationsToRemove = [],
-      allGameObjectsCreated = false,
-      ingameObjectCreatorRunning = false,
-      ingameObjectCreatorTimeElapsed = 0,
       previousHitted,
       opt;
 
 
     layer.onActivate = function() {
 
-      ingameObjectCreatorTimeElapsed = 0;
       previousHitted = undefined;
 
       // opt holds all current options from the gameConfig that are relevant for this layer
@@ -62,62 +60,50 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       };
 
 
-      Poll.start({
-        name: "gameObjectCreator",
-        interval: opt.introTimerLength / opt.objectsToSpawn,
-        action: function() {
-          if (gameObjects.length < opt.objectsToSpawn) {
-            attachNewGameObject(gameObjects.length);
-          } else {
-            // all done, make it interactive...
-            crosshairGO.events.on("crosshairActive", detectPointerHitsGameObject);
-            Poll.stop("gameObjectCreator"); // kill this poll.
-            allGameObjectsCreated = true;
+      // events to timers
+      timerIntro.events.on("introTickSpawnObject", onTimerIntroTickSpawnObject);
+      timerIntro.events.on("introEnd", onTimerIntroEnd);
+      timerRound.events.on("roundReattach", onTimerRoundReattach);
+      timerRound.events.on("roundEnd", onTimerRoundEnd);
 
-            attachInGameObjectAdder();
-          }
-        }
-      });
     };
 
-    function attachInGameObjectAdder() {
-      if (opt.gameMode === "clearInTime") {
-        Poll.start({
-          name: "inGameObjectCreator",
-          interval: opt.gameReattachObjectAfterMs,
-          action: function() {
+    function onTimerIntroEnd(tick) {
+      crosshairGO.events.on("crosshairActive", detectPointerHitsGameObject);
+    }
 
-            var gameObjectsLength = gameObjects.length,
-              missingObjectCount = opt.objectsToSpawn - gameObjectsLength,
-              i = 0;
+    function onTimerIntroTickSpawnObject(count) {
+      var i = 0,
+        objectsLength = gameObjects.length,
+        len = count;
 
-            // signal its still running.
-            ingameObjectCreatorRunning = true;
-
-
-            if (ingameObjectCreatorTimeElapsed >= (opt.gameMaxTime * 1000)) {
-              // don't add more, it's finished!
-              ingameObjectCreatorRunning = false;
-              Poll.stop("inGameObjectCreator");
-            } else {
-
-              // increase elapsed timer...
-              ingameObjectCreatorTimeElapsed += opt.gameReattachObjectAfterMs;
-
-              // add missing objects but comply with gameReattachObjectMax
-              if (missingObjectCount > opt.gameReattachObjectMax) {
-                missingObjectCount = opt.gameReattachObjectMax;
-              }
-
-              // attach the count needed.
-              for (i; i < missingObjectCount; i += 1) {
-                attachNewGameObject(gameObjectsLength + i);
-              }
-
-            }
-          }
-        });
+      for (i; i < len; i += 1) {
+        if ((objectsLength + i) < opt.objectsToSpawn) {
+          attachNewGameObject(objectsLength + i);
+        }
       }
+
+    }
+
+    function onTimerRoundReattach(tick) {
+      var gameObjectsLength = gameObjects.length,
+        missingObjectCount = opt.objectsToSpawn - gameObjectsLength,
+        i = 0;
+
+      // add missing objects but comply with gameReattachObjectMax
+      if (missingObjectCount > opt.gameReattachObjectMax) {
+        missingObjectCount = opt.gameReattachObjectMax;
+      }
+
+      // attach the count needed.
+      for (i; i < missingObjectCount; i += 1) {
+        attachNewGameObject(gameObjectsLength + i);
+      }
+    }
+
+    function onTimerRoundEnd(tick) {
+      crosshairGO.events.off("crosshairActive", detectPointerHitsGameObject);
+      removeAllGameObjects();
     }
 
     function attachNewGameObject(i) {
@@ -144,27 +130,28 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       layer.addChild(gameObjects[i]);
     }
 
+    function removeAllGameObjects() {
+      var i = 0,
+        len = gameObjects.length;
+      for (i; i < len; i += 1) {
+        gameObjects[i].visible = false;
+      }
+    }
+
     layer.onDeactivate = function() {
       crosshairGO.events.off("crosshairActive", detectPointerHitsGameObject);
 
-      if (allGameObjectsCreated === false) {
-        Poll.stop("gameObjectCreator"); // kill creator poll if still running...
-      }
+      timerIntro.events.off("introTickSpawnObject", onTimerIntroTickSpawnObject);
+      timerIntro.events.off("introEnd", onTimerIntroEnd);
+      timerRound.events.off("roundReattach", onTimerRoundReattach);
 
-      if (ingameObjectCreatorRunning === true) {
-        Poll.stop("inGameObjectCreator");
-      }
-
-      allGameObjectsCreated = false;
       gameObjects = [];
       killAnimationsToRemove = [];
     };
 
     layer.onRender = function() {
-      //if (allGameObjectsCreated) {
-        onRenderAnimateGameObjects();
-        onRenderClearExplosions();
-      //}
+      onRenderAnimateGameObjects();
+      onRenderClearExplosions();
     };
 
     layer.onHandFrame = function(coordinates) {
@@ -189,12 +176,9 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       for (i = max - 1; i >= 0; i -= 1) {
         if (gameObjects[i].visible === true) {
           hitted = hittest(gameObjects[i], hitCord);
-          // if (gameObjects[i].hitted !== hitted) {
-          //   soundBridge.play("hitted");
-          // }
           gameObjects[i].hitted = hitted;
           if (hitted === true) {
-            if(_.isUndefined(previousHitted) === false && previousHitted !== gameObjects[i]) {
+            if (_.isUndefined(previousHitted) === false && previousHitted !== gameObjects[i]) {
               soundBridge.play("hitted");
             }
             swapGameObjectToTop(gameObjects[i], i, max);
@@ -289,7 +273,6 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
             explosion.onComplete = onExplosionComplete;
 
-
             layer.addChild(explosion);
 
 
@@ -303,27 +286,27 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
           }
         } else {
           // gameObject wasn't introduced till here.
-          
+
           // alpha to minimum
-          if(gameObject.alpha < opt.objectNormalAlphaMin) {
+          if (gameObject.alpha < opt.objectNormalAlphaMin) {
             gameObject.alpha += 0.01;
-            if(gameObject.alpha > opt.objectNormalAlphaMin) {
+            if (gameObject.alpha > opt.objectNormalAlphaMin) {
               gameObject.alpha = opt.objectNormalAlphaMin;
             }
           }
 
           // scale to minimum
-          if(gameObject.scale.x < opt.objectNormalScaleMin) {
+          if (gameObject.scale.x < opt.objectNormalScaleMin) {
             gameObject.scale.x += 0.01;
             gameObject.scale.y += 0.01;
-            if(gameObject.scale.x > opt.objectNormalScaleMin) {
+            if (gameObject.scale.x > opt.objectNormalScaleMin) {
               gameObject.scale.x = opt.objectNormalScaleMin;
               gameObject.scale.y = opt.objectNormalScaleMin;
             }
           }
 
           // after conditions for introducing are met, its indroduced and handled!
-          if(gameObject.alpha === opt.objectNormalAlphaMin &&
+          if (gameObject.alpha === opt.objectNormalAlphaMin &&
             gameObject.scale.x === opt.objectNormalScaleMin) {
 
             gameObject.introducing = false;

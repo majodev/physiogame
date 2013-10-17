@@ -4,7 +4,9 @@ define(["Poll", "utils/publisher", "gameConfig", "log"],
     var events = publisher.make(),
       TIMER_TICK_MS = 100, // global ticks per call
       config_introMaxMs,
+      config_introObjectPerTick,
       introRunning = false,
+      introObjectTick = 0,
       introTick = 0;
 
     (function startup() {
@@ -19,6 +21,7 @@ define(["Poll", "utils/publisher", "gameConfig", "log"],
 
     function readGameConfig() {
       config_introMaxMs = gameConfig.get("introTimerLength");
+      config_introObjectPerTick = TIMER_TICK_MS / (config_introMaxMs / gameConfig.get("objectsToSpawn"));
     }
 
     function start() {
@@ -34,7 +37,9 @@ define(["Poll", "utils/publisher", "gameConfig", "log"],
         name: "gameIntroTimer",
         interval: TIMER_TICK_MS,
         action: function() {
-          // if there is a limit....
+
+          var introSpawnObjectCount = Math.floor(introObjectTick);
+
           if (introTick > 0 && introTick < config_introMaxMs) {
             events.trigger("introTick", introTick);
             if (introTick % 1000 === 0) {
@@ -42,11 +47,17 @@ define(["Poll", "utils/publisher", "gameConfig", "log"],
             }
           }
 
+          if(introSpawnObjectCount > 1) {
+            events.trigger("introTickSpawnObject", introSpawnObjectCount);
+            introObjectTick -= introSpawnObjectCount;
+          }
+
           if (introTick >= config_introMaxMs) {
             stop();
           }
 
           introTick += TIMER_TICK_MS;
+          introObjectTick += config_introObjectPerTick;
         }
       });
 
@@ -56,6 +67,12 @@ define(["Poll", "utils/publisher", "gameConfig", "log"],
     function stop() {
       if (introRunning) {
         Poll.stop("gameIntroTimer");
+
+        if(introObjectTick > 0) {
+          events.trigger("introTickSpawnObject", Math.ceil(introObjectTick));
+          introObjectTick = 0;
+        }
+
         events.trigger("introEnd", introTick); // trigger on end...
 
         resetTimerInternals();
