@@ -23,11 +23,13 @@ define(["base/leapManager", "moment", "gameConfig"],
         movement: {
           all: {
             x: 0,
-            y: 0
+            y: 0,
+            hyp: 0
           },
           inside: {
             x: 0,
-            y: 0
+            y: 0,
+            hyp: 0
           }
         }
       };
@@ -85,6 +87,7 @@ define(["base/leapManager", "moment", "gameConfig"],
     function computeMovement(stat) {
       session.movement.all.x += stat.movement.x;
       session.movement.all.y += stat.movement.y;
+      session.movement.all.hyp += stat.movement.hyp;
 
       if (stat.outside.left === false &&
         stat.outside.right === false &&
@@ -94,6 +97,7 @@ define(["base/leapManager", "moment", "gameConfig"],
         // inside
         session.movement.inside.x += stat.movement.x;
         session.movement.inside.y += stat.movement.y;
+        session.movement.inside.hyp += stat.movement.hyp;
       }
     }
 

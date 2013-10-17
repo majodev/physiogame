@@ -11,7 +11,8 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
       outsideScreen,
       movement = {
         x: 0,
-        y: 0
+        y: 0,
+        hyp: 0
       },
       handsLength = 0,
       attachedListeners = false,
@@ -113,42 +114,80 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
 
       if (handsAvailable === true) {
         if (_.isUndefined(lastHand) === false) {
-          // compute movement of hands in milimeters
 
-          // x movement, anchor at 0!
-          if (hand.palmPosition[0] < 0) {
-            if (lastHand.palmPosition[0] >= 0) { // new < 0 <= old
-              movement.x = Math.abs(hand.palmPosition[0]) + lastHand.palmPosition[0];
-            } else { // new < 0 && old < 0 
-              movement.x = Math.abs(Math.abs(hand.palmPosition[0]) - Math.abs(lastHand.palmPosition[0]));
-            }
-          } else {
-            if (lastHand.palmPosition[0] >= 0) { // new >= 0 && old >= 0
-              movement.x = Math.abs(hand.palmPosition[0] - lastHand.palmPosition[0]);
-            } else { // old < 0 <= new
-              movement.x = Math.abs(lastHand.palmPosition[0]) + hand.palmPosition[0];
-            }
-          }
-
-          // y movement, always positive!
-          movement.y = Math.abs(hand.palmPosition[1] - lastHand.palmPosition[1]);
+          movement.x = getLeapDistanceBetweenX(hand.palmPosition[0], lastHand.palmPosition[0]);
+          movement.y = getLeapDistanceBetweenY(hand.palmPosition[1], lastHand.palmPosition[1]);
+          movement.hyp = getHypotenuse(movement.x, movement.y);
 
         } else {
           movement = {
             x: 0,
-            y: 0
+            y: 0,
+            hyp: 0
           };
         }
       }
 
-      //console.log(movement);
+    }
+
+    function leapXToNormalize(x) {
+      return (displayWidth / leapToDisplayX) + (x * leapXModifier);
+    }
+
+    function leapYToNormalize(y) {
+      return (displayHeight * leapToDisplayY) - (y * leapYModifier);
+    }
+
+    function normalizedXToLeap(x) {
+      return (x - (displayWidth / leapToDisplayX)) / leapXModifier;
+    }
+
+    function normalizedYToLeap(y) {
+      return (y - (displayHeight / leapToDisplayY)) / leapYModifier;
+    }
+
+    function getProjectionSizeInMillimeters() {
+      return {
+        width: getLeapDistanceBetweenX(normalizedXToLeap(0),
+          normalizedXToLeap(displayWidth)),
+        height: getLeapDistanceBetweenY(normalizedYToLeap(0),
+          normalizedYToLeap(displayHeight))
+      };
+    }
+
+    function getHypotenuse(a, b) {
+      return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+    }
+
+    function getLeapDistanceBetweenX(x1, x2) {
+      var distanceX = 0;
+      // x movement, anchor at 0!
+      if (x1 < 0) {
+        if (x2 >= 0) { // new < 0 <= old
+          distanceX = Math.abs(x1) + x2;
+        } else { // new < 0 && old < 0 
+          distanceX = Math.abs(Math.abs(x1) - Math.abs(x2));
+        }
+      } else {
+        if (x2 >= 0) { // new >= 0 && old >= 0
+          distanceX = Math.abs(x1 - x2);
+        } else { // old < 0 <= new
+          distanceX = Math.abs(x2) + x1;
+        }
+      }
+      return distanceX;
+    }
+
+    function getLeapDistanceBetweenY(y1, y2) {
+      // y movement, always positive!
+      return Math.abs(y1 - y2);
     }
 
     function computePosition(x, y) {
 
       var position = {
-        x: (displayWidth / leapToDisplayX + (x * leapXModifier)),
-        y: (displayHeight * leapToDisplayY - (y * leapYModifier))
+        x: leapXToNormalize(x),
+        y: leapYToNormalize(y)
       };
 
       outsideScreen = {

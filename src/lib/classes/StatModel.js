@@ -62,8 +62,10 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
         this.set("leapOutsideBottom", sessionStats.time.outside.bottom);
         this.set("leapMovementAllX", sessionStats.movement.all.x);
         this.set("leapMovementAllY", sessionStats.movement.all.y);
+        this.set("leapMovementAllHyp", sessionStats.movement.all.hyp);
         this.set("leapMovementInsideX", sessionStats.movement.inside.x);
         this.set("leapMovementInsideY", sessionStats.movement.inside.y);
+        this.set("leapMovementInsideHyp", sessionStats.movement.inside.hyp);
       },
       lock: function() {
         this.set("locked", true);
@@ -81,10 +83,12 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
           config_gameMode_string: gameConfig.getFormattedCustomValue("gameMode", json.gameConfig.gameMode),
           config_gameMaxTime_sec: gameConfig.getValueNeededInCustomJSON("gameMaxTime", json.gameConfig),
           config_objectsToSpawn_count: json.gameConfig.objectsToSpawn,
-          leap_movement_all_x_millimeter: json.leapMovementAllX,
-          leap_movement_all_y_millimeter: json.leapMovementAllY,
-          leap_movement_inside_x_millimeter: json.leapMovementInsideX,
-          leap_movement_inside_y_millimeter: json.leapMovementInsideY,
+          leap_movement_all_hyp_millimeter: Math.floor(json.leapMovementAllHyp),
+          leap_movement_all_x_millimeter: Math.floor(json.leapMovementAllX),
+          leap_movement_all_y_millimeter: Math.floor(json.leapMovementAllY),
+          leap_movement_inside_hyp_millimeter: Math.floor(json.leapMovementInsideHyp),
+          leap_movement_inside_x_millimeter: Math.floor(json.leapMovementInsideX),
+          leap_movement_inside_y_millimeter: Math.floor(json.leapMovementInsideY),
           leap_detected_ms: json.leapDetected,
           leap_notdetected_ms: json.leapNotDetected,
           leap_inside_ms: json.leapInside,
@@ -118,14 +122,20 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
       getLeapStatsKeyValues: function(json) {
         return {
           keyValues: [{
+            key: "Gesamtlänge aller Bewegungen (sqrt(x^2 + y^2))",
+            value: Math.floor(json.leapMovementAllHyp) + " mm"
+          }, {
+            key: "Länge Bewegungen (sqrt(x^2 + y^2)) erlaubter Bereich",
+            value: Math.floor(json.leapMovementInsideHyp) + " mm"
+          }, {
             key: "Gesamtlänge aller horizontalen Bewegungen (x)",
             value: Math.floor(json.leapMovementAllX) + " mm"
           }, {
-            key: "Gesamtlänge aller vertikalen Bewegungen (y)",
-            value: Math.floor(json.leapMovementAllY) + " mm"
-          }, {
             key: "Länge horizontale Bewegungen (x) erlaubter Bereich",
             value: Math.floor(json.leapMovementInsideX) + " mm"
+          }, {
+            key: "Gesamtlänge aller vertikalen Bewegungen (y)",
+            value: Math.floor(json.leapMovementAllY) + " mm"
           }, {
             key: "Länge vertikale Bewegungen (y) erlaubter Bereich",
             value: Math.floor(json.leapMovementInsideY) + " mm"

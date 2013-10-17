@@ -217,29 +217,25 @@ define(["log", "PIXI",
 
         layer.pixiLayer.addChild(winningText);
         winningAdded = true;
-        //scoreTimerRunning = false;
 
         tempWinText = gameConfig.getFormattedValue("userName") + ", du hast " +
           currentStats.get("objectsCatched") + " Objekte in " +
           timeFormatter.formatSeconds(currentStats.get("playTime") / 1000) +
           " abgeschossen!\n\n";
 
-        totalMovement = Math.floor(currentStats.get("leapMovementAllX")) + Math.floor(currentStats.get("leapMovementAllY"));
+        totalMovement = Math.floor(currentStats.get("leapMovementAllHyp"));
 
         if (totalMovement > 0) {
-          withinMovement = Math.floor(currentStats.get("leapMovementInsideX")) + Math.floor(currentStats.get("leapMovementInsideY"));
+          withinMovement = Math.floor(currentStats.get("leapMovementInsideHyp"));
           percentage = (withinMovement === 0) ? 0 : Math.floor((100 / totalMovement * withinMovement));
 
           tempWinText += "Leap Motion sagt:\nDu hast dich in dieser Runde " +
-            (Math.floor(currentStats.get("leapMovementAllX")) + Math.floor(currentStats.get("leapMovementAllY"))) +
-            " mm bewegt und\n";
+            totalMovement + " mm bewegt und\n" +
+            "warst zu " + percentage + " % innerhalb des Spielfeldes.\n";
 
-          tempWinText += "warst zu " + percentage + " % innerhalb des Spielfeldes.\n";
         } else {
           tempWinText += "Leider hast du nicht mit Leap Motion gespielt\nsonst könnte ich dir noch mehr verraten...\n";
         }
-
-
 
         winningText.setText(tempWinText + "\nDanke fürs Spielen!\n");
 
