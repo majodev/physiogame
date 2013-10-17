@@ -18,21 +18,21 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
         }
 
       },
-      start: function() {
+      start: function(date) {
         if (this.get("locked") === false && this.get("started") === false) {
-          this.set("startDate", moment().toDate());
+          this.set("startDate", date);
           this.set("gameConfig", gameConfig.toJSON());
           this.set("started", true);
         } else {
           log.error("start: already started or locked, not possible!");
         }
       },
-      end: function() {
+      end: function(date) {
         var gameTime = 0,
           roundTime = 0;
 
         if (this.get("locked") === false && this.get("finished") === false && this.get("started") === true) {
-          this.set("endDate", moment().toDate());
+          this.set("endDate", date);
           
           // compute times...
           gameTime = moment(this.get("endDate")).diff(moment(this.get("startDate")));
@@ -99,18 +99,8 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
         json.gameTime = timeFormatter.formatMilliseconds(json.gameTime);
         json.objectsCatched = json.objectsCatched;
 
-        // leap detail fields
-        
+        // leap detail fields        
         json.leapStats = this.getLeapStatsKeyValues(json);
-
-        // json.leapDetected = timeFormatter.formatMilliseconds(json.leapDetected);
-        // json.leapNotDetected = timeFormatter.formatMilliseconds(json.leapNotDetected);
-        // json.leapInside = timeFormatter.formatMilliseconds(json.leapInside);
-        // json.leapOutside = timeFormatter.formatMilliseconds(json.leapOutside);
-        // json.leapOutsideLeft = timeFormatter.formatMilliseconds(json.leapOutsideLeft);
-        // json.leapOutsideRight = timeFormatter.formatMilliseconds(json.leapOutsideRight);
-        // json.leapOutsideTop = timeFormatter.formatMilliseconds(json.leapOutsideTop);
-        // json.leapOutsideBottom = timeFormatter.formatMilliseconds(json.leapOutsideBottom);
 
         // gameConfig detail fields
         json.gameConfig = gameConfig.generateKeyValuePairs(undefined, json.gameConfig);

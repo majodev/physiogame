@@ -1,34 +1,54 @@
 define(["game/stats", "game/timerRound", "game/timerIntro", "log", "gameConfig",
-  "utils/publisher", "game/leapSession"],
+  "utils/publisher", "game/leapSession", "moment"],
   function(stats, timerRound, timerIntro, log, gameConfig,
-    publisher, leapSession) {
+    publisher, leapSession, moment) {
 
     var sessionRunning = false,
       currentStat,
       events = publisher.make();
 
     function newSession() {
+      var startMoment;
+
       if (sessionRunning === false) {
+        
         events.trigger("newSession");
         log.debug("gameSession: newSession");
+        
+        // make a new stat entity via the controller
         currentStat = stats.getNew();
-        currentStat.start();
-        leapSession.startSession();
+
+        // set the start date of the stat and leapSession
+        startMoment = moment();
+        currentStat.start(startMoment.toDate());
+        leapSession.startSession(startMoment);
+
+        // evaluate the game conditions and set listeners appropriatly
         setGameSuccessCondition();
+
+        // hop to intro phase
         phase_1_intro();
         sessionRunning = true;
       }
     }
 
     function endSession() {
+      var endMoment;
       if (sessionRunning === true) {
+
+        // notify listeners and clear session runtime variables
         events.trigger("endSession");
         log.debug("gameSession: endSession");
         clearSessionRuntimeSettings();
-        leapSession.endSession();
+
+        endMoment = moment();
+
+        // end the leap session and set the dates in currentStat and SAVE it
+        leapSession.endSession(endMoment);
         currentStat.setLeapStats(leapSession.getSessionStats());
-        currentStat.end();
+        currentStat.end(endMoment.toDate());
         stats.saveCurrent();
+
         sessionRunning = false;
       }
     }

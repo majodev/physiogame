@@ -4,9 +4,9 @@ define(["base/leapManager", "moment"],
     var session = {},
       running = false;
 
-    function reset() {
+    function reset(startMoment) {
       session = {
-        lastFrameMoment: false,
+        lastFrameMoment: startMoment,
         time: {
           detected: 0,
           notDetected: 0,
@@ -22,18 +22,29 @@ define(["base/leapManager", "moment"],
       };
     }
 
-    function startSession() {
+    function startSession(startMoment) {
       if (running === true) {
         endSession();
       }
 
-      reset();
+      // the lastFrameMoment = the startMoment in beginning!
+      reset(startMoment);
+
       leapManager.events.on("frameStats", onLeapFrame);
       running = true;
     }
 
-    function endSession() {
+    function endSession(endMoment) {
+      var lastdiff = 0;
+
+      // turn the events off to frame evaluation.
       leapManager.events.off("frameStats", onLeapFrame);
+
+      // make the last time diff, with notDetected 
+      // (when leap wasnt available, this sets it to the whole time!)
+      lastdiff = endMoment.diff(session.lastFrameMoment);
+      session.time.notDetected += lastdiff;
+
       running = false;
     }
 
@@ -42,15 +53,11 @@ define(["base/leapManager", "moment"],
       var currentFrameMoment = moment(),
         diffTimeToLastFrameMs = 0;
 
-      if (session.lastFrameMoment === false) {
-        // got the first frame in this whole session.
-        session.lastFrameMoment = currentFrameMoment;
-        diffTimeToLastFrameMs = 0;
-      } else {
-        // compute the diff between current and last...
-        diffTimeToLastFrameMs = currentFrameMoment.diff(session.lastFrameMoment);
-      }
+      // compute the diff between current and last...
+      diffTimeToLastFrameMs = currentFrameMoment.diff(session.lastFrameMoment);
 
+
+      // evaluate the stat object from leap and our sessionStat
       if (stat.detected === true) {
         session.time.detected += diffTimeToLastFrameMs;
 
