@@ -1,5 +1,5 @@
 <h1>physiogame</h1>
-This is a master thesis project by me Mario Ranftl (@majodev). I'm trying to build a full-blown game that's playable in Browsers (even mobile should be possible) and can also be packaged via node-webkit. The target is to create a funny and simple game, that's suited for therapeutic exercises.
+This is a master thesis project by me, Mario Ranftl (@majodev). It's a JS/HTML5 game and playable in browsers and node-webkit. The target is to create a funny and simple game, that's suited for therapeutic exercises. 
 
 The idea is to track the progress of users and provide statistics "Statistiken" that can be exported to csv and json. Furthermore the behaviour "Verhalten" of the game and its objects can be fully customized through the settings "Einstellungen" menu. Last but not least, playing via mouse/touchscreens is possible, however, it's the target to use Leap Motion as primary input device.
 
@@ -20,6 +20,8 @@ Go to `localhost:8080` and enjoy
 `grunt build`
 
 Some libraries in src/vendor might need to be build manually (e.g. <a href="https://github.com/typekit/webfontloader">webfontloader</a> via rake). Trace the error through the r.js optimization script if you encounter any errors.
+
+The grunt task "build" takes care of all js/css minifying and assets/templates copying. In case you wonder: I'm using almond to tackle build problems that only happen with optimized builds in node-webkit (and it's 2kb smaller), even though there is no require (from node-webkit) in the global namespace during startup, a normal r.js optimized build will crash node-webkit! Hence, the specified build task with almond above (`grunt build`).
 
 <h2>Testing</h2>
 needs <a href="http://phantomjs.org/">phantomjs</a> bin in path!
