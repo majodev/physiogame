@@ -19,9 +19,12 @@ Go to `localhost:8080` and enjoy
 
 `grunt build`
 
-Some libraries in src/vendor might need to be build manually (e.g. <a href="https://github.com/typekit/webfontloader">webfontloader</a> via rake). Trace the error through the r.js optimization script if you encounter any errors.
+Some libraries in src/vendor might need to be build manually (e.g. <a href="https://github.com/typekit/webfontloader">webfontloader</a> via rake). Trace the error through the r.js optimization script if you encounter any errors or try to run setup before and consult your preferred js-dev-console.
 
-The grunt task "build" takes care of all js/css minifying and assets/templates copying. In case you wonder: I'm using almond to tackle build problems that only happen with optimized builds in node-webkit (and it's 2kb smaller), even though there is no require (from node-webkit) in the global namespace during startup, a normal r.js optimized build will crash node-webkit! Hence, the specified build task with almond above (`grunt build`).
+The grunt task `grunt build` takes care of all js/css minifying and assets/templates copying to the folder `build`. 
+
+<h2>Why almond?</h2>
+Even though there is no require (from node-webkit) in the global namespace during startup, a normal r.js optimized build will crash in node-webkit! I'm using <a href="https://github.com/jrburke/almond">almond</a> to tackle these build problems for node-webkit (furthermore the result is 2kb smaller). 
 
 <h2>Testing</h2>
 needs <a href="http://phantomjs.org/">phantomjs</a> bin in path!
