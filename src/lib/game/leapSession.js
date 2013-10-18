@@ -35,6 +35,10 @@ define(["base/leapManager", "moment", "gameConfig"],
         projection: {
           width: 0,
           height: 0
+        },
+        projectionCenter: {
+          x: 0,
+          y: 0
         }
       };
     }
@@ -51,6 +55,7 @@ define(["base/leapManager", "moment", "gameConfig"],
       reset(rountMoment);
 
       session.projection = leapManager.getProjectionSizeInMillimeters();
+      session.projectionCenter = leapManager.getProjectionCenterInMillimeters();
 
       leapManager.events.on("frameStats", onLeapFrame);
       running = true;

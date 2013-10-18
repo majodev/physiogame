@@ -68,6 +68,8 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
         this.set("leapMovementInsideHyp", sessionStats.movement.inside.hyp);
         this.set("leapProjectionWidth", sessionStats.projection.width);
         this.set("leapProjectionHeight", sessionStats.projection.height);
+        this.set("leapProjectionCenterX", sessionStats.projectionCenter.x);
+        this.set("leapProjectionCenterY", sessionStats.projectionCenter.y);
       },
       lock: function() {
         this.set("locked", true);
@@ -87,6 +89,8 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
           config_objectsToSpawn_count: json.gameConfig.objectsToSpawn,
           leap_projectionWidth_millimeter: Math.floor(json.leapProjectionWidth),
           leap_projectionHeight_millimeter: Math.floor(json.leapProjectionHeight),
+          leap_projectionCenterX_millimeter: Math.floor(json.leapProjectionCenterX),
+          leap_projectionCenterY_millimeter: Math.floor(json.leapProjectionCenterY),
           leap_movement_all_hyp_millimeter: Math.floor(json.leapMovementAllHyp),
           leap_movement_all_x_millimeter: Math.floor(json.leapMovementAllX),
           leap_movement_all_y_millimeter: Math.floor(json.leapMovementAllY),
@@ -126,11 +130,11 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
       getLeapStatsKeyValues: function(json) {
         return {
           keyValues: [{
-            key: "Projektionslänge",
-            value: Math.floor(json.leapProjectionWidth) + " mm"
+            key: "Projektionsfläche",
+            value: Math.floor(json.leapProjectionWidth) + " mm x " + Math.floor(json.leapProjectionHeight) + " mm"
           }, {
-            key: "Projektionshöhe",
-            value: Math.floor(json.leapProjectionHeight) + " mm"
+            key: "Projektionsmittelpunkt",
+            value: "x: " + Math.floor(json.leapProjectionCenterX) + " mm, y: " + Math.floor(json.leapProjectionCenterY) + " mm"
           }, {
             key: "Gesamtlänge aller Bewegungen (sqrt(x^2 + y^2))",
             value: Math.floor(json.leapMovementAllHyp) + " mm"

@@ -27,6 +27,12 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
         } catch (e) {
           log.error("stats: startup error, cannot apply last known settings e=" + e);
         }
+      } else {
+        alertModal.show({
+          head: "Willkommen " + gameConfig.getFormattedValue("userName") + "!",
+          text: "Schau doch mal in die Einstellungen um deinen Benutzernamen zu setzen.",
+          autoDismiss: 6000
+        });
       }
     }()); // self executing only at startup
 
@@ -34,7 +40,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
 
     function getNew() {
       current = new StatModel();
-      
+
       statsCollection.push(current);
       //log.debug("stats: getNew id=" + current.cid);
       return current;
