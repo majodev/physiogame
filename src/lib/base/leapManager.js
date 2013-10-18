@@ -5,7 +5,8 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
     _) {
 
     // private 
-    var controller = new Leap.Controller(),
+    var LEAP_Y_CENTER_POINT = 260, // center of leap mm, 20mm offset of leapbase!
+      controller = new Leap.Controller(),
       frameCount = 0,
       handsAvailable = false,
       outsideScreen,
@@ -133,18 +134,14 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
     }
 
     // the heart of leap normalizing and frame computing...
-
-    // 
-    // y: 20 <= y <= 500 (480mm)
-
     // leapToDisplay -- center point: 0 <= x <= 1
     // eg. width: 0.5 * 1280 = 640
     // eg. height: 0.5 * 720 = 360
     
-    // leapXModifier -- projection modifier from leap x to display x 
-    // min 2
-    // x: -320 <= x <= 320 (640mm)
+    // leapXModifier -- projection modifier = product * orgCord
     
+    // x: -320 <= x <= 320 (640mm)
+    // min 2
 
     function leapXToNormalize(x) { 
       if(x >= 0) {
@@ -155,54 +152,23 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
     }
 
     function normalizedXToLeap(x) {      
-      // if(x >= (displayWidth * leapToDisplayX)) {
-      //   return (x - (displayWidth * leapToDisplayX)) / leapXModifier;
-      // } else {
-      //   return (x + (displayWidth * leapToDisplayX)) / leapXModifier;
-      // }
       return (x - (displayWidth * leapToDisplayX)) / leapXModifier;
     }
 
-    // min 
     // y: 20 <= y <= 500 (480mm)
-    // == -240 <= y <= 240
     // min 1.5
 
     function leapYToNormalize(y) {
-      if(y >= 260) { // constant center at 260mm (20mm offset!)
-        return (displayHeight * leapToDisplayY) - Math.abs((y - 260) * leapYModifier);
+      if(y >= LEAP_Y_CENTER_POINT) { // constant center at LEAP_Y_CENTER_POINTmm (20mm offset!)
+        return (displayHeight * leapToDisplayY) - Math.abs((y - LEAP_Y_CENTER_POINT) * leapYModifier);
       } else {
-        return (displayHeight * leapToDisplayY) + Math.abs((y - 260) * leapYModifier);
+        return (displayHeight * leapToDisplayY) + Math.abs((y - LEAP_Y_CENTER_POINT) * leapYModifier);
       }
     }
 
     function normalizedYToLeap(y) {
-
-      return ((-y + (displayHeight * leapToDisplayY)) / leapYModifier) + 260;
-
-      // if(y >= (displayHeight * leapToDisplayY)) {
-      //   return ((y + (displayHeight * leapToDisplayY)) / leapYModifier) - 260;
-      // } else {
-      //   return ((y - (displayHeight * leapToDisplayY)) / leapYModifier) - 260;
-      // }
+      return ((-y + (displayHeight * leapToDisplayY)) / leapYModifier) + LEAP_Y_CENTER_POINT;
     }
-
-
-    // function leapXToNormalize(x) {
-    //   return (displayWidth / leapToDisplayX) + (x * leapXModifier);
-    // }
-
-    // function leapYToNormalize(y) {
-    //   return (displayHeight * leapToDisplayY) - (y * leapYModifier);
-    // }
-
-    // function normalizedXToLeap(x) {
-    //   return (x - (displayWidth / leapToDisplayX)) / leapXModifier;
-    // }
-
-    // function normalizedYToLeap(y) {
-    //   return (y - (displayHeight / leapToDisplayY)) / leapYModifier;
-    // }
 
     function getProjectionSizeInMillimeters() {
       return {

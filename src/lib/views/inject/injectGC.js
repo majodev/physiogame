@@ -1,20 +1,6 @@
 define(["base/leapManager", "underscore"],
   function(leapManager, _) {
 
-    // renderJSON.leap.push({
-    //       objectKey: projectionWidth,
-    //       objectValue: showValue,
-    //       objectDef: showDefault,
-    //       objectDesc: gameConfigMap[key].desc,
-    //       objectOpt: gameConfigMap[key].opt,
-    //       uiSlider: (gameConfigMap[key].ui === "slider") ? true : false,
-    //       uiDropdown: (gameConfigMap[key].ui === "dropdown") ? true : false,
-    //       uiToggle: (gameConfigMap[key].ui === "toggle") ? true : false,
-    //       uiText: (gameConfigMap[key].ui === "text") ? true : false
-    //     });
-
-
-
     function leapValuesToInject() {
       return [{
         objectKey: "projectionSize",
