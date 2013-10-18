@@ -1,12 +1,12 @@
 define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
-    "base/soundBridge", "game/crosshairGO", "classes/Layer",
+    "base/soundBridge", "classes/Layer",
     "game/stats",
     "game/behaviours/targetBehaviour", "game/behaviours/alphaBehaviour",
     "game/behaviours/scaleBehaviour", "game/behaviours/speedBehaviour",
     "game/timerIntro", "game/timerRound"
   ],
   function(textures, gameConfig, hittest, _, PIXI,
-    soundBridge, crosshairGO, Layer,
+    soundBridge, Layer,
     stats,
     targetBehaviour, alphaBehaviour,
     scaleBehaviour, speedBehaviour,
@@ -15,7 +15,8 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     var layer = new Layer({
       listeners: {
         render: true,
-        leap: true
+        leap: true,
+        interactionMove: true
       }
     });
 
@@ -72,7 +73,6 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
     function onTimerIntroEnd(tick) {
       introSucceeded = true;
-      crosshairGO.events.on("crosshairActive", detectPointerHitsGameObject);
     }
 
     function onTimerIntroTickSpawnObject(count) {
@@ -105,7 +105,6 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     }
 
     function onTimerRoundEnd(tick) {
-      crosshairGO.events.off("crosshairActive", detectPointerHitsGameObject);
       removeAllGameObjects();
     }
 
@@ -143,7 +142,6 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     }
 
     layer.onDeactivate = function() {
-      crosshairGO.events.off("crosshairActive", detectPointerHitsGameObject);
 
       timerIntro.events.off("introTickSpawnObject", onTimerIntroTickSpawnObject);
       timerIntro.events.off("introEnd", onTimerIntroEnd);
@@ -159,7 +157,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       onRenderClearExplosions();
     };
 
-    layer.onHandFrame = function(coordinates) {
+    layer.onMove = layer.onHandFrame = function(coordinates) {
       detectPointerHitsGameObject(coordinates);
     };
 

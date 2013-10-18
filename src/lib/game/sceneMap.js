@@ -11,17 +11,17 @@ define(["log", "classes/Scene",
     var scenes = [
       new Scene({
         id: "startscreen",
-        layers: [background, clouds, debugInfo, welcome, selection, nwSelection]
+        layers: [background, clouds, debugInfo, welcome, selection, nwSelection, crosshair]
       }),
       new Scene({
         id: "shooting",
-        layers: [background, clouds, debugInfo, gameObjects, crosshair,
-          leapIndicator, gameInfos, goBack
+        layers: [background, clouds, debugInfo, gameObjects,
+          leapIndicator, gameInfos, goBack, crosshair
         ]
       }),
       new Scene({
         id: "credits",
-        layers: [background, clouds, debugInfo, credits, goBack]
+        layers: [background, clouds, debugInfo, credits, goBack, crosshair]
       })
     ];
 

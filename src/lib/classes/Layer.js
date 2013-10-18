@@ -15,6 +15,9 @@ define(["PIXI", "underscore", "base/displayManager",
       this.listeners = {};
       this.listeners.render = false;
       this.listeners.leap = false;
+      this.listeners.interactionClick = false;
+      this.listeners.interactionMove = false;
+      this.listeners.interactionInitial = false;
 
 
       if (_.isUndefined(options) === false && _.isUndefined(options.listeners) === false) {
@@ -24,6 +27,18 @@ define(["PIXI", "underscore", "base/displayManager",
 
         if (!_.isUndefined(options.listeners.leap)) {
           this.listeners.leap = options.listeners.leap;
+        }
+
+        if (!_.isUndefined(options.listeners.interactionClick)) {
+          this.listeners.interactionClick = options.listeners.interactionClick;
+        }
+
+        if (!_.isUndefined(options.listeners.interactionMove)) {
+          this.listeners.interactionMove = options.listeners.interactionMove;
+        }
+
+        if (!_.isUndefined(options.listeners.interactionInitial)) {
+          this.listeners.interactionInitial = options.listeners.interactionInitial;
         }
       }
 
@@ -90,6 +105,15 @@ define(["PIXI", "underscore", "base/displayManager",
       },
       onHandFrame: function(coordinates) {
         throw new Error("onHandFrame has to be overridden when listeners.leap === true");
+      },
+      onClick: function(coordinates) {
+        throw new Error("onClick has to be overridden when listeners.interactionClick === true");
+      },
+      onMove: function(coordinates) {
+        throw new Error("onMove has to be overridden when listeners.interactionMove === true");
+      },
+      onInitial: function(coordinates) {
+        throw new Error("onInitial has to be overridden when listeners.interactionInitial === true");
       }
     };
 

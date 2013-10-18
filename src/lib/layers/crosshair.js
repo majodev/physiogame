@@ -1,45 +1,52 @@
-define(["base/displayManager", "base/leapManager",
-  "PIXI", "utils/publisher", "classes/Layer", "game/crosshairGO"],
-  function(displayManager, leapManager, PIXI, publisher,
-    Layer, crosshairGO) {
+define(["base/displayManager", "base/leapManager", "game/textures",
+    "PIXI", "utils/publisher", "classes/Layer"
+  ],
+  function(displayManager, leapManager, textures,
+    PIXI, publisher, Layer) {
 
     var layer = new Layer({
       listeners: {
         render: true,
-        leap: true
+        leap: true,
+        interactionMove: true,
+        interactionInitial: true
       }
     });
 
-    layer.onActivate = function () {
-      this.pixiLayer.addChild(crosshairGO.display);
+    var crosshairSprite;
+
+    layer.onActivate = function() {
+
+      crosshairSprite = new PIXI.Sprite(textures.atlas.crosshair);
+      
+      crosshairSprite.anchor = {
+        x: 0.5,
+        y: 0.5
+      };
+
+      crosshairSprite.scale = {
+        x: 0.35,
+        y: 0.35
+      };
+
+      crosshairSprite.alpha = 0.8;
+
+      this.pixiLayer.addChild(crosshairSprite);
+
     };
 
-    layer.onRender = function () {
+    layer.onRender = function() {
       onRenderRotate();
-      onRenderAlpha();
     };
 
-    layer.onHandFrame = function (coordinates) {
-      crosshairGO.display.position.x = coordinates.position.x;
-      crosshairGO.display.position.y = coordinates.position.y;
+    layer.onInitial = layer.onMove = layer.onHandFrame = function(coordinates) {
+      crosshairSprite.position = coordinates.position;
     };
 
     function onRenderRotate() {
-      crosshairGO.display.rotation += 0.1;
+      crosshairSprite.rotation += 0.08;
     }
 
-    function onRenderAlpha() {
-      if (leapManager.getHandsAvailable() === true || crosshairGO.display.buttonMode === true) {
-        if (crosshairGO.display.alpha < 1) {
-          crosshairGO.display.alpha += 0.02;
-        }
-      } else {
-        if (crosshairGO.display.alpha > 0.2) {
-          crosshairGO.display.alpha -= 0.01;
-        }
-      }
-    }
-    
     return layer;
   }
 );

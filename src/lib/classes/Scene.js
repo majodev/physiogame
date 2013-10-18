@@ -4,6 +4,8 @@ define(["underscore", "PIXI", "utils/publisher"],
 
     var Scene = function(options) {
 
+      var self = this;
+
       this.running = false;
       this.pixiScene = new PIXI.DisplayObjectContainer();
       this.events = publisher.make();
@@ -14,11 +16,31 @@ define(["underscore", "PIXI", "utils/publisher"],
 
       this.layers = options.layers;
       this.id = options.id;
+
+      this.lastInteraction = {
+        position: {
+          x: 634,
+          y: 300
+        }
+      };
+
+      this.pixiScene.interactive = true;
+      this.pixiScene.click = this.pixiScene.tap = function(interactionData) {
+        self.onClick({
+          position: interactionData.global
+        });
+      };
+      this.pixiScene.mousemove = this.pixiScene.touchmove = function(interactionData) {
+        self.onMove({
+          position: interactionData.global
+        });
+      };
+
     };
 
     Scene.prototype = {
       constructor: Scene,
-      activate: function() {
+      activate: function(lastInteraction) {
         var i = 0,
           len = this.layers.length;
 
@@ -31,6 +53,8 @@ define(["underscore", "PIXI", "utils/publisher"],
 
           this.running = true;
         }
+
+        this.setInitialPosition(lastInteraction);
       },
       deactivate: function() {
         var i = 0,
@@ -46,9 +70,11 @@ define(["underscore", "PIXI", "utils/publisher"],
 
           this.running = false;
         }
+
+        return this.lastInteraction;
       },
       reset: function() {
-        if(this.running === true) {
+        if (this.running === true) {
           this.deactivate();
         }
         this.activate();
@@ -61,6 +87,35 @@ define(["underscore", "PIXI", "utils/publisher"],
       },
       onLayerEvent: function(options) {
         this.events.trigger("sceneLayerEvent", options);
+      },
+      setInitialPosition: function(coordinates) {
+        var initial = this.lastInteraction;
+        if(_.isUndefined(coordinates) === false) {
+          this.lastInteraction = coordinates;
+          initial = coordinates;
+        }
+
+        _.each(this.layers, function(layer) {
+          if (layer.listeners.interactionInitial === true) {
+            layer.onInitial(initial);
+          }
+        });
+      },
+      onClick: function(coordinates) {
+        this.lastInteraction = coordinates;
+        _.each(this.layers, function(layer) {
+          if (layer.listeners.interactionClick === true) {
+            layer.onClick(coordinates);
+          }
+        });
+      },
+      onMove: function(coordinates) {
+        this.lastInteraction = coordinates;
+        _.each(this.layers, function(layer) {
+          if (layer.listeners.interactionMove === true) {
+            layer.onMove(coordinates);
+          }
+        });
       }
     };
 
