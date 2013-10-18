@@ -32,12 +32,19 @@
       <input id="{{objectKey}}" maxlength="20" type="text" class="form-control textInputField" placeholder="{{objectDef}}" value="{{objectValue}}">
     </td>
   {{/if}}
+  {{#if uiReadOnly}}
+    <td class="settingsConfigValue injectHint"><small>{{{this.hint}}}</small></td>
+  {{/if}}
   <td class="settingsValue">
     {{#if objectFormattedValue}}
       <div id="{{objectKey}}-value">{{{objectFormattedValue}}}</div>
     {{else}}
       <div id="{{objectKey}}-value">{{{objectValue}}}</div>
     {{/if}}
-    <div id="{{objectKey}}-default" class="settingsDefaultValue"><small>Standard: {{objectDef}}</small></div>
+    {{#if uiReadOnly}}
+      <div id="{{objectKey}}-default" class="settingsDefaultValue"><small>errechnet</small></div>
+    {{else}}
+      <div id="{{objectKey}}-default" class="settingsDefaultValue"><small>Standard: {{objectDef}}</small></div>
+    {{/if}}
   </td>
 </tr>

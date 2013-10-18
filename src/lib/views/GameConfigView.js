@@ -1,13 +1,13 @@
 define(["backbone", "jquery", "log", "gameConfig", "underscore",
     "hbars!views/templates/gameConfigTemplate",
     "hbars!views/templates/gameConfigItemPartial",
-    "Handlebars", "views/alertModal",
+    "Handlebars", "views/alertModal", "views/inject/injectGC",
     "bootstrap-slider"
   ],
   function(Backbone, $, log, gameConfig, _,
     gameConfigTemplate,
     gameConfigItemPartial,
-    Handlebars, alertModal) {
+    Handlebars, alertModal, injectGC) {
 
     // first tab
     var currentMainTab = "#general",
@@ -34,7 +34,7 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
         // render the template
         //this.$el.html(gameConfigTemplate(this.model.generateKeyValuePairs()));
 
-        this.$el.html(gameConfigTemplate(this.model.getKeyValueCategoryPairs()));
+        this.$el.html(gameConfigTemplate(this.getRenderJSON()));
 
         // add the slider functionality (each time needed!)
         $("input.parameterSlider").slider();
@@ -81,14 +81,16 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
             '<strong>Fehler:</strong> ' +
             validationError + '</small></div>');
         }
-        // else {
-        //   $("#statusNotification").append('<div class="alert alert-success"><small>' +
-        //     '<strong>Status:</strong> ' +
-        //     'Die Einstellungen sind gültig.' +
-        //     '</small></div>');
-        // }
 
         return this; // for chaining
+      },
+      getRenderJSON: function () {
+        var renderJSON = this.model.getKeyValueCategoryPairs();
+
+        // here its possible to inject other values (e.g. read only ones) from other places
+        renderJSON = injectGC.inject(renderJSON);
+
+        return renderJSON;
       },
       events: {
         // "slideStart input.parameterSlider": "sliderStart",

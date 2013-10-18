@@ -23,6 +23,10 @@ canvas { /* To remove the scrollbars */
   overflow-y: hidden;
 }
 
+.injectHint {
+  text-align: center;
+}
+
 #preloaderContainer {
   width: 100%;
   height: 100%

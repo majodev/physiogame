@@ -76,6 +76,8 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
       if (handsAvailable) {
         hand = frame.hands[0];
 
+        //console.log("x=" + Math.floor(hand.palmPosition[0]) + "y=" + Math.floor(hand.palmPosition[1]));
+
         position = computePosition(hand.palmPosition[0],
           hand.palmPosition[1]);
 
@@ -130,21 +132,77 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
 
     }
 
-    function leapXToNormalize(x) {
-      return (displayWidth / leapToDisplayX) + (x * leapXModifier);
+    // the heart of leap normalizing and frame computing...
+
+    // 
+    // y: 20 <= y <= 500 (480mm)
+
+    // leapToDisplay -- center point: 0 <= x <= 1
+    // eg. width: 0.5 * 1280 = 640
+    // eg. height: 0.5 * 720 = 360
+    
+    // leapXModifier -- projection modifier from leap x to display x 
+    // min 2
+    // x: -320 <= x <= 320 (640mm)
+    
+
+    function leapXToNormalize(x) { 
+      if(x >= 0) {
+        return (displayWidth * leapToDisplayX) + Math.abs(x * leapXModifier); 
+      } else {
+        return (displayWidth * leapToDisplayX) - Math.abs(x * leapXModifier); 
+      }
     }
+
+    function normalizedXToLeap(x) {      
+      // if(x >= (displayWidth * leapToDisplayX)) {
+      //   return (x - (displayWidth * leapToDisplayX)) / leapXModifier;
+      // } else {
+      //   return (x + (displayWidth * leapToDisplayX)) / leapXModifier;
+      // }
+      return (x - (displayWidth * leapToDisplayX)) / leapXModifier;
+    }
+
+    // min 
+    // y: 20 <= y <= 500 (480mm)
+    // == -240 <= y <= 240
+    // min 1.5
 
     function leapYToNormalize(y) {
-      return (displayHeight * leapToDisplayY) - (y * leapYModifier);
-    }
-
-    function normalizedXToLeap(x) {
-      return (x - (displayWidth / leapToDisplayX)) / leapXModifier;
+      if(y >= 260) { // constant center at 260mm (20mm offset!)
+        return (displayHeight * leapToDisplayY) - Math.abs((y - 260) * leapYModifier);
+      } else {
+        return (displayHeight * leapToDisplayY) + Math.abs((y - 260) * leapYModifier);
+      }
     }
 
     function normalizedYToLeap(y) {
-      return (y - (displayHeight / leapToDisplayY)) / leapYModifier;
+
+      return ((-y + (displayHeight * leapToDisplayY)) / leapYModifier) + 260;
+
+      // if(y >= (displayHeight * leapToDisplayY)) {
+      //   return ((y + (displayHeight * leapToDisplayY)) / leapYModifier) - 260;
+      // } else {
+      //   return ((y - (displayHeight * leapToDisplayY)) / leapYModifier) - 260;
+      // }
     }
+
+
+    // function leapXToNormalize(x) {
+    //   return (displayWidth / leapToDisplayX) + (x * leapXModifier);
+    // }
+
+    // function leapYToNormalize(y) {
+    //   return (displayHeight * leapToDisplayY) - (y * leapYModifier);
+    // }
+
+    // function normalizedXToLeap(x) {
+    //   return (x - (displayWidth / leapToDisplayX)) / leapXModifier;
+    // }
+
+    // function normalizedYToLeap(y) {
+    //   return (y - (displayHeight / leapToDisplayY)) / leapYModifier;
+    // }
 
     function getProjectionSizeInMillimeters() {
       return {
@@ -152,6 +210,13 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
           normalizedXToLeap(displayWidth)),
         height: getLeapDistanceBetweenY(normalizedYToLeap(0),
           normalizedYToLeap(displayHeight))
+      };
+    }
+
+    function getProjectionCenterInMillimeters() {
+      return {
+        x: -normalizedXToLeap(displayWidth/2),
+        y: normalizedYToLeap(displayHeight/2)
       };
     }
 
@@ -213,6 +278,8 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
         outsideScreen.bottom = true;
       }
 
+       //console.log("x=" + position.x + " y=" + position.y);
+
       return position;
     }
 
@@ -226,8 +293,8 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
         action: function() {
           var time = frameCount / 2,
             debugText = "leap @ " + time + "fps\n";
-            debugText += "projection @ " + Math.round(getProjectionSizeInMillimeters().width) +
-            " mm x " + Math.round(getProjectionSizeInMillimeters().height) + " mm";
+            debugText += "projection @ " + Math.floor(getProjectionSizeInMillimeters().width) +
+            " mm x " + Math.floor(getProjectionSizeInMillimeters().height) + " mm";
 
           if (attachedListeners === false) {
             debugText = "no leap connected.";
@@ -277,6 +344,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
       getHandsLength: getHandsLength,
       getOutsideScreen: getOutsideScreen,
       getProjectionSizeInMillimeters: getProjectionSizeInMillimeters,
+      getProjectionCenterInMillimeters: getProjectionCenterInMillimeters,
       events: events
     };
   }

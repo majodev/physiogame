@@ -365,49 +365,49 @@ define([],
         desc: "Zeige Leap Motion Hinweise"
       },
       leapXModifier: {
-        def: 3.8,
+        def: 4,
         min: 2,
-        max: 18,
-        step: 0.2,
+        max: 8,
+        step: 0.1,
         ui: "slider",
         cat: "leap",
-        desc: "Tracking-Verkleinerung der horizontalen Achse (x)",
+        desc: "Fläche: Verkleinerung horizontale Achse (x)",
         format: {
           post: "fach"
         }
       },
       leapYModifier: {
-        def: 3.8,
+        def: 3,
         min: 1.5,
-        max: 10,
-        step: 0.02,
+        max: 6,
+        step: 0.1,
         ui: "slider",
         cat: "leap",
-        desc: "Tracking-Verkleinerung der vertikalen Achse (y)",
+        desc: "Fläche: Verkleinerung vertikale Achse (y)",
         format: {
           post: "fach"
         }
       },
       leapToDisplayX: {
-        def: 2,
-        min: 1,
-        max: 4,
-        step: 0.02,
+        def: 0.5,
+        min: 0,
+        max: 1,
+        step: 0.01,
         ui: "slider",
         cat: "leap",
-        desc: "Tracking-Mittelpunkt der horizontalen Achse (x)",
+        desc: "Mittelpunkt: horizontale Achse (x)",
         format: {
           pre: "Produkt von"
         }
       },
       leapToDisplayY: {
-        def: 2,
-        min: 1.5,
-        max: 4,
-        step: 0.02,
+        def: 0.25,
+        min: 0,
+        max: 1,
+        step: 0.01,
         ui: "slider",
         cat: "leap",
-        desc: "Tracking-Mittelpunkt der vertikalen Achse (y)",
+        desc: "Mittelpunkt: vertikale Achse (y)",
         format: {
           pre: "Produkt von"
         }
