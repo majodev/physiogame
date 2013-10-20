@@ -264,12 +264,12 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
         interval: 2000,
         action: function() {
           var time = frameCount / 2,
-            debugText = "leap @ " + time + " fps\n";
+            debugText = "Leap @ " + time + " fps\n";
           // debugText += "projection @ " + Math.floor(getProjectionSizeInMillimeters().width) +
           //   " mm x " + Math.floor(getProjectionSizeInMillimeters().height) + " mm";
 
           if (attachedListeners === false) {
-            debugText = "no leap connected.";
+            debugText = "Leap nicht verbunden.";
           }
 
           events.trigger("debugInfo", debugText);

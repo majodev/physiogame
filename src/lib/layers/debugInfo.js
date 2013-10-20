@@ -6,15 +6,15 @@ define(["PIXI", "underscore", "classes/Layer", "base/displayManager",
 
     var layer = new Layer(),
       debugDisplay,
-      debugTextDisplayManager = "display: received 0 frames @ 0fps",
-      debugTextLeapManager = "leap: received 0 frames @ 0fps",
+      debugTextDisplayManager = "",
+      debugTextLeapManager = "",
       debugTextGameSession = "gameSession: ";
 
     layer.onActivate = function() {
       if (gameConfig.get("debugLayerVisible") === true) {
         if (_.isUndefined(debugDisplay) === true) {
 
-          debugDisplay = new PIXI.Text("display @ 0 fps\nleap @ 0 fps", {
+          debugDisplay = new PIXI.Text("Display @ 0 fps\nWarte auf Leap...", {
             font: "bold 15px Arvo",
             fill: "#3344bb",
             align: "left",
