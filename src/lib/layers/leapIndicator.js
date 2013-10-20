@@ -107,6 +107,7 @@ define(["classes/Layer", "PIXI", "game/textures", "base/leapManager",
     function applySharedParams(pixiSprite) {
       pixiSprite.reverseAlphaModifier = false;
       pixiSprite.alpha = minAlpha;
+      pixiSprite.visible = false;
     }
 
     layer.onRender = function() {

@@ -4,6 +4,13 @@ define(["PIXI", "game/textures", "underscore", "base/soundBridge",
   function(PIXI, textures, _, soundBridge,
     leapManager, hittest, moment) {
 
+    var LEAP_INDICATOR_OFFSET_X = 20,
+      LEAP_INDICATOR_PRODUCT_Y = 0,
+      LEAP_BUTTON_CLICK_AFTER_MS = 1500,
+      LEAP_INDICATOR_COLOR = 0x44FF44,
+      LEAP_INDICATOR_ALPHA = 0.6,
+      LEAP_INDICATOR_LINEWIDTH = 55;
+
     var Button = function(options) {
 
       var self = this; // save a reference to reference back in eventlisteners
@@ -67,10 +74,8 @@ define(["PIXI", "game/textures", "underscore", "base/soundBridge",
 
       // attach button text and bg to container
       this.display = new PIXI.DisplayObjectContainer();
-      this.display.addChild(this.buttonBG);
-      this.display.addChild(this.buttonText);
 
-      // set the eventlisteners
+      // set the eventlisteners for the buttonbg (mouse/touch handlers)
 
       this.buttonBG.mouseout = function(data) {
 
@@ -117,6 +122,13 @@ define(["PIXI", "game/textures", "underscore", "base/soundBridge",
         self.onTap();
       };
 
+
+      // set the graphics obj for the leap button indicators
+      this.leapIndicator = new PIXI.Graphics();
+      this.display.addChild(this.buttonBG);
+      this.display.addChild(this.leapIndicator);
+      this.display.addChild(this.buttonText);
+      
     };
 
     Button.prototype = {
@@ -150,7 +162,22 @@ define(["PIXI", "game/textures", "underscore", "base/soundBridge",
         // leap needs special treatment, lifecycle of listeners gets handled by Layer Class auto!
         leapManager.events.on("handFrameNormalized", this.leapInteractionHandler, this);
       },
-      leapInteractionHandler: function (coordinates) {
+      leapDrawIndicator: function(time) {
+
+        var percentage = time / LEAP_BUTTON_CLICK_AFTER_MS;
+
+        var lineY = (-(this.buttonBG.width / 2) + LEAP_INDICATOR_OFFSET_X) +
+          ((this.buttonBG.width - LEAP_INDICATOR_OFFSET_X*2) * percentage);
+
+        this.leapIndicator.clear();
+        if (percentage > 0 && time <= LEAP_BUTTON_CLICK_AFTER_MS) {
+          this.leapIndicator.lineStyle(LEAP_INDICATOR_LINEWIDTH, LEAP_INDICATOR_COLOR, LEAP_INDICATOR_ALPHA);
+          this.leapIndicator.moveTo(-(this.buttonBG.width / 2) + LEAP_INDICATOR_OFFSET_X, (this.buttonBG.height / 2) * LEAP_INDICATOR_PRODUCT_Y);
+          this.leapIndicator.lineTo(lineY, (this.buttonBG.height / 2) * LEAP_INDICATOR_PRODUCT_Y);
+        }
+
+      },
+      leapInteractionHandler: function(coordinates) {
         var hitCord = _.extend(coordinates, {
           width: 20,
           height: 20,
@@ -171,15 +198,16 @@ define(["PIXI", "game/textures", "underscore", "base/soundBridge",
         };
 
         var hittedByLeap = hittest(hitCord, buttonCord),
-          currentMoment = moment();
+          currentMoment = moment(),
+          diff = 0;
 
         if (hittedByLeap === true) {
           if (_.isUndefined(this.leapInitialHitMoment) === true) {
             this.leapInitialHitMoment = currentMoment;
-            //console.log("leap button initial hit");
           } else {
+            diff = currentMoment.diff(this.leapInitialHitMoment);
             // check if time reached for click to be called...
-            if (currentMoment.diff(this.leapInitialHitMoment) >= 1500) {
+            if (diff >= LEAP_BUTTON_CLICK_AFTER_MS) {
               //console.log("leap button click!");
               this.leapInitialHitMoment = undefined; // reset moment.
               this.buttonBG.click();
@@ -191,6 +219,8 @@ define(["PIXI", "game/textures", "underscore", "base/soundBridge",
           this.buttonBG.mouseout();
           this.leapInitialHitMoment = undefined;
         }
+
+        this.leapDrawIndicator(diff);
       }
     };
 

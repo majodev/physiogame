@@ -38,7 +38,7 @@ define(["classes/Layer", "classes/Button",
 
       settingsButton = new Button({
         style: {
-          font: "bold 30px Arvo"
+          font: "bold 25px Arvo"
         },
         texts: {
           normal: "Einstellungen",
