@@ -1,15 +1,31 @@
-define(["underscore"],
-  function(_) {
+define(["underscore", "gameConfig"],
+  function(_, gameConfig) {
 
     var available = false,
+      kioskMode,
       currentWindow;
 
     (function startup () {
       if(_.isUndefined(window.nwWindow) === false) {
         currentWindow = window.nwWindow;
         available = true;
+        setKioskMode(gameConfig.get("kioskMode"));
       }
     }());
+
+    gameConfig.on("change", function(model, options) {
+      setKioskMode(gameConfig.get("kioskMode"));
+    });
+
+    function setKioskMode(enabled) {
+      if(available === true) {
+        if(enabled === true) {
+          currentWindow.enterKioskMode();
+        } else {
+          currentWindow.leaveKioskMode();
+        }
+      }
+    }
 
     function quitApp() {
       if(available === true) {

@@ -1,11 +1,14 @@
-define(["PIXI", "classes/Layer", "appConfig", "utils/nwHelper", "classes/Button"],
-  function(PIXI, Layer, appConfig, nwHelper, Button) {
+define(["PIXI", "classes/Layer", "utils/nwHelper", "classes/Button", "gameConfig"],
+  function(PIXI, Layer, nwHelper, Button, gameConfig) {
 
     var layer = new Layer(),
       fullscreenButton,
       quitButton;
 
     layer.onActivate = function() {
+
+      var kioskMode = gameConfig.get("kioskMode");
+
       if (nwHelper.isAvailable() === true) {
 
         quitButton = new Button({
@@ -57,9 +60,10 @@ define(["PIXI", "classes/Layer", "appConfig", "utils/nwHelper", "classes/Button"
 
         setFullscreenButton();
 
-        this.addButton(fullscreenButton);
-        this.addButton(quitButton);
-        
+        if(kioskMode === false) {
+          this.addButton(fullscreenButton);
+          this.addButton(quitButton);
+        }
       }
     };
 

@@ -1,15 +1,21 @@
 define(["classes/Layer", "classes/Button",
-  "base/soundBridge", "views/modalControls"],
+    "base/soundBridge", "views/modalControls",
+    "gameConfig", "PIXI"
+  ],
   function(Layer, Button,
-    soundBridge, modalControls) {
+    soundBridge, modalControls,
+    gameConfig, PIXI) {
 
     var layer = new Layer(),
       shootingButton,
       creditsButton,
       settingsButton,
-      statsButton;
+      statsButton,
+      kioskOnlyText;
 
     layer.onActivate = function() {
+
+      var noStatsOrSettings = gameConfig.get("kioskMode");
 
       shootingButton = new Button({
         texts: {
@@ -105,10 +111,40 @@ define(["classes/Layer", "classes/Button",
         });
       };
 
-      this.addButton(settingsButton);
+      if (noStatsOrSettings === false) {
+        this.addButton(settingsButton);
+        this.addButton(statsButton);
+      }
+
       this.addButton(shootingButton);
       this.addButton(creditsButton);
-      this.addButton(statsButton);
+
+
+      if (noStatsOrSettings === true) {
+        kioskOnlyText = new PIXI.Text("Kiosk Modus", {
+          font: "bold 25px Arvo",
+          fill: "#3344bb",
+          align: "left",
+          stroke: "#AAAAFF",
+          strokeThickness: 1,
+          wordWrap: false,
+          wordWrapWidth: 100
+        });
+
+        kioskOnlyText.anchor = {
+          x: 0.5,
+          y: 0.5
+        };
+
+        kioskOnlyText.position = {
+          x: this.width * 0.5,
+          y: this.height * 0.85
+        };
+
+        this.addChild(kioskOnlyText);
+      }
+
+
     };
 
     return layer;

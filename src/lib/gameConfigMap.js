@@ -135,6 +135,12 @@ define([],
           post: "Objekte"
         }
       },
+      kioskMode: {
+        def: false,
+        ui: "toggle",
+        cat: "visual",
+        desc: "Kiosk Modus (Dialoge mit [esc] und [s])"
+      },
       objectHittedScaleCap: {
         def: 1,
         min: 0.1,
