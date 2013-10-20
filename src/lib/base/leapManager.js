@@ -121,37 +121,43 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
           movement.x = getLeapDistanceBetweenX(hand.palmPosition[0], lastHand.palmPosition[0]);
           movement.y = getLeapDistanceBetweenY(hand.palmPosition[1], lastHand.palmPosition[1]);
           movement.hyp = getHypotenuse(movement.x, movement.y);
+          return;
 
-        } else {
-          movement = {
-            x: 0,
-            y: 0,
-            hyp: 0
-          };
         }
       }
 
+      // if not returned already, set movement to empty!
+      emptyMovement();
+
+    }
+
+    function emptyMovement() {
+      movement = {
+        x: 0,
+        y: 0,
+        hyp: 0
+      };
     }
 
     // the heart of leap normalizing and frame computing...
     // leapToDisplay -- center point: 0 <= x <= 1
     // eg. width: 0.5 * 1280 = 640
     // eg. height: 0.5 * 720 = 360
-    
+
     // leapXModifier -- projection modifier = product * orgCord
-    
+
     // x: -320 <= x <= 320 (640mm)
     // min 2
 
-    function leapXToNormalize(x) { 
-      if(x >= 0) {
-        return (displayWidth * leapToDisplayX) + Math.abs(x * leapXModifier); 
+    function leapXToNormalize(x) {
+      if (x >= 0) {
+        return (displayWidth * leapToDisplayX) + Math.abs(x * leapXModifier);
       } else {
-        return (displayWidth * leapToDisplayX) - Math.abs(x * leapXModifier); 
+        return (displayWidth * leapToDisplayX) - Math.abs(x * leapXModifier);
       }
     }
 
-    function normalizedXToLeap(x) {      
+    function normalizedXToLeap(x) {
       return (x - (displayWidth * leapToDisplayX)) / leapXModifier;
     }
 
@@ -159,7 +165,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
     // min 1.5
 
     function leapYToNormalize(y) {
-      if(y >= LEAP_Y_CENTER_POINT) { // constant center at LEAP_Y_CENTER_POINTmm (20mm offset!)
+      if (y >= LEAP_Y_CENTER_POINT) { // constant center at LEAP_Y_CENTER_POINTmm (20mm offset!)
         return (displayHeight * leapToDisplayY) - Math.abs((y - LEAP_Y_CENTER_POINT) * leapYModifier);
       } else {
         return (displayHeight * leapToDisplayY) + Math.abs((y - LEAP_Y_CENTER_POINT) * leapYModifier);
@@ -181,8 +187,8 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
 
     function getProjectionCenterInMillimeters() {
       return {
-        x: -normalizedXToLeap(displayWidth/2),
-        y: normalizedYToLeap(displayHeight/2)
+        x: -normalizedXToLeap(displayWidth / 2),
+        y: normalizedYToLeap(displayHeight / 2)
       };
     }
 
@@ -244,7 +250,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
         outsideScreen.bottom = true;
       }
 
-       //console.log("x=" + position.x + " y=" + position.y);
+      //console.log("x=" + position.x + " y=" + position.y);
 
       return position;
     }
@@ -259,7 +265,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
         action: function() {
           var time = frameCount / 2,
             debugText = "leap @ " + time + "fps\n";
-            debugText += "projection @ " + Math.floor(getProjectionSizeInMillimeters().width) +
+          debugText += "projection @ " + Math.floor(getProjectionSizeInMillimeters().width) +
             " mm x " + Math.floor(getProjectionSizeInMillimeters().height) + " mm";
 
           if (attachedListeners === false) {

@@ -1,8 +1,8 @@
 define(["PIXI", "underscore", "base/displayManager",
-    "base/leapManager", "appConfig", "utils/publisher"
+    "appConfig", "utils/publisher"
   ],
   function(PIXI, _, displayManager,
-    leapManager, appConfig, publisher) {
+    appConfig, publisher) {
 
     var Layer = function(options) {
       this.width = appConfig.get("width");
@@ -18,6 +18,8 @@ define(["PIXI", "underscore", "base/displayManager",
       this.listeners.interactionClick = false;
       this.listeners.interactionMove = false;
       this.listeners.interactionInitial = false;
+
+      this.buttons = [];
 
 
       if (_.isUndefined(options) === false && _.isUndefined(options.listeners) === false) {
@@ -60,10 +62,6 @@ define(["PIXI", "underscore", "base/displayManager",
           displayManager.events.on("renderFrame", this.onRender);
         }
 
-        if (this.listeners.leap === true) {
-          leapManager.events.on("handFrameNormalized", this.onHandFrame);
-        }
-
         this.onActivate();
       },
       deactivate: function() {
@@ -75,10 +73,13 @@ define(["PIXI", "underscore", "base/displayManager",
           displayManager.events.off("renderFrame", this.onRender);
         }
 
-        if (this.listeners.leap === true) {
-          leapManager.events.off("handFrameNormalized", this.onHandFrame);
+        // remove all buttons of this layer...
+        i = this.buttons.length - 1;
+        for (i; i >= 0; i -= 1) {
+          this.removeButton(this.buttons[i]);
         }
 
+        // remove all draw childs of this layer...
         i = this.pixiLayer.children.length - 1;
         for (i; i >= 0; i -= 1) {
           this.pixiLayer.removeChild(this.pixiLayer.children[i]);
@@ -93,6 +94,18 @@ define(["PIXI", "underscore", "base/displayManager",
       },
       removeChild: function(child) {
         this.pixiLayer.removeChild(child);
+      },
+      addButton: function(button) {
+        // buttons are treated specially, as their listeners need to be unregistered on remove
+        this.buttons.push(button);
+        button.registerLeap();
+        this.pixiLayer.addChild(button.display);
+      },
+      removeButton: function(button) {
+        //console.log("removeButton");
+        this.buttons.splice(this.buttons.indexOf(button), 1);
+        button.unregisterLeap();
+        this.pixiLayer.removeChild(button.display);
       },
       notifyScene: function(options) {
         this.events.trigger("sceneNotification", options);

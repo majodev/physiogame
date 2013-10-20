@@ -1,5 +1,5 @@
-define(["underscore", "PIXI", "utils/publisher"],
-  function(_, PIXI, publisher) {
+define(["underscore", "PIXI", "utils/publisher", "base/leapManager"],
+  function(_, PIXI, publisher, leapManager) {
 
 
     var Scene = function(options) {
@@ -25,16 +25,24 @@ define(["underscore", "PIXI", "utils/publisher"],
       };
 
       this.pixiScene.interactive = true;
+      
+      // mouse and touch listeners...
       this.pixiScene.click = this.pixiScene.tap = function(interactionData) {
         self.onClick({
           position: interactionData.global
         });
       };
+      
       this.pixiScene.mousemove = this.pixiScene.touchmove = function(interactionData) {
         self.onMove({
           position: interactionData.global
         });
       };
+
+      // leap listeners...
+      leapManager.events.on("handFrameNormalized", function (coordinates) {
+        self.onHandFrame(coordinates);
+      });
 
     };
 
@@ -114,6 +122,14 @@ define(["underscore", "PIXI", "utils/publisher"],
         _.each(this.layers, function(layer) {
           if (layer.listeners.interactionMove === true) {
             layer.onMove(coordinates);
+          }
+        });
+      },
+      onHandFrame: function(coordinates) {
+        this.lastInteraction = coordinates;
+        _.each(this.layers, function(layer) {
+          if (layer.listeners.leap === true) {
+            layer.onHandFrame(coordinates);
           }
         });
       }

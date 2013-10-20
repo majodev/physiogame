@@ -31,20 +31,6 @@ define(["underscore"],
       }
     }
 
-
-
-    // function toggleLock() {
-    //   if(available === true) {
-    //     currentWindow.toggleKioskMode();
-    //   }
-    // }
-
-    // function restartApp() {
-    //   if(available === true) {
-    //     currentWindow.reloadIgnoringCache();
-    //   }
-    // }
-
     function isAvailable() {
       return available;
     }

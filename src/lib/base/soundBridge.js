@@ -26,12 +26,14 @@ define(["log", "loaders/soundLoader", "gameConfig"],
 
     function play(sound) {
       if(audioEnabled) {
+        //log.debug("play sound: " + sound);
         soundLoader.getSound(sound).play();
       }
     }
 
     function stop(sound) {
       if(audioEnabled) {
+        //log.debug("stop sound: " + sound);
         soundLoader.getSound(sound).stop();
       }
     }

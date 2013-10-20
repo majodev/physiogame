@@ -29,7 +29,7 @@ define(["classes/Layer", "classes/Button"],
         });
       };
 
-      this.addChild(goBackButton.display);
+      this.addButton(goBackButton);
     };
 
     return layer;

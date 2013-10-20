@@ -22,7 +22,6 @@ define(["log", "PIXI",
       timerText,
       textsCreated = false,
       winningAdded = false,
-      introTimerLength,
       introComplete,
       gameModeTime = false,
       maxTime = 0,
@@ -40,8 +39,6 @@ define(["log", "PIXI",
       } else {
         gameModeTime = false;
       }
-
-      introTimerLength = gameConfig.get("introTimerLength");
 
       textsCreated = false;
 
@@ -195,9 +192,6 @@ define(["log", "PIXI",
         countingText.setText(model.get("objectsCatched") + " von " + gameConfig.get("objectsToSpawn"));
       }
 
-      //if (gameModeTime === false && gameConfig.get("objectsToSpawn") <= model.get("objectsCatched")) {
-      //  showWinningText();
-      //}
     }
 
     function showWinningText() {
@@ -272,7 +266,7 @@ define(["log", "PIXI",
           });
         };
 
-        layer.addChild(retryButton.display);
+        layer.addButton(retryButton);
       }
     }
 

@@ -1,5 +1,8 @@
-define(["PIXI", "game/textures", "underscore", "base/soundBridge"],
-  function(PIXI, textures, _, soundBridge) {
+define(["PIXI", "game/textures", "underscore", "base/soundBridge",
+    "base/leapManager", "utils/hittest", "moment"
+  ],
+  function(PIXI, textures, _, soundBridge,
+    leapManager, hittest, moment) {
 
     var Button = function(options) {
 
@@ -25,20 +28,18 @@ define(["PIXI", "game/textures", "underscore", "base/soundBridge"],
         textures: defaultBGTextures
       };
 
-      //console.dir(this.settings);
-
       // examine options and merge into settings
       if (_.isUndefined(options) === false) {
         _.merge(this.settings, options);
 
         // texts are handled differently, e.g. should always be the same...
-        if(_.isUndefined(this.settings.texts.mouseover)) {
+        if (_.isUndefined(this.settings.texts.mouseover)) {
           this.settings.texts.mouseover = this.settings.texts.normal;
         }
-        if(_.isUndefined(this.settings.texts.click)) {
+        if (_.isUndefined(this.settings.texts.click)) {
           this.settings.texts.click = this.settings.texts.mouseover;
         }
-        if(_.isUndefined(this.settings.texts.tap)) {
+        if (_.isUndefined(this.settings.texts.tap)) {
           this.settings.texts.tap = this.settings.texts.click;
         }
       }
@@ -121,16 +122,16 @@ define(["PIXI", "game/textures", "underscore", "base/soundBridge"],
     Button.prototype = {
       constructor: Button,
       onClick: function() {
-        // OPTIONAL OVERRIDE
+        // OPTIONAL OVERRIDES
       },
       onMouseOut: function() {
-
+        // OPTIONAL OVERRIDES
       },
       onMouseOver: function() {
-
+        // OPTIONAL OVERRIDES
       },
       onTap: function() {
-
+        // OPTIONAL OVERRIDES
       },
       resetSettings: function(options) {
         if (_.isUndefined(options) === false) {
@@ -139,10 +140,60 @@ define(["PIXI", "game/textures", "underscore", "base/soundBridge"],
 
         this.buttonText.setText(this.settings.texts.normal);
         this.buttonBG.setTexture(this.settings.textures[0]);
+      },
+      unregisterLeap: function() {
+        //console.log("Button unregisterLeap");
+        leapManager.events.off("handFrameNormalized", this.leapInteractionHandler, this);
+      },
+      registerLeap: function() {
+        //console.log("Button registerLeap");
+        // leap needs special treatment, lifecycle of listeners gets handled by Layer Class auto!
+        leapManager.events.on("handFrameNormalized", this.leapInteractionHandler, this);
+      },
+      leapInteractionHandler: function (coordinates) {
+        var hitCord = _.extend(coordinates, {
+          width: 20,
+          height: 20,
+          anchor: {
+            x: 0.5,
+            y: 0.5
+          }
+        });
+
+        var buttonCord = {
+          position: this.display.position,
+          width: this.buttonBG.width * this.display.scale.x,
+          height: this.buttonBG.height * this.display.scale.y,
+          anchor: {
+            x: 0.5,
+            y: 0.5
+          }
+        };
+
+        var hittedByLeap = hittest(hitCord, buttonCord),
+          currentMoment = moment();
+
+        if (hittedByLeap === true) {
+          if (_.isUndefined(this.leapInitialHitMoment) === true) {
+            this.leapInitialHitMoment = currentMoment;
+            //console.log("leap button initial hit");
+          } else {
+            // check if time reached for click to be called...
+            if (currentMoment.diff(this.leapInitialHitMoment) >= 1500) {
+              //console.log("leap button click!");
+              this.leapInitialHitMoment = undefined; // reset moment.
+              this.buttonBG.click();
+            } else {
+              this.buttonBG.mouseover();
+            }
+          }
+        } else {
+          this.buttonBG.mouseout();
+          this.leapInitialHitMoment = undefined;
+        }
       }
     };
 
     return Button;
 
-  }
-);
+  });

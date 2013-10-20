@@ -9,7 +9,6 @@ define(["classes/Layer", "classes/Button",
       shootingButton,
       creditsButton,
       settingsButton,
-      //soundButton,
       statsButton;
 
     layer.onActivate = function() {
@@ -108,59 +107,11 @@ define(["classes/Layer", "classes/Button",
         });
       };
 
-      // soundButton = new Button({
-      //   style: {
-      //     font: "bold 22px Arvo"
-      //   }
-      // });
-
-      // setSoundButtons(); // set the texts according to the soundBridge settings
-
-      // soundButton.display.scale = {
-      //   x: 0.5,
-      //   y: 0.5
-      // };
-
-      // soundButton.display.position = {
-      //   x: this.width - soundButton.buttonBG.width / 4 - 10,
-      //   y: soundButton.buttonBG.height / 4 + 10
-      // };
-
-      // soundButton.onClick = function() {
-      //   soundBridge.toggleSound();
-      //   setSoundButtons();
-      // };
-
-
-
-      this.addChild(settingsButton.display);
-      this.addChild(shootingButton.display);
-      this.addChild(creditsButton.display);
-      //this.addChild(soundButton.display);
-      this.addChild(statsButton.display);
+      this.addButton(settingsButton);
+      this.addButton(shootingButton);
+      this.addButton(creditsButton);
+      this.addButton(statsButton);
     };
-
-    // function setSoundButtons() {
-    //   if (soundBridge.getSoundEnabled() === true) {
-    //     soundButton.resetSettings({
-    //       texts: {
-    //         normal: "Sound aktiviert",
-    //         mouseover: "Sound deaktivieren!",
-    //         click: "Sound deaktivieren!",
-    //         tap: "Sound deaktivieren!"
-    //       }
-    //     });
-    //   } else {
-    //     soundButton.resetSettings({
-    //       texts: {
-    //         normal: "Sound deaktiviert",
-    //         mouseover: "Sound aktivieren!",
-    //         click: "Sound aktivieren!",
-    //         tap: "Sound aktivieren!"
-    //       }
-    //     });
-    //   }
-    // }
 
     return layer;
 

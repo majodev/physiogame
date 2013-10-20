@@ -1,8 +1,7 @@
 define(["log", "base/displayManager", "base/leapManager",
   "base/sceneManager", "key",
   "base/soundBridge", "views/gameConfigModal",
-  "game/stats", "views/statsModal", "game/gameSession"
-  ],
+  "game/stats", "views/statsModal", "game/gameSession"],
   function(log, displayManager, leapManager,
     sceneManager, key,
     soundBridge, gameConfigModal,
@@ -34,17 +33,6 @@ define(["log", "base/displayManager", "base/leapManager",
 
       // save session if not already happenend.
       gameSession.endSession();
-
-      // everytime before the scene changes from shooting, try to save the current stats
-      // if(oldSceneID === "shooting") {
-      //   stats.saveCurrent();
-      // }
-
-      // if a new shooting scene will be build, make a new StatModel instance
-      // if(sceneID === "shooting") {
-      //   log.debug("onSceneChanging: new scene id=" + sceneID);
-      //   stats.getNew();
-      // }
       
       if(sceneID === "shooting") {
         // every new shooting layer gets a new session

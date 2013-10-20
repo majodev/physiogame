@@ -57,8 +57,8 @@ define(["PIXI", "classes/Layer", "appConfig", "utils/nwHelper", "classes/Button"
 
         setFullscreenButton();
 
-        this.pixiLayer.addChild(fullscreenButton.display);
-        this.pixiLayer.addChild(quitButton.display);
+        this.addButton(fullscreenButton);
+        this.addButton(quitButton);
         
       }
     };
