@@ -40,7 +40,6 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
     }
 
     // syntactic sugar for exchangeScene public api
-
     function pushScene(id) {
       exchangeScene(id, sceneMap.getScene(id));
     }

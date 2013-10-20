@@ -1,9 +1,7 @@
 define(["classes/Layer", "classes/Button",
-  "views/gameConfigModal", "views/statsModal",
-  "base/soundBridge"],
+  "base/soundBridge", "views/modalControls"],
   function(Layer, Button,
-    gameConfigModal, statsModal,
-    soundBridge) {
+    soundBridge, modalControls) {
 
     var layer = new Layer(),
       shootingButton,
@@ -52,7 +50,7 @@ define(["classes/Layer", "classes/Button",
       };
 
       settingsButton.onClick = function() {
-        gameConfigModal.show();
+        modalControls.toggleConfig();
       };
 
       settingsButton.display.scale = {
@@ -76,7 +74,7 @@ define(["classes/Layer", "classes/Button",
       };
 
       statsButton.onClick = function() {
-        statsModal.show();
+        modalControls.toggleStats();
       };
 
       statsButton.display.scale = {
