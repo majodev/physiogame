@@ -5,7 +5,10 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
     _) {
 
     // private 
-    var LEAP_Y_CENTER_POINT = 260, // center of leap mm, 20mm offset of leapbase!
+    var LEAP_Y_CENTER_POINT = 260, // center of leap mm, 20mm offset of leapbase! // TODO: into gameConfig
+      LEAP_Z_MAX = 180, // TODO: into gameConfig
+      LEAP_Z_NORMALIZED_CENTER = 0, // exported as needed for touch/mouse emulation
+      LEAP_Z_NORMALIZED_MAX_STEP = 0.1, // exported -...-
       controller = new Leap.Controller(),
       frameCount = 0,
       handsAvailable = false,
@@ -83,8 +86,11 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
           hand.palmPosition[1]);
 
         events.trigger("handFrameNormalized", {
-          position: position
+          position: position,
+          depth: leapZToNormalize(hand.palmPosition[2])
         });
+
+        //console.log(leapZToNormalize(hand.palmPosition[2]) + " -- " + normalizedZToLeap(leapZToNormalize(hand.palmPosition[2])));
       }
 
       validateOutsideScreen(handsAvailable);
@@ -176,6 +182,34 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
       return ((-y + (displayHeight * leapToDisplayY)) / leapYModifier) + LEAP_Y_CENTER_POINT;
     }
 
+
+    // z: -180 <= z <= 180 (320mm)
+    // Hard setted through constants as z axis wont be projected completely into our 2d pixi environment
+
+    function leapZToNormalize(z) {
+
+      var zNorm = z;
+
+      if (z > LEAP_Z_MAX) {
+        zNorm = LEAP_Z_MAX;
+      }
+
+      if (z < -LEAP_Z_MAX) {
+        zNorm = -LEAP_Z_MAX;
+      }
+
+      if (z >= 0) {
+        return LEAP_Z_NORMALIZED_CENTER + (LEAP_Z_NORMALIZED_MAX_STEP * Math.abs(zNorm/LEAP_Z_MAX));
+      } else {
+        return LEAP_Z_NORMALIZED_CENTER - (LEAP_Z_NORMALIZED_MAX_STEP * Math.abs(zNorm/LEAP_Z_MAX));
+      }
+    }
+
+    function normalizedZToLeap(z) {
+      return (z - (LEAP_Z_NORMALIZED_CENTER)) / LEAP_Z_NORMALIZED_MAX_STEP*LEAP_Z_MAX;
+    }
+
+
     function getProjectionSizeInMillimeters() {
       return {
         width: getLeapDistanceBetweenX(normalizedXToLeap(0),
@@ -226,6 +260,8 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
         x: leapXToNormalize(x),
         y: leapYToNormalize(y)
       };
+
+      //console.log(position.z + " -- " + normalizedZToLeap(position.z));
 
       outsideScreen = {
         left: false,
@@ -317,7 +353,9 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
       getOutsideScreen: getOutsideScreen,
       getProjectionSizeInMillimeters: getProjectionSizeInMillimeters,
       getProjectionCenterInMillimeters: getProjectionCenterInMillimeters,
-      events: events
+      events: events,
+      LEAP_Z_NORMALIZED_CENTER: LEAP_Z_NORMALIZED_CENTER,
+      LEAP_Z_NORMALIZED_MAX_STEP: LEAP_Z_NORMALIZED_MAX_STEP
     };
   }
 );

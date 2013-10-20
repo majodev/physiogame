@@ -29,13 +29,15 @@ define(["underscore", "PIXI", "utils/publisher", "base/leapManager"],
       // mouse and touch listeners...
       this.pixiScene.click = this.pixiScene.tap = function(interactionData) {
         self.onClick({
-          position: interactionData.global
+          position: interactionData.global,
+          depth: -leapManager.LEAP_Z_NORMALIZED_MAX_STEP // depth MAX normalized leap mouse/touch emu
         });
       };
       
       this.pixiScene.mousemove = this.pixiScene.touchmove = function(interactionData) {
         self.onMove({
-          position: interactionData.global
+          position: interactionData.global,
+          depth: leapManager.LEAP_Z_NORMALIZED_CENTER // depth CENTER normalized leap mouse/touch emu
         });
       };
 

@@ -1,8 +1,8 @@
 define(["PIXI", "underscore", "base/displayManager",
-    "appConfig", "utils/publisher"
+    "appConfig", "utils/publisher", "base/leapManager"
   ],
   function(PIXI, _, displayManager,
-    appConfig, publisher) {
+    appConfig, publisher, leapManager) {
 
     var Layer = function(options) {
       this.width = appConfig.get("width");
@@ -18,6 +18,11 @@ define(["PIXI", "underscore", "base/displayManager",
       this.listeners.interactionClick = false;
       this.listeners.interactionMove = false;
       this.listeners.interactionInitial = false;
+
+      this.DEPTH_LEAP = {
+        step: leapManager.LEAP_Z_NORMALIZED_MAX_STEP,
+        center: leapManager.LEAP_Z_NORMALIZED_CENTER
+      };
 
       this.buttons = [];
 

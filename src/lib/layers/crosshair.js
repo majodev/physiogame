@@ -41,6 +41,7 @@ define(["base/displayManager", "base/leapManager", "game/textures",
 
     layer.onInitial = layer.onMove = layer.onHandFrame = function(coordinates) {
       crosshairSprite.position = coordinates.position;
+      crosshairSprite.scale.x = crosshairSprite.scale.y = 0.35 + coordinates.depth;
     };
 
     function onRenderRotate() {
