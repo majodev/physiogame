@@ -23,7 +23,7 @@ define([],
         def: false,
         ui: "toggle",
         cat: "visual",
-        desc: "Zeige Debug Hinweise"
+        desc: "Zeige Frames pro Sekunde"
       },
       introTimerLength: {
         def: 3000,

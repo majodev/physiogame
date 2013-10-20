@@ -110,8 +110,14 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
       convertToFormattedJSON: function() {
         var json = this.toJSON();
 
+        // error handling for userName if gameConfig wasn't established...
+        if(_.isUndefined(json.gameConfig) === false) {
+          json.userName = gameConfig.getFormattedCustomValue("userName", json.gameConfig.userName);
+        } else {
+          json.userName = "--";
+        }
+
         // table fields
-        json.userName = gameConfig.getFormattedCustomValue("userName", json.gameConfig.userName);
         json.date = formatDateOnlyGerman(json.startDate);
         json.startDate = formatTimeOnlyGerman(json.startDate);
         json.endDate = formatTimeOnlyGerman(json.endDate);
@@ -124,6 +130,8 @@ define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
 
         // gameConfig detail fields
         json.gameConfig = gameConfig.generateKeyValuePairs(undefined, json.gameConfig);
+
+        
 
         return json;
       },

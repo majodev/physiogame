@@ -48,7 +48,7 @@ define(["classes/Layer", "classes/Button",
 
       settingsButton.display.position = {
         x: this.width * 0.58,
-        y: this.height * 0.87
+        y: this.height * 0.85
       };
 
       settingsButton.onClick = function() {
@@ -72,7 +72,7 @@ define(["classes/Layer", "classes/Button",
 
       statsButton.display.position = {
         x: this.width * 0.42,
-        y: this.height * 0.87
+        y: this.height * 0.85
       };
 
       statsButton.onClick = function() {

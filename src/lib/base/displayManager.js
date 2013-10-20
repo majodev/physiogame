@@ -35,7 +35,7 @@ define(["log", "PIXI", "appConfig", "utils/resizeWatcher", "utils/publisher", "g
           var time = frameCount / 2,
             // debugText = "display: " + frameCount + " frames @ " + time +
             //   "fps.";
-            debugText = "display @ " + time + "fps";
+            debugText = "display @ " + time + " fps";
           events.trigger("debugInfo", debugText);
           frameCount = 0;
         }

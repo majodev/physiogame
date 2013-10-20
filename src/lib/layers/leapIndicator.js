@@ -57,18 +57,18 @@ define(["classes/Layer", "PIXI", "game/textures", "base/leapManager",
         };
 
         noHand.position = {
-          x: layer.width / 2,
-          y: layer.height / 2
+          x: 15,
+          y: 15
         };
 
         noHand.anchor = {
-          x: 0.5,
-          y: 0.5
+          x: 0,
+          y: 0
         };
 
         noHand.scale = {
-          x: 0.6,
-          y: 0.6
+          x: 0.3,
+          y: 0.3
         };
 
         applyOutsideOnlyParams(outLeft);
@@ -99,8 +99,8 @@ define(["classes/Layer", "PIXI", "game/textures", "base/leapManager",
       };
 
       pixiSprite.scale = {
-        x: 0.3,
-        y: 0.3
+        x: 0.25,
+        y: 0.25
       };
     }
 

@@ -14,7 +14,7 @@ define(["PIXI", "underscore", "classes/Layer", "base/displayManager",
       if (gameConfig.get("debugLayerVisible") === true) {
         if (_.isUndefined(debugDisplay) === true) {
 
-          debugDisplay = new PIXI.Text("observing fps...", {
+          debugDisplay = new PIXI.Text("display @ 0 fps\nleap @ 0 fps", {
             font: "bold 15px Arvo",
             fill: "#3344bb",
             align: "left",
@@ -27,8 +27,8 @@ define(["PIXI", "underscore", "classes/Layer", "base/displayManager",
         }
 
         debugDisplay.position = {
-          x: 15,
-          y: 15
+          x: 100,
+          y: 32
         };
 
         displayManager.events.on("debugInfo", displayDebug);
