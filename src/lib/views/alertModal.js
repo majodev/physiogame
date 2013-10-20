@@ -8,7 +8,7 @@ define(["log", "jquery", "Handlebars", "underscore",
     var showing = false;
 
     function show(options) {
-      if (showing === true) {
+      if (getShowing() === true) {
         clearOldAndReshow(options);
       } else {
         appendNew(options);
@@ -17,7 +17,7 @@ define(["log", "jquery", "Handlebars", "underscore",
     }
 
     function hide() {
-      if (showing === true) {
+      if (getShowing() === true) {
         $('#alertModalHolder').on('hidden.bs.modal', function() {
           clearElement();
         });
@@ -39,7 +39,6 @@ define(["log", "jquery", "Handlebars", "underscore",
           hide();
         }, options.autoDismiss);
       }
-      showing = true;
     }
 
     function clearOldAndReshow(options) {
@@ -51,12 +50,11 @@ define(["log", "jquery", "Handlebars", "underscore",
     }
 
     function clearElement() {
-      showing = false;
       $("#alertModal").empty();
     }
 
     function getShowing() {
-      return showing;
+      return ($("#alertModalHolder").length > 0) ? true : false;
     }
 
     return {

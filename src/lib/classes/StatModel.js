@@ -1,5 +1,5 @@
-define(["log", "backbone", "gameConfig", "moment", "utils/timeFormatter"],
-  function(log, Backbone, gameConfig, moment, timeFormatter) {
+define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeFormatter"],
+  function(log, Backbone, _, gameConfig, moment, timeFormatter) {
 
     var ScoreModel = Backbone.Model.extend({
       raiseScore: function() {
