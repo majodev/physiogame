@@ -264,7 +264,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
         interval: 2000,
         action: function() {
           var time = frameCount / 2,
-            debugText = "Leap @ " + time + " fps\n";
+            debugText = "Leap @ " + time + " fps";
           // debugText += "projection @ " + Math.floor(getProjectionSizeInMillimeters().width) +
           //   " mm x " + Math.floor(getProjectionSizeInMillimeters().height) + " mm";
 

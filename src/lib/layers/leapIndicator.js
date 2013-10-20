@@ -1,8 +1,8 @@
 define(["classes/Layer", "PIXI", "game/textures", "base/leapManager",
-    "gameConfig"
+    "gameConfig", "moment", "underscore"
   ],
   function(Layer, PIXI, textures, leapManager,
-    gameConfig) {
+    gameConfig, moment, _) {
 
     var layer = new Layer({
       listeners: {
@@ -16,6 +16,7 @@ define(["classes/Layer", "PIXI", "game/textures", "base/leapManager",
       outTop,
       outBottom,
       noHand,
+      noHandText,
       minAlpha = 0.5,
       maxAlpha = 0.8,
       alphaModifier = 0.01,
@@ -26,6 +27,22 @@ define(["classes/Layer", "PIXI", "game/textures", "base/leapManager",
       showThisLayer = gameConfig.get("leapShowIndicatorLayer");
 
       if (showThisLayer) {
+
+        noHandText = new PIXI.Text("Bewege deine Hand in\nden Erkennungsbereich.", {
+          font: "bold 20px Arvo",
+          fill: "#FFFFFF",
+          align: "left",
+          stroke: "#3344bb",
+          strokeThickness: 1,
+          wordWrap: false,
+          wordWrapWidth: 100
+        });
+
+        noHandText.position = {
+          x: 100,
+          y: 27
+        };
+
         outLeft = new PIXI.Sprite(textures.atlas.leapOutside);
         outRight = new PIXI.Sprite(textures.atlas.leapOutside);
         outTop = new PIXI.Sprite(textures.atlas.leapOutside);
@@ -82,6 +99,7 @@ define(["classes/Layer", "PIXI", "game/textures", "base/leapManager",
         applySharedParams(outBottom);
 
         applySharedParams(noHand);
+        applySharedParams(noHandText);
 
         this.addChild(outLeft);
         this.addChild(outRight);
@@ -89,6 +107,8 @@ define(["classes/Layer", "PIXI", "game/textures", "base/leapManager",
         this.addChild(outBottom);
 
         this.addChild(noHand);
+        this.addChild(noHandText);
+        noHandText.alpha = 0;
       }
     };
 
@@ -118,28 +138,71 @@ define(["classes/Layer", "PIXI", "game/textures", "base/leapManager",
         outRight.visible = false;
         outTop.visible = false;
         outBottom.visible = false;
-
+        noHandText.visible = false;
         return;
       }
 
       if (showThisLayer) {
         if (leapManager.getHandsAvailable() === false) {
           noHand.visible = true;
+          noHandText.visible = true;
           outLeft.visible = false;
           outRight.visible = false;
           outTop.visible = false;
           outBottom.visible = false;
         } else {
           noHand.visible = false;
+          noHandText.visible = false;
         }
 
         animateIndicator(noHand);
+        animateNoHandText(noHandText);
         animateIndicator(outLeft);
         animateIndicator(outRight);
         animateIndicator(outTop);
         animateIndicator(outBottom);
       }
     };
+
+    function animateNoHandText(noHandText) {
+      var currentMoment = moment();
+      if (noHandText.visible === true) {
+        if (_.isUndefined(noHandText.startMoment) === true) {
+          noHandText.startMoment = currentMoment;
+        } else {
+          // previous. lets wait 5 seconds, then fade it in...
+          if (currentMoment.diff(noHandText.startMoment) >= 3000 &&
+            currentMoment.diff(noHandText.startMoment) < 10000) {
+            // fade it in
+            if (noHandText.alpha < maxAlpha) {
+              noHandText.alpha += alphaModifier;
+              if (noHandText.alpha >= maxAlpha) {
+                noHandText.alpha = maxAlpha;
+              }
+            }
+
+          }
+          if (currentMoment.diff(noHandText.startMoment) >= 10000 &&
+            currentMoment.diff(noHandText.startMoment) < 13000) {
+            // fade it out
+            if (noHandText.alpha > 0) {
+              noHandText.alpha -= alphaModifier;
+              if (noHandText.alpha <= 0) {
+                noHandText.alpha = 0;
+              }
+            }
+          }
+          if (currentMoment.diff(noHandText.startMoment) >= 13000) {
+            // reset it
+            noHandText.startMoment = undefined;
+            noHandText.alpha = 0;
+          }
+        }
+      } else {
+        noHandText.startMoment = undefined;
+        noHandText.alpha = 0;
+      }
+    }
 
     function animateIndicator(pixiSprite) {
       if (pixiSprite.visible === true) {

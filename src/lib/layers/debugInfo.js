@@ -26,9 +26,14 @@ define(["PIXI", "underscore", "classes/Layer", "base/displayManager",
 
         }
 
+        debugDisplay.anchor = {
+          x: 0,
+          y: 1
+        };
+
         debugDisplay.position = {
-          x: 100,
-          y: 32
+          x: 15,
+          y: this.height - 60
         };
 
         displayManager.events.on("debugInfo", displayDebug);
