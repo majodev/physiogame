@@ -1,15 +1,20 @@
 define(["PIXI", "game/textures", "underscore", "base/soundBridge",
-    "base/leapManager", "utils/hittest", "moment"
+    "base/leapManager", "utils/hittest", "moment", "gameConfig"
   ],
   function(PIXI, textures, _, soundBridge,
-    leapManager, hittest, moment) {
+    leapManager, hittest, moment, gameConfig) {
 
     var LEAP_INDICATOR_OFFSET_X = 20,
       LEAP_INDICATOR_PRODUCT_Y = 0,
-      LEAP_BUTTON_CLICK_AFTER_MS = 1500,
       LEAP_INDICATOR_COLOR = 0x44FF44,
       LEAP_INDICATOR_ALPHA = 0.6,
       LEAP_INDICATOR_LINEWIDTH = 55;
+
+    var leapButtonClickAfterMs = gameConfig.get("leapButtonHitAfterMs");
+
+    gameConfig.on("change", function(model, options) {
+      leapButtonClickAfterMs = gameConfig.get("leapButtonHitAfterMs");
+    });
 
     var Button = function(options) {
 
@@ -164,13 +169,13 @@ define(["PIXI", "game/textures", "underscore", "base/soundBridge",
       },
       leapDrawIndicator: function(time) {
 
-        var percentage = time / LEAP_BUTTON_CLICK_AFTER_MS;
+        var percentage = time / leapButtonClickAfterMs;
 
         var lineY = (-(this.buttonBG.width / 2) + LEAP_INDICATOR_OFFSET_X) +
           ((this.buttonBG.width - LEAP_INDICATOR_OFFSET_X*2) * percentage);
 
         this.leapIndicator.clear();
-        if (percentage > 0 && time <= LEAP_BUTTON_CLICK_AFTER_MS) {
+        if (percentage > 0 && time <= leapButtonClickAfterMs) {
           this.leapIndicator.lineStyle(LEAP_INDICATOR_LINEWIDTH, LEAP_INDICATOR_COLOR, LEAP_INDICATOR_ALPHA);
           this.leapIndicator.moveTo(-(this.buttonBG.width / 2) + LEAP_INDICATOR_OFFSET_X, (this.buttonBG.height / 2) * LEAP_INDICATOR_PRODUCT_Y);
           this.leapIndicator.lineTo(lineY, (this.buttonBG.height / 2) * LEAP_INDICATOR_PRODUCT_Y);
@@ -207,7 +212,7 @@ define(["PIXI", "game/textures", "underscore", "base/soundBridge",
           } else {
             diff = currentMoment.diff(this.leapInitialHitMoment);
             // check if time reached for click to be called...
-            if (diff >= LEAP_BUTTON_CLICK_AFTER_MS) {
+            if (diff >= leapButtonClickAfterMs) {
               //console.log("leap button click!");
               this.leapInitialHitMoment = undefined; // reset moment.
               this.buttonBG.click();

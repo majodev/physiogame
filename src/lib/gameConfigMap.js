@@ -412,6 +412,18 @@ define([],
           pre: "Produkt von"
         }
       },
+      leapButtonHitAfterMs: {
+        def: 2000,
+        min: 1000,
+        max: 5000,
+        step: 100,
+        ui: "slider",
+        cat: "leap",
+        desc: "Zeit bevor Schaltflächen ausgelößt werden",
+        format: {
+          time: "milli"
+        }
+      },
       objectHittedScaleExplodes: {
         def: 1.8,
         min: 0.1,
