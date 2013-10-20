@@ -7,7 +7,7 @@ define(["log", "base/displayManager", "base/leapManager",
     stats, gameSession) {
 
     function init() {
-      log.debug("gameController: init");
+      log.debug("gameManager: init");
 
       displayManager.init();
       sceneManager.init();

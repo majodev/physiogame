@@ -23,7 +23,7 @@ define(["appConfig", "log", "loaders/preloader", "loaders/indicator",
 
       // dynamic require! - dont forget to INCLUDE within build options
       // THIS IS NOT SEEN BY THE R.JS OPTIMIZER!
-      // Preloading must finish before gameController gets included at all.
+      // Preloading must finish before gameManager gets included at all.
       require(["base/gameManager"], function(game) {
         game.init();
         indicator.disable();

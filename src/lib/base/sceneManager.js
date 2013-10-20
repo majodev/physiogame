@@ -74,7 +74,7 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
     }
 
     function init() {
-      log.debug("sceneController: init");
+      log.debug("sceneManager: init");
       events.trigger("init");
     }
 

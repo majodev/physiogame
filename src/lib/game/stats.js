@@ -18,6 +18,7 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
       if (statsCollection.length > 0) {
         try {
           applyPreviousSettings(statsCollection.models[statsCollection.length - 1].id);
+          log.debug("stats: startup fetch(): restored previous settings.");
           //log.debug("stats: startup applied last known gameConfig!");
           alertModal.show({
             head: "Willkommen zurück " + gameConfig.getFormattedValue("userName") + "!",
@@ -25,9 +26,10 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
             autoDismiss: 4000
           });
         } catch (e) {
-          log.error("stats: startup error, cannot apply last known settings e=" + e);
+          log.error("stats: startup fetch(): cannot apply last known settings e=" + e);
         }
       } else {
+        log.debug("stats: startup fetch(): no settings found.");
         alertModal.show({
           head: "Willkommen " + gameConfig.getFormattedValue("userName") + "!",
           text: "Schau doch mal in die Einstellungen um deinen Benutzernamen zu setzen.",

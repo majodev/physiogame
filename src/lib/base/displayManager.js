@@ -11,7 +11,7 @@ define(["log", "PIXI", "appConfig", "utils/resizeWatcher", "utils/publisher", "g
       events = publisher.make();
 
     function init() {
-      log.debug("display: init");
+      log.debug("displayManager: init");
 
       // set style and append renderer
       renderer.view.style.position = "absolute";

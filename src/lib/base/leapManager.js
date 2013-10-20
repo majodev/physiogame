@@ -256,7 +256,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
     }
 
     function init() {
-      log.debug("leapController: init");
+      log.debug("leapManager: init");
       controller.connect();
 
       Poll.start({
