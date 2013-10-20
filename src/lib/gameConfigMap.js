@@ -365,9 +365,9 @@ define([],
         desc: "Zeige Leap Motion Hinweise"
       },
       leapXModifier: {
-        def: 4,
+        def: 5,
         min: 2,
-        max: 8,
+        max: 16,
         step: 0.1,
         ui: "slider",
         cat: "leap",
@@ -377,9 +377,9 @@ define([],
         }
       },
       leapYModifier: {
-        def: 3,
+        def: 4,
         min: 1.5,
-        max: 6,
+        max: 16,
         step: 0.1,
         ui: "slider",
         cat: "leap",
