@@ -139,7 +139,7 @@ define([],
         def: false,
         ui: "toggle",
         cat: "visual",
-        desc: "Kiosk Modus (Dialoge mit [esc] und [s])"
+        desc: "Kiosk Modus ([esc] bleibt aktiv!)"
       },
       objectHittedScaleCap: {
         def: 1,
