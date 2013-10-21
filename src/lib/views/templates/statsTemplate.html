@@ -16,11 +16,12 @@
         <tr>
           <th>Benutzer</th>
           <th>Datum</th>
-          <th>Spielstart</th>
-          <th>Spielende</th>
-          <th>Spielzeit</th>
+          <th>Start</th>
+          <th>Ende</th>
+          <!-- <th>Spielzeit</th> -->
           <th>Rundenzeit</th>
-          <th>Gefangen</th>
+          <th>Erwischt</th>
+          <th>Präzision</th>
           <th>Aktion</th>
         </tr>
       </thead>
@@ -31,9 +32,10 @@
             <td>{{date}}</td>
             <td>{{startDate}}</td>
             <td>{{endDate}}</td>
-            <td>{{gameTime}}</td>
+            <!-- <td>{{gameTime}}</td> -->
             <td>{{playTime}}</td>
             <td>{{objectsCatched}}</td>
+            <td>{{accuracySum}}</td>
             {{#if id}}
               <td>
                 <a class="accordion-toggle btn btn-primary btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{{id}}}">Details</a>

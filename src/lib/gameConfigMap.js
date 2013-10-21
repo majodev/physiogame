@@ -160,6 +160,12 @@ define([],
         cat: "visual",
         desc: "Verstecke den Maus-Cursor wenn möglich"
       },
+      accuracyTextsEnabled: {
+        def: true,
+        ui: "toggle",
+        cat: "visual",
+        desc: "Zeige Treffergenauigkeit jedes Treffers"
+      },
       objectHittedScaleCap: {
         def: 1,
         min: 0.1,

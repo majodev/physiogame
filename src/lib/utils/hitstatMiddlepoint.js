@@ -3,8 +3,6 @@ define([],
 
     function hitstatMiddlepoint(point, gameObject) {
 
-
-
       var gameObjectStartX = gameObject.position.x - (gameObject.width * gameObject.anchor.x);
       var gameObjectStartY = gameObject.position.y - (gameObject.height * gameObject.anchor.y);
       var gameObjectEndX = gameObjectStartX + gameObject.width;
@@ -20,7 +18,7 @@ define([],
 
       var percentageX = Math.abs(1 - xToPointDistance / (gameObject.width / 2));
       var percentageY = Math.abs(1 - yToPointDistance / (gameObject.height / 2));
-      var percentageBothAxis = percentageX * percentageY;
+      var percentageBothAxis = (percentageX + percentageY) / 2;
 
       //console.log("x%: " + Math.round(percentageX * 100) + " y%: " + Math.round(percentageY * 100) + " all%: " + Math.round(percentageBothAxis * 100));
 

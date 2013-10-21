@@ -16,7 +16,22 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
         } else {
           log.warn("raiseScore: not started or already locked, not possible!");
         }
+      },
+      updateAccuracy: function(hitstatMiddlepointObject) {
+        var newAccuracy;
 
+        if (this.get("locked") === false && this.get("started") === true) {
+
+          // first push it THEN compute it!
+          runtimeAccuracyArray.push(hitstatMiddlepointObject);
+          newAccuracy = computeAccuracy();
+
+          this.set("accuracyX", newAccuracy.x);
+          this.set("accuracyY", newAccuracy.y);
+          this.set("accuracySum", newAccuracy.sum);
+        } else {
+          log.warn("updateAccuracy: not started or already locked, not possible!");
+        }
       },
       start: function(date) {
         if (this.get("locked") === false && this.get("started") === false) {
@@ -76,7 +91,9 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
         this.set("leapProjectionCenterZ", sessionStats.projectionCenter.z);
       },
       lock: function() {
+        log.debug("StatModel: locked");
         this.set("locked", true);
+        runtimeAccuracyArray = [];
       },
       convertToCSV: function() {
         var json = this.toJSON();
@@ -88,6 +105,9 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
           gameTime_ms: json.gameTime,
           playTime_ms: json.playTime,
           catched_count: json.objectsCatched,
+          accuracy_sum_percentage: Math.round(json.accuracySum * 100),
+          accuracy_x_percentage: Math.round(json.accuracyX * 100),
+          accuracy_y_percentage: Math.round(json.accuracyY * 100),
           config_gameMode_string: gameConfig.getFormattedCustomValue("gameMode", json.gameConfig.gameMode),
           config_gameObjectCondition_string: gameConfig.getFormattedCustomValue("gameObjectCondition", json.gameConfig.gameObjectCondition),
           config_gameMaxTime_sec: gameConfig.getValueNeededInCustomJSON("gameMaxTime", json.gameConfig),
@@ -120,7 +140,7 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
         var json = this.toJSON();
 
         // error handling for userName if gameConfig wasn't established...
-        if(_.isUndefined(json.gameConfig) === false) {
+        if (_.isUndefined(json.gameConfig) === false) {
           json.userName = gameConfig.getFormattedCustomValue("userName", json.gameConfig.userName);
         } else {
           json.userName = "--";
@@ -133,6 +153,7 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
         json.playTime = timeFormatter.formatMilliseconds(json.playTime);
         json.gameTime = timeFormatter.formatMilliseconds(json.gameTime);
         json.objectsCatched = json.objectsCatched;
+        json.accuracySum = Math.round(json.accuracySum * 100) + " %";
 
         // leap detail fields        
         json.leapStats = this.getLeapStatsKeyValues(json);
@@ -140,7 +161,7 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
         // gameConfig detail fields
         json.gameConfig = gameConfig.generateKeyValuePairs(undefined, json.gameConfig);
 
-        
+
 
         return json;
       },
@@ -170,7 +191,7 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
           }, {
             key: "Länge vertikale Bewegungen (y) erlaubter Bereich",
             value: Math.floor(json.leapMovementInsideY) + " mm"
-          },{
+          }, {
             key: "Gesamtlänge Tiefen-Bewegungen (z)",
             value: Math.floor(json.leapMovementAllZ) + " mm"
           }, {
@@ -207,9 +228,38 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
         objectsCatched: 0,
         finished: false,
         started: false,
-        locked: false
+        locked: false,
+        accuracyX: 1,
+        accuracyY: 1,
+        accuracySum: 1
       }
     });
+
+    // LOOK OUT! - this needs to be resetted on locks from the gameSession!
+    // STATIC, lifecycle managed by lock!
+    var runtimeAccuracyArray = []; 
+
+    function computeAccuracy() {
+      var accuracy = {
+        x: 0,
+        y: 0,
+        sum: 0
+      };
+      var i = 0,
+        len = runtimeAccuracyArray.length;
+
+      for (i; i < len; i += 1) {
+        accuracy.x += runtimeAccuracyArray[i].percentageX;
+        accuracy.y += runtimeAccuracyArray[i].percentageY;
+        accuracy.sum += runtimeAccuracyArray[i].percentageBothAxis;
+      }
+
+      accuracy.x = accuracy.x / len;
+      accuracy.y = accuracy.y / len;
+      accuracy.sum = accuracy.sum / len;
+
+      return accuracy;
+    }
 
     function formatDateGerman(date) {
       return moment(date).format("DD.MM.YYYY  HH:mm:ss");

@@ -49,6 +49,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
         gameReattachObjectMax: gameConfig.get("gameReattachObjectMax"),
         objectsToSpawn: gameConfig.get("objectsToSpawn"),
         texturePackage: textures.atlas[gameConfig.get("objectTexture")],
+        accuracyTextsEnabled: gameConfig.get("accuracyTextsEnabled"),
         textureCount: textures.atlas[gameConfig.get("objectTexture")].length,
         introTimerLength: gameConfig.get("introTimerLength"),
         objectHittedScaleCap: gameConfig.get("objectHittedScaleCap"),
@@ -372,23 +373,31 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
     function createHitStat(gameObject) {
 
-      var hitStatText = new PIXI.Text(Math.round(gameObject.hitStat.percentageBothAxis * 100) + " %", {
-        font: "bold 30px Arvo",
-        fill: "#FFFFFF",
-        align: "center",
-        stroke: "#848484",
-        strokeThickness: 2
-      });
+      var hitStatText;
 
-      hitStatText.anchor = {
-        x: 0.5,
-        y: 0.5
-      };
+      // if they should be displayed... - else not...
+      if (opt.accuracyTextsEnabled === true) {
+        hitStatText = new PIXI.Text(Math.round(gameObject.hitStat.percentageBothAxis * 100) + " %", {
+          font: "bold 30px Arvo",
+          fill: "#FFFFFF",
+          align: "center",
+          stroke: "#848484",
+          strokeThickness: 2
+        });
 
-      hitStatText.position = gameObject.position;
+        hitStatText.anchor = {
+          x: 0.5,
+          y: 0.5
+        };
 
-      layer.addChild(hitStatText);
-      hitStatsToRemove.push(hitStatText);
+        hitStatText.position = gameObject.position;
+
+        layer.addChild(hitStatText);
+        hitStatsToRemove.push(hitStatText);
+      }
+
+      // finally update the stats...
+      stats.getCurrent().updateAccuracy(gameObject.hitStat);
     }
 
     // visuals for explosion of gameObject
