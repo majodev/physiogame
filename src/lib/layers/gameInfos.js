@@ -27,6 +27,8 @@ define(["log", "PIXI",
       gameModeTime = false,
       maxTime = 0,
       retryButton,
+      INTRO_ROTATE_MAX = 0.02,
+      INTRO_ROTATE_STEP = 0.0025,
       currentStats;
 
     layer.onActivate = function() {
@@ -67,6 +69,7 @@ define(["log", "PIXI",
       introText.scale.y = 0;
       introText.anchor.x = 0.5;
       introText.anchor.y = 0.5;
+      introText.currentStep = INTRO_ROTATE_STEP;
 
       tippIntroText.anchor.x = 0.5;
       tippIntroText.anchor.y = 1;
@@ -108,6 +111,7 @@ define(["log", "PIXI",
 
     layer.onRender = function() {
       animateIntroScale(introText);
+      animateIntroRotate(introText);
       animateIntroAlpha(tippIntroText);
     };
 
@@ -118,19 +122,19 @@ define(["log", "PIXI",
         timerText.setText("0:00 von " + timeFormatter.formatSeconds(maxTime));
       } else {
         countingText.setText(currentStats.get("objectsCatched") + " von " + gameConfig.get("objectsToSpawn"));
-        introText.setText("Erwische alle Objekte!");
+        introText.setText("Erwische alle " + gameConfig.get("objectsToSpawn") + " Objekte!");
         timerText.setText("0:00");
       }
 
       switch (gameConfig.get("gameObjectCondition")) {
         case "objectScale":
-          tippIntroText.setText("Tipp: Sie platzen wenn Du sie fokusierst!");
+          tippIntroText.setText("Sie platzen wenn Du sie länger fokusierst!");
           break;
         case "clickOrDepth":
-          tippIntroText.setText("Tipp: Sie platzen wenn Du sie stoßt/anklickst!");
+          tippIntroText.setText("Sie platzen wenn Du sie stoßt/anklickst!");
           break;
         default:
-          tippIntroText.setText("ERROR: KEIN SPIELZIEL!");
+          tippIntroText.setText("ERROR: KEIN OBJEKTSPIELZIEL!");
           log.error("gameObjects: gameObjectCondition not supported!");
           break;
       }
@@ -156,6 +160,19 @@ define(["log", "PIXI",
           } else {
             whichText.visible = false;
           }
+        }
+      }
+    }
+
+    function animateIntroRotate(whichText) {
+      if (whichText.visible === true) {
+        if (introComplete === false) {
+          whichText.rotation += whichText.currentStep;
+          if(Math.abs(whichText.rotation) >= INTRO_ROTATE_MAX) {
+            whichText.currentStep = whichText.currentStep * -1;
+          }
+        } else {
+          whichText.rotation = 0;
         }
       }
     }
@@ -208,11 +225,11 @@ define(["log", "PIXI",
           strokeThickness: 5
         });
         tippIntroText = new PIXI.Text("NOTHING", {
-          font: "bold 20px Arvo",
+          font: "bold 30px Arvo",
           fill: "#FFFFFF",
           align: "center",
-          stroke: "#3344bb",
-          strokeThickness: 1
+          stroke: "#848484",
+          strokeThickness: 2
         });
         winningText = new PIXI.Text("NOTHING", {
           font: "bold 35px Arvo",
