@@ -20,7 +20,7 @@ define([],
         desc: "Benutzername"
       },
       gameObjectCondition: {
-        def: "objectScale",
+        def: "clickOrDepth",
         opt: [{
           id: "objectScale",
           desc: "max. Skalierung"

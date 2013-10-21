@@ -161,11 +161,17 @@ define(["PIXI", "game/textures", "underscore", "base/soundBridge",
       unregisterLeap: function() {
         //console.log("Button unregisterLeap");
         leapManager.events.off("handFrameNormalized", this.leapInteractionHandler, this);
+        leapManager.events.off("noHand", this.resetLeapDrawIndicator, this);
       },
       registerLeap: function() {
         //console.log("Button registerLeap");
         // leap needs special treatment, lifecycle of listeners gets handled by Layer Class auto!
         leapManager.events.on("handFrameNormalized", this.leapInteractionHandler, this);
+        leapManager.events.on("noHand", this.resetLeapDrawIndicator, this);
+      },
+      resetLeapDrawIndicator: function() {
+        this.leapInitialHitMoment = undefined;
+        this.leapDrawIndicator(0);
       },
       leapDrawIndicator: function(time) {
 

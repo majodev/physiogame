@@ -193,6 +193,9 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
                 soundBridge.play("hitted");
               }
               swapGameObjectToTop(gameObjects[i], i, max);
+
+              // where hitted? Middlepoint?
+
               gameObjects[i].depthKick = coordinates.depth;
               previousHitted = gameObjects[i];
               return;

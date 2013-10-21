@@ -29,6 +29,7 @@ define(["underscore", "PIXI", "utils/publisher", "base/leapManager"],
       // mouse and touch listeners...
       this.pixiScene.mousedown = this.pixiScene.tap = function(interactionData) {
         self.onClick({
+          leapCoordinates: false,
           position: interactionData.global,
           depth: -leapManager.LEAP_Z_NORMALIZED_MAX_STEP // depth MAX normalized leap mouse/touch emu
         });
@@ -36,6 +37,7 @@ define(["underscore", "PIXI", "utils/publisher", "base/leapManager"],
       
       this.pixiScene.mouseup = this.pixiScene.touchend = this.pixiScene.mousemove = this.pixiScene.touchmove = function(interactionData) {
         self.onMove({
+          leapCoordinates: false,
           position: interactionData.global,
           depth: leapManager.LEAP_Z_NORMALIZED_MAX_STEP // depth CENTER normalized leap mouse/touch emu
         });

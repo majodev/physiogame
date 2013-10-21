@@ -1,8 +1,8 @@
-define(["log", "jquery", "Handlebars", "underscore",
+define(["log", "jquery", "Handlebars", "underscore", "utils/cursorHider",
     "hbars!views/templates/alertTemplate", "base/soundBridge",
     "bootstrap",
   ],
-  function(log, $, Handlebars, _,
+  function(log, $, Handlebars, _, cursorHider,
     alertTemplate, soundBridge) {
 
     var showing = false;
@@ -12,6 +12,7 @@ define(["log", "jquery", "Handlebars", "underscore",
         clearOldAndReshow(options);
       } else {
         appendNew(options);
+        cursorHider.hideAtBody();
         soundBridge.play("alert");
       }
     }
@@ -51,6 +52,7 @@ define(["log", "jquery", "Handlebars", "underscore",
 
     function clearElement() {
       $("#alertModal").empty();
+      cursorHider.showAtBody();
     }
 
     function getShowing() {

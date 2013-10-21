@@ -1,8 +1,8 @@
 define(["base/displayManager", "base/leapManager", "game/textures",
-    "PIXI", "utils/publisher", "classes/Layer"
+    "PIXI", "utils/publisher", "classes/Layer", "moment", "underscore"
   ],
   function(displayManager, leapManager, textures,
-    PIXI, publisher, Layer) {
+    PIXI, publisher, Layer, moment, _) {
 
     var layer = new Layer({
       listeners: {
@@ -14,7 +14,9 @@ define(["base/displayManager", "base/leapManager", "game/textures",
       }
     });
 
-    var crosshairSprite;
+    var crosshairSprite,
+      lastLeapInput,
+      LOCK_MOUSE_AFTER_LEAP_INPUT_FOR_MS = 1000;
 
     layer.onActivate = function() {
 
@@ -41,9 +43,21 @@ define(["base/displayManager", "base/leapManager", "game/textures",
     };
 
     layer.onClick = layer.onInitial = layer.onMove = layer.onHandFrame = function(coordinates) {
+      if(coordinates.leapCoordinates === true) {
+        lastLeapInput = moment();
+      }
+
+      if(coordinates.leapCoordinates === false && _.isUndefined(lastLeapInput) === false) {
+        if(moment().diff(lastLeapInput) <= LOCK_MOUSE_AFTER_LEAP_INPUT_FOR_MS) {
+          return;
+        }
+      }
+
       crosshairSprite.position = coordinates.position;
       crosshairSprite.scale.x = crosshairSprite.scale.y = 0.35 + coordinates.depth;
     };
+
+
 
     function onRenderRotate() {
       crosshairSprite.rotation += 0.08;

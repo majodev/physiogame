@@ -1,5 +1,7 @@
-define(["log", "PIXI", "appConfig", "utils/resizeWatcher", "utils/publisher", "game/textures", "Poll"],
-  function(log, PIXI, appConfig, resizeWatcher, publisher, textures, Poll) {
+define(["log", "PIXI", "appConfig", "utils/resizeWatcher",
+  "utils/publisher", "game/textures", "Poll", "utils/cursorHider"],
+  function(log, PIXI, appConfig, resizeWatcher,
+    publisher, textures, Poll, cursorHider) {
 
     // private
     var stage = new PIXI.Stage(appConfig.get("background"),
@@ -49,6 +51,10 @@ define(["log", "PIXI", "appConfig", "utils/resizeWatcher", "utils/publisher", "g
 
       // render the stage and update count for debug purposes
       renderer.render(stage);
+
+      // bruteforcing cursor hiding, as PIXI doesn't allow this option yet and resets auto
+      cursorHider.hideAtCanvas();
+
       frameCount += 1;
     }
 

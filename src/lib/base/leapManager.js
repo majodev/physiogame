@@ -88,11 +88,14 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
           hand.palmPosition[1]);
 
         events.trigger("handFrameNormalized", {
+          leapCoordinates: true,
           position: position,
           depth: leapZToNormalize(hand.palmPosition[2])
         });
 
         //console.log(leapZToNormalize(hand.palmPosition[2]) + " -- " + normalizedZToLeap(leapZToNormalize(hand.palmPosition[2])));
+      } else {
+        events.trigger("noHand");
       }
 
       validateOutsideScreen(handsAvailable);
