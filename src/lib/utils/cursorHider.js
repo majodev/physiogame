@@ -1,19 +1,40 @@
-define(["jquery"],
-  function($) {
+define(["jquery", "gameConfig"],
+  function($, gameConfig) {
+
+    var hideCursorActivated;
+
+    (function startup() {
+      hideCursorActivated = gameConfig.get("hideMouseCursor");
+    }());
+
+    gameConfig.on("change", function(model, options) {
+      hideCursorActivated = gameConfig.get("hideMouseCursor");
+      if(hideCursorActivated === false) {
+        showAtCanvas();
+        showAtBody();
+      }
+    });
+
+
     function hideAtCanvas() {
-      $("canvas").css('cursor', 'none');
+      if(hideCursorActivated === true) {
+        $("canvas").css('cursor', 'none');
+      }
     }
 
     function showAtCanvas() {
-      $("canvas").css('cursor', '');
+        $("canvas").css('cursor', '');
+      
     }
 
     function hideAtBody() {
-      $("body").css('cursor', 'none');
+      if(hideCursorActivated === true) {
+        $("body").css('cursor', 'none');
+      }
     }
 
     function showAtBody() {
-      $("body").css('cursor', '');
+        $("body").css('cursor', '');
     }
 
     return {

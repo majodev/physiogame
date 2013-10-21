@@ -154,6 +154,12 @@ define([],
         cat: "visual",
         desc: "Kiosk Modus ([esc] bleibt aktiv!)"
       },
+      hideMouseCursor: {
+        def: true,
+        ui: "toggle",
+        cat: "visual",
+        desc: "Verstecke den Maus-Cursor wenn möglich"
+      },
       objectHittedScaleCap: {
         def: 1,
         min: 0.1,
