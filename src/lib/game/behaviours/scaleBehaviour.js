@@ -2,12 +2,14 @@ define([],
   function() {
     function update(layer, gameObject, opt) {
       if (gameObject.hitted === true) {
-        if (gameObject.scale.x < opt.objectHittedScaleCap) {
-          gameObject.scale.x += opt.objectHittedScaleBeforeCap;
-          gameObject.scale.y += opt.objectHittedScaleBeforeCap;
-        } else {
-          gameObject.scale.x += opt.objectHittedScaleAfterCap;
-          gameObject.scale.y += opt.objectHittedScaleAfterCap;
+        if (gameObject.scale.x < opt.objectHittedScaleExplodes) {
+          if (gameObject.scale.x < opt.objectHittedScaleCap) {
+            gameObject.scale.x += opt.objectHittedScaleBeforeCap;
+            gameObject.scale.y += opt.objectHittedScaleBeforeCap;
+          } else {
+            gameObject.scale.x += opt.objectHittedScaleAfterCap;
+            gameObject.scale.y += opt.objectHittedScaleAfterCap;
+          }
         }
       } else {
         if (gameObject.scale.x > opt.objectNormalScaleMin) {

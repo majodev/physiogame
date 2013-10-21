@@ -85,6 +85,7 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
           playTime_ms: json.playTime,
           catched_count: json.objectsCatched,
           config_gameMode_string: gameConfig.getFormattedCustomValue("gameMode", json.gameConfig.gameMode),
+          config_gameObjectCondition_string: gameConfig.getFormattedCustomValue("gameObjectCondition", json.gameConfig.gameObjectCondition),
           config_gameMaxTime_sec: gameConfig.getValueNeededInCustomJSON("gameMaxTime", json.gameConfig),
           config_objectsToSpawn_count: json.gameConfig.objectsToSpawn,
           leap_projectionWidth_millimeter: Math.floor(json.leapProjectionWidth),

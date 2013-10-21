@@ -19,6 +19,19 @@ define([],
         cat: "general",
         desc: "Benutzername"
       },
+      gameObjectCondition: {
+        def: "objectScale",
+        opt: [{
+          id: "objectScale",
+          desc: "max. Skalierung"
+        }, {
+          id: "clickOrDepth",
+          desc: "Klick / Tiefe"
+        }],
+        ui: "dropdown",
+        cat: "general",
+        desc: "Abschussbedingung der Spiel-Objekte"
+      },
       debugLayerVisible: {
         def: false,
         ui: "toggle",
@@ -394,6 +407,18 @@ define([],
           post: "fach"
         }
       },
+      leapZModifier: {
+        def: 4.5,
+        min: 2,
+        max: 10,
+        step: 0.1,
+        ui: "slider",
+        cat: "leap",
+        desc: "Fläche: Verkleinerung Tiefen-Achse (z)",
+        format: {
+          post: "fach"
+        }
+      },
       leapToDisplayX: {
         def: 0.5,
         min: 0,
@@ -437,7 +462,7 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Getroffen: Skalier-Maximum vor Explosion",
+        desc: "Getroffen: Skalier-Maximum (ev. Abschuss)",
         format: {
           percent: true,
           post: "%"

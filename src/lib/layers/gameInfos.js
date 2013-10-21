@@ -215,7 +215,7 @@ define(["log", "PIXI",
         tempWinText = gameConfig.getFormattedValue("userName") + ", du hast " +
           currentStats.get("objectsCatched") + " Objekte in " +
           timeFormatter.formatSeconds(currentStats.get("playTime") / 1000) +
-          " abgeschossen!\n\n";
+          " erwischt!\n\n";
 
         totalMovement = Math.floor(currentStats.get("leapMovementAllHyp"));
 

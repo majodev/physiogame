@@ -16,7 +16,8 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       listeners: {
         render: true,
         leap: true,
-        interactionMove: true
+        interactionMove: true,
+        interactionClick: true
       }
     });
 
@@ -24,6 +25,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       killAnimationsToRemove = [],
       introSucceeded = false,
       previousHitted,
+      allowedToDepthAttack = true,
       opt;
 
 
@@ -31,11 +33,13 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
       previousHitted = undefined;
       introSucceeded = false;
+      allowedToDepthAttack = true;
 
       // opt holds all current options from the gameConfig that are relevant for this layer
       // get the current set options from the model
       opt = {
         gameMode: gameConfig.get("gameMode"),
+        gameObjectCondition: gameConfig.get("gameObjectCondition"),
         gameMaxTime: gameConfig.get("gameMaxTime"),
         gameReattachObjectAfterMs: gameConfig.get("gameReattachObjectAfterMs"),
         gameReattachObjectMax: gameConfig.get("gameReattachObjectMax"),
@@ -120,6 +124,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       gameObject.alpha = 0; // will be set to minNormal after introduced!
       gameObject.speed = opt.objectNormalSpeedMin; // extra
       gameObject.introducing = true; // signales that its being introduced and not hitable
+      gameObject.depthKick = layer.DEPTH.CENTER;
 
       // set positions and targets accordingliy...
 
@@ -157,7 +162,8 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       onRenderClearExplosions();
     };
 
-    layer.onMove = layer.onHandFrame = function(coordinates) {
+    layer.onClick = layer.onMove = layer.onHandFrame = function(coordinates) {
+      //console.log(coordinates);
       detectPointerHitsGameObject(coordinates);
     };
 
@@ -174,7 +180,8 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
           }
         });
 
-      if(introSucceeded) {
+      if (introSucceeded) {
+        checkResetDepthAttack(coordinates);
         resetAllHittedToFalse();
 
         for (i = max - 1; i >= 0; i -= 1) {
@@ -186,13 +193,19 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
                 soundBridge.play("hitted");
               }
               swapGameObjectToTop(gameObjects[i], i, max);
+              gameObjects[i].depthKick = coordinates.depth;
               previousHitted = gameObjects[i];
               return;
             }
           }
         }
       }
+    }
 
+    function checkResetDepthAttack(coordinates) {
+      if (allowedToDepthAttack === false && coordinates.depth >= layer.DEPTH.CENTER) {
+        allowedToDepthAttack = true;
+      }
     }
 
     function swapGameObjectToTop(gameObject, arrayPosition, arrayLength) {
@@ -201,8 +214,8 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
       // swap in display
       if (top !== gameObject) {
-        // Swapchildren is currently unsupported in pixi -.-
-        // ugly approach:
+        // Swapchildren is currently not implemented in pixi -.-
+        // ugly alternative approach (non speed proven) to just get it on the top here
         layer.pixiLayer.removeChild(gameObject);
         layer.pixiLayer.addChild(gameObject);
       }
@@ -257,30 +270,9 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
           scaleBehaviour.update(layer, gameObject, opt);
           speedBehaviour.update(layer, gameObject, opt);
 
-
           // when to explode...
-          if (gameObject.scale.x > opt.objectHittedScaleExplodes) { // boom
-            gameObject.visible = false;
-
-            var explosion = new PIXI.MovieClip(textures.atlas.explosions);
-
-            explosion.position.x = gameObjects[i].position.x;
-            explosion.position.y = gameObjects[i].position.y;
-            explosion.anchor.x = 0.5;
-            explosion.anchor.y = 0.5;
-
-            explosion.rotation = Math.random() * Math.PI;
-            explosion.scale.x = explosion.scale.y = 0.75 + Math.random() * 0.5;
-
-            explosion.loop = false;
-            explosion.gotoAndPlay(0);
-
-            soundBridge.play("explosion");
-
-            explosion.onComplete = onExplosionComplete;
-
-            layer.addChild(explosion);
-
+          if (checkForExplosion(gameObject) === true) {
+            createExplosion(gameObject);
 
             stats.getCurrent().raiseScore();
 
@@ -290,6 +282,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
             i -= 1;
             max -= 1;
           }
+
         } else {
           // gameObject wasn't introduced till here.
 
@@ -321,6 +314,55 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
           }
         }
       }
+    }
+
+    function checkForExplosion(gameObject) {
+
+      var returnValue = false;
+
+      switch (opt.gameObjectCondition) {
+        case "objectScale":
+          if (gameObject.scale.x > opt.objectHittedScaleExplodes) {
+            returnValue = true;
+          }
+          break;
+        case "clickOrDepth":
+          if (gameObject.hitted === true && gameObject.depthKick <= -layer.DEPTH.STEP && allowedToDepthAttack === true) {
+            allowedToDepthAttack = false; // this one can be smashed, but not a following one
+            returnValue = true;
+          }
+          break;
+        default:
+          log.error("gameObjects: gameObjectCondition not supported!");
+          break;
+      }
+
+      return returnValue;
+    }
+
+    // visuals for explosion of gameObject
+
+    function createExplosion(gameObject) {
+      gameObject.visible = false;
+
+      var explosion = new PIXI.MovieClip(textures.atlas.explosions);
+
+      explosion.position.x = gameObject.position.x;
+      explosion.position.y = gameObject.position.y;
+      explosion.anchor.x = 0.5;
+      explosion.anchor.y = 0.5;
+
+      explosion.rotation = Math.random() * Math.PI;
+      explosion.scale.x = explosion.scale.y = 0.75 + Math.random() * 0.5;
+
+      explosion.loop = false;
+      explosion.gotoAndPlay(0);
+
+      soundBridge.play("explosion");
+
+      explosion.onComplete = onExplosionComplete;
+
+      layer.addChild(explosion);
     }
 
     function onExplosionComplete() {

@@ -183,7 +183,7 @@ define(["classes/Layer", "PIXI", "game/textures", "base/leapManager",
 
           }
           if (currentMoment.diff(noHandText.startMoment) >= 10000 &&
-            currentMoment.diff(noHandText.startMoment) < 13000) {
+            currentMoment.diff(noHandText.startMoment) < 16000) {
             // fade it out
             if (noHandText.alpha > 0) {
               noHandText.alpha -= alphaModifier;
@@ -192,7 +192,7 @@ define(["classes/Layer", "PIXI", "game/textures", "base/leapManager",
               }
             }
           }
-          if (currentMoment.diff(noHandText.startMoment) >= 13000) {
+          if (currentMoment.diff(noHandText.startMoment) >= 16000) {
             // reset it
             noHandText.startMoment = undefined;
             noHandText.alpha = 0;

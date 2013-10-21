@@ -4,10 +4,11 @@ define(["base/leapManager", "underscore"],
     function leapValuesToInject() {
       return [{
         objectKey: "projectionSize",
-        objectValue: Math.floor(leapManager.getProjectionSizeInMillimeters().width) + " mm x " + 
-          Math.floor(leapManager.getProjectionSizeInMillimeters().height) + " mm",
+        objectValue: Math.floor(leapManager.getProjectionSizeInMillimeters().width) + " x " + 
+          Math.floor(leapManager.getProjectionSizeInMillimeters().height) + " x " +
+          Math.floor(leapManager.getProjectionSizeInMillimeters().depth) + " mm",
         objectDesc: "native Projektionsfläche",
-        hint: "x <= 640<br />y <= 480",
+        hint: "x <= 640<br />y <= 480<br />z <= 180",
         uiReadOnly: true
       }, {
         objectKey: "projectionCenter",

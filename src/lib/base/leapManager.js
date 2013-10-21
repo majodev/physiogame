@@ -6,7 +6,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
 
     // private 
     var LEAP_Y_CENTER_POINT = 260, // center of leap mm, 20mm offset of leapbase! // TODO: into gameConfig
-      LEAP_Z_MAX = 180, // TODO: into gameConfig
+      LEAP_Z_MAX = 180, // TODO: into gameConfig, max 180
       LEAP_Z_NORMALIZED_CENTER = 0, // exported as needed for touch/mouse emulation
       LEAP_Z_NORMALIZED_MAX_STEP = 0.1, // exported -...-
       controller = new Leap.Controller(),
@@ -26,6 +26,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
       displayHeight = appConfig.get("height"),
       leapXModifier = gameConfig.get("leapXModifier"),
       leapYModifier = gameConfig.get("leapYModifier"),
+      leapZModifier = gameConfig.get("leapZModifier"),
       leapToDisplayX = gameConfig.get("leapToDisplayX"),
       leapToDisplayY = gameConfig.get("leapToDisplayY");
 
@@ -190,23 +191,23 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
 
       var zNorm = z;
 
-      if (z > LEAP_Z_MAX) {
-        zNorm = LEAP_Z_MAX;
+      if (z > (LEAP_Z_MAX / leapZModifier)) {
+        zNorm = (LEAP_Z_MAX / leapZModifier);
       }
 
-      if (z < -LEAP_Z_MAX) {
-        zNorm = -LEAP_Z_MAX;
+      if (z < -(LEAP_Z_MAX / leapZModifier)) {
+        zNorm = -(LEAP_Z_MAX / leapZModifier);
       }
 
       if (z >= 0) {
-        return LEAP_Z_NORMALIZED_CENTER + (LEAP_Z_NORMALIZED_MAX_STEP * Math.abs(zNorm/LEAP_Z_MAX));
+        return LEAP_Z_NORMALIZED_CENTER + (LEAP_Z_NORMALIZED_MAX_STEP * Math.abs(zNorm / (LEAP_Z_MAX / leapZModifier)));
       } else {
-        return LEAP_Z_NORMALIZED_CENTER - (LEAP_Z_NORMALIZED_MAX_STEP * Math.abs(zNorm/LEAP_Z_MAX));
+        return LEAP_Z_NORMALIZED_CENTER - (LEAP_Z_NORMALIZED_MAX_STEP * Math.abs(zNorm / (LEAP_Z_MAX / leapZModifier)));
       }
     }
 
     function normalizedZToLeap(z) {
-      return (z - (LEAP_Z_NORMALIZED_CENTER)) / LEAP_Z_NORMALIZED_MAX_STEP*LEAP_Z_MAX;
+      return (z - (LEAP_Z_NORMALIZED_CENTER)) / LEAP_Z_NORMALIZED_MAX_STEP * (LEAP_Z_MAX / leapZModifier);
     }
 
 
@@ -215,7 +216,9 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
         width: getLeapDistanceBetweenX(normalizedXToLeap(0),
           normalizedXToLeap(displayWidth)),
         height: getLeapDistanceBetweenY(normalizedYToLeap(0),
-          normalizedYToLeap(displayHeight))
+          normalizedYToLeap(displayHeight)),
+        depth: getLeapDistanceBetweenZ(normalizedZToLeap(LEAP_Z_NORMALIZED_CENTER - LEAP_Z_NORMALIZED_MAX_STEP),
+          normalizedZToLeap(LEAP_Z_NORMALIZED_CENTER + LEAP_Z_NORMALIZED_MAX_STEP))
       };
     }
 
@@ -252,6 +255,11 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
     function getLeapDistanceBetweenY(y1, y2) {
       // y movement, always positive!
       return Math.abs(y1 - y2);
+    }
+
+    function getLeapDistanceBetweenZ(z1, z2) {
+      // has the same behaviour as a distance computation with x!
+      return getLeapDistanceBetweenX(z1, z2);
     }
 
     function computePosition(x, y) {
@@ -319,6 +327,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
     function gameConfigChanged(model, options) {
       leapXModifier = model.get("leapXModifier");
       leapYModifier = model.get("leapYModifier");
+      leapZModifier = model.get("leapZModifier");
       leapToDisplayX = model.get("leapToDisplayX");
       leapToDisplayY = model.get("leapToDisplayY");
     }
