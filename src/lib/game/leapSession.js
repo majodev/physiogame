@@ -24,21 +24,25 @@ define(["base/leapManager", "moment", "gameConfig"],
           all: {
             x: 0,
             y: 0,
+            z: 0,
             hyp: 0
           },
           inside: {
             x: 0,
             y: 0,
+            z: 0,
             hyp: 0
           }
         },
         projection: {
           width: 0,
-          height: 0
+          height: 0,
+          depth: 0
         },
         projectionCenter: {
           x: 0,
-          y: 0
+          y: 0,
+          z: 0
         }
       };
     }
@@ -98,6 +102,7 @@ define(["base/leapManager", "moment", "gameConfig"],
     function computeMovement(stat) {
       session.movement.all.x += stat.movement.x;
       session.movement.all.y += stat.movement.y;
+      session.movement.all.z += stat.movement.z;
       session.movement.all.hyp += stat.movement.hyp;
 
       if (stat.outside.left === false &&
@@ -108,8 +113,10 @@ define(["base/leapManager", "moment", "gameConfig"],
         // inside
         session.movement.inside.x += stat.movement.x;
         session.movement.inside.y += stat.movement.y;
+        session.movement.inside.z += stat.movement.z;
         session.movement.inside.hyp += stat.movement.hyp;
       }
+      //console.log(session.movement.all.z);
     }
 
     function computeOffsetTime(stat) {

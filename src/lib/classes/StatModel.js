@@ -62,14 +62,18 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
         this.set("leapOutsideBottom", sessionStats.time.outside.bottom);
         this.set("leapMovementAllX", sessionStats.movement.all.x);
         this.set("leapMovementAllY", sessionStats.movement.all.y);
+        this.set("leapMovementAllZ", sessionStats.movement.all.z);
         this.set("leapMovementAllHyp", sessionStats.movement.all.hyp);
         this.set("leapMovementInsideX", sessionStats.movement.inside.x);
         this.set("leapMovementInsideY", sessionStats.movement.inside.y);
+        this.set("leapMovementInsideZ", sessionStats.movement.inside.z);
         this.set("leapMovementInsideHyp", sessionStats.movement.inside.hyp);
         this.set("leapProjectionWidth", sessionStats.projection.width);
         this.set("leapProjectionHeight", sessionStats.projection.height);
+        this.set("leapProjectionDepth", sessionStats.projection.depth);
         this.set("leapProjectionCenterX", sessionStats.projectionCenter.x);
         this.set("leapProjectionCenterY", sessionStats.projectionCenter.y);
+        this.set("leapProjectionCenterZ", sessionStats.projectionCenter.z);
       },
       lock: function() {
         this.set("locked", true);
@@ -90,14 +94,18 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
           config_objectsToSpawn_count: json.gameConfig.objectsToSpawn,
           leap_projectionWidth_millimeter: Math.floor(json.leapProjectionWidth),
           leap_projectionHeight_millimeter: Math.floor(json.leapProjectionHeight),
+          leap_projectionDepth_millimeter: Math.floor(json.leapProjectionDepth),
           leap_projectionCenterX_millimeter: Math.floor(json.leapProjectionCenterX),
           leap_projectionCenterY_millimeter: Math.floor(json.leapProjectionCenterY),
+          leap_projectionCenterZ_millimeter: Math.floor(json.leapProjectionCenterZ),
           leap_movement_all_hyp_millimeter: Math.floor(json.leapMovementAllHyp),
           leap_movement_all_x_millimeter: Math.floor(json.leapMovementAllX),
           leap_movement_all_y_millimeter: Math.floor(json.leapMovementAllY),
+          leap_movement_all_z_millimeter: Math.floor(json.leapMovementAllZ),
           leap_movement_inside_hyp_millimeter: Math.floor(json.leapMovementInsideHyp),
           leap_movement_inside_x_millimeter: Math.floor(json.leapMovementInsideX),
           leap_movement_inside_y_millimeter: Math.floor(json.leapMovementInsideY),
+          leap_movement_inside_z_millimeter: Math.floor(json.leapMovementInsideZ),
           leap_detected_ms: json.leapDetected,
           leap_notdetected_ms: json.leapNotDetected,
           leap_inside_ms: json.leapInside,
@@ -140,28 +148,34 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
         return {
           keyValues: [{
             key: "Projektionsfläche",
-            value: Math.floor(json.leapProjectionWidth) + " mm x " + Math.floor(json.leapProjectionHeight) + " mm"
+            value: Math.floor(json.leapProjectionWidth) + " x " + Math.floor(json.leapProjectionHeight) + " x " + Math.floor(json.leapProjectionDepth) + " mm"
           }, {
             key: "Projektionsmittelpunkt",
-            value: "x: " + Math.floor(json.leapProjectionCenterX) + " mm, y: " + Math.floor(json.leapProjectionCenterY) + " mm"
+            value: "x: " + Math.floor(json.leapProjectionCenterX) + "; y: " + Math.floor(json.leapProjectionCenterY) + "; z: " + Math.floor(json.leapProjectionCenterZ) + " mm"
           }, {
-            key: "Gesamtlänge aller Bewegungen (sqrt(x^2 + y^2))",
+            key: "Gesamtbewegungen (sqrt(dx^2 + dy^2 + dz^2))",
             value: Math.floor(json.leapMovementAllHyp) + " mm"
           }, {
-            key: "Länge Bewegungen (sqrt(x^2 + y^2)) erlaubter Bereich",
+            key: "Erlaubte Bewegungen (sqrt(dx^2 + dy^2 + dz^2))",
             value: Math.floor(json.leapMovementInsideHyp) + " mm"
           }, {
-            key: "Gesamtlänge aller horizontalen Bewegungen (x)",
+            key: "Gesamtlänge horizontale Bewegungen (x)",
             value: Math.floor(json.leapMovementAllX) + " mm"
           }, {
             key: "Länge horizontale Bewegungen (x) erlaubter Bereich",
             value: Math.floor(json.leapMovementInsideX) + " mm"
           }, {
-            key: "Gesamtlänge aller vertikalen Bewegungen (y)",
+            key: "Gesamtlänge vertikale Bewegungen (y)",
             value: Math.floor(json.leapMovementAllY) + " mm"
           }, {
             key: "Länge vertikale Bewegungen (y) erlaubter Bereich",
             value: Math.floor(json.leapMovementInsideY) + " mm"
+          },{
+            key: "Gesamtlänge Tiefen-Bewegungen (z)",
+            value: Math.floor(json.leapMovementAllZ) + " mm"
+          }, {
+            key: "Länge Tiefen-Bewegungen (z) erlaubter Bereich",
+            value: Math.floor(json.leapMovementInsideZ) + " mm"
           }, {
             key: "Rundenzeit Hand getrackt",
             value: timeFormatter.formatMilliseconds(json.leapDetected)

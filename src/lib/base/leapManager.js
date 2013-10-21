@@ -16,6 +16,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
       movement = {
         x: 0,
         y: 0,
+        z: 0,
         hyp: 0
       },
       handsLength = 0,
@@ -127,7 +128,9 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
 
           movement.x = getLeapDistanceBetweenX(hand.palmPosition[0], lastHand.palmPosition[0]);
           movement.y = getLeapDistanceBetweenY(hand.palmPosition[1], lastHand.palmPosition[1]);
-          movement.hyp = getHypotenuse(movement.x, movement.y);
+          movement.z = getLeapDistanceBetweenZ(hand.palmPosition[2], lastHand.palmPosition[2]);
+
+          movement.hyp = get3DHypotenuse(movement.x, movement.y, movement.z);
           return;
 
         }
@@ -142,6 +145,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
       movement = {
         x: 0,
         y: 0,
+        z: 0,
         hyp: 0
       };
     }
@@ -182,7 +186,6 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
     function normalizedYToLeap(y) {
       return ((-y + (displayHeight * leapToDisplayY)) / leapYModifier) + LEAP_Y_CENTER_POINT;
     }
-
 
     // z: -180 <= z <= 180 (320mm)
     // Hard setted through constants as z axis wont be projected completely into our 2d pixi environment
@@ -230,8 +233,8 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
       };
     }
 
-    function getHypotenuse(a, b) {
-      return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+    function get3DHypotenuse(a, b, c) {
+      return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2) + Math.pow(c, 2));
     }
 
     function getLeapDistanceBetweenX(x1, x2) {
@@ -263,6 +266,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
       return getLeapDistanceBetweenX(z1, z2);
     }
 
+    // computes the 2d position as needed by pixi stage (comply to width and height)
     function computePosition(x, y) {
 
       var position = {
