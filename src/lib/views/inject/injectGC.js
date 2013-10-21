@@ -12,8 +12,9 @@ define(["base/leapManager", "underscore"],
         uiReadOnly: true
       }, {
         objectKey: "projectionCenter",
-        objectValue: "x: " + Math.floor(leapManager.getProjectionCenterInMillimeters().x) + " mm, y: " +
-          Math.floor(leapManager.getProjectionCenterInMillimeters().y) + " mm",
+        objectValue: "x: " + Math.floor(leapManager.getProjectionCenterInMillimeters().x) + "; y: " +
+          Math.floor(leapManager.getProjectionCenterInMillimeters().y) + "; z: " + 
+          Math.floor(leapManager.getProjectionCenterInMillimeters().z) + " mm",
         objectDesc: "nativer Projektionsmittelpunkt",
         hint: "-320 <= x <= 320<br />20 >= y >= 500",
         uiReadOnly: true

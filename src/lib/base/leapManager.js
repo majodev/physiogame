@@ -225,7 +225,8 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
     function getProjectionCenterInMillimeters() {
       return {
         x: -normalizedXToLeap(displayWidth / 2),
-        y: normalizedYToLeap(displayHeight / 2)
+        y: normalizedYToLeap(displayHeight / 2),
+        z: 0 // z is always fixed to 0 - makes no sense to change it as area is way to small to move it
       };
     }
 
