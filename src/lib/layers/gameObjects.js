@@ -377,7 +377,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
       // if they should be displayed... - else not...
       if (opt.accuracyTextsEnabled === true) {
-        hitStatText = new PIXI.Text(Math.round(gameObject.hitStat.percentageBothAxis * 100) + " %", {
+        hitStatText = new PIXI.Text(Math.ceil(gameObject.hitStat.percentageBothAxis * 100) + " %", {
           font: "bold 30px Arvo",
           fill: "#FFFFFF",
           align: "center",

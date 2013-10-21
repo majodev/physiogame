@@ -105,9 +105,9 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
           gameTime_ms: json.gameTime,
           playTime_ms: json.playTime,
           catched_count: json.objectsCatched,
-          accuracy_sum_percentage: Math.round(json.accuracySum * 100),
-          accuracy_x_percentage: Math.round(json.accuracyX * 100),
-          accuracy_y_percentage: Math.round(json.accuracyY * 100),
+          accuracy_sum_percentage: Math.ceil(json.accuracySum * 100),
+          accuracy_x_percentage: Math.ceil(json.accuracyX * 100),
+          accuracy_y_percentage: Math.ceil(json.accuracyY * 100),
           config_gameMode_string: gameConfig.getFormattedCustomValue("gameMode", json.gameConfig.gameMode),
           config_gameObjectCondition_string: gameConfig.getFormattedCustomValue("gameObjectCondition", json.gameConfig.gameObjectCondition),
           config_gameMaxTime_sec: gameConfig.getValueNeededInCustomJSON("gameMaxTime", json.gameConfig),
@@ -151,9 +151,14 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
         json.startDate = formatTimeOnlyGerman(json.startDate);
         json.endDate = formatTimeOnlyGerman(json.endDate);
         json.playTime = timeFormatter.formatMilliseconds(json.playTime);
-        json.gameTime = timeFormatter.formatMilliseconds(json.gameTime);
         json.objectsCatched = json.objectsCatched;
-        json.accuracySum = Math.round(json.accuracySum * 100) + " %";
+        json.accuracySum = Math.ceil(json.accuracySum * 100) + " %";
+        
+
+        // not currently displayed
+        json.gameTime = timeFormatter.formatMilliseconds(json.gameTime);
+        json.accuracyX = Math.ceil(json.accuracyX * 100) + " %";
+        json.accuracyY = Math.ceil(json.accuracyY * 100) + " %";
 
         // leap detail fields        
         json.leapStats = this.getLeapStatsKeyValues(json);

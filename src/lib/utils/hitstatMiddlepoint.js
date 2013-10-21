@@ -20,7 +20,7 @@ define([],
       var percentageY = Math.abs(1 - yToPointDistance / (gameObject.height / 2));
       var percentageBothAxis = (percentageX + percentageY) / 2;
 
-      //console.log("x%: " + Math.round(percentageX * 100) + " y%: " + Math.round(percentageY * 100) + " all%: " + Math.round(percentageBothAxis * 100));
+      //console.log("x%: " + Math.ceil(percentageX * 100) + " y%: " + Math.ceil(percentageY * 100) + " all%: " + Math.ceil(percentageBothAxis * 100));
 
       if (percentageX < 0 || percentageX > 1 || percentageY < 0 ||
         percentageY > 1 || percentageBothAxis < 0 || percentageBothAxis > 1) {
