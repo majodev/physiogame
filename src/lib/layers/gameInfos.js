@@ -28,7 +28,7 @@ define(["log", "PIXI",
       maxTime = 0,
       retryButton,
       INTRO_ROTATE_MAX = 0.02,
-      INTRO_ROTATE_STEP = 0.0025,
+      INTRO_ROTATE_STEP = 0.0015,
       currentStats;
 
     layer.onActivate = function() {
@@ -57,11 +57,13 @@ define(["log", "PIXI",
       countingText.position.x = layer.width - 15;
       countingText.position.y = 15;
       countingText.anchor.x = 1;
+      countingText.scale.x = countingText.scale.y = 1;
 
       timerText.position.x = layer.width - 15;
       timerText.position.y = layer.height - 15;
       timerText.anchor.x = 1;
       timerText.anchor.y = 1;
+      timerText.scale.x = timerText.scale.y = 1;
 
       introText.position.x = layer.width / 2;
       introText.position.y = layer.height / 2;
@@ -98,6 +100,9 @@ define(["log", "PIXI",
     function onTimerRoundTickSecond(tick) {
       if (gameModeTime === true) {
         timerText.setText(timeFormatter.formatSeconds(tick / 1000) + " von " + timeFormatter.formatSeconds(maxTime));
+        if((Math.round(tick/1000) + 3) >= maxTime) {
+          bumbText(timerText);
+        }
       } else {
         timerText.setText(timeFormatter.formatSeconds(tick / 1000));
       }
@@ -113,6 +118,8 @@ define(["log", "PIXI",
       animateIntroScale(introText);
       animateIntroRotate(introText);
       animateIntroAlpha(tippIntroText);
+      animateScaleBumbReduzer(timerText);
+      animateScaleBumbReduzer(countingText);
     };
 
     function setStartupTexts() {
@@ -198,6 +205,20 @@ define(["log", "PIXI",
       }
     }
 
+    function animateScaleBumbReduzer(whichText) {
+      if(whichText.scale.x > 1) {
+        whichText.scale.x -= 0.02;
+        whichText.scale.y -= 0.02;
+        if(whichText.scale.x < 1) {
+          whichText.scale.x = whichText.scale.y = 1;
+        }
+      }
+    }
+
+    function bumbText(whichText) {
+      whichText.scale.x = whichText.scale.y = 1.8;
+    }
+
     layer.onDeactivate = function() {
 
       timerRound.events.off("roundTickSecond", onTimerRoundTickSecond);
@@ -260,6 +281,8 @@ define(["log", "PIXI",
       } else {
         countingText.setText(model.get("objectsCatched") + " von " + gameConfig.get("objectsToSpawn"));
       }
+
+      bumbText(countingText);
 
     }
 
