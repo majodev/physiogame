@@ -3,14 +3,14 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     "game/stats",
     "game/behaviours/targetBehaviour", "game/behaviours/alphaBehaviour",
     "game/behaviours/scaleBehaviour", "game/behaviours/speedBehaviour",
-    "game/timerIntro", "game/timerRound"
+    "game/timerIntro", "game/timerRound", "utils/hitstatMiddlepoint"
   ],
   function(textures, gameConfig, hittest, _, PIXI,
     soundBridge, Layer,
     stats,
     targetBehaviour, alphaBehaviour,
     scaleBehaviour, speedBehaviour,
-    timerIntro, timerRound) {
+    timerIntro, timerRound, hitstatMiddlepoint) {
 
     var layer = new Layer({
       listeners: {
@@ -23,6 +23,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
     var gameObjects = [],
       killAnimationsToRemove = [],
+      hitStatsToRemove = [],
       introSucceeded = false,
       previousHitted,
       allowedToDepthAttack = true,
@@ -31,6 +32,9 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
     layer.onActivate = function() {
 
+      gameObjects = [];
+      killAnimationsToRemove = [];
+      hitStatsToRemove = [];
       previousHitted = undefined;
       introSucceeded = false;
       allowedToDepthAttack = true;
@@ -155,11 +159,13 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
       gameObjects = [];
       killAnimationsToRemove = [];
+      hitStatsToRemove = [];
     };
 
     layer.onRender = function() {
       onRenderAnimateGameObjects();
       onRenderClearExplosions();
+      onRenderClearHitStats();
     };
 
     layer.onClick = layer.onMove = layer.onHandFrame = function(coordinates) {
@@ -192,9 +198,11 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
               if (_.isUndefined(previousHitted) === false && previousHitted !== gameObjects[i]) {
                 soundBridge.play("hitted");
               }
-              swapGameObjectToTop(gameObjects[i], i, max);
 
               // where hitted? Middlepoint?
+              gameObjects[i].hitStat = hitstatMiddlepoint(coordinates, gameObjects[i]);
+
+              swapGameObjectToTop(gameObjects[i], i, max);
 
               gameObjects[i].depthKick = coordinates.depth;
               previousHitted = gameObjects[i];
@@ -220,7 +228,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
         // Swapchildren is currently not implemented in pixi -.-
         // ugly alternative approach (non speed proven) to just get it on the top here
         layer.pixiLayer.removeChild(gameObject);
-        layer.pixiLayer.addChild(gameObject);
+        layer.pixiLayer.addChildAt(gameObject, arrayLength - 1);
       }
 
       // swap in array
@@ -255,6 +263,19 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       }
     }
 
+    function onRenderClearHitStats() {
+      var i = hitStatsToRemove.length - 1;
+      for (i; i >= 0; i -= 1) {
+        if (hitStatsToRemove[i].alpha > 0) {
+          hitStatsToRemove[i].alpha -= 0.01;
+          hitStatsToRemove[i].position.y -= 0.8;
+        } else {
+          layer.removeChild(hitStatsToRemove[i]);
+          hitStatsToRemove.splice(i, 1);
+        }
+      }
+    }
+
     function onRenderAnimateGameObjects() {
       var i = 0,
         max = gameObjects.length,
@@ -276,6 +297,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
           // when to explode...
           if (checkForExplosion(gameObject) === true) {
             createExplosion(gameObject);
+            createHitStat(gameObject);
 
             stats.getCurrent().raiseScore();
 
@@ -289,33 +311,37 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
         } else {
           // gameObject wasn't introduced till here.
 
-          // alpha to minimum
-          if (gameObject.alpha < opt.objectNormalAlphaMin) {
-            gameObject.alpha += 0.009;
-            if (gameObject.alpha > opt.objectNormalAlphaMin) {
-              gameObject.alpha = opt.objectNormalAlphaMin;
-            }
-          }
-
-          // scale to minimum
-          if (gameObject.scale.x < opt.objectNormalScaleMin) {
-            gameObject.scale.x += 0.01;
-            gameObject.scale.y += 0.01;
-            if (gameObject.scale.x > opt.objectNormalScaleMin) {
-              gameObject.scale.x = opt.objectNormalScaleMin;
-              gameObject.scale.y = opt.objectNormalScaleMin;
-            }
-          }
-
-          // after conditions for introducing are met, its indroduced and handled!
-          if (gameObject.scale.x === opt.objectNormalScaleMin &&
-            gameObject.alpha === opt.objectNormalAlphaMin) {
-
-            gameObject.alpha = opt.objectNormalAlphaMin;
-
-            gameObject.introducing = false;
-          }
+          introduceGameObject(gameObject);
         }
+      }
+    }
+
+    function introduceGameObject(gameObject) {
+      // alpha to minimum
+      if (gameObject.alpha < opt.objectNormalAlphaMin) {
+        gameObject.alpha += 0.009;
+        if (gameObject.alpha > opt.objectNormalAlphaMin) {
+          gameObject.alpha = opt.objectNormalAlphaMin;
+        }
+      }
+
+      // scale to minimum
+      if (gameObject.scale.x < opt.objectNormalScaleMin) {
+        gameObject.scale.x += 0.01;
+        gameObject.scale.y += 0.01;
+        if (gameObject.scale.x > opt.objectNormalScaleMin) {
+          gameObject.scale.x = opt.objectNormalScaleMin;
+          gameObject.scale.y = opt.objectNormalScaleMin;
+        }
+      }
+
+      // after conditions for introducing are met, its indroduced and handled!
+      if (gameObject.scale.x === opt.objectNormalScaleMin &&
+        gameObject.alpha === opt.objectNormalAlphaMin) {
+
+        gameObject.alpha = opt.objectNormalAlphaMin;
+
+        gameObject.introducing = false;
       }
     }
 
@@ -341,6 +367,28 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       }
 
       return returnValue;
+    }
+
+
+    function createHitStat(gameObject) {
+
+      var hitStatText = new PIXI.Text(Math.round(gameObject.hitStat.percentageBothAxis * 100) + " %", {
+        font: "bold 30px Arvo",
+        fill: "#FFFFFF",
+        align: "center",
+        stroke: "#848484",
+        strokeThickness: 2
+      });
+
+      hitStatText.anchor = {
+        x: 0.5,
+        y: 0.5
+      };
+
+      hitStatText.position = gameObject.position;
+
+      layer.addChild(hitStatText);
+      hitStatsToRemove.push(hitStatText);
     }
 
     // visuals for explosion of gameObject

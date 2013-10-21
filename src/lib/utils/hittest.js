@@ -2,7 +2,7 @@ define(["underscore"],
   function(_) {
 
     function hittest(r1, r2) {
-      // define vars for normalized positions will consider the anchor
+      // define vars for normalized positions and consider the anchor
       var r1posx = 0,
         r1posy = 0,
         r2posx = 0,
@@ -27,10 +27,10 @@ define(["underscore"],
       r2posy = r2.position.y - (r2.height * r2.anchor.y);
 
       // test hitting
-      if (((r1posx + r1.width >= r2posx) &&
-          (r1posx <= r2posx + r2.width)) &&
-        ((r1posy + r1.height >= r2posy) &&
-          (r1posy <= r2posy + r2.height))) {
+      if ((((r1posx + r1.width) >= r2posx) &&
+          (r1posx <= (r2posx + r2.width))) &&
+        (((r1posy + r1.height) >= r2posy) &&
+          (r1posy <= (r2posy + r2.height)))) {
         return true;
       } else {
         return false;
