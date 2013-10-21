@@ -18,6 +18,7 @@ define(["log", "PIXI",
 
     var countingText,
       introText,
+      tippIntroText,
       winningText,
       timerText,
       textsCreated = false,
@@ -47,6 +48,7 @@ define(["log", "PIXI",
       countingText.visible = true;
       timerText.visible = true;
       introText.visible = true;
+      tippIntroText.visible = true;
       winningText.visible = false;
       winningAdded = false;
 
@@ -66,8 +68,18 @@ define(["log", "PIXI",
       introText.anchor.x = 0.5;
       introText.anchor.y = 0.5;
 
+      tippIntroText.anchor.x = 0.5;
+      tippIntroText.anchor.y = 1;
+      tippIntroText.position.x = layer.width / 2;
+      tippIntroText.position.y = layer.height -90;
+      tippIntroText.scale.x = 1;
+      tippIntroText.scale.y = 1;
+      tippIntroText.alpha = 0;
+      
+
       this.pixiLayer.addChild(countingText);
       this.pixiLayer.addChild(timerText);
+      this.pixiLayer.addChild(tippIntroText);
       this.pixiLayer.addChild(introText);
 
       timerRound.events.on("roundTickSecond", onTimerRoundTickSecond);
@@ -95,44 +107,77 @@ define(["log", "PIXI",
     }
 
     layer.onRender = function() {
-      animateIntroText();
+      animateIntroScale(introText);
+      animateIntroAlpha(tippIntroText);
     };
 
     function setStartupTexts() {
       if (gameModeTime === true) {
         countingText.setText(currentStats.get("objectsCatched"));
-        introText.setText("Erwische soviele wie möglich!\nZeit: " + timeFormatter.formatSeconds(maxTime));
+        introText.setText("Erwische soviele wie möglich\nin " + timeFormatter.formatSeconds(maxTime) + "!");
         timerText.setText("0:00 von " + timeFormatter.formatSeconds(maxTime));
       } else {
         countingText.setText(currentStats.get("objectsCatched") + " von " + gameConfig.get("objectsToSpawn"));
         introText.setText("Erwische alle Objekte!");
         timerText.setText("0:00");
       }
+
+      switch (gameConfig.get("gameObjectCondition")) {
+        case "objectScale":
+          tippIntroText.setText("Tipp: Sie platzen wenn Du sie fokusierst!");
+          break;
+        case "clickOrDepth":
+          tippIntroText.setText("Tipp: Sie platzen wenn Du sie stoßt/anklickst!");
+          break;
+        default:
+          tippIntroText.setText("ERROR: KEIN SPIELZIEL!");
+          log.error("gameObjects: gameObjectCondition not supported!");
+          break;
+      }
     }
 
-    function animateIntroText() {
-      if (introText.visible === true) {
+    function animateIntroScale(whichText) {
+      if (whichText.visible === true) {
         if (introComplete === false) {
-          if (introText.scale.x < 1) {
-            introText.scale.x += 0.05;
-            introText.scale.y += 0.05;
-            if(introText.scale.x > 1) {
-              introText.scale.x = 1;
-              introText.scale.y = 1;
+          if (whichText.scale.x < 1) {
+            whichText.scale.x += 0.05;
+            whichText.scale.y += 0.05;
+            if(whichText.scale.x > 1) {
+              whichText.scale.x = 1;
+              whichText.scale.y = 1;
             }
           }
         }
 
         if (introComplete === true) {
-          if (introText.scale.x > 0) {
-            //log.debug(introText.scale.x);
-            introText.scale.x -= 0.02;
-            introText.scale.y -= 0.02;
+          if (whichText.scale.x > 0) {
+            whichText.scale.x -= 0.02;
+            whichText.scale.y -= 0.02;
           } else {
-            introText.visible = false;
+            whichText.visible = false;
+          }
+        }
+      }
+    }
+
+    function animateIntroAlpha(whichText) {
+      if (whichText.visible === true) {
+        if (introComplete === false) {
+          if (whichText.alpha < 0.8) {
+            whichText.alpha += 0.025;
+            if(whichText.alpha > 0.8) {
+              whichText.alpha = 0.8;
+            }
           }
         }
 
+        if (introComplete === true) {
+          if (whichText.alpha > 0) {
+            whichText.alpha -= 0.0075;
+          } else {
+            whichText.visible = false;
+          }
+        }
       }
     }
 
@@ -156,11 +201,18 @@ define(["log", "PIXI",
           strokeThickness: 5
         });
         introText = new PIXI.Text("NOTHING", {
-          font: "bold 80px Arvo",
+          font: "bold 60px Arvo",
           fill: "#3344bb",
           align: "center",
           stroke: "#AAAAFF",
           strokeThickness: 5
+        });
+        tippIntroText = new PIXI.Text("NOTHING", {
+          font: "bold 20px Arvo",
+          fill: "#FFFFFF",
+          align: "center",
+          stroke: "#3344bb",
+          strokeThickness: 1
         });
         winningText = new PIXI.Text("NOTHING", {
           font: "bold 35px Arvo",
