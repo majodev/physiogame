@@ -2,13 +2,13 @@ define(["log", "PIXI",
     "gameConfig", "classes/Layer", "classes/Button",
     "utils/timeFormatter", "game/stats",
     "game/timerRound", "game/timerIntro",
-    "game/gameSession"
+    "game/gameSession", "base/soundBridge"
   ],
   function(log, PIXI,
     gameConfig, Layer, Button,
     timeFormatter, stats,
     timerRound, timerIntro,
-    gameSession) {
+    gameSession, soundBridge) {
 
     var layer = new Layer({
       listeners: {
@@ -102,6 +102,7 @@ define(["log", "PIXI",
         timerText.setText(timeFormatter.formatSeconds(tick / 1000) + " von " + timeFormatter.formatSeconds(maxTime));
         if((Math.round(tick/1000) + 3) >= maxTime) {
           bumbText(timerText);
+          soundBridge.play("timewarning");
         }
       } else {
         timerText.setText(timeFormatter.formatSeconds(tick / 1000));

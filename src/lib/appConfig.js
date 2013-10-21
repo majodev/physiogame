@@ -26,10 +26,13 @@ define(["backbone"],
       sounds: [{
         name: "roundintro",
         volume: 0.1
-      },{
+      }, {
         name: "roundstart",
         volume: 0.1
-      },{
+      }, {
+        name: "timewarning",
+        volume: 0.1
+      }, {
         name: "select",
         volume: 0.1
       }, {
