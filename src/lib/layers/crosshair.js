@@ -9,7 +9,8 @@ define(["base/displayManager", "base/leapManager", "game/textures",
         render: true,
         leap: true,
         interactionMove: true,
-        interactionInitial: true
+        interactionInitial: true,
+        interactionClick: true
       }
     });
 
@@ -39,7 +40,7 @@ define(["base/displayManager", "base/leapManager", "game/textures",
       onRenderRotate();
     };
 
-    layer.onInitial = layer.onMove = layer.onHandFrame = function(coordinates) {
+    layer.onClick = layer.onInitial = layer.onMove = layer.onHandFrame = function(coordinates) {
       crosshairSprite.position = coordinates.position;
       crosshairSprite.scale.x = crosshairSprite.scale.y = 0.35 + coordinates.depth;
     };

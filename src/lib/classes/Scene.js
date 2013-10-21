@@ -27,17 +27,17 @@ define(["underscore", "PIXI", "utils/publisher", "base/leapManager"],
       this.pixiScene.interactive = true;
       
       // mouse and touch listeners...
-      this.pixiScene.click = this.pixiScene.tap = function(interactionData) {
+      this.pixiScene.mousedown = this.pixiScene.tap = function(interactionData) {
         self.onClick({
           position: interactionData.global,
           depth: -leapManager.LEAP_Z_NORMALIZED_MAX_STEP // depth MAX normalized leap mouse/touch emu
         });
       };
       
-      this.pixiScene.mousemove = this.pixiScene.touchmove = function(interactionData) {
+      this.pixiScene.mouseup = this.pixiScene.touchend = this.pixiScene.mousemove = this.pixiScene.touchmove = function(interactionData) {
         self.onMove({
           position: interactionData.global,
-          depth: leapManager.LEAP_Z_NORMALIZED_CENTER // depth CENTER normalized leap mouse/touch emu
+          depth: leapManager.LEAP_Z_NORMALIZED_MAX_STEP // depth CENTER normalized leap mouse/touch emu
         });
       };
 

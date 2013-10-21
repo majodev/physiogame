@@ -124,7 +124,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       gameObject.alpha = 0; // will be set to minNormal after introduced!
       gameObject.speed = opt.objectNormalSpeedMin; // extra
       gameObject.introducing = true; // signales that its being introduced and not hitable
-      gameObject.depthKick = layer.DEPTH.CENTER;
+      gameObject.depthKick = layer.DEPTH.STEP;
 
       // set positions and targets accordingliy...
 
@@ -203,7 +203,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     }
 
     function checkResetDepthAttack(coordinates) {
-      if (allowedToDepthAttack === false && coordinates.depth >= layer.DEPTH.CENTER) {
+      if (allowedToDepthAttack === false && coordinates.depth >= layer.DEPTH.STEP) {
         allowedToDepthAttack = true;
       }
     }
