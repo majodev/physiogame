@@ -32,6 +32,23 @@ define([],
         cat: "general",
         desc: "Abschussbedingung der Spiel-Objekte"
       },
+      probabilitySpecialObject: {
+        def: 0.25,
+        min: 0,
+        max: 1,
+        step: 0.01,
+        ui: "slider",
+        cat: "general",
+        desc: "Spezial-Spiel-Object Wahrscheinlichkeit",
+        format: {
+          percent: true,
+          post: "%"
+        },
+        enabled: {
+          id: "gameObjectCondition",
+          value: "clickOrDepth"
+        },
+      },
       debugLayerVisible: {
         def: false,
         ui: "toggle",

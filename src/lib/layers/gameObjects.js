@@ -33,6 +33,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     layer.onActivate = function() {
 
       gameObjects = [];
+      specialGameObjects = [];
       killAnimationsToRemove = [];
       hitStatsToRemove = [];
       previousHitted = undefined;
@@ -44,6 +45,8 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       opt = {
         gameMode: gameConfig.get("gameMode"),
         gameObjectCondition: gameConfig.get("gameObjectCondition"),
+        probabilitySpecialObject: gameConfig.get("probabilitySpecialObject"),
+        specialObjectEnabled: gameConfig.checkKeyIsEnabled("probabilitySpecialObject"),
         gameMaxTime: gameConfig.get("gameMaxTime"),
         gameReattachObjectAfterMs: gameConfig.get("gameReattachObjectAfterMs"),
         gameReattachObjectMax: gameConfig.get("gameReattachObjectMax"),
@@ -90,10 +93,21 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
       for (i; i < len; i += 1) {
         if (gameObjects.length < opt.objectsToSpawn) {
-          attachNewGameObject(gameObjects.length);
+          attachGameOrSpecialObject();
         }
       }
+    }
 
+    function attachGameOrSpecialObject() {
+      if (opt.specialObjectEnabled === true) {
+        if (Math.random() < opt.probabilitySpecialObject) {
+          gameObjects.push(attachNewSpecialGameObject(gameObjects.length, true));
+        } else {
+          gameObjects.push(attachNewGameObject(gameObjects.length, true));
+        }
+      } else {
+        gameObjects.push(attachNewGameObject(gameObjects.length, true));
+      }
     }
 
     function onTimerRoundReattach(tick) {
@@ -108,7 +122,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       // attach the count needed.
       for (i; i < missingObjectCount; i += 1) {
         if (gameObjects.length < opt.objectsToSpawn) {
-          attachNewGameObject(gameObjects.length);
+          attachGameOrSpecialObject();
         }
       }
     }
@@ -117,8 +131,8 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       removeAllGameObjects();
     }
 
-    function attachNewGameObject(i) {
-      var gameObject = new PIXI.Sprite(opt.texturePackage[i % opt.textureCount]);
+    function attachNewGameObject(textureModInt, autoadd) {
+      var gameObject = new PIXI.Sprite(opt.texturePackage[textureModInt % opt.textureCount]);
 
       // set its initial values...
       gameObject.anchor.x = 0.5;
@@ -130,6 +144,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       gameObject.speed = opt.objectNormalSpeedMin; // extra
       gameObject.introducing = true; // signales that its being introduced and not hitable
       gameObject.depthKick = layer.DEPTH.STEP;
+      gameObject.isSpecial = false;
 
       // set positions and targets accordingliy...
 
@@ -138,8 +153,51 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       gameObject.targetX = _.random(gameObject.width / 2, layer.width - gameObject.width / 2);
       gameObject.targetY = _.random(gameObject.height / 2, layer.height - gameObject.height / 2);
 
-      gameObjects.push(gameObject);
-      layer.addChild(gameObjects[i]);
+      if (autoadd === true) {
+        layer.addChild(gameObject);
+      }
+
+      return gameObject;
+    }
+
+    function attachNewSpecialGameObject(textureModInt, autoadd) {
+      var special = attachNewGameObject(textureModInt, false);
+      var specialCount = _.random(0, 5);
+      var overlayText = new PIXI.Text(specialCount, {
+        font: "bold 80px Arvo",
+        fill: "#FFFFFF",
+        align: "center",
+        stroke: "#848484",
+        strokeThickness: 2
+      });
+      overlayText.anchor = {
+        x: 0.5,
+        y: 0.5
+      };
+      var overlayLeap = new PIXI.Text("", {
+        font: "bold 30px Arvo",
+        fill: "#FF0000",
+        align: "center",
+        stroke: "#FFAAAA",
+        strokeThickness: 5
+      });
+      overlayLeap.anchor = {
+        x: 0.5,
+        y: 1
+      };
+      overlayLeap.position.y = 80;
+      special.specialCount = specialCount;
+      special.isSpecial = true;
+      special.addChild(overlayText);
+      special.addChild(overlayLeap);
+      special.overlay = overlayText;
+      special.overlayLeap = overlayLeap;
+
+      if (autoadd === true) {
+        layer.addChild(special);
+      }
+
+      return special;
     }
 
     function removeAllGameObjects() {
@@ -203,6 +261,9 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
               // where hitted? Middlepoint?
               gameObjects[i].hitStat = hitstatMiddlepoint(coordinates, gameObjects[i]);
 
+              // the current coordinates obj, to the gameObject!
+              gameObjects[i].coordinates = coordinates;
+
               swapGameObjectToTop(gameObjects[i], i, max);
 
               gameObjects[i].depthKick = coordinates.depth;
@@ -246,6 +307,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       for (i; i < len; i += 1) {
         if (gameObjects[i].visible === true) {
           gameObjects[i].hitted = false;
+          gameObjects[i].coordinates = undefined;
         }
       }
     }
@@ -297,6 +359,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
           // when to explode...
           if (checkForExplosion(gameObject) === true) {
+
             createExplosion(gameObject);
             createHitStat(gameObject);
 
@@ -361,6 +424,29 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
             allowedToDepthAttack = false; // this one can be smashed, but not a following one
             returnValue = true;
           }
+          // handle special objects differently...
+          if (gameObject.isSpecial === true) {
+
+            // FOR LEAP!
+            if (gameObject.hitted === true && gameObject.coordinates.leapCoordinates === true) {
+              if (returnValue === true) { // there is currently a depthAttack going on, execute it!
+                returnValue = decreaseSpecialObject(gameObject);
+              } else { // no depthAttack currently, count the fingers...
+                returnValue = specialObjectCheckLeap(gameObject);
+              }
+            } else {
+              // no leap event, nor hitted, clear visible leap display of special element...
+              gameObject.overlayLeap.visible = false;
+            }
+
+            // FOR MOUSE/TOUCH
+            if (gameObject.hitted === true && gameObject.coordinates.leapCoordinates === false) {
+              if (returnValue === true) {
+                // execute a depth attack but check if it should really be destroyed now....
+                returnValue = decreaseSpecialObject(gameObject);
+              }
+            }
+          }
           break;
         default:
           log.error("gameObjects: gameObjectCondition not supported!");
@@ -370,6 +456,48 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       return returnValue;
     }
 
+    function decreaseSpecialObject(specialObject) {
+      specialObject.specialCount -= 1;
+
+      if (specialObject.specialCount >= 0) {
+        specialObject.overlay.setText(specialObject.specialCount);
+      } else {
+        specialObject.overlay.setText("");
+      }
+
+      if (specialObject.specialCount >= 0) {
+        return false; //should not explode now.
+      } else {
+        return true; // should explode now!
+      }
+    }
+
+    function specialObjectCheckLeap(specialObject) {
+      specialObject.overlayLeap.visible = true;
+      if (specialObject.coordinates.fingerCount === specialObject.specialCount) {
+
+        // it should explode now immediately. 
+        // As a bonus for leap players, a object killed with this way dowsn't count to the accuracy! 
+        specialObject.hitStat = "SPECIAL_KILL";
+        return true; // should explode now!
+      } else {
+        // set the indicator in the object how many fingers are left to show!
+        if (_.isUndefined(specialObject.leapLastFingerCount) === false) {
+          if (specialObject.leapLastFingerCount === specialObject.coordinates.fingerCount) {
+            // the same, dont reset the leap text as it saves us performance
+          } else {
+            // has changed to last time, reset it.
+            specialObject.overlayLeap.setText(specialObject.coordinates.fingerCount);
+            specialObject.leapLastFingerCount = specialObject.coordinates.fingerCount;
+          }
+        } else {
+          // was never set, changed the text as we dont know whats on the and set a helper counter.
+          specialObject.overlayLeap.setText(specialObject.coordinates.fingerCount);
+          specialObject.leapLastFingerCount = specialObject.coordinates.fingerCount;
+        }
+        return false;
+      }
+    }
 
     function createHitStat(gameObject) {
 
@@ -389,7 +517,13 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
           hitStatToDisplay = gameObject.hitStat;
         }
 
-        hitStatText = new PIXI.Text(Math.ceil(hitStatToDisplay.percentageBothAxis * 100) + " %", {
+        if (gameObject.hitStat === "SPECIAL_KILL") {
+          hitStatToDisplay = gameObject.coordinates.fingerCount + " Finger!"; // on a special kill with leap, show instead the fingers used!
+        } else {
+          hitStatToDisplay = Math.ceil(hitStatToDisplay.percentageBothAxis * 100) + " %";
+        }
+
+        hitStatText = new PIXI.Text(hitStatToDisplay, {
           font: "bold 30px Arvo",
           fill: "#FFFFFF",
           align: "center",
@@ -409,7 +543,12 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       }
 
       // finally update the stats...
-      stats.getCurrent().updateAccuracy(gameObject.hitStat);
+      if (gameObject.hitStat !== "SPECIAL_KILL") {
+        stats.getCurrent().updateAccuracy(gameObject.hitStat);
+      } else {
+        // TODO: Fingerkills have no stats currently, change this!
+      }
+
     }
 
     // visuals for explosion of gameObject

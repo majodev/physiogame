@@ -89,6 +89,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
 
         events.trigger("handFrameNormalized", {
           leapCoordinates: true,
+          fingerCount: hand.fingers.length,
           position: position,
           depth: leapZToNormalize(hand.palmPosition[2])
         });
