@@ -19,9 +19,9 @@
           <th>Start</th>
           <th>Ende</th>
           <!-- <th>Spielzeit</th> -->
-          <th>Rundenzeit</th>
-          <th>Erwischt</th>
-          <th>Präzision</th>
+          <th>Runde</th>
+          <th>#</th>
+          <th>%</th>
           <th>Aktion</th>
         </tr>
       </thead>
@@ -47,15 +47,29 @@
           <tr id="collapse-{{{id}}}" class="panel-collapse collapse">
             <td colspan="8">
               <div><p><strong>Details:</strong> ({{id}})</p></div>
-              
+
+              <div class="row">
+                <div class="col-xs-6"><strong>Erweiterte Statistiken</strong></div>
+              </div>
+
+              <div id="leap-{{{id}}}" class="statDetails">
+                <div class="row">
+                  {{#each advancedStats.keyValues}}
+                    <div class="col-xs-6"><p><small>{{key}}: </small><strong>{{value}}</strong></p></div>
+                  {{/each}}
+                 </div>
+              </div>
+
               <div class="row">
                 <div class="col-xs-6"><strong>Leap Motion</strong></div>
               </div>
 
               <div id="leap-{{{id}}}" class="statDetails">
-                {{#each leapStats.keyValues}}
-                  <div class="col-xs-6"><p><small>{{key}}: </small><strong>{{value}}</strong></p></div>
-                {{/each}}
+                <div class="row">
+                  {{#each leapStats.keyValues}}
+                    <div class="col-xs-6"><p><small>{{key}}: </small><strong>{{value}}</strong></p></div>
+                  {{/each}}
+                </div>
               </div>
 
               <div class="row">
@@ -66,9 +80,11 @@
               </div>
 
               <div id="config-{{{id}}}" class="statDetails">
-                {{#each gameConfig.keyValues}}
-                  <div class="col-xs-6"><p><small>{{objectDesc}}: </small><strong>{{objectFormattedValue}}</strong></p></div>
-                {{/each}}
+                <div class="row">
+                  {{#each gameConfig.keyValues}}
+                    <div class="col-xs-6"><p><small>{{objectDesc}}: </small><strong>{{objectFormattedValue}}</strong></p></div>
+                  {{/each}}
+                </div>
               </div>
 
             </td>

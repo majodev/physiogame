@@ -373,11 +373,23 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
     function createHitStat(gameObject) {
 
-      var hitStatText;
+      var hitStatText,
+        hitStatToDisplay;
 
       // if they should be displayed... - else not...
       if (opt.accuracyTextsEnabled === true) {
-        hitStatText = new PIXI.Text(Math.ceil(gameObject.hitStat.percentageBothAxis * 100) + " %", {
+
+        if (_.isUndefined(gameObject.hitStat) === true) {
+          hitStatToDisplay = {
+            percentageX: 0,
+            percentageY: 0,
+            percentageBothAxis: 0
+          };
+        } else {
+          hitStatToDisplay = gameObject.hitStat;
+        }
+
+        hitStatText = new PIXI.Text(Math.ceil(hitStatToDisplay.percentageBothAxis * 100) + " %", {
           font: "bold 30px Arvo",
           fill: "#FFFFFF",
           align: "center",

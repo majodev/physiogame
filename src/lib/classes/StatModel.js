@@ -22,13 +22,19 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
 
         if (this.get("locked") === false && this.get("started") === true) {
 
-          // first push it THEN compute it!
-          runtimeAccuracyArray.push(hitstatMiddlepointObject);
-          newAccuracy = computeAccuracy();
+          if (_.isUndefined(hitstatMiddlepointObject) === false) {
+            // first push it THEN compute it!
+            runtimeAccuracyArray.push(hitstatMiddlepointObject);
+            newAccuracy = computeAccuracy();
 
-          this.set("accuracyX", newAccuracy.x);
-          this.set("accuracyY", newAccuracy.y);
-          this.set("accuracySum", newAccuracy.sum);
+            this.set("accuracyX", newAccuracy.x);
+            this.set("accuracyY", newAccuracy.y);
+            this.set("accuracySum", newAccuracy.sum);
+          } else {
+            log.warn("updateAccuracy: received empty hitStat, autoKill?");
+          }
+
+
         } else {
           log.warn("updateAccuracy: not started or already locked, not possible!");
         }
@@ -153,12 +159,9 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
         json.playTime = timeFormatter.formatMilliseconds(json.playTime);
         json.objectsCatched = json.objectsCatched;
         json.accuracySum = Math.ceil(json.accuracySum * 100) + " %";
-        
 
-        // not currently displayed
-        json.gameTime = timeFormatter.formatMilliseconds(json.gameTime);
-        json.accuracyX = Math.ceil(json.accuracyX * 100) + " %";
-        json.accuracyY = Math.ceil(json.accuracyY * 100) + " %";
+        // a few stats that are only displayed at advanced tab (keyValues!)
+        json.advancedStats = this.getAdvancedStatKeyValues(json);
 
         // leap detail fields        
         json.leapStats = this.getLeapStatsKeyValues(json);
@@ -229,20 +232,34 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
           }]
         };
       },
+      getAdvancedStatKeyValues: function(json) {
+        return {
+          keyValues: [{
+            key: "Gesamtspielzeit",
+            value: timeFormatter.formatMilliseconds(json.gameTime)
+          }, {
+            key: "% Treffergenauigkeit horizontal (x)",
+            value: Math.ceil(json.accuracyX * 100) + " %"
+          }, {
+            key: "% Treffergenauigkeit vertikal (y)",
+            value: Math.ceil(json.accuracyY * 100) + " %"
+          }]
+        };
+      },
       defaults: {
         objectsCatched: 0,
         finished: false,
         started: false,
         locked: false,
-        accuracyX: 1,
-        accuracyY: 1,
-        accuracySum: 1
+        accuracyX: 0,
+        accuracyY: 0,
+        accuracySum: 0
       }
     });
 
     // LOOK OUT! - this needs to be resetted on locks from the gameSession!
     // STATIC, lifecycle managed by lock!
-    var runtimeAccuracyArray = []; 
+    var runtimeAccuracyArray = [];
 
     function computeAccuracy() {
       var accuracy = {
