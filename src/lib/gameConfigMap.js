@@ -420,7 +420,7 @@ define([],
         }
       },
       leapZModifier: {
-        def: 4.5,
+        def: 8,
         min: 2,
         max: 10,
         step: 0.1,

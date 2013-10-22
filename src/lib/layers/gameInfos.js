@@ -368,8 +368,8 @@ define(["log", "PIXI",
           "Treffer:\n" +
           "Zeit:\n" +
           "Genauigkeit:\n" +
-          "Bewegungsweg:\n" +
-          "Bewegung im Spielfeld:\n");
+          "gesamter Bewegungsweg:\n" +
+          "Spielfeld Bewegungsweg:\n");
         layer.pixiLayer.addChild(winningStatsLabelsText);
         winningStatsLabelsText.visible = true;
 
@@ -383,15 +383,16 @@ define(["log", "PIXI",
 
         totalMovement = Math.floor(currentStats.get("leapMovementAllHyp"));
         withinMovement = Math.floor(currentStats.get("leapMovementInsideHyp"));
-        percentage = (totalMovement === 0) ? "nur mit Leap Motion" : Math.floor((100 / totalMovement * withinMovement)) + " mm";
-        totalMovement = (totalMovement === 0) ? "nur mit Leap Motion" : totalMovement + " %";
+        percentage = (totalMovement === 0) ? "0 %" : Math.floor((100 / totalMovement * withinMovement)) + " %";
+        totalMovement = (totalMovement === 0) ? "nur mit Leap Motion" : totalMovement + " mm";
+        withinMovement = (withinMovement === 0) ? "nur mit Leap Motion" : withinMovement + " mm";
 
         winningStatsValuesText.setText(
           currentStats.get("objectsCatched") + " Objekte\n" +
           timeFormatter.formatSeconds(currentStats.get("playTime") / 1000) + "\n" +
           Math.ceil(currentStats.get("accuracySum") * 100) + " %\n" +
           totalMovement + "\n" +
-          percentage);
+          withinMovement + " (" + percentage + ")");
         layer.pixiLayer.addChild(winningStatsValuesText);
         winningStatsValuesText.visible = true;
 
