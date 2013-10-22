@@ -6,6 +6,7 @@ define(["PIXI", "appConfig", "utils/zeroPad", "log"],
         crosshair: undefined,
         aliens: [],
         explosions: [],
+        popExplosions: [],
         clouds: [],
         buttonBGs: [],
         balloons: [],
@@ -42,7 +43,10 @@ define(["PIXI", "appConfig", "utils/zeroPad", "log"],
         "eggHead.png", "flowerTop.png", "helmlok.png", "skully.png"]);
 
       // add explosion textures
-      parseTextures(atlas.explosions, "Explosion_Sequence_A ", ".png", 1, 26, false);
+      parseTextures(atlas.explosions, "Explosion_Sequence_A ", ".png", 1, 27, false);
+
+      // add pop explosion textures
+      parseTextures(atlas.popExplosions, "pop_mv", ".png", 1, 27, true, 4);
 
       // add cloud textures
       parseTextures(atlas.clouds, "cloud/", "", 0, 24, true, 4);

@@ -52,6 +52,8 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
         gameReattachObjectMax: gameConfig.get("gameReattachObjectMax"),
         objectsToSpawn: gameConfig.get("objectsToSpawn"),
         texturePackage: textures.atlas[gameConfig.get("objectTexture")],
+        explosionPackage: textures.atlas[gameConfig.get("explosionTexture")],
+        explosionTextureRotate: gameConfig.checkKeyIsEnabled("explosionTextureRotate") && gameConfig.get("explosionTextureRotate"),
         accuracyTextsEnabled: gameConfig.get("accuracyTextsEnabled"),
         textureCount: textures.atlas[gameConfig.get("objectTexture")].length,
         introTimerLength: gameConfig.get("introTimerLength"),
@@ -561,14 +563,19 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     function createExplosion(gameObject) {
       gameObject.visible = false;
 
-      var explosion = new PIXI.MovieClip(textures.atlas.explosions);
+      var explosion = new PIXI.MovieClip(opt.explosionPackage);
 
       explosion.position.x = gameObject.position.x;
       explosion.position.y = gameObject.position.y;
       explosion.anchor.x = 0.5;
       explosion.anchor.y = 0.5;
 
-      explosion.rotation = Math.random() * Math.PI;
+      if (opt.explosionTextureRotate === true) {
+        explosion.rotation = Math.random() * Math.PI;
+      } else {
+        explosion.rotation = 0;
+      }
+
       explosion.scale.x = explosion.scale.y = 0.75 + Math.random() * 0.5;
 
       explosion.loop = false;

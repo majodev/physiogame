@@ -20,7 +20,8 @@ define(["backbone"],
         "assets/sprites/crosshair.png",
         "assets/sprites/fh-joanneum-logo.png",
         "assets/sprites/majodev-icon.png",
-        "assets/sprites/leap-indicators.json"
+        "assets/sprites/leap-indicators.json",
+        "assets/sprites/pop_sprites.json"
       ],
       soundBaseDir: "assets/sounds/",
       sounds: [{

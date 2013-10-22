@@ -80,6 +80,29 @@ define([],
         cat: "visual",
         desc: "Texturpaket der Spiel-Objekte"
       },
+      explosionTexture: {
+        def: "explosions",
+        opt: [{
+          id: "explosions",
+          desc: "Echtexplosion"
+        }, {
+          id: "popExplosions",
+          desc: "Cartoonexplosion"
+        }],
+        ui: "dropdown",
+        cat: "visual",
+        desc: "Texturpaket der Explosionen"
+      },
+      explosionTextureRotate: {
+        def: true,
+        ui: "toggle",
+        cat: "visual",
+        desc: "Explosionen zufällig drehen",
+        enabled: {
+          id: "explosionTexture",
+          value: "explosions"
+        },
+      },
       gameMode: {
         def: "clearInTime",
         opt: [{
