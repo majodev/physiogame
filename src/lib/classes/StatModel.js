@@ -121,6 +121,8 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
           gameTime_ms: json.gameTime,
           playTime_ms: json.playTime,
           catched_count: json.objectsCatched,
+          specialsCatched_count: json.specialsCatched,
+          points_count: Math.round(json.points),
           accuracy_sum_percentage: Math.ceil(json.accuracySum * 100),
           accuracy_x_percentage: Math.ceil(json.accuracyX * 100),
           accuracy_y_percentage: Math.ceil(json.accuracyY * 100),
@@ -168,6 +170,8 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
         json.endDate = formatTimeOnlyGerman(json.endDate);
         json.playTime = timeFormatter.formatMilliseconds(json.playTime);
         json.objectsCatched = json.objectsCatched;
+        json.specialsCatched = json.specialsCatched;
+        json.points = Math.round(json.points);
         json.accuracySum = Math.ceil(json.accuracySum * 100) + " %";
 
         // a few stats that are only displayed at advanced tab (keyValues!)
@@ -245,14 +249,14 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
       getAdvancedStatKeyValues: function(json) {
         return {
           keyValues: [{
-            key: "Gesamtspielzeit",
-            value: timeFormatter.formatMilliseconds(json.gameTime)
-          }, {
             key: "% Treffergenauigkeit horizontal (x)",
             value: Math.ceil(json.accuracyX * 100) + " %"
           }, {
             key: "% Treffergenauigkeit vertikal (y)",
             value: Math.ceil(json.accuracyY * 100) + " %"
+          }, {
+            key: "Gesamtspielzeit",
+            value: timeFormatter.formatMilliseconds(json.gameTime)
           }]
         };
       },

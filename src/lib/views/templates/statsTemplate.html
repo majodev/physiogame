@@ -18,10 +18,11 @@
           <th>Datum</th>
           <th>Start</th>
           <th>Ende</th>
-          <!-- <th>Spielzeit</th> -->
           <th>Runde</th>
-          <th>#</th>
-          <th>%</th>
+          <th>Norm</th>
+          <th>Spez</th>
+          <th>Präz</th>
+          <th>Punkte</th>
           <th>Aktion</th>
         </tr>
       </thead>
@@ -32,10 +33,11 @@
             <td>{{date}}</td>
             <td>{{startDate}}</td>
             <td>{{endDate}}</td>
-            <!-- <td>{{gameTime}}</td> -->
             <td>{{playTime}}</td>
             <td>{{objectsCatched}}</td>
+            <td>{{specialsCatched}}</td>
             <td>{{accuracySum}}</td>
+            <td>{{points}}</td>
             {{#if id}}
               <td>
                 <a class="accordion-toggle btn btn-primary btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{{id}}}">Details</a>
@@ -45,7 +47,7 @@
             {{/if}}
           </tr>
           <tr id="collapse-{{{id}}}" class="panel-collapse collapse">
-            <td colspan="8">
+            <td colspan="10">
               <div><p><strong>Details:</strong> ({{id}})</p></div>
 
               <div class="row">

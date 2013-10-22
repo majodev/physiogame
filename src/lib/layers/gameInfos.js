@@ -428,7 +428,7 @@ define(["log", "PIXI",
           winningSpecialsText.anchor.x = 0.5;
           winningSpecialsText.anchor.y = 0.5;
           winningSpecialsText.currentStep = INTRO_ROTATE_STEP;
-          winningSpecialsText.currentXStep = 18;
+          winningSpecialsText.currentXStep = 22;
           winningSpecialsText.currentXTarget = 240;
 
           winningSpecialsText.setText(currentStats.get("specialsCatched") + " Spezial-\nPunkte!");
@@ -443,7 +443,7 @@ define(["log", "PIXI",
         winningPointsText.anchor.x = 0.5;
         winningPointsText.anchor.y = 0.5;
         winningPointsText.currentStep = INTRO_ROTATE_STEP;
-        winningPointsText.currentXStep = -18;
+        winningPointsText.currentXStep = -22;
         winningPointsText.currentXTarget = 1040;
 
         winningPointsText.setText(Math.round(sumPoints) + " Gesamt-\nPunkte!");

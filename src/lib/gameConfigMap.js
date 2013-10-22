@@ -39,7 +39,7 @@ define([],
         step: 0.01,
         ui: "slider",
         cat: "general",
-        desc: "Spezial-Spiel-Object Wahrscheinlichkeit",
+        desc: "Spezial-Objekt Wahrscheinlichkeit",
         format: {
           percent: true,
           post: "%"
