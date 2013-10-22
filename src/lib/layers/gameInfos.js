@@ -19,7 +19,6 @@ define(["log", "PIXI",
     var countingText,
       introText,
       tippIntroText,
-      winningText,
       winningStatsLabelsText,
       winningStatsValuesText,
       winningTopText,
@@ -55,7 +54,6 @@ define(["log", "PIXI",
       introText.visible = true;
       tippIntroText.visible = true;
       winningTopText.visible = false;
-      winningText.visible = false;
       winningStatsLabelsText.visible = false;
       winningStatsValuesText.visible = false;
       winningAdded = false;
@@ -133,6 +131,9 @@ define(["log", "PIXI",
     };
 
     function setStartupTexts() {
+
+      var tippText;
+
       if (gameModeTime === true) {
         countingText.setText(currentStats.get("objectsCatched"));
         introText.setText("Erwische soviele wie möglich\nin " + timeFormatter.formatSeconds(maxTime) + "!");
@@ -145,16 +146,24 @@ define(["log", "PIXI",
 
       switch (gameConfig.get("gameObjectCondition")) {
         case "objectScale":
-          tippIntroText.setText("Sie platzen wenn Du sie länger fokusierst!");
+          tippText = ("Interaktion: Sie platzen wenn Du sie fokusierst!");
           break;
         case "clickOrDepth":
-          tippIntroText.setText("Sie platzen wenn Du sie stoßt/anklickst!");
+          tippText = ("Interaktion: Sie platzen wenn Du sie stoßt/anklickst!");
           break;
         default:
-          tippIntroText.setText("ERROR: KEIN OBJEKTSPIELZIEL!");
+          tippText = ("ERROR: KEIN OBJEKTSPIELZIEL!");
           log.error("gameObjects: gameObjectCondition not supported!");
           break;
       }
+
+      tippText += "\nTipp: " + getRandomTipText();
+
+      tippIntroText.setText(tippText);
+    }
+
+    function getRandomTipText() {
+      return "Versuche Sie mittig zu treffen.";
     }
 
     function animateIntroScale(whichText) {
@@ -281,13 +290,6 @@ define(["log", "PIXI",
           stroke: "#848484",
           strokeThickness: 2
         });
-        winningText = new PIXI.Text("NOTHING", {
-          font: "bold 35px Arvo",
-          fill: "#3344bb",
-          align: "center",
-          stroke: "#AAAAFF",
-          strokeThickness: 5
-        });
         winningStatsLabelsText = new PIXI.Text("NOTHING", {
           font: "bold 40px Arvo",
           fill: "#FFFFFF",
@@ -395,44 +397,6 @@ define(["log", "PIXI",
           withinMovement + " (" + percentage + ")");
         layer.pixiLayer.addChild(winningStatsValuesText);
         winningStatsValuesText.visible = true;
-
-
-
-        // winningText.position.x = layer.width / 2;
-        // winningText.position.y = 200;
-        // winningText.anchor.x = 0.5;
-        // winningText.anchor.y = 0;
-
-        // tempWinText = gameConfig.getFormattedValue("userName") + ", du hast " +
-        //   currentStats.get("objectsCatched") +
-        //   " Objekte\nmit einer Treffergenauigkeit von " +
-        //   Math.ceil(currentStats.get("accuracySum") * 100) + " %\nin " +
-        //   timeFormatter.formatSeconds(currentStats.get("playTime") / 1000) +
-        //   " erwischt!\n\n";
-
-
-
-        // if (totalMovement > 0) {
-        //   withinMovement = Math.floor(currentStats.get("leapMovementInsideHyp"));
-        //   percentage = (withinMovement === 0) ? 0 : Math.floor((100 / totalMovement * withinMovement));
-
-        //   tempWinText += "Leap Motion sagt:\nDu hast dich in dieser Runde " +
-        //     totalMovement + " mm bewegt und\n" +
-        //     "warst zu " + percentage + " % innerhalb des Spielfeldes.\n";
-
-        // } else {
-        //   tempWinText += "Leider hast du nicht mit Leap Motion gespielt\n" + 
-        //   "sonst könnte ich dir noch mehr verraten.\n" + 
-        //   "Vielleicht das nächste Mal?\n";
-        // }
-
-        // winningText.setText(tempWinText + "\nGratulation!");
-
-        //layer.pixiLayer.addChild(winningText);
-
-
-        winningText.visible = true;
-
 
 
         // RETRY BUTTON HINZUFUEGEN...
