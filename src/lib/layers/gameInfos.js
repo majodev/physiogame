@@ -22,6 +22,8 @@ define(["log", "PIXI",
       winningStatsLabelsText,
       winningStatsValuesText,
       winningTopText,
+      winningSpecialsText,
+      winningPointsText,
       timerText,
       textsCreated = false,
       winningAdded = false,
@@ -56,6 +58,8 @@ define(["log", "PIXI",
       winningTopText.visible = false;
       winningStatsLabelsText.visible = false;
       winningStatsValuesText.visible = false;
+      winningSpecialsText.visible = false;
+      winningPointsText.visible = false;
       winningAdded = false;
 
       countingText.position.x = layer.width - 15;
@@ -126,8 +130,12 @@ define(["log", "PIXI",
       animateScaleBumbReduzer(timerText);
       animateScaleBumbReduzer(countingText);
       animateRotate(winningTopText, winningAdded, true);
+      animateRotate(winningSpecialsText, winningAdded, true);
+      animateRotate(winningPointsText, winningAdded, true);
       animateXRun(winningStatsLabelsText, winningAdded, true);
       animateXRun(winningStatsValuesText, winningAdded, true);
+      animateXRun(winningSpecialsText, winningAdded, true);
+      animateXRun(winningPointsText, winningAdded, true);     
     };
 
     function setStartupTexts() {
@@ -304,6 +312,20 @@ define(["log", "PIXI",
           stroke: "#AAAAFF",
           strokeThickness: 3
         });
+        winningSpecialsText = new PIXI.Text("NOTHING", {
+          font: "bold 45px Arvo",
+          fill: "#FFFFFF", 
+          align: "center",
+          stroke: "#848484", 
+          strokeThickness: 3
+        });
+        winningPointsText = new PIXI.Text("NOTHING", {
+          font: "bold 45px Arvo",
+          fill: "#bb4433",
+          align: "center",
+          stroke: "#FFAAAA",
+          strokeThickness: 5
+        });
         winningTopText = new PIXI.Text("NOTHING", {
           font: "bold 55px Arvo",
           fill: "#3344bb",
@@ -398,6 +420,35 @@ define(["log", "PIXI",
         layer.pixiLayer.addChild(winningStatsValuesText);
         winningStatsValuesText.visible = true;
 
+
+        // specials text
+        if (currentStats.get("specialsCatched") > 0) {
+          winningSpecialsText.position.x = 0 - (layer.width);
+          winningSpecialsText.position.y = 595;
+          winningSpecialsText.anchor.x = 0.5;
+          winningSpecialsText.anchor.y = 0.5;
+          winningSpecialsText.currentStep = INTRO_ROTATE_STEP;
+          winningSpecialsText.currentXStep = 18;
+          winningSpecialsText.currentXTarget = 240;
+
+          winningSpecialsText.setText(currentStats.get("specialsCatched") + " Spezial-\nPunkte!");
+          layer.pixiLayer.addChild(winningSpecialsText);
+          winningSpecialsText.visible = true;
+        }
+
+        // points text
+        var sumPoints = currentStats.get("points");
+        winningPointsText.position.x = layer.width + (layer.width*2);
+        winningPointsText.position.y = 595;
+        winningPointsText.anchor.x = 0.5;
+        winningPointsText.anchor.y = 0.5;
+        winningPointsText.currentStep = INTRO_ROTATE_STEP;
+        winningPointsText.currentXStep = -18;
+        winningPointsText.currentXTarget = 1040;
+
+        winningPointsText.setText(Math.round(sumPoints) + " Gesamt-\nPunkte!");
+        layer.pixiLayer.addChild(winningPointsText);
+        winningPointsText.visible = true;
 
         // RETRY BUTTON HINZUFUEGEN...
 

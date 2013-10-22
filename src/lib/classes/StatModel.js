@@ -17,6 +17,15 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
           log.warn("raiseScore: not started or already locked, not possible!");
         }
       },
+      raiseSpecial: function() {
+        var specialScore = this.get("specialsCatched");
+        if (this.get("locked") === false && this.get("started") === true) {
+          specialScore += 1;
+          this.set("specialsCatched", specialScore);
+        } else {
+          log.warn("raiseSpecial: not started or already locked, not possible!");
+        }
+      },
       updateAccuracy: function(hitstatMiddlepointObject) {
         var newAccuracy;
 
@@ -99,6 +108,7 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
       lock: function() {
         log.debug("StatModel: locked");
         this.set("locked", true);
+        this.set("points", ((this.get("objectsCatched") * this.get("accuracySum")) + this.get("specialsCatched")) * 100);
         runtimeAccuracyArray = [];
       },
       convertToCSV: function() {
@@ -248,12 +258,14 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
       },
       defaults: {
         objectsCatched: 0,
+        specialsCatched: 0,
         finished: false,
         started: false,
         locked: false,
         accuracyX: 0,
         accuracyY: 0,
-        accuracySum: 0
+        accuracySum: 0,
+        points: 0
       }
     });
 

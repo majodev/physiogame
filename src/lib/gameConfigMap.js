@@ -33,7 +33,7 @@ define([],
         desc: "Abschussbedingung der Spiel-Objekte"
       },
       probabilitySpecialObject: {
-        def: 0.25,
+        def: 0.20,
         min: 0,
         max: 1,
         step: 0.01,

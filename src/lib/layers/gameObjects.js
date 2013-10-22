@@ -188,6 +188,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       overlayLeap.position.y = 80;
       special.specialCount = specialCount;
       special.isSpecial = true;
+      special.initialCount = specialCount;
       special.addChild(overlayText);
       special.addChild(overlayLeap);
       special.overlay = overlayText;
@@ -363,6 +364,10 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
             createExplosion(gameObject);
             createHitStat(gameObject);
 
+            if(gameObject.isSpecial === true) {
+              stats.getCurrent().raiseSpecial();
+            }
+            
             stats.getCurrent().raiseScore();
 
             // finally clear the gameObject from the array and kill the gameObject
