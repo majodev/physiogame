@@ -69,22 +69,22 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
         });
 
         // when text was last focused reset it to there...
-        if(_.isUndefined(lastFocusedChild) === false) {
+        if (_.isUndefined(lastFocusedChild) === false) {
           //$( "#" + lastFocusedChild ).select();
-          $( "#" + lastFocusedChild ).prop("selectionStart", $( "#" + lastFocusedChild ).val().length).focus();
+          $("#" + lastFocusedChild).prop("selectionStart", $("#" + lastFocusedChild).val().length).focus();
           lastFocusedChild = undefined;
         }
 
         // finally validate current configuration and show results
-        if(this.model.isValid() === false) {
-          $("#statusNotification").append('<div class="alert alert-danger"><small>' + 
+        if (this.model.isValid() === false) {
+          $("#statusNotification").append('<div class="alert alert-danger"><small>' +
             '<strong>Fehler:</strong> ' +
             validationError + '</small></div>');
         }
 
         return this; // for chaining
       },
-      getRenderJSON: function () {
+      getRenderJSON: function() {
         var renderJSON = this.model.getKeyValueCategoryPairs();
 
         // here its possible to inject other values (e.g. read only ones) from other places
@@ -99,6 +99,7 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
         "click .dropdown-menu a": "dropdownClick",
         "click button.toggleButton": "toggleClick",
         "click #resetToStandard": "resetAllToStandard",
+        "click #resetStats": "resetStats",
         "input .textInputField": "textInputChange"
       },
       dropdownClick: function(event) {
@@ -109,7 +110,7 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
         var newValue = Math.round(event.value * 1000) / 1000,
           formattedValue = this.model.getFormattedValueIfNeeded(event.currentTarget.id, newValue);
 
-        if(formattedValue !== false) {
+        if (formattedValue !== false) {
           $("#" + event.currentTarget.id + "-value").text(formattedValue);
         } else {
           $("#" + event.currentTarget.id + "-value").text(newValue);
@@ -122,21 +123,20 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
       toggleClick: function(event) {
         this.setModelValue(event.currentTarget.id, !this.model.get(event.currentTarget.id));
       },
-      resetAllToStandard: function (event) {
+      resetAllToStandard: function(event) {
         log.debug("resetAllToStandard!");
         this.model.resetToDefaultValues();
         refreshGameWithNewValues();
         alertModal.show({
           head: "Standard-Werte wiederhergestellt!",
-          text: "Alle Werte auf Standard zurückgesetzt. Benutzername ist nun \"" +
-            gameConfig.getFormattedValue("userName") + "\".",
+          text: "Alle Werte auf Standard zurückgesetzt. Benutzername ist nun \"" + gameConfig.getFormattedValue("userName") + "\".",
           autoDismiss: 2500
         });
       },
       setModelValue: function(key, value, dontRefresh) {
         this.model.set(key, value);
         //this.model.isValid();
-        if(_.isUndefined(dontRefresh) || dontRefresh === false) {
+        if (_.isUndefined(dontRefresh) || dontRefresh === false) {
           refreshGameWithNewValues();
         }
       },
@@ -145,9 +145,20 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
         validationError = error;
         log.warn("validation error: " + error);
       },
-      textInputChange: function (event) {
+      textInputChange: function(event) {
         lastFocusedChild = event.currentTarget.id;
         this.setModelValue(event.currentTarget.id, event.currentTarget.value, true);
+      },
+      resetStats: function(event) {
+        // convinience function if something goes wrong with stats (e.g. old values!)
+        require(["game/stats"], function(stats) {
+          stats.clearLocalStorage();
+          alertModal.show({
+            head: "Statistiken gelöscht!",
+            text: "Alle lokalen Statistik-Daten wurden gelöscht.",
+            autoDismiss: 2500
+          });
+        });
       }
     });
 

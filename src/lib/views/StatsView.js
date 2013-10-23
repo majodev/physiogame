@@ -49,6 +49,11 @@ define(["backbone", "jquery", "log", "underscore",
       },
       clearStorage: function(e) {
         stats.clearLocalStorage();
+        alertModal.show({
+          head: "Statistiken gelöscht!",
+          text: "Alle lokalen Statistik-Daten wurden gelöscht.",
+          autoDismiss: 2500
+        });
       },
       loadJSON: function(e) {
         parseLocalFile(e.target.files[0]);

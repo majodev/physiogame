@@ -43,7 +43,8 @@ define(["base/leapManager", "moment", "gameConfig"],
           x: 0,
           y: 0,
           z: 0
-        }
+        },
+        fingerCountTime: [0, 0, 0, 0, 0, 0] // 5 Fingers + 0 Fingers
       };
     }
 
@@ -66,7 +67,7 @@ define(["base/leapManager", "moment", "gameConfig"],
     }
 
     function startSessionRound() {
-      if(running === true) {
+      if (running === true) {
         roundRunning = true;
       }
     }
@@ -82,7 +83,7 @@ define(["base/leapManager", "moment", "gameConfig"],
       // (when leap wasnt available, this sets it to the whole time!)
       lastdiff = endMoment.diff(session.lastFrameMoment);
 
-      if(lastdiff < 0) {
+      if (lastdiff < 0) {
         // was never in SessionRound!
         lastdiff = 0;
       }
@@ -93,9 +94,20 @@ define(["base/leapManager", "moment", "gameConfig"],
     }
 
     function onLeapFrame(stat) {
-      if(roundRunning) {
-        computeOffsetTime(stat);
+      var currentFrameMoment,
+        diffTimeToLastFrameMs;
+      if (roundRunning) {
+        // get the frame moment and the diff
+        currentFrameMoment = moment();
+        diffTimeToLastFrameMs = currentFrameMoment.diff(session.lastFrameMoment);
+
+        // make session computations...
+        computeOffsetTime(stat, diffTimeToLastFrameMs);
+        computeFingerCountTime(stat, diffTimeToLastFrameMs);
         computeMovement(stat);
+
+        // remember the moment in session
+        session.lastFrameMoment = currentFrameMoment;
       }
     }
 
@@ -119,14 +131,13 @@ define(["base/leapManager", "moment", "gameConfig"],
       //console.log(session.movement.all.z);
     }
 
-    function computeOffsetTime(stat) {
-      var currentFrameMoment = moment(),
-        diffTimeToLastFrameMs = 0;
+    function computeFingerCountTime(stat, diffTimeToLastFrameMs) {
+      if (stat.fingerCount >= 0 && stat.fingerCount <= 5) {
+        session.fingerCountTime[stat.fingerCount] += diffTimeToLastFrameMs;
+      }
+    }
 
-      // compute the diff between current and last...
-      diffTimeToLastFrameMs = currentFrameMoment.diff(session.lastFrameMoment);
-
-
+    function computeOffsetTime(stat, diffTimeToLastFrameMs) {
       // evaluate the stat object from leap and our sessionStat
       if (stat.detected === true) {
         session.time.detected += diffTimeToLastFrameMs;
@@ -158,8 +169,7 @@ define(["base/leapManager", "moment", "gameConfig"],
         session.time.notDetected += diffTimeToLastFrameMs;
       }
 
-      // remember the moment in session
-      session.lastFrameMoment = currentFrameMoment;
+
     }
 
     function getSessionStats() {

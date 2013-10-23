@@ -26,6 +26,16 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
           log.warn("raiseSpecial: not started or already locked, not possible!");
         }
       },
+      raiseFingerUsedOnSpecial: function(fingerCount) {
+        var specialFingerUsedArray = this.get("specialFingerUsed");
+        if (this.get("locked") === false && this.get("started") === true) {
+          specialFingerUsedArray[fingerCount] += 1;
+
+          this.set("specialFingerUsed", specialFingerUsedArray);
+        } else {
+          log.warn("raiseSpecial: not started or already locked, not possible!");
+        }
+      },
       updateAccuracy: function(hitstatMiddlepointObject) {
         var newAccuracy;
 
@@ -104,6 +114,7 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
         this.set("leapProjectionCenterX", sessionStats.projectionCenter.x);
         this.set("leapProjectionCenterY", sessionStats.projectionCenter.y);
         this.set("leapProjectionCenterZ", sessionStats.projectionCenter.z);
+        this.set("leapFingerCountTime", sessionStats.fingerCountTime);
       },
       lock: function() {
         log.debug("StatModel: locked");
@@ -122,6 +133,12 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
           playTime_ms: json.playTime,
           catched_count: json.objectsCatched,
           specialsCatched_count: json.specialsCatched,
+          specialsFinger0_count: json.specialFingerUsed[0],
+          specialsFinger1_count: json.specialFingerUsed[1],
+          specialsFinger2_count: json.specialFingerUsed[2],
+          specialsFinger3_count: json.specialFingerUsed[3],
+          specialsFinger4_count: json.specialFingerUsed[4],
+          specialsFinger5_count: json.specialFingerUsed[5],
           points_count: Math.round(json.points),
           accuracy_sum_percentage: Math.ceil(json.accuracySum * 100),
           accuracy_x_percentage: Math.ceil(json.accuracyX * 100),
@@ -151,7 +168,13 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
           leap_outsideLeft_ms: json.leapOutsideLeft,
           leap_outsideRight_ms: json.leapOutsideRight,
           leap_outsideTop_ms: json.leapOutsideTop,
-          leap_outsideBottom_ms: json.leapOutsideBottom
+          leap_outsideBottom_ms: json.leapOutsideBottom,
+          leap_fingerTime0_ms: json.leapFingerCountTime[0],
+          leap_fingerTime1_ms: json.leapFingerCountTime[1],
+          leap_fingerTime2_ms: json.leapFingerCountTime[2],
+          leap_fingerTime3_ms: json.leapFingerCountTime[3],
+          leap_fingerTime4_ms: json.leapFingerCountTime[4],
+          leap_fingerTime5_ms: json.leapFingerCountTime[5]
         };
       },
       convertToFormattedJSON: function() {
@@ -243,6 +266,24 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
           }, {
             key: "Rundenzeit Hand außerhalb unten",
             value: timeFormatter.formatMilliseconds(json.leapOutsideBottom)
+          }, {
+            key: "Rundenzeit kein Finger sichtbar",
+            value: timeFormatter.formatMilliseconds(json.leapFingerCountTime[0])
+          }, {
+            key: "Rundenzeit 1 Finger sichtbar",
+            value: timeFormatter.formatMilliseconds(json.leapFingerCountTime[1])
+          }, {
+            key: "Rundenzeit 2 Finger sichtbar",
+            value: timeFormatter.formatMilliseconds(json.leapFingerCountTime[2])
+          }, {
+            key: "Rundenzeit 3 Finger sichtbar",
+            value: timeFormatter.formatMilliseconds(json.leapFingerCountTime[3])
+          }, {
+            key: "Rundenzeit 4 Finger sichtbar",
+            value: timeFormatter.formatMilliseconds(json.leapFingerCountTime[4])
+          }, {
+            key: "Rundenzeit 5 Finger sichtbar",
+            value: timeFormatter.formatMilliseconds(json.leapFingerCountTime[5])
           }]
         };
       },
@@ -254,6 +295,24 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
           }, {
             key: "% Treffergenauigkeit vertikal (y)",
             value: Math.ceil(json.accuracyY * 100) + " %"
+          }, {
+            key: "Spezial-Objekte mit 0 Finger erwischt",
+            value: Math.ceil(json.specialFingerUsed[0]) + " Objekte"
+          }, {
+            key: "Spezial-Objekte mit 1 Finger erwischt",
+            value: Math.ceil(json.specialFingerUsed[1]) + " Objekte"
+          }, {
+            key: "Spezial-Objekte mit 2 Finger erwischt",
+            value: Math.ceil(json.specialFingerUsed[2]) + " Objekte"
+          }, {
+            key: "Spezial-Objekte mit 3 Finger erwischt",
+            value: Math.ceil(json.specialFingerUsed[3]) + " Objekte"
+          }, {
+            key: "Spezial-Objekte mit 4 Finger erwischt",
+            value: Math.ceil(json.specialFingerUsed[4]) + " Objekte"
+          }, {
+            key: "Spezial-Objekte mit 5 Finger erwischt",
+            value: Math.ceil(json.specialFingerUsed[5]) + " Objekte"
           }, {
             key: "Gesamtspielzeit",
             value: timeFormatter.formatMilliseconds(json.gameTime)
@@ -269,7 +328,8 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
         accuracyX: 1,
         accuracyY: 1,
         accuracySum: 1,
-        points: 0
+        points: 0,
+        specialFingerUsed: [0, 0, 0, 0, 0, 0] // 0 - 5 Fingers
       }
     });
 

@@ -33,7 +33,6 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     layer.onActivate = function() {
 
       gameObjects = [];
-      specialGameObjects = [];
       killAnimationsToRemove = [];
       hitStatsToRemove = [];
       previousHitted = undefined;
@@ -636,7 +635,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
         }
 
         if (gameObject.hitStat === "SPECIAL_KILL") {
-          hitStatToDisplay = gameObject.coordinates.fingerCount + " Finger!"; // on a special kill with leap, show instead the fingers used!
+          hitStatToDisplay = gameObject.specialCount + " Finger!"; // on a special kill with leap, show instead the fingers used!
         } else {
           hitStatToDisplay = Math.ceil(hitStatToDisplay.percentageBothAxis * 100) + " %";
         }
@@ -665,6 +664,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
         stats.getCurrent().updateAccuracy(gameObject.hitStat);
       } else {
         // TODO: Fingerkills have no stats currently, change this!
+        stats.getCurrent().raiseFingerUsedOnSpecial(gameObject.specialCount);
       }
 
     }

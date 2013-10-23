@@ -66,7 +66,8 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
     function perFrame(frame) {
       var handId = 0,
         position,
-        hand;
+        hand,
+        fingerCount = -1;
 
       if (frame.hands === undefined) {
         handsAvailable = false;
@@ -81,6 +82,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
 
       if (handsAvailable) {
         hand = frame.hands[0];
+        fingerCount = hand.fingers.length;
 
         //console.log("x=" + Math.floor(hand.palmPosition[0]) + "y=" + Math.floor(hand.palmPosition[1]));
 
@@ -89,7 +91,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
 
         events.trigger("handFrameNormalized", {
           leapCoordinates: true,
-          fingerCount: hand.fingers.length,
+          fingerCount: fingerCount,
           position: position,
           depth: leapZToNormalize(hand.palmPosition[2])
         });
@@ -106,7 +108,8 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
       events.trigger("frameStats", {
         detected: handsAvailable,
         outside: outsideScreen,
-        movement: movement
+        movement: movement,
+        fingerCount: fingerCount
       });
 
       lastHand = hand;
