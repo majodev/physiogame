@@ -8,26 +8,25 @@
   }
 
   function featureReport() {
-    return "-- Status --<br />audio: " + canAudio + "<br />render: " + canRender +
-      "<br />svg: " + canStats + "<br />float32: " + canFloat32Array +
-      "<br />storage: " + canStorage;
+    return "-- Status Report --<br />HTML5 Audio: " + canAudio + "<br />HTML5 Canvas/WebGL: " + canRender +
+      "<br />Float32Array Support: " + canFloat32Array +
+      "<br />LocalStorage Support: " + canStorage;
   }
 
   // FEATURE-DETECTION...
   var canAudio = Modernizr.audio.ogg || Modernizr.audio.mp3 || Modernizr.audio.m4a;
   var canRender = Modernizr.canvas || Modernizr.webgl;
-  var canStats = Modernizr.svg;
   var canFloat32Array = (typeof Float32Array !== "undefined") ? true : false;
   var canStorage = Modernizr.localstorage;
 
-  if (canAudio && canRender && canStats && canFloat32Array && canStorage) {
+  if (canAudio && canRender && canFloat32Array && canStorage) {
     // allowed to continue with loading the application...
-    writeStatus("Passed feature detection!<br />Please wait...<br />");
+    writeStatus("Mindestvoraussetzungen werden erfüllt!<br />Bitte warten...<br />");
   } else {
     // failed feature detection!
-    writeStatus(":(<br /><br />Sorry, your browser is too old.<br />" +
-      "Please update to the LATEST version of IE, Firefox, Chrome, Safari or Opera!<br /><br />" +
-      "<a href=\"http://www.google.at/intl/de/chrome/\">Best played in Google Chrome</a><br /><br />" +
+    writeStatus(":(<br /><br />Ohje, dein Browser ist leider zu alt.<br />" +
+      "Bitte aktualisiere auf die neueste Version!<br /><br />" +
+      "<a href=\"http://www.google.at/intl/de/chrome/\">Empfohlener Browser: Google Chrome</a><br /><br />" +
       featureReport());
     // stop immetiately with further processing!
     return;

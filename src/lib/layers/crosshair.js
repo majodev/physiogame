@@ -36,7 +36,8 @@ define(["base/displayManager", "base/leapManager", "game/textures",
       };
 
       crosshairSprite.alpha = 0.8;
-
+      
+      crosshairSprite.visible = false;
       this.pixiLayer.addChild(crosshairSprite);
 
     };
@@ -46,6 +47,7 @@ define(["base/displayManager", "base/leapManager", "game/textures",
     };
 
     layer.onClick = layer.onInitial = layer.onMove = layer.onHandFrame = function(coordinates) {
+      crosshairSprite.visible = true;
       crosshairSprite.position = coordinates.position;
       crosshairSprite.scale.x = crosshairSprite.scale.y = 0.35 + coordinates.depth;
     };

@@ -5,7 +5,7 @@ define(["appConfig", "log", "loaders/preloader", "loaders/indicator",
 
     (function preloading() {
 
-      status.write("\nPreloading assets");
+      status.write("\nLade Assets");
       indicator.enable();
 
       log.setLevel(appConfig.get("logLevel"));
@@ -19,7 +19,7 @@ define(["appConfig", "log", "loaders/preloader", "loaders/indicator",
     function preloadingFinished() {
 
       log.debug("preloadingFinished");
-      status.write("\n\nInitializing physiogame");
+      status.write("\n\nInitialisiere " + appConfig.get("applicationName"));
 
       // dynamic require! - dont forget to INCLUDE within build options
       // THIS IS NOT SEEN BY THE R.JS OPTIMIZER!

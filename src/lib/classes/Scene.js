@@ -45,11 +45,14 @@ define(["underscore", "PIXI", "utils/publisher", "base/leapManager",
         this.backgroundMusic = options.backgroundMusic;
       }
 
+      // 
       this.lastInteraction = {
         position: {
           x: 634,
           y: 300
-        }
+        },
+        leapCoordinates: false,
+        depth: leapManager.LEAP_Z_NORMALIZED_MAX_STEP
       };
 
       this.pixiScene.interactive = true;
