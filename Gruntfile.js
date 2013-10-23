@@ -38,6 +38,14 @@ module.exports = function(grunt) {
           src: ["**/*.json", "**/*.html"],
           dest: "build/"
         }]
+      },
+      "legal": {
+        files: [{
+          expand: true,
+          cwd: ".",
+          src: ["LICENSE.md"],
+          dest: "build/"
+        }]
       }
     },
     uglify: {
@@ -122,15 +130,19 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask("default", "shell:mocha-phantomjs");
-  grunt.registerTask("build", ["modernizr", "shell:build-almond", "uglify" ,"copy:build-templates", "copy:assets", "cssmin"]);
+  grunt.registerTask("build", ["modernizr", "shell:build-almond", "uglify" ,"copy:build-templates", "copy:assets", "cssmin", "copy:legal"]);
 };
+
+
+
+// HOW TO TEST
 
 // 1. make sure a http-server is running:
 // (parameter -c-1 === cache for -1 seconds === dont cache)
 // http-server -c-1
 
 // 2. optional: run tests once:
-// grunt shell:mocha-phantomjs --OR-- grunt
+// grunt shell:mocha-phantomjs
 
-// 3. start watcher:
+// 3. start test watcher:
 // grunt watch

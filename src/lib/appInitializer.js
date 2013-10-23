@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Physiogame <https://github.com/majodev/physiogame>
+ * Copyright 2013 Mario Ranftl (@majodev) <http://majodev.com>
+ * Available under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
+ */
 define(["appConfig", "log", "loaders/preloader", "loaders/indicator",
   "loaders/status"],
   function(appConfig, log, preloader, indicator,
