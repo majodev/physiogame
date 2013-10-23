@@ -20,9 +20,9 @@ define(["log", "base/displayManager", "base/leapManager",
       sceneManager.events.on("resettingScene", onSceneChanging);
 
       // definition of startscene of game
-      //sceneManager.pushScene("startscreen");
+      sceneManager.pushScene("startscreen");
       //sceneManager.pushScene("shooting");
-      sceneManager.pushScene("credits");
+      //sceneManager.pushScene("credits");
     }
 
     function onSceneChanging(sceneID, oldSceneID) {
