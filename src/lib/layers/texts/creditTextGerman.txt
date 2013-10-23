@@ -2,7 +2,7 @@ Dieses Spiel entstand im Rahmen des praktischen Teils meiner Masterarbeit
 am Studiengang Informationsmanagement an der FH JOANNEUM, Graz.
 Kooperation mit den Studiengängen Physiotherapie und Ergotherapie.
 
-Folgende externen Assets wurden aus anderen Quellen verwendet:
+Folgende Assets wurden aus anderen Quellen verwendet:
 
 Balloons Vectors by Stuart Bainbridge
 Creative Commons Attribution-Share Alike 3.0 License.

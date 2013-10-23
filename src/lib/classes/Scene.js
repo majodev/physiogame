@@ -1,6 +1,24 @@
-define(["underscore", "PIXI", "utils/publisher", "base/leapManager"],
-  function(_, PIXI, publisher, leapManager) {
+define(["underscore", "PIXI", "utils/publisher", "base/leapManager", "moment"],
+  function(_, PIXI, publisher, leapManager, moment) {
 
+    // Shared Interaction Hooks: Lock Mouse-Input if Leap is active for Milliseconds
+    var lastLeapInputMoment,
+      LOCK_MOUSE_AFTER_LEAP_INPUT_FOR_MS = 1000;
+
+    function registerLeapInput() {
+      lastLeapInputMoment = moment();
+    }
+
+    function checkMouseInputAllowed() {
+      if (_.isUndefined(lastLeapInputMoment) === false) {
+        if (moment().diff(lastLeapInputMoment) <= LOCK_MOUSE_AFTER_LEAP_INPUT_FOR_MS) {
+          return false; // mouse input NOT allowed
+        } else {
+          lastLeapInputMoment = undefined; // reset so check doesn't have to occur
+        }
+      }
+      return true; // mouse input allowed
+    }
 
     var Scene = function(options) {
 
@@ -17,7 +35,7 @@ define(["underscore", "PIXI", "utils/publisher", "base/leapManager"],
       this.layers = options.layers;
       this.id = options.id;
 
-      if(_.isUndefined(options.backgroundMusic) === false) {
+      if (_.isUndefined(options.backgroundMusic) === false) {
         this.backgroundMusic = options.backgroundMusic;
       }
 
@@ -29,26 +47,31 @@ define(["underscore", "PIXI", "utils/publisher", "base/leapManager"],
       };
 
       this.pixiScene.interactive = true;
-      
+
       // mouse and touch listeners...
       this.pixiScene.mousedown = this.pixiScene.tap = function(interactionData) {
-        self.onClick({
-          leapCoordinates: false,
-          position: interactionData.global,
-          depth: -leapManager.LEAP_Z_NORMALIZED_MAX_STEP // depth MAX normalized leap mouse/touch emu
-        });
+        if (checkMouseInputAllowed() === true) { // shared interaction hook
+          self.onClick({
+            leapCoordinates: false,
+            position: interactionData.global,
+            depth: -leapManager.LEAP_Z_NORMALIZED_MAX_STEP // depth MAX normalized leap mouse/touch emu
+          });
+        }
       };
-      
+
       this.pixiScene.mouseup = this.pixiScene.touchend = this.pixiScene.mousemove = this.pixiScene.touchmove = function(interactionData) {
-        self.onMove({
-          leapCoordinates: false,
-          position: interactionData.global,
-          depth: leapManager.LEAP_Z_NORMALIZED_MAX_STEP // depth CENTER normalized leap mouse/touch emu
-        });
+        if (checkMouseInputAllowed() === true) { // shared interaction hook
+          self.onMove({
+            leapCoordinates: false,
+            position: interactionData.global,
+            depth: leapManager.LEAP_Z_NORMALIZED_MAX_STEP // depth CENTER normalized leap mouse/touch emu
+          });
+        }
       };
 
       // leap listeners...
-      leapManager.events.on("handFrameNormalized", function (coordinates) {
+      leapManager.events.on("handFrameNormalized", function(coordinates) {
+        registerLeapInput(); // shared interaction hook
         self.onHandFrame(coordinates);
       });
 
@@ -106,7 +129,7 @@ define(["underscore", "PIXI", "utils/publisher", "base/leapManager"],
       },
       setInitialPosition: function(coordinates) {
         var initial = this.lastInteraction;
-        if(_.isUndefined(coordinates) === false) {
+        if (_.isUndefined(coordinates) === false) {
           this.lastInteraction = coordinates;
           initial = coordinates;
         }
