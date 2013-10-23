@@ -530,6 +530,30 @@ define([],
           time: "milli"
         }
       },
+      leapSpecialsHitAfterMs: {
+        def: 200,
+        min: 100,
+        max: 1000,
+        step: 50,
+        ui: "slider",
+        cat: "leap",
+        desc: "Zeit bevor Spezialobjekte ausgelößt werden",
+        format: {
+          time: "milli"
+        }
+      },
+      leapLocksMouseAndTouchForMs: {
+        def: 1000,
+        min: 500,
+        max: 5000,
+        step: 250,
+        ui: "slider",
+        cat: "leap",
+        desc: "Zeitraum Interaktion sperrt Maus/Touch",
+        format: {
+          time: "milli"
+        }
+      },
       objectHittedScaleExplodes: {
         def: 1.8,
         min: 0.1,

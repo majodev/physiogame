@@ -20,9 +20,13 @@ define(["underscore", "gameConfig"],
     function setKioskMode(enabled) {
       if(available === true) {
         if(enabled === true) {
-          currentWindow.enterKioskMode();
+          if(currentWindow.isKioskMode === false) {
+            currentWindow.enterKioskMode();
+          }
         } else {
-          currentWindow.leaveKioskMode();
+          if(currentWindow.isKioskMode === true) {
+            currentWindow.leaveKioskMode();
+          }
         }
       }
     }

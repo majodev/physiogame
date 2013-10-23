@@ -1,9 +1,15 @@
-define(["underscore", "PIXI", "utils/publisher", "base/leapManager", "moment"],
-  function(_, PIXI, publisher, leapManager, moment) {
+define(["underscore", "PIXI", "utils/publisher", "base/leapManager",
+  "moment", "gameConfig"],
+  function(_, PIXI, publisher, leapManager,
+    moment, gameConfig) {
 
     // Shared Interaction Hooks: Lock Mouse-Input if Leap is active for Milliseconds
     var lastLeapInputMoment,
-      LOCK_MOUSE_AFTER_LEAP_INPUT_FOR_MS = 1000;
+      lockMouseInputForMs = gameConfig.get("leapLocksMouseAndTouchForMs");
+
+    gameConfig.on("change", function(model, options) {
+      lockMouseInputForMs = model.get("leapLocksMouseAndTouchForMs");
+    });
 
     function registerLeapInput() {
       lastLeapInputMoment = moment();
@@ -11,7 +17,7 @@ define(["underscore", "PIXI", "utils/publisher", "base/leapManager", "moment"],
 
     function checkMouseInputAllowed() {
       if (_.isUndefined(lastLeapInputMoment) === false) {
-        if (moment().diff(lastLeapInputMoment) <= LOCK_MOUSE_AFTER_LEAP_INPUT_FOR_MS) {
+        if (moment().diff(lastLeapInputMoment) <= lockMouseInputForMs) {
           return false; // mouse input NOT allowed
         } else {
           lastLeapInputMoment = undefined; // reset so check doesn't have to occur

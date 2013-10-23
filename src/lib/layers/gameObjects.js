@@ -73,7 +73,8 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
         objectHittedScaleExplodes: gameConfig.get("objectHittedScaleExplodes"),
         objectNormalSpeedStep: gameConfig.get("objectNormalSpeedStep"),
         objectHittedSpeedMin: gameConfig.get("objectHittedSpeedMin"),
-        objectNormalSpeedMax: gameConfig.get("objectNormalSpeedMax")
+        objectNormalSpeedMax: gameConfig.get("objectNormalSpeedMax"),
+        leapSpecialsHitAfterMs: gameConfig.get("leapSpecialsHitAfterMs")
       };
 
 
@@ -188,12 +189,21 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
         y: 1
       };
       overlayLeap.position.y = 80;
+
+      var circleLeap = new PIXI.Graphics();
+      circleLeap.position.x = 0;
+      circleLeap.position.y = 59;
+
       special.specialCount = specialCount;
       special.isSpecial = true;
       special.initialCount = specialCount;
+
       special.addChild(overlayText);
+      special.addChild(circleLeap);
       special.addChild(overlayLeap);
+
       special.overlay = overlayText;
+      special.circleLeap = circleLeap;
       special.overlayLeap = overlayLeap;
 
       if (autoadd === true) {
@@ -450,6 +460,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
             } else {
               // no leap event, nor hitted, clear visible leap display of special element...
               gameObject.overlayLeap.visible = false;
+              gameObject.circleLeap.visible = false;
             }
 
             // FOR MOUSE/TOUCH
@@ -486,6 +497,8 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     }
 
     function specialObjectCheckLeap(specialObject) {
+      var diff = 0;
+
       // set the graphical representation of the finger count...
       redrawVisualsFingerForSpecialObjectLeap(specialObject);
 
@@ -493,29 +506,37 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       if (specialObject.coordinates.fingerCount === specialObject.specialCount) {
 
         if (_.isUndefined(specialObject.leapFingerMatchFirstMoment) === false) {
-          // increase diff and then check...
-          if (moment().diff(specialObject.leapFingerMatchFirstMoment) >= 200) {
-            // allowed.
+          // increase diff and then check.
+          diff = moment().diff(specialObject.leapFingerMatchFirstMoment);
+          if (diff >= opt.leapSpecialsHitAfterMs) {
+            // allowed to explode!
             // As a bonus for leap players, a object killed with this way dowsn't
             // count to the accuracy, flag "SPECIAL_KILL"
             specialObject.hitStat = "SPECIAL_KILL";
             return true; // should explode now!
-          } else {
-            // not allowed now.
           }
         } else {
           // first moment when hit with right finger count, save moment.
           specialObject.leapFingerMatchFirstMoment = moment();
         }
-
-        return false; // allowed moment diff did not match, no boom.
       } else {
         // fingers don't match, reset leapFingerMatchFirstMoment.
         specialObject.leapFingerMatchFirstMoment = undefined;
-
-
-        return false;
       }
+
+      // not allowed now to explode but draw indicator how much time has passed.
+      redrawVisualsCircleForSpecialObjectLeap(specialObject, diff / opt.leapSpecialsHitAfterMs);
+
+      return false; // dont explode now.
+    }
+
+    function redrawVisualsCircleForSpecialObjectLeap(specialObject, percentage) {
+      specialObject.circleLeap.visible = true;
+
+      specialObject.circleLeap.clear();
+      specialObject.circleLeap.beginFill(0x00FF00, percentage); // increase alpha with diff...
+      specialObject.circleLeap.drawCircle(0, 0, 40 * percentage); // target radius is 20...
+      specialObject.circleLeap.endFill();
     }
 
     function redrawVisualsFingerForSpecialObjectLeap(specialObject) {
