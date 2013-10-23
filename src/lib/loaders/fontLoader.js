@@ -19,6 +19,8 @@ define(["log", "WebFont", "utils/publisher", "appConfig", "underscore",
           //log.debug("fonts: fontloading " + familyName);
         },
         fontactive: function(familyName, fvd) {
+          //console.dir(familyName);
+          //console.dir(fvd);
           log.debug("font loaded: " + familyName + ", " + fvd);
           status.touch();
           //status.write("fonts: loaded " + familyName + ", " + fvd);

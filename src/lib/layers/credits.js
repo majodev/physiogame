@@ -131,7 +131,7 @@ define(["classes/Layer", "PIXI", "game/textures",
       });
 
       creditsHeader.position.x = 6;
-      creditsHeader.position.y = -385;
+      creditsHeader.position.y = -390;
       creditsHeader.anchor.x = 0.5;
       creditsHeader.anchor.y = 0;
     }

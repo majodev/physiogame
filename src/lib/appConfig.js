@@ -67,8 +67,8 @@ define(["backbone"],
       }],
       soundExtensions: [".ogg", ".mp3", "m4a"],
       fonts: {
-        google: {
-          families: ['Arvo:400,700,400italic,700italic:latin']
+        custom: {
+          families: ['Arvo:n4,i4,n7,i7']
         }
       },
       spinnerTargetID: "preloaderSpinner",

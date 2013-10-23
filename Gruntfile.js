@@ -27,7 +27,12 @@ module.exports = function(grunt) {
     copy: {
       "assets": {
         files: [{
-          src: ["assets/**/*.json", "assets/**/*.png", "assets/**/*.mp3", "assets/**/*.ogg", "assets/**/*.m4a", "!assets/sounds/old/**/*.*", "!assets/sprites/old/**/*.*", "!assets/old/**/*.*"],
+          src: ["assets/**/*.json", "assets/**/*.png", "assets/**/*.mp3",
+            "assets/**/*.ogg", "assets/**/*.m4a", "assets/**/*.eot",
+            "assets/**/*.ttf", "assets/**/*.woff",
+            "!assets/sounds/old/**/*.*", "!assets/sprites/old/**/*.*",
+            "!assets/old/**/*.*"
+          ],
           dest: "build/"
         }]
       },
@@ -60,7 +65,11 @@ module.exports = function(grunt) {
         banner: '/*! <%= pkg.name %> v<%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd HH:MM:s") %> */'
       },
       css: {
-        src: ["src/vendor/bootstrap/dist/css/bootstrap.css", "src/vendor/bootstrap-slider/css/slider.css", "app.css"],
+        src: ["src/vendor/bootstrap/dist/css/bootstrap.css",
+          "src/vendor/bootstrap-slider/css/slider.css",
+          "fonts.css",
+          "app.css"
+        ],
         dest: "build/app.min.css"
       }
     },
@@ -130,7 +139,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask("default", "shell:mocha-phantomjs");
-  grunt.registerTask("build", ["modernizr", "shell:build-almond", "uglify" ,"copy:build-templates", "copy:assets", "cssmin", "copy:legal"]);
+  grunt.registerTask("build", ["modernizr", "shell:build-almond", "uglify", "copy:build-templates", "copy:assets", "cssmin", "copy:legal"]);
 };
 
 
