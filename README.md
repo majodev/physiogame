@@ -39,48 +39,10 @@ No internationalization! - only german texts for now.
 <h2>Links</h2>
 <a href="https://github.com/majodev/leap-requirejs-optimization-error">resolving r.js and leapjs error</a>
 
-<h2>Credits</h2>
-practical part of my master thesis for FH JOANNEUM, Graz, Austria (no kangaroos)
+<h2>Copyright and Licenses</h2>
+Sourcecode licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
+Assets licensed under Attribution-ShareAlike 3.0 Unported
 
-FH JOANNEUM advanced information management master degree program
-
-in cooperation with FH JOANNEUM occupational therapy and physiotherapy
-
-I would like to thank these artists for using their assets:  
-
-Balloons Vectors by Stuart Bainbridge 
-
-Creative Commons Attribution-Share Alike 3.0 License. 
-
-Aliens and explosion animation by PIXI.js team 
-
-MIT License 
-
-Webfont Arvo by Anton Koovit
-
-SIL Open Font License, 1.1 
-
-All background-music was published under the Creative Commons Zero license in the open game art bundle: http://open.commonly.cc/
-
-Used music:
-
-from Stratkat
-
-* Elevator Music (main)
-* 8-bit loop (round)
-* xylophone (credits)
-
-from Epic Battle Fantasy III
-
-* Victory Theme (Faded) (win)
-
-All other assets are by Mario Ranftl, BSc. (@majodev) MIT License 
-
-A special THANK YOU goes to: 
-
-@jrburke, @paulirish, @nischi, C.A.F. and NICI <3
-
-<h2>Copyright</h2>
-MIT license - see LICENSE.md for further information
+Please see LICENSE.md for further information of 3rd party licenses (used assets an libs)
 
 (c) 2013 Mario Ranftl (<a href="http://www.majodev.com">majodev</a>).

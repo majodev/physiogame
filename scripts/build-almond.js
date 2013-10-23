@@ -16,7 +16,7 @@ var config = {
       return contents;
     }
   },
-  preserveLicenseComments: false,
+  preserveLicenseComments: true,
   // heads up: app init and gameManager is loaded via require dynamically, hence include!
   include: ["appInitializer", "base/gameManager"],
   logLevel: 0,
