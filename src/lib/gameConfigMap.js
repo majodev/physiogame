@@ -81,7 +81,7 @@ define([],
         desc: "Texturpaket der Spiel-Objekte"
       },
       explosionTexture: {
-        def: "explosions",
+        def: "popExplosions",
         opt: [{
           id: "explosions",
           desc: "Echtexplosion"
@@ -101,6 +101,29 @@ define([],
         enabled: {
           id: "explosionTexture",
           value: "explosions"
+        },
+      },
+      crosshairTexture: {
+        def: "crosshair",
+        opt: [{
+          id: "crosshair",
+          desc: "Fadenkreuz"
+        }, {
+          id: "crosshairLeapStyle",
+          desc: "Hand"
+        }],
+        ui: "dropdown",
+        cat: "visual",
+        desc: "Textur des Zeigers"
+      },
+      crosshairTextureRotate: {
+        def: true,
+        ui: "toggle",
+        cat: "visual",
+        desc: "Fadenkreuz fortwährend drehen",
+        enabled: {
+          id: "crosshairTexture",
+          value: "crosshair"
         },
       },
       gameMode: {

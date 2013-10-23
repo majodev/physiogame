@@ -4,6 +4,7 @@ define(["PIXI", "appConfig", "utils/zeroPad", "log"],
     var atlas = {
         background: undefined,
         crosshair: undefined,
+        crosshairLeapStyle: undefined,
         aliens: [],
         explosions: [],
         popExplosions: [],
@@ -27,6 +28,9 @@ define(["PIXI", "appConfig", "utils/zeroPad", "log"],
 
       // add crosshair
       atlas.crosshair = getTextureByName("assets/sprites/crosshair.png");
+
+      // add crosshair styled as leap
+      atlas.crosshairLeapStyle = getTextureByName("assets/sprites/crosshair-leapstyle.png");
 
       // add fh joanneum logo
       atlas.fhjoanneumlogo = getTextureByName("assets/sprites/fh-joanneum-logo.png");

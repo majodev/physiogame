@@ -1,8 +1,10 @@
 define(["base/displayManager", "base/leapManager", "game/textures",
-    "PIXI", "utils/publisher", "classes/Layer", "moment", "underscore"
+    "PIXI", "utils/publisher", "classes/Layer", "moment", "underscore",
+    "gameConfig"
   ],
   function(displayManager, leapManager, textures,
-    PIXI, publisher, Layer, moment, _) {
+    PIXI, publisher, Layer, moment, _,
+    gameConfig) {
 
     var layer = new Layer({
       listeners: {
@@ -15,12 +17,17 @@ define(["base/displayManager", "base/leapManager", "game/textures",
     });
 
     var crosshairSprite,
+      crosshairTexture,
+      rotateCrosshair,
       lastLeapInput,
       LOCK_MOUSE_AFTER_LEAP_INPUT_FOR_MS = 1000;
 
     layer.onActivate = function() {
+      
+      crosshairTexture = textures.atlas[gameConfig.get("crosshairTexture")];
+      rotateCrosshair = gameConfig.checkKeyIsEnabled("crosshairTextureRotate") && gameConfig.get("crosshairTextureRotate");
 
-      crosshairSprite = new PIXI.Sprite(textures.atlas.crosshair);
+      crosshairSprite = new PIXI.Sprite(crosshairTexture);
       
       crosshairSprite.anchor = {
         x: 0.5,
@@ -60,7 +67,9 @@ define(["base/displayManager", "base/leapManager", "game/textures",
 
 
     function onRenderRotate() {
-      crosshairSprite.rotation += 0.08;
+      if(rotateCrosshair === true) {
+        crosshairSprite.rotation += 0.08;
+      }
     }
 
     return layer;
