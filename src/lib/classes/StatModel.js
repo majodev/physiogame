@@ -266,9 +266,9 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
         finished: false,
         started: false,
         locked: false,
-        accuracyX: 0,
-        accuracyY: 0,
-        accuracySum: 0,
+        accuracyX: 1,
+        accuracyY: 1,
+        accuracySum: 1,
         points: 0
       }
     });

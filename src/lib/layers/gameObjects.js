@@ -1,13 +1,13 @@
 define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     "base/soundBridge", "classes/Layer",
-    "game/stats",
+    "game/stats", "moment",
     "game/behaviours/targetBehaviour", "game/behaviours/alphaBehaviour",
     "game/behaviours/scaleBehaviour", "game/behaviours/speedBehaviour",
     "game/timerIntro", "game/timerRound", "utils/hitstatMiddlepoint"
   ],
   function(textures, gameConfig, hittest, _, PIXI,
     soundBridge, Layer,
-    stats,
+    stats, moment,
     targetBehaviour, alphaBehaviour,
     scaleBehaviour, speedBehaviour,
     timerIntro, timerRound, hitstatMiddlepoint) {
@@ -259,6 +259,12 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
             if (hitted === true) {
               if (_.isUndefined(previousHitted) === false && previousHitted !== gameObjects[i]) {
                 soundBridge.play("hitted");
+
+                if (gameObjects[i].isSpecial === true && coordinates.leapCoordinates === true) {
+                  // newly selected special with leap interaction
+                  // reset FirstMoment for Finger evaluation to undefined 
+                  gameObjects[i].leapFingerMatchFirstMoment = undefined;
+                }
               }
 
               // where hitted? Middlepoint?
@@ -366,10 +372,10 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
             createExplosion(gameObject);
             createHitStat(gameObject);
 
-            if(gameObject.isSpecial === true) {
+            if (gameObject.isSpecial === true) {
               stats.getCurrent().raiseSpecial();
             }
-            
+
             stats.getCurrent().raiseScore();
 
             // finally clear the gameObject from the array and kill the gameObject
@@ -480,29 +486,74 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     }
 
     function specialObjectCheckLeap(specialObject) {
-      specialObject.overlayLeap.visible = true;
+      // set the graphical representation of the finger count...
+      redrawVisualsFingerForSpecialObjectLeap(specialObject);
+
+      // check if finger count matches...
       if (specialObject.coordinates.fingerCount === specialObject.specialCount) {
 
-        // it should explode now immediately. 
-        // As a bonus for leap players, a object killed with this way dowsn't count to the accuracy! 
-        specialObject.hitStat = "SPECIAL_KILL";
-        return true; // should explode now!
-      } else {
-        // set the indicator in the object how many fingers are left to show!
-        if (_.isUndefined(specialObject.leapLastFingerCount) === false) {
-          if (specialObject.leapLastFingerCount === specialObject.coordinates.fingerCount) {
-            // the same, dont reset the leap text as it saves us performance
+        if (_.isUndefined(specialObject.leapFingerMatchFirstMoment) === false) {
+          // increase diff and then check...
+          if (moment().diff(specialObject.leapFingerMatchFirstMoment) >= 200) {
+            // allowed.
+            // As a bonus for leap players, a object killed with this way dowsn't
+            // count to the accuracy, flag "SPECIAL_KILL"
+            specialObject.hitStat = "SPECIAL_KILL";
+            return true; // should explode now!
           } else {
-            // has changed to last time, reset it.
-            specialObject.overlayLeap.setText(specialObject.coordinates.fingerCount);
-            specialObject.leapLastFingerCount = specialObject.coordinates.fingerCount;
+            // not allowed now.
           }
         } else {
-          // was never set, changed the text as we dont know whats on the and set a helper counter.
+          // first moment when hit with right finger count, save moment.
+          specialObject.leapFingerMatchFirstMoment = moment();
+        }
+
+        return false; // allowed moment diff did not match, no boom.
+      } else {
+        // fingers don't match, reset leapFingerMatchFirstMoment.
+        specialObject.leapFingerMatchFirstMoment = undefined;
+
+
+        return false;
+      }
+    }
+
+    function redrawVisualsFingerForSpecialObjectLeap(specialObject) {
+      // set the indicator in the object how many fingers are left to show!
+      specialObject.overlayLeap.visible = true;
+      setSpecialObjectLeapOverlayStyle(specialObject);
+      if (_.isUndefined(specialObject.leapLastFingerCount) === false) {
+        if (specialObject.leapLastFingerCount === specialObject.coordinates.fingerCount) {
+          // the same, dont reset the leap text as it saves us performance
+        } else {
+          // has changed to last time, reset it.
           specialObject.overlayLeap.setText(specialObject.coordinates.fingerCount);
           specialObject.leapLastFingerCount = specialObject.coordinates.fingerCount;
         }
-        return false;
+      } else {
+        // was never set, changed the text as we dont know whats on the and set a helper counter.
+        specialObject.overlayLeap.setText(specialObject.coordinates.fingerCount);
+        specialObject.leapLastFingerCount = specialObject.coordinates.fingerCount;
+      }
+    }
+
+    function setSpecialObjectLeapOverlayStyle(specialObject) {
+      if (specialObject.coordinates.fingerCount === specialObject.specialCount) {
+        specialObject.overlayLeap.setStyle({
+          font: "bold 30px Arvo",
+          fill: "#00FF00",
+          align: "center",
+          stroke: "#AAFFAA",
+          strokeThickness: 5
+        });
+      } else {
+        specialObject.overlayLeap.setStyle({
+          font: "bold 30px Arvo",
+          fill: "#FF0000",
+          align: "center",
+          stroke: "#FFAAAA",
+          strokeThickness: 5
+        });
       }
     }
 
