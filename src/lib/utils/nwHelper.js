@@ -2,7 +2,7 @@ define(["underscore", "gameConfig"],
   function(_, gameConfig) {
 
     var available = false,
-      kioskMode,
+      inKioskModeCurrenty = false,
       currentWindow;
 
     (function startup () {
@@ -20,14 +20,17 @@ define(["underscore", "gameConfig"],
     function setKioskMode(enabled) {
       if(available === true) {
         if(enabled === true) {
-          if(currentWindow.isKioskMode === false) {
+          if(inKioskModeCurrenty === false) {
             currentWindow.enterKioskMode();
+            console.log("Entering KioskMode");
           }
         } else {
-          if(currentWindow.isKioskMode === true) {
+          if(inKioskModeCurrenty === true) {
             currentWindow.leaveKioskMode();
+            console.log("Leaving KioskMode");
           }
         }
+        inKioskModeCurrenty = enabled;
       }
     }
 
