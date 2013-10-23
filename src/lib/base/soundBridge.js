@@ -21,6 +21,7 @@ define(["log", "loaders/soundLoader", "gameConfig", "underscore"],
 
     function play(sound) {
       if (audioEnabled) {
+        //log.debug("play: " + sound);
         soundLoader.getSound(sound).play();
       }
     }

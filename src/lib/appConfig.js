@@ -44,6 +44,9 @@ define(["backbone"],
         name: "explosion",
         volume: 0.2
       }, {
+        name: "special_action",
+        volume: 0.1
+      }, {
         name: "hitted",
         volume: 0.08
       }, {

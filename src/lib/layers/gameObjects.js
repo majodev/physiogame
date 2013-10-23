@@ -267,15 +267,6 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
             hitted = hittest(gameObjects[i], hitCord);
             gameObjects[i].hitted = hitted;
             if (hitted === true) {
-              if (_.isUndefined(previousHitted) === false && previousHitted !== gameObjects[i]) {
-                soundBridge.play("hitted");
-
-                if (gameObjects[i].isSpecial === true && coordinates.leapCoordinates === true) {
-                  // newly selected special with leap interaction
-                  // reset FirstMoment for Finger evaluation to undefined 
-                  gameObjects[i].leapFingerMatchFirstMoment = undefined;
-                }
-              }
 
               // where hitted? Middlepoint?
               gameObjects[i].hitStat = hitstatMiddlepoint(coordinates, gameObjects[i]);
@@ -286,6 +277,17 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
               swapGameObjectToTop(gameObjects[i], i, max);
 
               gameObjects[i].depthKick = coordinates.depth;
+
+              // is it a new one?
+              if (_.isUndefined(previousHitted) === false && previousHitted !== gameObjects[i]) {
+                soundBridge.play("hitted");
+
+                if (gameObjects[i].isSpecial === true && coordinates.leapCoordinates === true) {
+                  // newly selected special with leap interaction
+                  // reset FirstMoment for Finger evaluation to undefined 
+                  gameObjects[i].leapFingerMatchFirstMoment = undefined;
+                }
+              }
               previousHitted = gameObjects[i];
               return;
             }
@@ -376,6 +378,10 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
           scaleBehaviour.update(layer, gameObject, opt);
           speedBehaviour.update(layer, gameObject, opt);
 
+          if(gameObject.isSpecial === true) {
+            animateSpecialObjectOverlays(gameObject);
+          }
+
           // when to explode...
           if (checkForExplosion(gameObject) === true) {
 
@@ -401,6 +407,35 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
           introduceGameObject(gameObject);
         }
       }
+    }
+
+    function animateSpecialObjectOverlays(specialObject) {
+      if(specialObject.overlay.scale.x > 1) {
+        specialObject.overlay.scale.x -= 0.05;
+        specialObject.overlay.scale.y -= 0.05;
+        if(specialObject.overlay.scale.x < 1) {
+          specialObject.overlay.scale.x = 1;
+          specialObject.overlay.scale.y = 1;
+        }
+      }
+      if(specialObject.overlayLeap.scale.x > 1) {
+        specialObject.overlayLeap.scale.x -= 0.05;
+        specialObject.overlayLeap.scale.y -= 0.05;
+        if(specialObject.overlayLeap.scale.x < 1) {
+          specialObject.overlayLeap.scale.x = 1;
+          specialObject.overlayLeap.scale.y = 1;
+        }
+      }
+    }
+
+    function bumpSpecialObjectOverlayLeap(specialObject) {
+      soundBridge.play("special_action");
+      specialObject.overlayLeap.scale.x = specialObject.overlayLeap.scale.y = 1.5;
+    }
+
+    function bumpSpecialObjectOverlayCount(specialObject) {
+      soundBridge.play("special_action");
+      specialObject.overlay.scale.x = specialObject.overlay.scale.y = 1.5;
     }
 
     function introduceGameObject(gameObject) {
@@ -490,6 +525,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
       }
 
       if (specialObject.specialCount >= 0) {
+        bumpSpecialObjectOverlayCount(specialObject);
         return false; //should not explode now.
       } else {
         return true; // should explode now!
@@ -518,6 +554,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
         } else {
           // first moment when hit with right finger count, save moment.
           specialObject.leapFingerMatchFirstMoment = moment();
+          bumpSpecialObjectOverlayLeap(specialObject);
         }
       } else {
         // fingers don't match, reset leapFingerMatchFirstMoment.
