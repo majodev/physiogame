@@ -40,9 +40,10 @@ No internationalization! - only german texts for now.
 <a href="https://github.com/majodev/leap-requirejs-optimization-error">resolving r.js and leapjs error</a>
 
 <h2>Copyright and Licenses</h2>
-Sourcecode licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
-Assets licensed under Attribution-ShareAlike 3.0 Unported
+Sourcecode: GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 
-Please see LICENSE.md for further information of 3rd party licenses (used assets an libs)
+Assets: Attribution-ShareAlike 3.0 Unported
+
+Please see LICENSE.md for further information of 3rd party licenses (used assets and libs)
 
 (c) 2013 Mario Ranftl (<a href="http://www.majodev.com">majodev</a>).

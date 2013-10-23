@@ -167,7 +167,7 @@ define(["classes/Layer", "PIXI", "game/textures",
         creditsScroller.position.y -= SCROLL_SPEED;
         //console.log(scrollToZeroRuntime);
       } else {
-        creditsScroller.alpha -= 0.001;
+        creditsScroller.alpha -= 0.005;
         if (creditsScroller.alpha <= 0) {
           creditsScroller.position.y = layer.height + creditsHeader.height/2;
           creditsScroller.alpha = 1;
