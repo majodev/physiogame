@@ -2,13 +2,15 @@ define(["log", "PIXI",
     "gameConfig", "classes/Layer", "classes/Button",
     "utils/timeFormatter", "game/stats",
     "game/timerRound", "game/timerIntro",
-    "game/gameSession", "base/soundBridge"
+    "game/gameSession", "base/soundBridge",
+    "underscore"
   ],
   function(log, PIXI,
     gameConfig, Layer, Button,
     timeFormatter, stats,
     timerRound, timerIntro,
-    gameSession, soundBridge) {
+    gameSession, soundBridge,
+    _) {
 
     var layer = new Layer({
       listeners: {
@@ -33,7 +35,21 @@ define(["log", "PIXI",
       retryButton,
       INTRO_ROTATE_MAX = 0.02,
       INTRO_ROTATE_STEP = 0.0015,
-      currentStats;
+      currentStats,
+      TIP_TEXTS_ARRAY_CLICK = [
+        "Versuche die Spiel-Objekte mittig zu treffen.",
+        "Spezial-Objekte wollen deine Finger sehen, Spreizen!",
+        "Triff Spezial-Objekte damit sie eine Zahl verlieren.",
+        "Spezial-Objekte geben extra Punkte.",
+        "Versuche im Spielfeld zu bleiben.",
+        "Wenn du den »zurück« Knopf verwendest, speichere ich."
+      ],
+      TIP_TEXTS_ARRAY_SCALE = [
+        "Versuche die Spiel-Objekte mittig zu treffen.",
+        "Genauigkeit ist wichtig, finde die Mitte der Objekte.",
+        "Versuche im Spielfeld zu bleiben.",
+        "Wenn du den »zurück« Knopf verwendest, speichere ich."
+      ];
 
     layer.onActivate = function() {
 
@@ -135,7 +151,7 @@ define(["log", "PIXI",
       animateXRun(winningStatsLabelsText, winningAdded, true);
       animateXRun(winningStatsValuesText, winningAdded, true);
       animateXRun(winningSpecialsText, winningAdded, true);
-      animateXRun(winningPointsText, winningAdded, true);     
+      animateXRun(winningPointsText, winningAdded, true);
     };
 
     function setStartupTexts() {
@@ -155,9 +171,11 @@ define(["log", "PIXI",
       switch (gameConfig.get("gameObjectCondition")) {
         case "objectScale":
           tippText = ("Interaktion: Sie platzen wenn Du sie fokusierst!");
+          tippText += "\nTipp: " + getRandomTipTextScale();
           break;
         case "clickOrDepth":
           tippText = ("Interaktion: Sie platzen wenn Du sie stoßt/anklickst!");
+          tippText += "\nTipp: " + getRandomTipTextClick();
           break;
         default:
           tippText = ("ERROR: KEIN OBJEKTSPIELZIEL!");
@@ -165,13 +183,17 @@ define(["log", "PIXI",
           break;
       }
 
-      tippText += "\nTipp: " + getRandomTipText();
+
 
       tippIntroText.setText(tippText);
     }
 
-    function getRandomTipText() {
-      return "Versuche Sie mittig zu treffen.";
+    function getRandomTipTextScale() {
+      return TIP_TEXTS_ARRAY_SCALE[_.random(0, TIP_TEXTS_ARRAY_SCALE.length - 1)];
+    }
+
+    function getRandomTipTextClick() {
+      return TIP_TEXTS_ARRAY_CLICK[_.random(0, TIP_TEXTS_ARRAY_CLICK.length - 1)];
     }
 
     function animateIntroScale(whichText) {
@@ -314,9 +336,9 @@ define(["log", "PIXI",
         });
         winningSpecialsText = new PIXI.Text("NOTHING", {
           font: "bold 45px Arvo",
-          fill: "#FFFFFF", 
+          fill: "#FFFFFF",
           align: "center",
-          stroke: "#848484", 
+          stroke: "#848484",
           strokeThickness: 3
         });
         winningPointsText = new PIXI.Text("NOTHING", {
@@ -438,7 +460,7 @@ define(["log", "PIXI",
 
         // points text
         var sumPoints = currentStats.get("points");
-        winningPointsText.position.x = layer.width + (layer.width*2);
+        winningPointsText.position.x = layer.width + (layer.width * 2);
         winningPointsText.position.y = 595;
         winningPointsText.anchor.x = 0.5;
         winningPointsText.anchor.y = 0.5;
