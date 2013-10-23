@@ -258,18 +258,40 @@ define(["backbone", "underscore", "gameConfigMap",
                 }
               }
             }
+
+            // check cross-variable-checks defined in gameConfigMap (EQUALS)
+            if (_.isUndefined(gameConfigMap[attrKeys[i]].check) === false) {
+              if (_.isUndefined(gameConfigMap[attrKeys[i]].check.minEquals) === false) {
+                if (this.get(attrKeys[i]) < this.get(gameConfigMap[attrKeys[i]].check.minEquals)) {
+                  return gameConfigMap[attrKeys[i]].desc + " ist " + stripNumberPrecision(this.get(attrKeys[i])) + " muss größer sein als " +
+                    stripNumberPrecision(this.get(gameConfigMap[attrKeys[i]].check.minEquals)) + "(" +
+                    gameConfigMap[gameConfigMap[attrKeys[i]].check.minEquals].desc + ")";
+                }
+              }
+              if (_.isUndefined(gameConfigMap[attrKeys[i]].check.maxEquals) === false) {
+                if (this.get(attrKeys[i]) > this.get(gameConfigMap[attrKeys[i]].check.maxEquals)) {
+                  return gameConfigMap[attrKeys[i]].desc + " ist " + stripNumberPrecision(this.get(attrKeys[i])) + " muss kleiner sein als " +
+                    stripNumberPrecision(this.get(gameConfigMap[attrKeys[i]].check.maxEquals)) + " (" +
+                    gameConfigMap[gameConfigMap[attrKeys[i]].check.maxEquals].desc + ")";
+                }
+              }
+            }
+
+
           }
         }
       },
       defaults: {
         userName: gameConfigMap.userName.def,
         objectsToSpawn: gameConfigMap.objectsToSpawn.def,
-        gameObjectCondition: gameConfigMap.gameObjectCondition.def,
-        probabilitySpecialObject: gameConfigMap.probabilitySpecialObject.def,
         gameMode: gameConfigMap.gameMode.def,
         gameMaxTime: gameConfigMap.gameMaxTime.def,
         gameReattachObjectAfterMs: gameConfigMap.gameReattachObjectAfterMs.def,
         gameReattachObjectMax: gameConfigMap.gameReattachObjectMax.def,
+        gameObjectCondition: gameConfigMap.gameObjectCondition.def,
+        probabilitySpecialObject: gameConfigMap.probabilitySpecialObject.def,
+        specialObjectCountMin: gameConfigMap.specialObjectCountMin.def,
+        specialObjectCountMax: gameConfigMap.specialObjectCountMax.def,
         objectTexture: gameConfigMap.objectTexture.def,
         explosionTexture: gameConfigMap.explosionTexture.def,
         explosionTextureRotate: gameConfigMap.explosionTextureRotate.def,

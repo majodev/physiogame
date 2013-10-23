@@ -47,6 +47,8 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
         gameObjectCondition: gameConfig.get("gameObjectCondition"),
         probabilitySpecialObject: gameConfig.get("probabilitySpecialObject"),
         specialObjectEnabled: gameConfig.checkKeyIsEnabled("probabilitySpecialObject"),
+        specialObjectCountMin: gameConfig.get("specialObjectCountMin"),
+        specialObjectCountMax: gameConfig.get("specialObjectCountMax"),
         gameMaxTime: gameConfig.get("gameMaxTime"),
         gameReattachObjectAfterMs: gameConfig.get("gameReattachObjectAfterMs"),
         gameReattachObjectMax: gameConfig.get("gameReattachObjectMax"),
@@ -165,7 +167,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
 
     function attachNewSpecialGameObject(textureModInt, autoadd) {
       var special = attachNewGameObject(textureModInt, false);
-      var specialCount = _.random(0, 5);
+      var specialCount = _.random(opt.specialObjectCountMin, opt.specialObjectCountMax);
       var overlayText = new PIXI.Text(specialCount, {
         font: "bold 80px Arvo",
         fill: "#FFFFFF",

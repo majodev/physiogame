@@ -47,7 +47,45 @@ define([],
         enabled: {
           id: "gameObjectCondition",
           value: "clickOrDepth"
+        }
+      },
+      specialObjectCountMin: {
+        def: 0,
+        min: 0,
+        max: 5,
+        step: 1,
+        ui: "slider",
+        cat: "general",
+        desc: "Spezial-Objekt minimale Fingerzahl",
+        enabled: {
+          id: "gameObjectCondition",
+          value: "clickOrDepth"
         },
+        format: {
+          post: "Finger"
+        },
+        check: {
+          maxEquals: "specialObjectCountMax"
+        }
+      },
+      specialObjectCountMax: {
+        def: 5,
+        min: 0,
+        max: 5,
+        step: 1,
+        ui: "slider",
+        cat: "general",
+        desc: "Spezial-Objekt maximale Fingerzahl",
+        enabled: {
+          id: "gameObjectCondition",
+          value: "clickOrDepth"
+        },
+        format: {
+          post: "Finger"
+        },
+        check: {
+          minEquals: "specialObjectCountMin"
+        }
       },
       debugLayerVisible: {
         def: false,
@@ -62,7 +100,7 @@ define([],
         step: 500,
         ui: "slider",
         cat: "visual",
-        desc: "Aufbauzeit vor Spielstart",
+        desc: "Einleitungszeit vor Rundenstart",
         format: {
           time: "milli"
         }
@@ -212,7 +250,7 @@ define([],
         }
       },
       fullScreenMode: {
-        def: true,
+        def: false,
         ui: "toggle",
         cat: "visual",
         desc: "Vollbildmodus (kein Kiosk Modus!)",
