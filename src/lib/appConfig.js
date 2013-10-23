@@ -41,14 +41,25 @@ define(["backbone"],
         volume: 0.1
       }, {
         name: "explosion",
-        volume: 0.1
+        volume: 0.2
       }, {
         name: "hitted",
         volume: 0.08
       }, {
-        name: "bg",
-        volume: 0.2,
+        name: "music/bg_credits",
+        volume: 0.1,
         loop: true
+      }, {
+        name: "music/bg_main",
+        volume: 0.1,
+        loop: true
+      }, {
+        name: "music/bg_round",
+        volume: 0.1,
+        loop: true
+      }, {
+        name: "music/bg_win",
+        volume: 0.1
       }],
       soundExtensions: [".ogg", ".mp3", "m4a"],
       fonts: {

@@ -13,19 +13,22 @@ define(["log", "classes/Scene",
         id: "startscreen",
         layers: [background, clouds, debugInfo, welcome, selection, nwSelection,
           leapIndicator, crosshair
-        ]
+        ],
+        backgroundMusic: "music/bg_main"
       }),
       new Scene({
         id: "shooting",
         layers: [background, clouds, debugInfo, gameObjects, gameInfos, goBack,
           leapIndicator, crosshair
-        ]
+        ],
+        backgroundMusic: "music/bg_round"
       }),
       new Scene({
         id: "credits",
         layers: [background, clouds, debugInfo, credits, goBack,
           leapIndicator, crosshair
-        ]
+        ],
+        backgroundMusic: "music/bg_credits"
       })
     ];
 

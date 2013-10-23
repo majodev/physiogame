@@ -59,10 +59,20 @@ MIT License
 Webfont Arvo by Anton Koovit
 
 SIL Open Font License, 1.1 
-        
-TOOLS: node-webkit, Flash, Texture Packer, Audacity, cfxr, Otomata, ImageOptim, ImageAlpha 
 
-FRAMEWORKS and LIBRARIES: requirejs, r.js, bootstrap, handlebars, howler, jquery, keymaster leapjs, loglevel, pixi, polljs, spinjs, text, webfontloader, backbone, grunt, lodash, mocha, chai  
+All background-music was published under the Creative Commons Zero license in the open game art bundle: http://open.commonly.cc/
+
+Used music:
+
+from Stratkat
+
+* Elevator Music (main)
+* 8-bit loop (round)
+* xylophone (credits)
+
+from Epic Battle Fantasy III
+
+* Victory Theme (Faded) (win)
 
 All other assets are by Mario Ranftl, BSc. (@majodev) MIT License 
 

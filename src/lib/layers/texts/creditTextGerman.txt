@@ -1,0 +1,23 @@
+Dieses Spiel entstand im Rahmen des praktischen Teils meiner Masterarbeit 
+am Studiengang Informationsmanagement an der FH JOANNEUM, Graz.
+Kooperation mit den Studiengängen Physiotherapie und Ergotherapie.
+
+Folgende externen Assets wurden aus anderen Quellen verwendet:
+
+Balloons Vectors by Stuart Bainbridge
+Creative Commons Attribution-Share Alike 3.0 License.
+
+Alien sprites and explosion animation by PIXI.js team
+MIT License
+
+Music by The Open Game Art Bundle (Stratkat, Epic Battle Fantasy III)
+Creative Commons Zero License
+
+Webfont Arvo by Anton Koovit
+SIL Open Font License, 1.1
+
+Alle anderen Assets und der Sourcecode sind von mir, Mario Ranftl (@majodev), 
+produziert und unter der MIT License freigegeben.
+
+Ein besonderes Danke für die Unterstützung geht an:
+@jrburke, @nischi, C.A.F. and NICI <3

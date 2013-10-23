@@ -8,7 +8,7 @@ define([],
         desc: "Audio-Effekte abspielen"
       },
       audioBackgroundEnabled: {
-        def: false,
+        def: true,
         ui: "toggle",
         cat: "audio",
         desc: "Audio-Hintergrund abspielen"
@@ -177,7 +177,7 @@ define([],
         }
       },
       cloudsToGenerate: {
-        def: 5,
+        def: 20,
         min: 0,
         max: 100,
         step: 1,

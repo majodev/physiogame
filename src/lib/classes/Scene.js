@@ -17,6 +17,10 @@ define(["underscore", "PIXI", "utils/publisher", "base/leapManager"],
       this.layers = options.layers;
       this.id = options.id;
 
+      if(_.isUndefined(options.backgroundMusic) === false) {
+        this.backgroundMusic = options.backgroundMusic;
+      }
+
       this.lastInteraction = {
         position: {
           x: 634,

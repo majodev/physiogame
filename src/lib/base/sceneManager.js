@@ -1,8 +1,8 @@
 define(["log", "utils/publisher", "base/displayManager", "underscore",
-    "game/sceneMap"
+    "game/sceneMap", "base/soundBridge"
   ],
   function(log, publisher, displayManager, _,
-    sceneMap) {
+    sceneMap, soundBridge) {
 
     var events = publisher.make(),
       currentScene = {
@@ -35,11 +35,17 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
       currentScene.object.activate(lastInteraction);
       displayManager.stage.addChild(currentScene.object.getScene());
 
+      // play the background if defined.
+      if (typeof currentScene.object.backgroundMusic !== 'undefined') {
+        soundBridge.playBackgroundMusic(currentScene.object.backgroundMusic);
+      }
+
       // notify after push complete.
       events.trigger("pushedScene", getCurrentSceneID(), oldID);
     }
 
     // syntactic sugar for exchangeScene public api
+
     function pushScene(id) {
       exchangeScene(id, sceneMap.getScene(id));
     }
@@ -49,6 +55,12 @@ define(["log", "utils/publisher", "base/displayManager", "underscore",
         // notify before resetting
         events.trigger("resettingScene", currentScene.id);
         currentScene.object.reset();
+
+        // play the background if defined.
+        if (typeof currentScene.object.backgroundMusic !== 'undefined') {
+          soundBridge.playBackgroundMusic(currentScene.object.backgroundMusic);
+        }
+
         events.trigger("resettedScene", currentScene.id);
       }
     }

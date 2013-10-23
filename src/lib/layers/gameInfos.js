@@ -487,6 +487,9 @@ define(["log", "PIXI",
 
         // set flag to make animations running...
         winningAdded = true;
+
+        // play the winning sound!
+        soundBridge.playBackgroundMusic("music/bg_win");
       }
     }
 
