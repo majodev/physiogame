@@ -211,11 +211,26 @@ define([],
           post: "Objekte"
         }
       },
+      fullScreenMode: {
+        def: true,
+        ui: "toggle",
+        cat: "visual",
+        desc: "Vollbildmodus (kein Kiosk Modus!)",
+        enabled: {
+          id: "kioskMode",
+          value: false
+        },
+        nwRequired: true
+      },
       kioskMode: {
         def: false,
         ui: "toggle",
         cat: "visual",
-        desc: "Kiosk Modus ([esc] bleibt aktiv!)"
+        desc: "Kiosk Modus ([esc] bleibt aktiv!)",
+        enabled: {
+          id: "fullScreenMode",
+          value: false
+        }
       },
       hideMouseCursor: {
         def: true,

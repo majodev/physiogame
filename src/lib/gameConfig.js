@@ -66,6 +66,14 @@ define(["backbone", "underscore", "gameConfigMap",
       },
       checkKeyIsEnabled: function(key) {
 
+        if(_.isUndefined(gameConfigMap[key].nwRequired) === false && gameConfigMap[key].nwRequired === true) {
+          // check if node-webkit is available...
+          if(_.isUndefined(window.nwWindow) === true) {
+            // node-webkit test not passed!
+            return false;
+          }
+        }
+
         // check if variable should be even returned (enabled flag in gameConfigMap)
         if (_.isUndefined(gameConfigMap[key].enabled) === false) {
 
@@ -273,6 +281,7 @@ define(["backbone", "underscore", "gameConfigMap",
         accuracyTextsEnabled: gameConfigMap.accuracyTextsEnabled.def,
         hideMouseCursor: gameConfigMap.hideMouseCursor.def,
         debugLayerVisible: gameConfigMap.debugLayerVisible.def,
+        fullScreenMode: gameConfigMap.fullScreenMode.def,
         kioskMode: gameConfigMap.kioskMode.def,
         audioEnabled: gameConfigMap.audioEnabled.def,
         audioBackgroundEnabled: gameConfigMap.audioBackgroundEnabled.def,
