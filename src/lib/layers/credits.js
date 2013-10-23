@@ -8,20 +8,22 @@ define(["classes/Layer", "PIXI", "game/textures",
         render: true
       }
     }),
+      balloon,
       creditsText,
       creditsTextContainer,
       fhlogo,
       majodevlogo,
       creditsHeader,
-      ROTATE_MAX = 0.04,
-      ROTATE_STEP = 0.0003,
+      ROTATE_MAX = 0.06,
+      ROTATE_STEP = 0.0012,
       SCROLL_SPEED = 1,
       WORDWRAP = 900,
       scrollToZeroRuntime = 0,
       OFFSET_TO_ZERO = 70,
+      OFFSET_BALLOON = 45,
       currentStep,
       creditsTextMask,
-      creditsHeadLogosTextCreated = false,
+      creditsPlainObjectsCreated = false,
       creditsScroller;
 
     layer.onActivate = function() {
@@ -30,11 +32,12 @@ define(["classes/Layer", "PIXI", "game/textures",
 
       // container
 
-      if (creditsHeadLogosTextCreated === false) {
+      if (creditsPlainObjectsCreated === false) {
         createHeader();
         createLogos();
         createCreditsText();
-        creditsHeadLogosTextCreated = true;
+        createBalloon();
+        creditsPlainObjectsCreated = true;
       }
 
       createCreditsContainer();
@@ -44,6 +47,7 @@ define(["classes/Layer", "PIXI", "game/textures",
       creditsTextContainer.addChild(creditsScroller);
 
       // add childs to scroller
+      creditsScroller.addChild(balloon);
       creditsScroller.addChild(creditsHeader);
       creditsScroller.addChild(creditsText);
       creditsScroller.addChild(majodevlogo);
@@ -78,6 +82,22 @@ define(["classes/Layer", "PIXI", "game/textures",
       };
     }
 
+    function createBalloon() {
+      balloon = new PIXI.Sprite(textures.atlas.balloons[2]);
+
+      // set its initial values...
+      balloon.anchor.x = 0.5;
+      balloon.anchor.y = 1;
+      balloon.scale.x = 1; // will be set to minNormal after introduced!
+      balloon.scale.y = 1; // will be set to minNormal after introduced!
+      balloon.alpha = 1; // will be set to minNormal after introduced!
+
+      // set positions and targets accordingliy...
+
+      balloon.position.x = 0;
+      balloon.position.y = -creditsHeader.height + OFFSET_BALLOON;
+    }
+
     function createCreditsText() {
 
       creditsText = new PIXI.Text(creditTextGerman, {
@@ -110,10 +130,10 @@ define(["classes/Layer", "PIXI", "game/textures",
         strokeThickness: 2
       });
 
-      creditsHeader.position.x = 0;
-      creditsHeader.position.y = 0;
+      creditsHeader.position.x = 6;
+      creditsHeader.position.y = -385;
       creditsHeader.anchor.x = 0.5;
-      creditsHeader.anchor.y = 1;
+      creditsHeader.anchor.y = 0;
     }
 
     function createLogos() {
