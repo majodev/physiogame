@@ -92,21 +92,21 @@ http-server, chai, mocha, phantomjs, mocha-phantomjs, grunt-cli, grunt-contrib-w
 Sublime Text 2, node-webkit, Adobe CS6 Suite, Texture Packer, Audacity, cfxr, XLD, Otomata, ImageOptim, ImageAlpha
 
 
-<h3>Cooperation</h3>
-In cooperation with FH JOANNEUM Graz, Austria.
-* advanced information management
-* physiotherapy and 
-* occupational therapy
-
-![Image](https://github.com/majodev/physiogame/blob/master/pics/fh-joanneum-logo-min.png?raw=true)
-
-
 <h3>Thank you!</h3>
 * @nischi
 * @jrburke
 * C.A.F.
 * Ranftl family
 * NICI <3
+
+
+<h3>Cooperation</h3>
+In cooperation with FH JOANNEUM Graz, Austria.
+![Image](https://github.com/majodev/physiogame/blob/master/pics/fh-joanneum-logo-min.png?raw=true)
+* advanced information management
+* physiotherapy and 
+* occupational therapy
+
 
 
 <h2>Copyright and Licenses</h2>
@@ -116,6 +116,5 @@ Assets: Attribution-ShareAlike 3.0 Unported
 
 Please see LICENSE.md for further information of 3rd party licenses (used assets and libs)
 
-(c) 2013 Mario Ranftl (<a href="http://www.majodev.com">majodev</a>).
-
 ![Image](https://github.com/majodev/physiogame/blob/master/pics/majodev-logo-min.png?raw=true)
+(c) 2013 Mario Ranftl (<a href="http://www.majodev.com">majodev</a>).
