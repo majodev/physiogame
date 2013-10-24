@@ -137,7 +137,7 @@ module.exports = function(grunt) {
         linux32: false, 
         linux64: false, 
         version: '0.7.5',
-        mac_icns: "./assets/icons/majodev.icns"
+        mac_icns: "./assets/icons/physiogame_boom.icns"
       },
       src: ['./build/**/*'] // source
     }
