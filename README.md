@@ -25,13 +25,6 @@ Attention: No internationalization! Only german texts for now.
 ![Image](https://github.com/majodev/physiogame/blob/master/pics/options.png?raw=true)
 ![Image](https://github.com/majodev/physiogame/blob/master/pics/stats.png?raw=true)
 
-<h2>Setup</h2>
-Fire up your http-server in project root, e.g. <a href="https://npmjs.org/package/http-server">simple http-server for node</a>
-
-`http-server -c-1`
-
-Go to `localhost:8080` and enjoy
-
 <h2>Building</h2>
 `npm install -d`
 
@@ -42,6 +35,12 @@ Go to `localhost:8080` and enjoy
 Some libraries in src/vendor might need to be build manually (e.g. <a href="https://github.com/typekit/webfontloader">webfontloader</a> via rake). Trace the error through the r.js optimization script if you encounter any errors or try to run setup before and consult your preferred js-dev-console.
 
 The grunt task `grunt build` takes care of all js/css minifying and assets/templates copying to the folder `build`. 
+
+Fire up your http-server in project root, e.g. <a href="https://npmjs.org/package/http-server">simple http-server for node</a>
+
+`http-server -c-1`
+
+Go to `localhost:8080/build` and enjoy
 
 <h3>Why almond?</h3>
 Even though there is no require (from node-webkit) in the global namespace during startup, a normal r.js optimized build will crash in node-webkit! I'm using <a href="https://github.com/jrburke/almond">almond</a> to tackle these build problems for node-webkit (furthermore the result is 2kb smaller). 
