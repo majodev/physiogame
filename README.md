@@ -63,6 +63,42 @@ needs <a href="http://phantomjs.org/">phantomjs</a> bin in path!
 <h2>Links</h2>
 <a href="https://github.com/majodev/leap-requirejs-optimization-error">resolving r.js and leapjs error</a>
 
+<h3>Assets</h3>
+Balloons Vectors by Stuart Bainbridge
+* Creative Commons Attribution-Share Alike 3.0 License.
+
+Alien sprites and explosion animation by PIXI.js team
+* MIT License
+
+Music by The Open Game Art Bundle (from Stratkat and Epic Battle Fantasy III)
+* Creative Commons Zero License
+
+Webfont Arvo by Anton Koovit
+* SIL Open Font License, 1.1
+
+Icons Hand and Arrow by Dave Gandy (Font Awesome)
+* SIL Open Font License, 1.1
+
+
+<h3>Libraries</h3>
+requirejs, almond, backbone, lodash
+
+Modernizr, pixi, leapjs, keymaster, jquery, howler, webfontloader, loglevel, spinjs, polljs, bootstrap, text, handlebars, requirejs-handlebars, bootstrap-slider, Backbone.localStorage, csv, FileSaver, momentjs
+
+http-server, chai, mocha, phantomjs, mocha-phantomjs, grunt-cli, grunt-contrib-watch, grunt-shell, grunt-contrib-copy, grunt-contrib-cssmin, grunt-modernizr, grunt-contrib-uglify, grunt-node-webkit-builder
+
+
+<h3>Tools</h3>
+Sublime Text 2, node-webkit, Adobe CS6 Suite, Texture Packer, Audacity, cfxr, XLD, Otomata, ImageOptim, ImageAlpha
+
+
+<h2>Thank you!</h2>
+* @nischi
+* @jrburke
+* C.A.F.
+* Ranftl family
+* NICI <3
+
 <h2>Copyright and Licenses</h2>
 Sourcecode: GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 
@@ -70,4 +106,13 @@ Assets: Attribution-ShareAlike 3.0 Unported
 
 Please see LICENSE.md for further information of 3rd party licenses (used assets and libs)
 
+In cooperation with FH JOANNEUM Graz, Austria.
+* advanced information management
+* physiotherapy and 
+* occupational therapy
+
+![Image](https://github.com/majodev/physiogame/blob/master/assets/sprites/fh-joanneum-logo.png?raw=true)
+
 (c) 2013 Mario Ranftl (<a href="http://www.majodev.com">majodev</a>).
+
+![Image](https://github.com/majodev/physiogame/blob/master/assets/sprites/majodev-icon.png?raw=true)
