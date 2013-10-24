@@ -1,6 +1,6 @@
 {
   "name": "physiogame",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "dependencies": {
     "bower": "latest",
     "requirejs": "~2.1.9",
