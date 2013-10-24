@@ -153,8 +153,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask("default", "shell:mocha-phantomjs");
   grunt.registerTask("build", ["modernizr", "shell:build-almond", "uglify", "copy:build-templates", "copy:assets", "cssmin", "copy:legal"]);
-  grunt.registerTask("buildrelease", ["build", "nodewebkit"]);
-  grunt.registerTask("release", ["nodewebkit"]);
+  grunt.registerTask("release", ["build", "nodewebkit"]);
+  grunt.registerTask("release-only", ["nodewebkit"]);
 };
 
 

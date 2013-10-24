@@ -23,6 +23,13 @@ Some libraries in src/vendor might need to be build manually (e.g. <a href="http
 
 The grunt task `grunt build` takes care of all js/css minifying and assets/templates copying to the folder `build`. 
 
+<h2>Release</h2>
+It's possible to do release builds for node-webkit via <a href="https://github.com/mllrsohn/grunt-node-webkit-builder">grunt-node-webkit-builder</a> for Windows, Mac and Linux in one step. Here's how it works:
+
+`grunt release`
+
+That's it! Easy huh?!
+
 <h3>Why almond?</h3>
 Even though there is no require (from node-webkit) in the global namespace during startup, a normal r.js optimized build will crash in node-webkit! I'm using <a href="https://github.com/jrburke/almond">almond</a> to tackle these build problems for node-webkit (furthermore the result is 2kb smaller). 
 
