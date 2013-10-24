@@ -101,8 +101,9 @@ Sublime Text 2, node-webkit, Adobe CS6 Suite, Texture Packer, Audacity, cfxr, XL
 
 
 <h3>Cooperation</h3>
-In cooperation with FH JOANNEUM Graz, Austria.
 ![Image](https://github.com/majodev/physiogame/blob/master/pics/fh-joanneum-logo-min.png?raw=true)
+
+In cooperation with FH JOANNEUM Graz, Austria.
 * advanced information management
 * physiotherapy and 
 * occupational therapy
@@ -110,11 +111,12 @@ In cooperation with FH JOANNEUM Graz, Austria.
 
 
 <h2>Copyright and Licenses</h2>
+![Image](https://github.com/majodev/physiogame/blob/master/pics/majodev-logo-min.png?raw=true)
+
 Sourcecode: GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 
 Assets: Attribution-ShareAlike 3.0 Unported
 
 Please see LICENSE.md for further information of 3rd party licenses (used assets and libs)
 
-![Image](https://github.com/majodev/physiogame/blob/master/pics/majodev-logo-min.png?raw=true)
 (c) 2013 Mario Ranftl (<a href="http://www.majodev.com">majodev</a>).
