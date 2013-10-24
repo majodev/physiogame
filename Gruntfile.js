@@ -29,9 +29,9 @@ module.exports = function(grunt) {
         files: [{
           src: ["assets/**/*.json", "assets/**/*.png", "assets/**/*.mp3",
             "assets/**/*.ogg", "assets/**/*.m4a", "assets/**/*.eot",
-            "assets/**/*.ttf", "assets/**/*.woff",
+            "assets/**/*.ttf", "assets/**/*.woff", "assets/**/*.ico",
             "!assets/sounds/old/**/*.*", "!assets/sprites/old/**/*.*",
-            "!assets/old/**/*.*", "!assets/icons/**/*.*"
+            "!assets/old/**/*.*"
           ],
           dest: "build/"
         }]
@@ -132,11 +132,12 @@ module.exports = function(grunt) {
     nodewebkit: {
       options: {
         build_dir: './release', // target
-        mac: true, 
-        win: true, 
-        linux32: false, 
-        linux64: false, 
+        mac: true,
+        win: true,
+        linux32: true,
+        linux64: true,
         version: '0.7.5',
+        credits: "./build/credits.html",
         mac_icns: "./assets/icons/physiogame_boom.icns"
       },
       src: ['./build/**/*'] // source
@@ -154,7 +155,7 @@ module.exports = function(grunt) {
   grunt.registerTask("default", "shell:mocha-phantomjs");
   grunt.registerTask("build", ["modernizr", "shell:build-almond", "uglify", "copy:build-templates", "copy:assets", "cssmin", "copy:legal"]);
   grunt.registerTask("release", ["build", "nodewebkit"]);
-  grunt.registerTask("release-only", ["nodewebkit"]);
+  grunt.registerTask("releasebuild", ["nodewebkit"]);
 };
 
 

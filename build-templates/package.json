@@ -4,6 +4,7 @@
   "main": "index.html",
   "window": {
     "title": "physiogame",
+    "icon": "assets/icons/physiogame_boom.ico",
     "show": true,
     "toolbar": false,
     "frame": true,
