@@ -1,6 +1,6 @@
 <h1>physiogame</h1>
 
-![Image](../physiogame/master/assets/icons/physiogame_boom_512x512x32.png?raw=true)
+![Image](https://github.com/majodev/physiogame/blob/master/assets/icons/physiogame_boom_512x512x32.png?raw=true)
 
 This is a master thesis project by me, Mario Ranftl (@majodev). It's a JS/HTML5 game and playable in browsers and node-webkit. The target is to create a funny and simple game, that's suited for therapeutic exercises. 
 
