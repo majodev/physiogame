@@ -1,6 +1,6 @@
 <h1>physiogame</h1>
 
-![Image](https://github.com/majodev/physiogame/blob/master/assets/icons/physiogame_boom_512x512x32.png?raw=true)
+![Image](https://github.com/majodev/physiogame/blob/master/assets/icons/physiogame_boom_256x256x32.png?raw=true)
 
 This is a master thesis project by me, Mario Ranftl (@majodev). It's a JS/HTML5 game and playable in browsers and node-webkit. The target is to create a funny and simple game, that's suited for therapeutic exercises. 
 
@@ -18,12 +18,12 @@ Attention: No internationalization! Only german texts for now.
 
 <h2>How does it look?</h2>
 
-![Image](../physiogame/master/pics/main.png?raw=true)
-![Image](../physiogame/master/pics/round.png?raw=true)
-![Image](../physiogame/master/pics/win.png?raw=true)
-![Image](../physiogame/master/pics/credits.png?raw=true)
-![Image](../physiogame/master/pics/options.png?raw=true)
-![Image](../physiogame/master/pics/stats.png?raw=true)
+![Image](https://github.com/majodev/physiogame/blob/master/pics/main.png?raw=true)
+![Image](https://github.com/majodev/physiogame/blob/master/pics/round.png?raw=true)
+![Image](https://github.com/majodev/physiogame/blob/master/pics/win.png?raw=true)
+![Image](https://github.com/majodev/physiogame/blob/master/pics/credits.png?raw=true)
+![Image](https://github.com/majodev/physiogame/blob/master/pics/options.png?raw=true)
+![Image](https://github.com/majodev/physiogame/blob/master/pics/stats.png?raw=true)
 
 <h2>Setup</h2>
 Fire up your http-server in project root, e.g. <a href="https://npmjs.org/package/http-server">simple http-server for node</a>
