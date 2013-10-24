@@ -40,7 +40,8 @@ FileSaver, momentjs
 http-server, chai, mocha, phantomjs, mocha-phantomjs
 grunt-cli, grunt-contrib-watch, grunt-shell
 grunt-contrib-copy, grunt-contrib-cssmin,
-grunt-modernizr, grunt-contrib-uglify
+grunt-modernizr, grunt-contrib-uglify,
+grunt-node-webkit-builder
 
 
 -- Tools --

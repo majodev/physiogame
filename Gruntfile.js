@@ -31,7 +31,7 @@ module.exports = function(grunt) {
             "assets/**/*.ogg", "assets/**/*.m4a", "assets/**/*.eot",
             "assets/**/*.ttf", "assets/**/*.woff",
             "!assets/sounds/old/**/*.*", "!assets/sprites/old/**/*.*",
-            "!assets/old/**/*.*"
+            "!assets/old/**/*.*", "!assets/icons/**/*.*"
           ],
           dest: "build/"
         }]
@@ -128,6 +128,18 @@ module.exports = function(grunt) {
 
       // Have custom Modernizr tests? Add paths to their location here.
       "customTests": []
+    },
+    nodewebkit: {
+      options: {
+        build_dir: './release', // target
+        mac: true, 
+        win: true, 
+        linux32: false, 
+        linux64: false, 
+        version: '0.7.5',
+        mac_icns: "./assets/icons/majodev.icns"
+      },
+      src: ['./build/**/*'] // source
     }
   });
 
@@ -137,9 +149,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-cssmin");
   grunt.loadNpmTasks("grunt-modernizr");
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-node-webkit-builder');
 
   grunt.registerTask("default", "shell:mocha-phantomjs");
   grunt.registerTask("build", ["modernizr", "shell:build-almond", "uglify", "copy:build-templates", "copy:assets", "cssmin", "copy:legal"]);
+  grunt.registerTask("buildrelease", ["build", "nodewebkit"]);
+  grunt.registerTask("release", ["nodewebkit"]);
 };
 
 
