@@ -27,13 +27,13 @@ define(["backbone"],
       soundBaseDir: "assets/sounds/",
       sounds: [{
         name: "roundintro",
-        volume: 0.1
+        volume: 0.05
       }, {
         name: "roundstart",
         volume: 0.1
       }, {
         name: "timewarning",
-        volume: 0.1
+        volume: 0.3
       }, {
         name: "select",
         volume: 0.1
@@ -41,11 +41,11 @@ define(["backbone"],
         name: "alert",
         volume: 0.1
       }, {
-        name: "explosion",
-        volume: 0.2
+        name: "explosion", //explosion must be lauder...
+        volume: 0.5
       }, {
         name: "special_action",
-        volume: 0.1
+        volume: 0.2
       }, {
         name: "hitted",
         volume: 0.08
