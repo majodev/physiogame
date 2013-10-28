@@ -300,6 +300,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     function checkResetDepthAttack(coordinates) {
       if (allowedToDepthAttack === false && coordinates.depth >= layer.DEPTH.STEP) {
         allowedToDepthAttack = true;
+        layer.events.trigger("crosshairStatus", true);
       }
     }
 
@@ -481,6 +482,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
         case "clickOrDepth":
           if (gameObject.hitted === true && gameObject.depthKick <= -layer.DEPTH.STEP && allowedToDepthAttack === true) {
             allowedToDepthAttack = false; // this one can be smashed, but not a following one
+            layer.events.trigger("crosshairStatus", false);
             returnValue = true;
           }
           // handle special objects differently...

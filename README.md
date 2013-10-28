@@ -9,7 +9,8 @@ The idea is to track the progress of users and provide statistics "Statistiken" 
 <h2>Issues</h2>
 Attention: No internationalization! Only german texts for now.
 
-<h2>Binaries (version 1.0, Oct 24, 2013)</h2>
+<h2>Binaries</h2>
+<h3>(version 1.0.1, Oct 28, 2013)</h3>
 * Windows: <a href="http://majodev.com/physiogame/physiogame_win.zip">win32</a>
 * Mac: <a href="http://majodev.com/physiogame/physiogame_mac.zip">32bit, 10.7+</a>
 * Linux: <a href="http://majodev.com/physiogame/physiogame_linux32.zip">32bit</a> / <a href="http://majodev.com/physiogame/physiogame_linux64.zip">64bit</a>
