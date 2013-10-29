@@ -1,6 +1,6 @@
 <h1>physiogame</h1>
 
-![Image](https://github.com/majodev/physiogame/blob/master/pics/physiogame_logo-min.png?raw=true)
+![Image](pics/physiogame_logo-min.png?raw=true)
 
 This is a master thesis project by me, Mario Ranftl (@majodev). It's a JS/HTML5 game and playable in browsers and node-webkit. The target is to create a funny and simple game, that's suited for therapeutic exercises. 
 
@@ -19,12 +19,12 @@ Attention: No internationalization! Only german texts for now.
 
 <h2>How does it look?</h2>
 
-![Image](https://github.com/majodev/physiogame/blob/master/pics/main.png?raw=true)
-![Image](https://github.com/majodev/physiogame/blob/master/pics/round.png?raw=true)
-![Image](https://github.com/majodev/physiogame/blob/master/pics/win.png?raw=true)
-![Image](https://github.com/majodev/physiogame/blob/master/pics/credits.png?raw=true)
-![Image](https://github.com/majodev/physiogame/blob/master/pics/options.png?raw=true)
-![Image](https://github.com/majodev/physiogame/blob/master/pics/stats.png?raw=true)
+![Image](pics/main.png?raw=true)
+![Image](pics/round.png?raw=true)
+![Image](pics/win.png?raw=true)
+![Image](pics/credits.png?raw=true)
+![Image](pics/options.png?raw=true)
+![Image](pics/stats.png?raw=true)
 
 <h2>Building</h2>
 `npm install -d`
@@ -110,7 +110,7 @@ Sublime Text 2, node-webkit, Adobe CS6 Suite, Texture Packer, Audacity, cfxr, XL
 
 
 <h3>Cooperation</h3>
-![Image](https://github.com/majodev/physiogame/blob/master/pics/fh-joanneum-logo-min.png?raw=true)
+![Image](pics/fh-joanneum-logo-min.png?raw=true)
 
 In cooperation with FH JOANNEUM Graz, Austria.
 * advanced information management
@@ -120,7 +120,7 @@ In cooperation with FH JOANNEUM Graz, Austria.
 
 
 <h2>Copyright and Licenses</h2>
-![Image](https://github.com/majodev/physiogame/blob/master/pics/majodev-logo-min.png?raw=true)
+![Image](pics/majodev-logo-min.png?raw=true)
 
 Sourcecode: GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 
