@@ -29,13 +29,22 @@ Attention: No internationalization! Only german texts for now.
 <h2>Building</h2>
 `npm install -d`
 
-`bower install -d`
+`bower update`
 
-`grunt build`
+<h3>Building 3rd party libs</h3>
 
 Some libraries in src/vendor might need to be build manually (e.g. <a href="https://github.com/typekit/webfontloader">webfontloader</a> via rake). Trace the error through the r.js optimization script if you encounter any errors or try to run setup before and consult your preferred js-dev-console.
 
+`cd src/vendor/webfontloader/`
+`rake`
+
+<h3>Grunt build task</h3>
+
+`grunt build`
+
 The grunt task `grunt build` takes care of all js/css minifying and assets/templates copying to the folder `build`. 
+
+<h3>Running a build</h3>
 
 Fire up your http-server in project root, e.g. <a href="https://npmjs.org/package/http-server">simple http-server for node</a>
 
