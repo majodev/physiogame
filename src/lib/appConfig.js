@@ -67,7 +67,7 @@ define(["backbone"],
         name: "music/bg_win",
         volume: 0.1
       }],
-      soundExtensions: [".ogg", ".mp3", "m4a"],
+      soundExtensions: [".ogg", ".mp3", ".m4a"],
       fonts: {
         custom: {
           families: ['Arvo:n4,i4,n7,i7']

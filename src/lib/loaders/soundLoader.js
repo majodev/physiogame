@@ -20,7 +20,7 @@ define(["log", "Howler", "appConfig", "utils/publisher", "loaders/status"],
         sounds[soundFiles[i].name] = new Howler.Howl({
           urls: generateUrls(soundBaseDir, soundFiles[i].name, soundExtensions),
           autoplay: false,
-          loop: (soundFiles[i].loop !== undefined) ? soundFiles[i].loop : false,
+          loop: (typeof soundFiles[i].loop !== "undefined") ? soundFiles[i].loop : false,
           volume: soundFiles[i].volume,
           onload: onSoundLoaded(soundFiles[i])
         });
