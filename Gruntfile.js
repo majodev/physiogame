@@ -136,7 +136,7 @@ module.exports = function(grunt) {
         win: true,
         linux32: true,
         linux64: true,
-        version: '0.7.5',
+        version: '0.8.0',
         credits: "./build/credits.html",
         mac_icns: "./assets/icons/physiogame_boom.icns"
       },

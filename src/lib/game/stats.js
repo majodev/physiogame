@@ -41,7 +41,18 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
     // returns an instance of a new StatModel in the Collection
 
     function getNew() {
-      current = new StatModel();
+      current = new StatModel({
+        objectsCatched: 0,
+        specialsCatched: 0,
+        finished: false,
+        started: false,
+        locked: false,
+        accuracyX: 1,
+        accuracyY: 1,
+        accuracySum: 1,
+        points: 0,
+        specialFingerUsed: [0, 0, 0, 0, 0, 0]
+      });
 
       statsCollection.push(current);
       //log.debug("stats: getNew id=" + current.cid);

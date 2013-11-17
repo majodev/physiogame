@@ -2,7 +2,8 @@ define(["underscore"],
   function(_) {
 
     function hittest(r1, r2) {
-      // define vars for normalized positions and consider the anchor
+      // define vars for normalized positions
+      // and consider the anchor
       var r1posx = 0,
         r1posy = 0,
         r2posx = 0,

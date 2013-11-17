@@ -29,6 +29,7 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
       raiseFingerUsedOnSpecial: function(fingerCount) {
         var specialFingerUsedArray = this.get("specialFingerUsed");
         if (this.get("locked") === false && this.get("started") === true) {
+          //console.log(specialFingerUsedArray);
           specialFingerUsedArray[fingerCount] += 1;
 
           this.set("specialFingerUsed", specialFingerUsedArray);

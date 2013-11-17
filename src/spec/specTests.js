@@ -1,5 +1,4 @@
 define([
-    "spec/utils/parasiticCombinationInheritance",
     "spec/utils/hittest"
   ],
   function() {
