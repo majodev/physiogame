@@ -9,13 +9,6 @@ module.exports = function(grunt) {
           stderr: true
         }
       },
-      "build-requirejs": {
-        command: "node scripts/build.js",
-        options: {
-          stdout: true,
-          stderr: true
-        }
-      },
       "build-almond": {
         command: "node scripts/build-almond.js",
         options: {
