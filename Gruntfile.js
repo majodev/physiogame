@@ -51,6 +51,12 @@ module.exports = function(grunt) {
           src: ["LICENSE.md"],
           dest: "build/"
         }]
+      },
+      "locales": {
+        files: [{
+          src: ["locales/*.json"],
+          dest: "build/"
+        }]
       }
     },
     uglify: {
@@ -153,7 +159,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-node-webkit-builder');
 
   grunt.registerTask("default", "shell:mocha-phantomjs");
-  grunt.registerTask("build", ["modernizr", "shell:build-almond", "uglify", "copy:build-templates", "copy:assets", "cssmin", "copy:legal"]);
+  grunt.registerTask("build", ["modernizr", "shell:build-almond", "uglify", "copy:build-templates", "copy:assets", "cssmin", "copy:legal", "copy:locales"]);
   grunt.registerTask("release", ["build", "nodewebkit"]);
   grunt.registerTask("releasebuild", ["nodewebkit"]);
 };

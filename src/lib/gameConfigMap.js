@@ -1,11 +1,11 @@
-define([],
-  function() {
+define(["i18n"],
+  function(i18n) {
     return {
       audioEnabled: {
         def: true,
         ui: "toggle",
         cat: "audio",
-        desc: "Audio-Effekte abspielen"
+        desc: i18n.t("audioEnabled")
       },
       audioBackgroundEnabled: {
         def: true,

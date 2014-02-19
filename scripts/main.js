@@ -21,12 +21,13 @@ require.config({
     "bootstrap-slider": "../vendor/bootstrap-slider/js/bootstrap-slider",
     "csv": "../vendor/csv/lib/csv",
     "saveAs": "../vendor/FileSaver/FileSaver",
-    "moment": "../vendor/momentjs/moment"
+    "moment": "../vendor/momentjs/moment",
+    "i18n": "../vendor/i18next/i18next.amd"
   },
   shim: {
     "Poll": {
       exports: "Poll",
-      init: function () { // Poll must reside globally to work
+      init: function() { // Poll must reside globally to work
         console.log("r_shim: Poll");
       }
     },
@@ -44,7 +45,7 @@ require.config({
     },
     "bootstrap-slider": {
       deps: ["jquery", "bootstrap"],
-      init : function($) {
+      init: function($) {
         console.log("r_shim: bootstrap-slider");
       }
     },
