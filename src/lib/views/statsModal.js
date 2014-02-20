@@ -26,6 +26,8 @@ define(["log", "jquery", "views/StatsView",
         statsView.visible = true;
       });
 
+      $("#statsDialogHeader").i18n();
+
       initialized = true;
     }
 

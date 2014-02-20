@@ -1,11 +1,12 @@
 <div id="statusNotification"></div>
 <ul class="nav nav-tabs" id="settingsMainTab">
-  <li><a href="#general">Allgemein</a></li>
-  <li><a href="#visual">Anzeige</a></li>
-  <li><a href="#audio">Audio</a></li>
-  <li><a href="#behaviour" class="mainWithSubTab">Verhalten</a></li>
-  <li><a href="#leap">Leap Motion</a></li>
-  <li><a href="#help">Hilfe</a></li>
+  <li><a href="#general">{{i18n "catGeneral"}}</a></li>
+  <li><a href="#visual">{{i18n "catDisplay"}}</a></li>
+  <li><a href="#audio">{{i18n "catAudio"}}</a></li>
+  <li><a href="#behaviour" class="mainWithSubTab">{{i18n "catBehaviour"}}</a></li>
+  <li><a href="#leap">{{i18n "catLeap"}}</a></li>
+  <li><a href="#language">{{i18n "catLanguage"}}</a></li>
+  <li><a href="#help">{{i18n "catHelp"}}</a></li>
 </ul>
 
 <div id="tabcontainer" class="tab-content">
@@ -15,9 +16,9 @@
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th class="settingsDescription">Parameter</th>
-            <th class="settingsConfigValue">Konfiguration</th>
-            <th class="settingsValue">Wert</th>
+            <th class="settingsDescription">{{i18n "parameter"}}</th>
+            <th class="settingsConfigValue">{{i18n "configuration"}}</th>
+            <th class="settingsValue">{{i18n "value"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -34,9 +35,9 @@
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th class="settingsDescription">Parameter</th>
-            <th class="settingsConfigValue">Konfiguration</th>
-            <th class="settingsValue">Wert</th>
+            <th class="settingsDescription">{{i18n "parameter"}}</th>
+            <th class="settingsConfigValue">{{i18n "configuration"}}</th>
+            <th class="settingsValue">{{i18n "value"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -53,9 +54,9 @@
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th class="settingsDescription">Parameter</th>
-            <th class="settingsConfigValue">Konfiguration</th>
-            <th class="settingsValue">Wert</th>
+            <th class="settingsDescription">{{i18n "parameter"}}</th>
+            <th class="settingsConfigValue">{{i18n "configuration"}}</th>
+            <th class="settingsValue">{{i18n "value"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -69,9 +70,9 @@
 
   <div class="tab-pane fade" id="behaviour">
     <ul class="nav nav-tabs subTabBar" id="settingsBehaviourTab">
-      <li><a href="#speed" class="subTab">Geschwindigkeit</a></li>
-      <li><a href="#scale" class="subTab">Skalierung</a></li>
-      <li><a href="#alpha" class="subTab">Durchsichtigkeit</a></li>
+      <li><a href="#speed" class="subTab">{{i18n "subCatSpeed"}}</a></li>
+      <li><a href="#scale" class="subTab">{{i18n "subCatScale"}}</a></li>
+      <li><a href="#alpha" class="subTab">{{i18n "subCatAlpha"}}</a></li>
     </ul>
     <div id="subBehaviourTabContainer" class="tab-content">
       <div class="tab-pane fade" id="scale">
@@ -79,9 +80,9 @@
           <table class="table table-condensed">
             <thead>
               <tr>
-                <th class="settingsDescription">Parameter</th>
-                <th class="settingsConfigValue">Konfiguration</th>
-                <th class="settingsValue">Wert</th>
+                <th class="settingsDescription">{{i18n "parameter"}}</th>
+                <th class="settingsConfigValue">{{i18n "configuration"}}</th>
+                <th class="settingsValue">{{i18n "value"}}</th>
               </tr>
             </thead>
             <tbody>
@@ -97,9 +98,9 @@
           <table class="table table-condensed">
             <thead>
               <tr>
-                <th class="settingsDescription">Parameter</th>
-                <th class="settingsConfigValue">Konfiguration</th>
-                <th class="settingsValue">Wert</th>
+                <th class="settingsDescription">{{i18n "parameter"}}</th>
+                <th class="settingsConfigValue">{{i18n "configuration"}}</th>
+                <th class="settingsValue">{{i18n "value"}}</th>
               </tr>
             </thead>
             <tbody>
@@ -115,9 +116,9 @@
           <table class="table table-condensed">
             <thead>
               <tr>
-                <th class="settingsDescription">Parameter</th>
-                <th class="settingsConfigValue">Konfiguration</th>
-                <th class="settingsValue">Wert</th>
+                <th class="settingsDescription">{{i18n "parameter"}}</th>
+                <th class="settingsConfigValue">{{i18n "configuration"}}</th>
+                <th class="settingsValue">{{i18n "value"}}</th>
               </tr>
             </thead>
             <tbody>
@@ -137,9 +138,9 @@
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th class="settingsDescription">Parameter</th>
-            <th class="settingsConfigValue">Konfiguration</th>
-            <th class="settingsValue">Wert</th>
+            <th class="settingsDescription">{{i18n "parameter"}}</th>
+            <th class="settingsConfigValue">{{i18n "configuration"}}</th>
+            <th class="settingsValue">{{i18n "value"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -150,14 +151,23 @@
       </table>
     </div>
   </div>
+
+  <div class="tab-pane fade" id="language">
+    <div class="languageContainer">
+      <p><p class="lead">{{i18n "changeLanguage"}}</p>{{i18n "changeLanguageRestart"}}</p>
+      <a class="btn btn-danger btn-block" href="/?setLng=en">{{i18n "switchLanguageEN"}}</a>
+      <a class="btn btn-danger btn-block" href="/?setLng=de">{{i18n "switchLanguageDE"}}</a>
+    </div>    
+  </div>
+
   <div class="tab-pane fade" id="help">
     <div class="helpContainer">
-      <p><p class="lead">Einstellungsprobleme?</p>Durch diese Aktion werden alle <strong>werksseitigen</strong> Einstellungen dieser Applikation wiederhergestellt. Du kannst jedoch <strong>weiterhin</strong> frühere Einstellungen aus den lokal verfügbaren Statistiken zu einem späteren Zeitpunkt wiederverwenden.</p>
-      <button id="resetToStandard" type="button" class="btn btn-warning btn-block">Standard-Einstellungen wiederherstellen</button>
+      <p><p class="lead">{{i18n "helpSettingsProblemsHeader"}}</p>{{i18n "helpSettingsProblemsText"}}</p>
+      <button id="resetToStandard" type="button" class="btn btn-warning btn-block">{{i18n "helpSettingsProblemsButton"}}</button>
       <br />
       <br />
-      <p><p class="lead">Statistikprobleme?</p>Stelle vorab sicher, dass Du die Statistiken <strong>gespeichert hast</strong> (via <strong>JSON</strong> zur späteren Wiederverwendung)!</p>
-      <button id="resetStats" type="button" class="btn btn-danger btn-block">Lokale Statistiken löschen</button>
+      <p><p class="lead">{{i18n "helpStatsProblemsHeader"}}</p>{{i18n "helpStatsProblemsText"}}</p>
+      <button id="resetStats" type="button" class="btn btn-danger btn-block">{{i18n "helpStatsProblemsButton"}}</button>
     </div>    
   </div>
   

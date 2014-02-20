@@ -23,6 +23,8 @@ define(["log", "jquery", "views/GameConfigView",
         showing = true;
       });
 
+      $("#settingsDialogHeader").i18n();
+
       initialized = true;
     }
 
