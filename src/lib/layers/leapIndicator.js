@@ -1,8 +1,8 @@
 define(["classes/Layer", "PIXI", "game/textures", "base/leapManager",
-    "gameConfig", "moment", "underscore"
+    "gameConfig", "moment", "underscore", "i18n"
   ],
   function(Layer, PIXI, textures, leapManager,
-    gameConfig, moment, _) {
+    gameConfig, moment, _, i18n) {
 
     var layer = new Layer({
       listeners: {
@@ -28,7 +28,7 @@ define(["classes/Layer", "PIXI", "game/textures", "base/leapManager",
 
       if (showThisLayer) {
 
-        noHandText = new PIXI.Text("Bewege deine Hand in\nden Erkennungsbereich.", {
+        noHandText = new PIXI.Text(i18n.t("leapMoveWithinRange"), {
           font: "bold 20px Arvo",
           fill: "#FFFFFF",
           align: "left",

@@ -22,7 +22,7 @@ require.config({
     "csv": "../vendor/csv/lib/csv",
     "saveAs": "../vendor/FileSaver/FileSaver",
     "moment": "../vendor/momentjs/moment",
-    "i18n": "../vendor/i18next/i18next.amd"
+    "i18n": "../vendor/i18next/i18next.amd.withJQuery"
   },
   shim: {
     "Poll": {

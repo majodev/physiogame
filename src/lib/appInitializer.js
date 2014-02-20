@@ -5,10 +5,10 @@
  * Available under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
  */
 define(["appConfig", "log", "loaders/preloader", "loaders/indicator",
-    "loaders/status", "i18n", "jquery"
+    "loaders/status", "i18n", "jquery", "Handlebars"
   ],
   function(appConfig, log, preloader, indicator,
-    status, i18n, $) {
+    status, i18n, $, Handlebars) {
 
     (function preloading() {
 
@@ -22,7 +22,7 @@ define(["appConfig", "log", "loaders/preloader", "loaders/indicator",
       status.write("... (language loading | Sprache wird geladen) ...");
 
       // i18next init...
-      i18n.init({
+      $.i18n.init({
         ns: "messages",
         lowerCaseLng: true,
         fallbackLng: "en",
@@ -52,6 +52,13 @@ define(["appConfig", "log", "loaders/preloader", "loaders/indicator",
         // i18next finished, continue loading up application...
         log.debug("i18n: current language: " + i18n.lng());
         status.write(i18n.t("languageLoaded"));
+
+        // register handlebars helper to add i18n to templates...
+        Handlebars.registerHelper('i18n', function(i18n_key) {
+          var result = i18n.t(i18n_key);
+          return new Handlebars.SafeString(result);
+        });
+
 
         // preloading assets....
         status.write(i18n.t("loadingAssets"));

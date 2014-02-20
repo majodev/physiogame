@@ -1,5 +1,5 @@
-define(["classes/Layer", "classes/Button"],
-  function(Layer, Button) {
+define(["classes/Layer", "classes/Button", "i18n"],
+  function(Layer, Button, i18n) {
 
     var layer = new Layer(),
       goBackButton;
@@ -8,8 +8,8 @@ define(["classes/Layer", "classes/Button"],
 
       goBackButton = new Button({
         texts: {
-          normal: "zurück",
-          mouseover: "zurück!",
+          normal: i18n.t("back"),
+          mouseover: i18n.t("back") + "!",
         }
       });
 

@@ -1,5 +1,5 @@
-define(["PIXI", "classes/Layer", "utils/nwHelper", "classes/Button", "gameConfig"],
-  function(PIXI, Layer, nwHelper, Button, gameConfig) {
+define(["PIXI", "classes/Layer", "utils/nwHelper", "classes/Button", "gameConfig", "i18n"],
+  function(PIXI, Layer, nwHelper, Button, gameConfig, i18n) {
 
     var layer = new Layer(),
       fullscreenButton,
@@ -13,8 +13,8 @@ define(["PIXI", "classes/Layer", "utils/nwHelper", "classes/Button", "gameConfig
 
         quitButton = new Button({
           texts: {
-            normal: "Beenden",
-            mouseover: "Beenden!",
+            normal: i18n.t("quit"),
+            mouseover: i18n.t("quit") + "!",
           },
           style: {
             font: "bold 30px Arvo"
@@ -71,19 +71,19 @@ define(["PIXI", "classes/Layer", "utils/nwHelper", "classes/Button", "gameConfig
       if (nwHelper.isFullscreen() === true) {
         fullscreenButton.resetSettings({
           texts: {
-            normal: "Vollbild",
-            mouseover: "Fenster!",
-            click: "Fenster!",
-            tap: "Fenster!"
+            normal: i18n.t("fullscreen"),
+            mouseover: i18n.t("windowed") + "!",
+            click: i18n.t("windowed") + "!",
+            tap: i18n.t("windowed") + "!"
           }
         });
       } else {
         fullscreenButton.resetSettings({
           texts: {
-            normal: "Fenster",
-            mouseover: "Vollbild!",
-            click: "Vollbild!",
-            tap: "Vollbild!"
+            normal: i18n.t("windowed"),
+            mouseover: i18n.t("fullscreen") + "!",
+            click: i18n.t("fullscreen") + "!",
+            tap: i18n.t("fullscreen") + "!"
           }
         });
       }

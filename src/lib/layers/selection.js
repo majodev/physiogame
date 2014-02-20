@@ -1,10 +1,10 @@
 define(["classes/Layer", "classes/Button",
     "base/soundBridge", "views/modalControls",
-    "gameConfig", "PIXI"
+    "gameConfig", "PIXI", "i18n"
   ],
   function(Layer, Button,
     soundBridge, modalControls,
-    gameConfig, PIXI) {
+    gameConfig, PIXI, i18n) {
 
     var layer = new Layer(),
       shootingButton,
@@ -19,8 +19,8 @@ define(["classes/Layer", "classes/Button",
 
       shootingButton = new Button({
         texts: {
-          normal: "Spielen",
-          mouseover: "Spielen!",
+          normal: i18n.t("play"),
+          mouseover: i18n.t("play") + "!",
         }
       });
 
@@ -45,8 +45,8 @@ define(["classes/Layer", "classes/Button",
           font: "bold 25px Arvo"
         },
         texts: {
-          normal: "Einstellungen",
-          mouseover: "Einstellungen!",
+          normal: i18n.t("settings"),
+          mouseover: i18n.t("settings") + "!",
         }
       });
 
@@ -69,8 +69,8 @@ define(["classes/Layer", "classes/Button",
           font: "bold 30px Arvo"
         },
         texts: {
-          normal: "Statistiken",
-          mouseover: "Statistiken!",
+          normal: i18n.t("statistics"),
+          mouseover: i18n.t("statistics") + "!",
         }
       });
 
@@ -90,8 +90,8 @@ define(["classes/Layer", "classes/Button",
 
       creditsButton = new Button({
         texts: {
-          normal: "Credits",
-          mouseover: "Credits!"
+          normal: i18n.t("credits"),
+          mouseover: i18n.t("credits") + "!"
         }
       });
 
@@ -121,7 +121,7 @@ define(["classes/Layer", "classes/Button",
 
 
       if (noStatsOrSettings === true) {
-        kioskOnlyText = new PIXI.Text("Kiosk Modus", {
+        kioskOnlyText = new PIXI.Text(i18n.t("kioskModelSignal"), {
           font: "bold 25px Arvo",
           fill: "#3344bb",
           align: "left",

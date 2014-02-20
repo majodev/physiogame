@@ -22,9 +22,9 @@
   {{/if}}
   {{#if uiToggle}}
     {{#if objectValue}}
-      <td class="settingsConfigValue"><button id="{{objectKey}}" type="button" class="btn btn-xs btn-primary toggleButton active" data-toggle="button">aktiviert</button></td>
+      <td class="settingsConfigValue"><button id="{{objectKey}}" type="button" class="btn btn-xs btn-primary toggleButton active" data-toggle="button">{{i18n "activated"}}</button></td>
     {{else}}
-      <td class="settingsConfigValue"><button id="{{objectKey}}" type="button" class="btn btn-xs btn-danger toggleButton" data-toggle="button">deaktiviert</button></td>
+      <td class="settingsConfigValue"><button id="{{objectKey}}" type="button" class="btn btn-xs btn-danger toggleButton" data-toggle="button">{{i18n "deactivated"}}</button></td>
     {{/if}}
   {{/if}}
   {{#if uiText}}
@@ -42,9 +42,9 @@
       <div id="{{objectKey}}-value">{{{objectValue}}}</div>
     {{/if}}
     {{#if uiReadOnly}}
-      <div id="{{objectKey}}-default" class="settingsDefaultValue"><small>errechnet</small></div>
+      <div id="{{objectKey}}-default" class="settingsDefaultValue"><small>{{i18n "computed"}}</small></div>
     {{else}}
-      <div id="{{objectKey}}-default" class="settingsDefaultValue"><small>Standard: {{objectDef}}</small></div>
+      <div id="{{objectKey}}-default" class="settingsDefaultValue"><small>{{i18n "standard"}}: {{objectDef}}</small></div>
     {{/if}}
   </td>
 </tr>

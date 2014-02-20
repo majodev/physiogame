@@ -411,11 +411,11 @@ define(["log", "PIXI",
         winningStatsLabelsText.currentXTarget = (layer.width / 2) - 15;
 
         winningStatsLabelsText.setText(
-          "Treffer:\n" +
-          "Zeit:\n" +
-          "Genauigkeit:\n" +
-          "gesamter Bewegungsweg:\n" +
-          "Spielfeld Bewegungsweg:\n");
+          i18n.t("hits") + ":\n" +
+          i18n.t("time") + ":\n" +
+          i18n.t("accuracy") + ":\n" +
+          i18n.t("totalMovement") + ":\n" +
+          i18n.t("acceptedMovement") + ":\n");
         layer.pixiLayer.addChild(winningStatsLabelsText);
         winningStatsLabelsText.visible = true;
 
@@ -430,11 +430,11 @@ define(["log", "PIXI",
         totalMovement = Math.floor(currentStats.get("leapMovementAllHyp"));
         withinMovement = Math.floor(currentStats.get("leapMovementInsideHyp"));
         percentage = (totalMovement === 0) ? "0 %" : Math.floor((100 / totalMovement * withinMovement)) + " %";
-        totalMovement = (totalMovement === 0) ? "nur mit Leap Motion" : totalMovement + " mm";
-        withinMovement = (withinMovement === 0) ? "nur mit Leap Motion" : withinMovement + " mm";
+        totalMovement = (totalMovement === 0) ? i18n.t("onlyWithLeap") : totalMovement + " mm";
+        withinMovement = (withinMovement === 0) ? i18n.t("onlyWithLeap") : withinMovement + " mm";
 
         winningStatsValuesText.setText(
-          currentStats.get("objectsCatched") + " Objekte\n" +
+          currentStats.get("objectsCatched") + " " + i18n.t("objects") +  "\n" +
           timeFormatter.formatSeconds(currentStats.get("playTime") / 1000) + "\n" +
           Math.ceil(currentStats.get("accuracySum") * 100) + " %\n" +
           totalMovement + "\n" +
@@ -453,7 +453,7 @@ define(["log", "PIXI",
           winningSpecialsText.currentXStep = 22;
           winningSpecialsText.currentXTarget = 240;
 
-          winningSpecialsText.setText(currentStats.get("specialsCatched") + " Spezial-\nPunkte!");
+          winningSpecialsText.setText(currentStats.get("specialsCatched") + " " + i18n.t("specialPoints"));
           layer.pixiLayer.addChild(winningSpecialsText);
           winningSpecialsText.visible = true;
         }
@@ -468,7 +468,7 @@ define(["log", "PIXI",
         winningPointsText.currentXStep = -22;
         winningPointsText.currentXTarget = 1040;
 
-        winningPointsText.setText(Math.round(sumPoints) + " Gesamt-\nPunkte!");
+        winningPointsText.setText(Math.round(sumPoints) + " " + i18n.t("totalPoints"));
         layer.pixiLayer.addChild(winningPointsText);
         winningPointsText.visible = true;
 
@@ -479,8 +479,8 @@ define(["log", "PIXI",
             font: "bold 23px Arvo"
           },
           texts: {
-            normal: "Neuer Versuch",
-            mouseover: "Neuer Versuch!",
+            normal: i18n.t("newTry"),
+            mouseover: i18n.t("newTry") + "!",
           }
         });
 

@@ -3,14 +3,16 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
     "game/stats", "moment",
     "game/behaviours/targetBehaviour", "game/behaviours/alphaBehaviour",
     "game/behaviours/scaleBehaviour", "game/behaviours/speedBehaviour",
-    "game/timerIntro", "game/timerRound", "utils/hitstatMiddlepoint"
+    "game/timerIntro", "game/timerRound", "utils/hitstatMiddlepoint",
+    "i18n"
   ],
   function(textures, gameConfig, hittest, _, PIXI,
     soundBridge, Layer,
     stats, moment,
     targetBehaviour, alphaBehaviour,
     scaleBehaviour, speedBehaviour,
-    timerIntro, timerRound, hitstatMiddlepoint) {
+    timerIntro, timerRound, hitstatMiddlepoint,
+    i18n) {
 
     var layer = new Layer({
       listeners: {
@@ -637,7 +639,7 @@ define(["game/textures", "gameConfig", "utils/hittest", "underscore", "PIXI",
         }
 
         if (gameObject.hitStat === "SPECIAL_KILL") {
-          hitStatToDisplay = gameObject.specialCount + " Finger!"; // on a special kill with leap, show instead the fingers used!
+          hitStatToDisplay = gameObject.specialCount + " " + i18n.t("fingers") + "!"; // on a special kill with leap, show instead the fingers used!
         } else {
           hitStatToDisplay = Math.ceil(hitStatToDisplay.percentageBothAxis * 100) + " %";
         }
