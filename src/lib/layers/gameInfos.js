@@ -3,14 +3,14 @@ define(["log", "PIXI",
     "utils/timeFormatter", "game/stats",
     "game/timerRound", "game/timerIntro",
     "game/gameSession", "base/soundBridge",
-    "underscore"
+    "underscore", "i18n"
   ],
   function(log, PIXI,
     gameConfig, Layer, Button,
     timeFormatter, stats,
     timerRound, timerIntro,
     gameSession, soundBridge,
-    _) {
+    _, i18n) {
 
     var layer = new Layer({
       listeners: {
@@ -37,18 +37,18 @@ define(["log", "PIXI",
       INTRO_ROTATE_STEP = 0.0015,
       currentStats,
       TIP_TEXTS_ARRAY_CLICK = [
-        "Versuche die Spiel-Objekte mittig zu treffen.",
-        "Spezial-Objekte wollen deine Finger sehen, Spreizen!",
-        "Triff Spezial-Objekte damit sie eine Zahl verlieren.",
-        "Spezial-Objekte geben extra Punkte.",
-        "Versuche im Spielfeld zu bleiben.",
-        "Wenn du den »zurück« Knopf verwendest, speichere ich."
+        i18n.t("tip_HitCentered"),
+        i18n.t("tip_SplayOut"),
+        i18n.t("tip_SpecialHit"),
+        i18n.t("tip_SpecialPoints"),
+        i18n.t("tip_InteractionArea"),
+        i18n.t("tip_BackSave")
       ],
       TIP_TEXTS_ARRAY_SCALE = [
-        "Versuche die Spiel-Objekte mittig zu treffen.",
-        "Genauigkeit ist wichtig, finde die Mitte der Objekte.",
-        "Versuche im Spielfeld zu bleiben.",
-        "Wenn du den »zurück« Knopf verwendest, speichere ich."
+        i18n.t("tip_HitCentered"),
+        i18n.t("tip_Accuracy"),
+        i18n.t("tip_InteractionArea"),
+        i18n.t("tip_BackSave")
       ];
 
     layer.onActivate = function() {
@@ -123,7 +123,7 @@ define(["log", "PIXI",
 
     function onTimerRoundTickSecond(tick) {
       if (gameModeTime === true) {
-        timerText.setText(timeFormatter.formatSeconds(tick / 1000) + " von " + timeFormatter.formatSeconds(maxTime));
+        timerText.setText(timeFormatter.formatSeconds(tick / 1000) + " " + i18n.t("of") + " " + timeFormatter.formatSeconds(maxTime));
         if ((Math.round(tick / 1000) + 3) >= maxTime) {
           bumbText(timerText);
           soundBridge.play("timewarning");
@@ -135,7 +135,7 @@ define(["log", "PIXI",
 
     function onTimerIntroEnd(tick) {
       //log.debug("introend!");
-      introText.setText("Los!");
+      introText.setText(i18n.t("go"));
       introComplete = true;
     }
 
@@ -160,25 +160,25 @@ define(["log", "PIXI",
 
       if (gameModeTime === true) {
         countingText.setText(currentStats.get("objectsCatched"));
-        introText.setText("Erwische soviele wie möglich\nin " + timeFormatter.formatSeconds(maxTime) + "!");
-        timerText.setText("0:00 von " + timeFormatter.formatSeconds(maxTime));
+        introText.setText(i18n.t("hitAsManyAsYouCan") + "\nin " + timeFormatter.formatSeconds(maxTime) + "!");
+        timerText.setText("0:00 " + i18n.t("of") + " " + timeFormatter.formatSeconds(maxTime));
       } else {
-        countingText.setText(currentStats.get("objectsCatched") + " von " + gameConfig.get("objectsToSpawn"));
-        introText.setText("Erwische alle " + gameConfig.get("objectsToSpawn") + " Objekte!");
+        countingText.setText(currentStats.get("objectsCatched") + " " + i18n.t("of") + " " + gameConfig.get("objectsToSpawn"));
+        introText.setText(i18n.t("hitAll") + " " + gameConfig.get("objectsToSpawn") + " " + i18n.t("objects") + "!");
         timerText.setText("0:00");
       }
 
       switch (gameConfig.get("gameObjectCondition")) {
         case "objectScale":
-          tippText = ("Interaktion: Sie platzen wenn Du sie fokusierst!");
-          tippText += "\nTipp: " + getRandomTipTextScale();
+          tippText = (i18n.t("interactionFocusTip"));
+          tippText += "\n" + i18n.t("tip") + ": " + getRandomTipTextScale();
           break;
         case "clickOrDepth":
-          tippText = ("Interaktion: Sie platzen wenn Du sie stoßt/anklickst!");
-          tippText += "\nTipp: " + getRandomTipTextClick();
+          tippText = (i18n.t("interactionClickTip"));
+          tippText += "\n" + i18n.t("tip") + ": " + getRandomTipTextClick();
           break;
         default:
-          tippText = ("ERROR: KEIN OBJEKTSPIELZIEL!");
+          tippText = ("error, no main objective");
           log.error("gameObjects: gameObjectCondition not supported!");
           break;
       }
@@ -372,7 +372,7 @@ define(["log", "PIXI",
       if (gameModeTime === true) {
         countingText.setText(model.get("objectsCatched"));
       } else {
-        countingText.setText(model.get("objectsCatched") + " von " + gameConfig.get("objectsToSpawn"));
+        countingText.setText(model.get("objectsCatched") + " " + i18n.t("of") + " " + gameConfig.get("objectsToSpawn"));
       }
 
       bumbText(countingText);
@@ -397,7 +397,7 @@ define(["log", "PIXI",
         winningTopText.anchor.y = 0;
         winningTopText.currentStep = INTRO_ROTATE_STEP;
 
-        winningTopText.setText(gameConfig.getFormattedValue("userName") + ", du hast es geschafft!\n\n");
+        winningTopText.setText(gameConfig.getFormattedValue("userName") + ", " + i18n.t("youMadeIt") + "\n\n");
         layer.pixiLayer.addChild(winningTopText);
         winningTopText.visible = true;
 

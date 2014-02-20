@@ -1,8 +1,8 @@
 define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
-    "csv", "saveAs", "gameConfig", "moment", "views/alertModal"
+    "csv", "saveAs", "gameConfig", "moment", "views/alertModal", "i18n"
   ],
   function(log, StatsCollection, StatModel, _,
-    csv, saveAs, gameConfig, moment, alertModal) {
+    csv, saveAs, gameConfig, moment, alertModal, i18n) {
 
     var statsCollection = new StatsCollection(),
       current;
@@ -21,8 +21,8 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
           log.debug("stats: startup fetch(): restored previous settings.");
           //log.debug("stats: startup applied last known gameConfig!");
           alertModal.show({
-            head: "Willkommen zurück " + gameConfig.getFormattedValue("userName") + "!",
-            text: "Einstellungen deines letzten Spiels wiederhergestellt.",
+            head: i18n.t("welcomeBack") + " " + gameConfig.getFormattedValue("userName") + "!",
+            text: i18n.t("settingsRestored"),
             autoDismiss: 4000
           });
         } catch (e) {
@@ -31,8 +31,8 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
       } else {
         log.debug("stats: startup fetch(): no settings found.");
         alertModal.show({
-          head: "Willkommen " + gameConfig.getFormattedValue("userName") + "!",
-          text: "Schau doch mal in die Einstellungen um deinen Benutzernamen zu setzen.",
+          head: i18n.t("welcome") + " " + gameConfig.getFormattedValue("userName") + "!",
+          text: i18n.t("welcomeAnonymous"),
           autoDismiss: 6000
         });
       }
@@ -72,8 +72,8 @@ define(["log", "classes/StatsCollection", "classes/StatModel", "underscore",
           current.lock();
           current.save();
           alertModal.show({
-            head: "Speichern...",
-            text: gameConfig.getFormattedValue("userName") + ", dein Spiel wurde gespeichert!",
+            head: i18n.t("save"),
+            text: gameConfig.getFormattedValue("userName") + i18n.t("gameSaved"),
             autoDismiss: 1200
           });
         }

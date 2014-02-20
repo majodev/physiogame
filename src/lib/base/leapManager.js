@@ -1,8 +1,8 @@
 define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
-    "underscore"
+    "underscore", "i18n"
   ],
   function(log, Leap, appConfig, publisher, Poll, gameConfig,
-    _) {
+    _, i18n) {
 
     // private 
     var LEAP_Y_CENTER_POINT = 260, // center of leap mm, 20mm offset of leapbase! // TODO: into gameConfig
@@ -325,7 +325,7 @@ define(["log", "Leap", "appConfig", "utils/publisher", "Poll", "gameConfig",
           //   " mm x " + Math.floor(getProjectionSizeInMillimeters().height) + " mm";
 
           if (attachedListeners === false) {
-            debugText = "Leap nicht verbunden.";
+            debugText = i18n.t("leapNotConnected");
           }
 
           events.trigger("debugInfo", debugText);
