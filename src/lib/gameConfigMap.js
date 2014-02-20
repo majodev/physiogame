@@ -11,13 +11,13 @@ define(["i18n"],
         def: true,
         ui: "toggle",
         cat: "audio",
-        desc: "Audio-Hintergrund abspielen"
+        desc: i18n.t("audioBackgroundEnabled")
       },
       userName: {
         def: "Anonym",
         ui: "text",
         cat: "general",
-        desc: "Benutzername"
+        desc: i18n.t("userName")
       },
       gameObjectCondition: {
         def: "clickOrDepth",
@@ -30,7 +30,7 @@ define(["i18n"],
         }],
         ui: "dropdown",
         cat: "general",
-        desc: "Abschussbedingung der Spiel-Objekte"
+        desc: i18n.t("gameObjectCondition")
       },
       probabilitySpecialObject: {
         def: 0.20,
@@ -39,7 +39,7 @@ define(["i18n"],
         step: 0.01,
         ui: "slider",
         cat: "general",
-        desc: "Spezial-Objekt Wahrscheinlichkeit",
+        desc: i18n.t("probabilitySpecialObject"),
         format: {
           percent: true,
           post: "%"
@@ -56,7 +56,7 @@ define(["i18n"],
         step: 1,
         ui: "slider",
         cat: "general",
-        desc: "Spezial-Objekt minimale Fingerzahl",
+        desc: i18n.t("specialObjectCountMin"),
         enabled: {
           id: "gameObjectCondition",
           value: "clickOrDepth"
@@ -75,7 +75,7 @@ define(["i18n"],
         step: 1,
         ui: "slider",
         cat: "general",
-        desc: "Spezial-Objekt maximale Fingerzahl",
+        desc: i18n.t("specialObjectCountMax"),
         enabled: {
           id: "gameObjectCondition",
           value: "clickOrDepth"
@@ -91,7 +91,7 @@ define(["i18n"],
         def: false,
         ui: "toggle",
         cat: "visual",
-        desc: "Zeige Frames pro Sekunde"
+        desc: i18n.t("debugLayerVisible")
       },
       introTimerLength: {
         def: 3000,
@@ -100,7 +100,7 @@ define(["i18n"],
         step: 500,
         ui: "slider",
         cat: "visual",
-        desc: "Einleitungszeit vor Rundenstart",
+        desc: i18n.t("introTimerLength"),
         format: {
           time: "milli"
         }
@@ -116,7 +116,7 @@ define(["i18n"],
         }],
         ui: "dropdown",
         cat: "visual",
-        desc: "Texturpaket der Spiel-Objekte"
+        desc: i18n.t("objectTexture")
       },
       explosionTexture: {
         def: "popExplosions",
@@ -129,13 +129,13 @@ define(["i18n"],
         }],
         ui: "dropdown",
         cat: "visual",
-        desc: "Texturpaket der Explosionen"
+        desc: i18n.t("explosionTexture")
       },
       explosionTextureRotate: {
         def: true,
         ui: "toggle",
         cat: "visual",
-        desc: "Explosionen zufällig drehen",
+        desc: i18n.t("explosionTextureRotate"),
         enabled: {
           id: "explosionTexture",
           value: "explosions"
@@ -152,13 +152,13 @@ define(["i18n"],
         }],
         ui: "dropdown",
         cat: "visual",
-        desc: "Textur des Zeigers"
+        desc: i18n.t("crosshairTexture")
       },
       crosshairTextureRotate: {
         def: true,
         ui: "toggle",
         cat: "visual",
-        desc: "Fadenkreuz fortwährend drehen",
+        desc: i18n.t("crosshairTextureRotate"),
         enabled: {
           id: "crosshairTexture",
           value: "crosshair"
@@ -175,7 +175,7 @@ define(["i18n"],
         }],
         ui: "dropdown",
         cat: "general",
-        desc: "Hauptspielmodus"
+        desc: i18n.t("gameMode")
       },
       gameMaxTime: {
         def: 15,
@@ -184,7 +184,7 @@ define(["i18n"],
         step: 15,
         ui: "slider",
         cat: "general",
-        desc: "Spielzeit eines Durchlaufes",
+        desc: i18n.t("gameMaxTime"),
         enabled: {
           id: "gameMode",
           value: "clearInTime"
@@ -200,7 +200,7 @@ define(["i18n"],
         step: 100,
         ui: "slider",
         cat: "general",
-        desc: "Spiel-Objekte wieder hinzuzufügen nach",
+        desc: i18n.t("gameReattachObjectAfterMs"),
         enabled: {
           id: "gameMode",
           value: "clearInTime"
@@ -216,7 +216,7 @@ define(["i18n"],
         step: 1,
         ui: "slider",
         cat: "general",
-        desc: "Anzahl Objekte gleichzeitig hinzuzufügen",
+        desc: i18n.t("gameReattachObjectMax"),
         enabled: {
           id: "gameMode",
           value: "clearInTime"
@@ -232,7 +232,7 @@ define(["i18n"],
         step: 1,
         ui: "slider",
         cat: "general",
-        desc: "Anzahl der Spiel-Objekte",
+        desc: i18n.t("objectsToSpawn"),
         format: {
           post: "Objekte"
         }
@@ -244,7 +244,7 @@ define(["i18n"],
         step: 1,
         ui: "slider",
         cat: "visual",
-        desc: "Anzahl der Wolken-Objekte",
+        desc: i18n.t("cloudsToGenerate"),
         format: {
           post: "Objekte"
         }
@@ -253,7 +253,7 @@ define(["i18n"],
         def: false,
         ui: "toggle",
         cat: "visual",
-        desc: "Vollbildmodus (kein Kiosk Modus!)",
+        desc: i18n.t("fullScreenMode"),
         enabled: {
           id: "kioskMode",
           value: false
@@ -264,7 +264,7 @@ define(["i18n"],
         def: false,
         ui: "toggle",
         cat: "visual",
-        desc: "Kiosk Modus ([esc] bleibt aktiv!)",
+        desc: i18n.t("kioskMode"),
         enabled: {
           id: "fullScreenMode",
           value: false
@@ -274,13 +274,13 @@ define(["i18n"],
         def: true,
         ui: "toggle",
         cat: "visual",
-        desc: "Verstecke den Maus-Cursor wenn möglich"
+        desc: i18n.t("hideMouseCursor")
       },
       accuracyTextsEnabled: {
         def: true,
         ui: "toggle",
         cat: "visual",
-        desc: "Zeige Treffergenauigkeit jedes Treffers"
+        desc: i18n.t("accuracyTextsEnabled")
       },
       objectHittedScaleCap: {
         def: 1,
@@ -289,7 +289,7 @@ define(["i18n"],
         step: 0.1,
         ui: "slider",
         cat: "scale",
-        desc: "Getroffen: Skalier-Grenze",
+        desc: i18n.t("objectHittedScaleCap"),
         check: {
           max: "objectHittedScaleExplodes"
         },
@@ -305,7 +305,7 @@ define(["i18n"],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Getroffen: Skalier-Zunahme vor Grenze",
+        desc: i18n.t("objectHittedScaleBeforeCap"),
         format: {
           percent: true,
           post: "%/Frame"
@@ -318,7 +318,7 @@ define(["i18n"],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Getroffen: Skalier-Zunahme nach Grenze",
+        desc: i18n.t("objectHittedScaleAfterCap"),
         format: {
           percent: true,
           post: "%/Frame"
@@ -331,7 +331,7 @@ define(["i18n"],
         step: 0.1,
         ui: "slider",
         cat: "speed",
-        desc: "Getroffen: Minimale Geschwindigkeit",
+        desc: i18n.t("objectHittedSpeedMin"),
         check: {
           max: "objectHittedSpeedMax"
         },
@@ -346,7 +346,7 @@ define(["i18n"],
         step: 0.1,
         ui: "slider",
         cat: "speed",
-        desc: "Getroffen: Maximale Geschwindigkeit",
+        desc: i18n.t("objectHittedSpeedMax"),
         check: {
           min: "objectHittedSpeedMin"
         },
@@ -361,7 +361,7 @@ define(["i18n"],
         step: 0.01,
         ui: "slider",
         cat: "speed",
-        desc: "Getroffen: Geschwindigkeitsschritt",
+        desc: i18n.t("objectHittedSpeedStep"),
         format: {
           post: "Pixel/Frame"
         }
@@ -373,7 +373,7 @@ define(["i18n"],
         step: 0.1,
         ui: "slider",
         cat: "speed",
-        desc: "Normal: Minimale Geschwindigkeit",
+        desc: i18n.t("objectNormalSpeedMin"),
         check: {
           max: "objectNormalSpeedMax"
         },
@@ -388,7 +388,7 @@ define(["i18n"],
         step: 0.1,
         ui: "slider",
         cat: "speed",
-        desc: "Normal: Maximale Geschwindigkeit",
+        desc: i18n.t("objectNormalSpeedMax"),
         check: {
           min: "objectNormalSpeedMin"
         },
@@ -403,7 +403,7 @@ define(["i18n"],
         step: 0.01,
         ui: "slider",
         cat: "speed",
-        desc: "Normal: Geschwindigkeitsschritt",
+        desc: i18n.t("objectNormalSpeedStep"),
         format: {
           post: "Pixel/Frame"
         }
@@ -415,7 +415,7 @@ define(["i18n"],
         step: 0.01,
         ui: "slider",
         cat: "alpha",
-        desc: "Normal: Minimale Durchsichtigkeit",
+        desc: i18n.t("objectNormalAlphaMin"),
         format: {
           percent: true,
           post: "%"
@@ -428,7 +428,7 @@ define(["i18n"],
         step: 0.01,
         ui: "slider",
         cat: "alpha",
-        desc: "Getroffen: Durchsichtigkeitserhöhung",
+        desc: i18n.t("objectHittedAlphaStep"),
         format: {
           percent: true,
           post: "%/Frame"
@@ -441,7 +441,7 @@ define(["i18n"],
         step: 0.01,
         ui: "slider",
         cat: "alpha",
-        desc: "Normal: Durchsichtigkeitsverringerung",
+        desc: i18n.t("objectNormalAlphaStep"),
         format: {
           percent: true,
           post: "%/Frame"
@@ -454,7 +454,7 @@ define(["i18n"],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Normal: Minimale Skalierung",
+        desc: i18n.t("objectNormalScaleMin"),
         check: {
           max: "objectNormalScaleCap"
         },
@@ -470,7 +470,7 @@ define(["i18n"],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Normal: Skalier-Grenze",
+        desc: i18n.t("objectNormalScaleCap"),
         check: {
           max: "objectHittedScaleExplodes"
         },
@@ -486,7 +486,7 @@ define(["i18n"],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Normal: Skalier-Abnahme vor Grenze",
+        desc: i18n.t("objectNormalScaleBeforeCap"),
         format: {
           percent: true,
           post: "%/Frame"
@@ -499,7 +499,7 @@ define(["i18n"],
         step: 0.001,
         ui: "slider",
         cat: "scale",
-        desc: "Normal: Skalier-Abnahme nach Grenze",
+        desc: i18n.t("objectNormalScaleAfterCap"),
         format: {
           percent: true,
           post: "%/Frame"
@@ -509,7 +509,7 @@ define(["i18n"],
         def: true,
         ui: "toggle",
         cat: "visual",
-        desc: "Zeige Leap Motion Hinweise"
+        desc: i18n.t("leapShowIndicatorLayer")
       },
       leapXModifier: {
         def: 5,
@@ -518,7 +518,7 @@ define(["i18n"],
         step: 0.1,
         ui: "slider",
         cat: "leap",
-        desc: "Fläche: Verkleinerung horizontale Achse (x)",
+        desc: i18n.t("leapXModifier"),
         format: {
           post: "fach"
         }
@@ -530,7 +530,7 @@ define(["i18n"],
         step: 0.1,
         ui: "slider",
         cat: "leap",
-        desc: "Fläche: Verkleinerung vertikale Achse (y)",
+        desc: i18n.t("leapYModifier"),
         format: {
           post: "fach"
         }
@@ -542,7 +542,7 @@ define(["i18n"],
         step: 0.1,
         ui: "slider",
         cat: "leap",
-        desc: "Fläche: Verkleinerung Tiefen-Achse (z)",
+        desc: i18n.t("leapZModifier"),
         format: {
           post: "fach"
         }
@@ -554,7 +554,7 @@ define(["i18n"],
         step: 0.01,
         ui: "slider",
         cat: "leap",
-        desc: "Mittelpunkt: horizontale Achse (x)",
+        desc: i18n.t("leapToDisplayX"),
         format: {
           pre: "Produkt von"
         }
@@ -566,7 +566,7 @@ define(["i18n"],
         step: 0.01,
         ui: "slider",
         cat: "leap",
-        desc: "Mittelpunkt: vertikale Achse (y)",
+        desc: i18n.t("leapToDisplayY"),
         format: {
           pre: "Produkt von"
         }
@@ -578,7 +578,7 @@ define(["i18n"],
         step: 100,
         ui: "slider",
         cat: "leap",
-        desc: "Zeit bevor Schaltflächen ausgelößt werden",
+        desc: i18n.t("leapButtonHitAfterMs"),
         format: {
           time: "milli"
         }
@@ -590,7 +590,7 @@ define(["i18n"],
         step: 100,
         ui: "slider",
         cat: "leap",
-        desc: "Zeit bevor Spezialobjekte ausgelößt werden",
+        desc: i18n.t("leapSpecialsHitAfterMs"),
         format: {
           time: "milli"
         }
@@ -602,7 +602,7 @@ define(["i18n"],
         step: 250,
         ui: "slider",
         cat: "leap",
-        desc: "Zeitraum Interaktion sperrt Maus/Touch",
+        desc: i18n.t("leapLocksMouseAndTouchForMs"),
         format: {
           time: "milli"
         }
@@ -614,7 +614,7 @@ define(["i18n"],
         step: 0.01,
         ui: "slider",
         cat: "scale",
-        desc: "Getroffen: Skalier-Maximum (ev. Abschuss)",
+        desc: i18n.t("objectHittedScaleExplodes"),
         format: {
           percent: true,
           post: "%"
