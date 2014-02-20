@@ -1,8 +1,8 @@
 define(["backbone", "underscore", "gameConfigMap",
-    "utils/timeFormatter"
+    "utils/timeFormatter", "i18n"
   ],
   function(Backbone, _, gameConfigMap,
-    timeFormatter) {
+    timeFormatter, i18n) {
 
     var GameConfig = Backbone.Model.extend({
       generateKeyValuePairs: function(filterCategory, customJSON) { // optional filter
@@ -125,9 +125,9 @@ define(["backbone", "underscore", "gameConfigMap",
         // uiToggle elements have manually formatted values
         if(gameConfigMap[key].ui === "toggle") {
           if(valueToFormat === true) {
-            formattedValue = "aktiviert";
+            formattedValue = i18n.t("activated");
           } else {
-            formattedValue = "deaktiviert";
+            formattedValue = i18n.t("deactivated");
           }
         }
 
@@ -226,8 +226,8 @@ define(["backbone", "underscore", "gameConfigMap",
             // check if range within defined minimum
             if (_.isUndefined(gameConfigMap[attrKeys[i]].min) === false) {
               if (this.get(attrKeys[i]) < gameConfigMap[attrKeys[i]].min) {
-                return gameConfigMap[attrKeys[i]].desc + " ist " +
-                  stripNumberPrecision(this.get(attrKeys[i])) + " muss größer sein als " +
+                return gameConfigMap[attrKeys[i]].desc + " " + i18n.t("is") + " " +
+                  stripNumberPrecision(this.get(attrKeys[i])) + " " + i18n.t("mustBeBiggerAs") + " " +
                   stripNumberPrecision(gameConfigMap[attrKeys[i]].min);
               }
             }
@@ -235,8 +235,8 @@ define(["backbone", "underscore", "gameConfigMap",
             // check if range within defined maximum
             if (_.isUndefined(gameConfigMap[attrKeys[i]].max) === false) {
               if (this.get(attrKeys[i]) > gameConfigMap[attrKeys[i]].max) {
-                return gameConfigMap[attrKeys[i]].desc + " ist " +
-                  stripNumberPrecision(this.get(attrKeys[i])) + " muss kleiner sein als " +
+                return gameConfigMap[attrKeys[i]].desc + " " + i18n.t("is") + " " +
+                  stripNumberPrecision(this.get(attrKeys[i])) + " " + i18n.t("mustBeSmallerAs") + " " +
                   stripNumberPrecision(gameConfigMap[attrKeys[i]].max);
               }
             }
@@ -245,14 +245,14 @@ define(["backbone", "underscore", "gameConfigMap",
             if (_.isUndefined(gameConfigMap[attrKeys[i]].check) === false) {
               if (_.isUndefined(gameConfigMap[attrKeys[i]].check.min) === false) {
                 if (this.get(attrKeys[i]) <= this.get(gameConfigMap[attrKeys[i]].check.min)) {
-                  return gameConfigMap[attrKeys[i]].desc + " ist " + stripNumberPrecision(this.get(attrKeys[i])) + " muss größer sein als " +
+                  return gameConfigMap[attrKeys[i]].desc + " " + i18n.t("is") + " " + stripNumberPrecision(this.get(attrKeys[i])) + " " + i18n.t("mustBeBiggerAs") + " " +
                     stripNumberPrecision(this.get(gameConfigMap[attrKeys[i]].check.min)) + "(" +
                     gameConfigMap[gameConfigMap[attrKeys[i]].check.min].desc + ")";
                 }
               }
               if (_.isUndefined(gameConfigMap[attrKeys[i]].check.max) === false) {
                 if (this.get(attrKeys[i]) >= this.get(gameConfigMap[attrKeys[i]].check.max)) {
-                  return gameConfigMap[attrKeys[i]].desc + " ist " + stripNumberPrecision(this.get(attrKeys[i])) + " muss kleiner sein als " +
+                  return gameConfigMap[attrKeys[i]].desc + " " + i18n.t("is") + " " + stripNumberPrecision(this.get(attrKeys[i])) + " " + i18n.t("mustBeSmallerAs") + " " +
                     stripNumberPrecision(this.get(gameConfigMap[attrKeys[i]].check.max)) + " (" +
                     gameConfigMap[gameConfigMap[attrKeys[i]].check.max].desc + ")";
                 }
@@ -263,14 +263,14 @@ define(["backbone", "underscore", "gameConfigMap",
             if (_.isUndefined(gameConfigMap[attrKeys[i]].check) === false) {
               if (_.isUndefined(gameConfigMap[attrKeys[i]].check.minEquals) === false) {
                 if (this.get(attrKeys[i]) < this.get(gameConfigMap[attrKeys[i]].check.minEquals)) {
-                  return gameConfigMap[attrKeys[i]].desc + " ist " + stripNumberPrecision(this.get(attrKeys[i])) + " muss größer sein als " +
+                  return gameConfigMap[attrKeys[i]].desc + " " + i18n.t("is") + " " + stripNumberPrecision(this.get(attrKeys[i])) + " " + i18n.t("mustBeBiggerAs") + " " +
                     stripNumberPrecision(this.get(gameConfigMap[attrKeys[i]].check.minEquals)) + "(" +
                     gameConfigMap[gameConfigMap[attrKeys[i]].check.minEquals].desc + ")";
                 }
               }
               if (_.isUndefined(gameConfigMap[attrKeys[i]].check.maxEquals) === false) {
                 if (this.get(attrKeys[i]) > this.get(gameConfigMap[attrKeys[i]].check.maxEquals)) {
-                  return gameConfigMap[attrKeys[i]].desc + " ist " + stripNumberPrecision(this.get(attrKeys[i])) + " muss kleiner sein als " +
+                  return gameConfigMap[attrKeys[i]].desc + " " + i18n.t("is") + " " + stripNumberPrecision(this.get(attrKeys[i])) + " " + i18n.t("mustBeSmallerAs") + " " +
                     stripNumberPrecision(this.get(gameConfigMap[attrKeys[i]].check.maxEquals)) + " (" +
                     gameConfigMap[gameConfigMap[attrKeys[i]].check.maxEquals].desc + ")";
                 }

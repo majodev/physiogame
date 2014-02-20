@@ -14,7 +14,7 @@ define(["i18n"],
         desc: i18n.t("audioBackgroundEnabled")
       },
       userName: {
-        def: "Anonym",
+        def: i18n.t("userNameDefault"),
         ui: "text",
         cat: "general",
         desc: i18n.t("userName")
@@ -23,10 +23,10 @@ define(["i18n"],
         def: "clickOrDepth",
         opt: [{
           id: "objectScale",
-          desc: "max. Skalierung"
+          desc: i18n.t("gameObjectConditionMaxScale")
         }, {
           id: "clickOrDepth",
-          desc: "Klick / Tiefe"
+          desc: i18n.t("gameObjectConditionClickDepth")
         }],
         ui: "dropdown",
         cat: "general",
@@ -62,7 +62,7 @@ define(["i18n"],
           value: "clickOrDepth"
         },
         format: {
-          post: "Finger"
+          post: i18n.t("fingers")
         },
         check: {
           maxEquals: "specialObjectCountMax"
@@ -81,7 +81,7 @@ define(["i18n"],
           value: "clickOrDepth"
         },
         format: {
-          post: "Finger"
+          post: i18n.t("fingers")
         },
         check: {
           minEquals: "specialObjectCountMin"
@@ -109,10 +109,10 @@ define(["i18n"],
         def: "balloons",
         opt: [{
           id: "aliens",
-          desc: "Alienpaket"
+          desc: i18n.t("objectTextureAliens")
         }, {
           id: "balloons",
-          desc: "Luftballonpaket"
+          desc: i18n.t("objectTextureBalloons")
         }],
         ui: "dropdown",
         cat: "visual",
@@ -122,10 +122,10 @@ define(["i18n"],
         def: "popExplosions",
         opt: [{
           id: "explosions",
-          desc: "Echtexplosion"
+          desc: i18n.t("explosionTextureReal")
         }, {
           id: "popExplosions",
-          desc: "Cartoonexplosion"
+          desc: i18n.t("explosionTextureCartoon")
         }],
         ui: "dropdown",
         cat: "visual",
@@ -145,10 +145,10 @@ define(["i18n"],
         def: "crosshair",
         opt: [{
           id: "crosshair",
-          desc: "Fadenkreuz"
+          desc: i18n.t("crosshairTextureCross")
         }, {
           id: "crosshairLeapStyle",
-          desc: "Hand"
+          desc: i18n.t("crosshairTextureHand")
         }],
         ui: "dropdown",
         cat: "visual",
@@ -168,10 +168,10 @@ define(["i18n"],
         def: "clearInTime",
         opt: [{
           id: "clearAllObjects",
-          desc: "nach Anzahl"
+          desc: i18n.t("gameModeCount")
         }, {
           id: "clearInTime",
-          desc: "nach Zeit"
+          desc: i18n.t("gameModeTime")
         }],
         ui: "dropdown",
         cat: "general",
@@ -222,7 +222,7 @@ define(["i18n"],
           value: "clearInTime"
         },
         format: {
-          post: "Objekte"
+          post: i18n.t("objects")
         }
       },
       objectsToSpawn: {
@@ -234,7 +234,7 @@ define(["i18n"],
         cat: "general",
         desc: i18n.t("objectsToSpawn"),
         format: {
-          post: "Objekte"
+          post: i18n.t("objects")
         }
       },
       cloudsToGenerate: {
@@ -246,7 +246,7 @@ define(["i18n"],
         cat: "visual",
         desc: i18n.t("cloudsToGenerate"),
         format: {
-          post: "Objekte"
+          post: i18n.t("objects")
         }
       },
       fullScreenMode: {
@@ -520,7 +520,7 @@ define(["i18n"],
         cat: "leap",
         desc: i18n.t("leapXModifier"),
         format: {
-          post: "fach"
+          post: i18n.t("perTimes")
         }
       },
       leapYModifier: {
@@ -532,7 +532,7 @@ define(["i18n"],
         cat: "leap",
         desc: i18n.t("leapYModifier"),
         format: {
-          post: "fach"
+          post: i18n.t("perTimes")
         }
       },
       leapZModifier: {
@@ -544,7 +544,7 @@ define(["i18n"],
         cat: "leap",
         desc: i18n.t("leapZModifier"),
         format: {
-          post: "fach"
+          post: i18n.t("perTimes")
         }
       },
       leapToDisplayX: {
@@ -556,7 +556,7 @@ define(["i18n"],
         cat: "leap",
         desc: i18n.t("leapToDisplayX"),
         format: {
-          pre: "Produkt von"
+          pre: i18n.t("productOf")
         }
       },
       leapToDisplayY: {
@@ -568,7 +568,7 @@ define(["i18n"],
         cat: "leap",
         desc: i18n.t("leapToDisplayY"),
         format: {
-          pre: "Produkt von"
+          pre: i18n.t("productOf")
         }
       },
       leapButtonHitAfterMs: {
