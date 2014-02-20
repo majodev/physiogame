@@ -1,11 +1,11 @@
 <div class="row buttonStatBar">
   {{#if stats}}
-    <span id="loadJSON" class="btn btn-success btn-file btn-sm">Laden (JSON) <input type="file"></span>
-    <button id="downloadJSON" type="button" class="btn btn-primary btn-sm">Speichern (JSON)</button>
-    <button id="downloadCSV" type="button" class="btn btn-primary btn-sm">Exportieren (CSV)</button>
-    <button id="clearStorage" type="button" class="btn btn-danger btn-sm pull-right">&times; Alle löschen</button>
+    <span id="loadJSON" class="btn btn-success btn-file btn-sm">{{i18n "statsLoad"}} <input type="file"></span>
+    <button id="downloadJSON" type="button" class="btn btn-primary btn-sm">{{i18n "statsSave"}}</button>
+    <button id="downloadCSV" type="button" class="btn btn-primary btn-sm">{{i18n "statsExport"}}</button>
+    <button id="clearStorage" type="button" class="btn btn-danger btn-sm pull-right">&times; {{i18n "statsWipe"}}</button>
   {{else}}
-    <span id="loadJSON" class="btn btn-success btn-file btn-sm">Laden (JSON) <input type="file"></span>
+    <span id="loadJSON" class="btn btn-success btn-file btn-sm">{{i18n "statsLoad"}} <input type="file"></span>
   {{/if}}
 </div>
 
@@ -14,16 +14,16 @@
     <table class="table table-condensed statsTable">
       <thead>
         <tr>
-          <th>Benutzer</th>
-          <th>Datum</th>
-          <th>Start</th>
-          <th>Ende</th>
-          <th>Runde</th>
-          <th>Norm</th>
-          <th>Spez</th>
-          <th>Präz</th>
-          <th>Punkte</th>
-          <th>Aktion</th>
+          <th>{{i18n "statsUser"}}</th>
+          <th>{{i18n "statsDate"}}</th>
+          <th>{{i18n "statsStart"}}</th>
+          <th>{{i18n "statsEnd"}}</th>
+          <th>{{i18n "statsRound"}}</th>
+          <th>{{i18n "statsNormal"}}</th>
+          <th>{{i18n "statsSpecial"}}</th>
+          <th>{{i18n "statsAccuracy"}}</th>
+          <th>{{i18n "statsPoints"}}</th>
+          <th>{{i18n "statsAction"}}</th>
         </tr>
       </thead>
       <tbody>
@@ -40,18 +40,18 @@
             <td>{{points}}</td>
             {{#if id}}
               <td>
-                <a class="accordion-toggle btn btn-primary btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{{id}}}">Details</a>
+                <a class="accordion-toggle btn btn-primary btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{{id}}}">{{i18n "statsMore"}}</a>
                 <button id="remove-{{id}}" data-id="{{id}}" type="button" class="btn btn-danger btn-xs removeItem pull-right">&times;</button></td>
             {{else}}
-              <td><small>Läuft noch</small></td>
+              <td><small>{{i18n "statsStillRunning"}}</small></td>
             {{/if}}
           </tr>
           <tr id="collapse-{{{id}}}" class="panel-collapse collapse">
             <td colspan="10">
-              <div><p><strong>Details:</strong> ({{id}})</p></div>
+              <div><p><strong>{{i18n "statsDetails"}}</strong> {{id}}</p></div>
 
               <div class="row">
-                <div class="col-xs-6"><strong>Erweiterte Statistiken</strong></div>
+                <div class="col-xs-6"><strong>{{i18n "statsDetailedStats"}}</strong></div>
               </div>
 
               <div id="leap-{{{id}}}" class="statDetails">
@@ -75,9 +75,9 @@
               </div>
 
               <div class="row">
-                <div class="col-xs-6"><strong>Einstellungen</strong></div>
+                <div class="col-xs-6"><strong>{{i18n "settings"}}</strong></div>
                 <div class="col-xs-6">
-                  <button id="apply-{{id}}" data-id="{{id}}" type="button" data-loading-text="Lade..." class="btn btn-warning btn-xs applySettings pull-right">Einstellungen dieses Spiels wiederherstellen</button>
+                  <button id="apply-{{id}}" data-id="{{id}}" type="button" data-loading-text="Lade..." class="btn btn-warning btn-xs applySettings pull-right">{{i18n "statsRestoreSettings"}}</button>
                 </div>
               </div>
 
@@ -96,5 +96,5 @@
     </table>
   </div>
 {{else}}
-  <div class="stats-no-games"><p>:(</p><p>Keine früheren Spiele gefunden.</p></div>
+  <div class="stats-no-games"><p>:(</p><p>{{i18n "statsNoPreviousGames"}}</p></div>
 {{/if}}
