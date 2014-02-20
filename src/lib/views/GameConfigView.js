@@ -1,13 +1,13 @@
 define(["backbone", "jquery", "log", "gameConfig", "underscore",
     "hbars!views/templates/gameConfigTemplate",
     "hbars!views/templates/gameConfigItemPartial",
-    "Handlebars", "views/alertModal", "views/inject/injectGC",
+    "Handlebars", "views/alertModal", "views/inject/injectGC", "i18n",
     "bootstrap-slider"
   ],
   function(Backbone, $, log, gameConfig, _,
     gameConfigTemplate,
     gameConfigItemPartial,
-    Handlebars, alertModal, injectGC) {
+    Handlebars, alertModal, injectGC, i18n) {
 
     // first tab
     var currentMainTab = "#general",
@@ -78,7 +78,7 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
         // finally validate current configuration and show results
         if (this.model.isValid() === false) {
           $("#statusNotification").append('<div class="alert alert-danger"><small>' +
-            '<strong>Fehler:</strong> ' +
+            '<strong>' + i18n.t("error") + ':</strong> ' +
             validationError + '</small></div>');
         }
 
@@ -128,8 +128,8 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
         this.model.resetToDefaultValues();
         refreshGameWithNewValues();
         alertModal.show({
-          head: "Standard-Werte wiederhergestellt!",
-          text: "Alle Werte auf Standard zurückgesetzt. Benutzername ist nun \"" + gameConfig.getFormattedValue("userName") + "\".",
+          head: i18n.t("alertStandardRestoredHeader"),
+          text: i18n.t("alertStandardRestoredText") + gameConfig.getFormattedValue("userName") + "\".",
           autoDismiss: 2500
         });
       },
@@ -154,8 +154,8 @@ define(["backbone", "jquery", "log", "gameConfig", "underscore",
         require(["game/stats"], function(stats) {
           stats.clearLocalStorage();
           alertModal.show({
-            head: "Statistiken gelöscht!",
-            text: "Alle lokalen Statistik-Daten wurden gelöscht.",
+            head: i18n.t("alertStatsDeletedHeader"),
+            text: i18n.t("alertStatsDeletedText"),
             autoDismiss: 2500
           });
         });

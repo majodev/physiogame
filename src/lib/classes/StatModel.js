@@ -1,5 +1,5 @@
-define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeFormatter"],
-  function(log, Backbone, _, gameConfig, moment, timeFormatter) {
+define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeFormatter", "i18n"],
+  function(log, Backbone, _, gameConfig, moment, timeFormatter, i18n) {
 
     var ScoreModel = Backbone.Model.extend({
       raiseScore: function() {
@@ -214,76 +214,76 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
       getLeapStatsKeyValues: function(json) {
         return {
           keyValues: [{
-            key: "Projektionsfläche",
+            key: i18n.t("statsProjectionArea"),
             value: Math.floor(json.leapProjectionWidth) + " x " + Math.floor(json.leapProjectionHeight) + " x " + Math.floor(json.leapProjectionDepth) + " mm"
           }, {
-            key: "Projektionsmittelpunkt",
+            key: i18n.t("statsProjectionCenter"),
             value: "x: " + Math.floor(json.leapProjectionCenterX) + "; y: " + Math.floor(json.leapProjectionCenterY) + "; z: " + Math.floor(json.leapProjectionCenterZ) + " mm"
           }, {
-            key: "Gesamtbewegungen (sqrt(dx^2 + dy^2 + dz^2))",
+            key: i18n.t("statsAllMovement"),
             value: Math.floor(json.leapMovementAllHyp) + " mm"
           }, {
-            key: "Erlaubte Bewegungen (sqrt(dx^2 + dy^2 + dz^2))",
+            key: i18n.t("statsAllowedMovement"),
             value: Math.floor(json.leapMovementInsideHyp) + " mm"
           }, {
-            key: "Gesamtlänge horizontale Bewegungen (x)",
+            key: i18n.t("statsHorizontalMovement"),
             value: Math.floor(json.leapMovementAllX) + " mm"
           }, {
-            key: "Länge horizontale Bewegungen (x) erlaubter Bereich",
+            key: i18n.t("statsAllowedHorizontalMovement"),
             value: Math.floor(json.leapMovementInsideX) + " mm"
           }, {
-            key: "Gesamtlänge vertikale Bewegungen (y)",
+            key: i18n.t("statsVerticalMovement"),
             value: Math.floor(json.leapMovementAllY) + " mm"
           }, {
-            key: "Länge vertikale Bewegungen (y) erlaubter Bereich",
+            key: i18n.t("statsAllowedVerticalMovement"),
             value: Math.floor(json.leapMovementInsideY) + " mm"
           }, {
-            key: "Gesamtlänge Tiefen-Bewegungen (z)",
+            key: i18n.t("statsDepthMovement"),
             value: Math.floor(json.leapMovementAllZ) + " mm"
           }, {
-            key: "Länge Tiefen-Bewegungen (z) erlaubter Bereich",
+            key: i18n.t("statsAllowedDepthMovement"),
             value: Math.floor(json.leapMovementInsideZ) + " mm"
           }, {
-            key: "Rundenzeit Hand getrackt",
+            key: i18n.t("statsHandTracked"),
             value: timeFormatter.formatMilliseconds(json.leapDetected)
           }, {
-            key: "Rundenzeit nicht getrackt",
+            key: i18n.t("statsHandNotTracked"),
             value: timeFormatter.formatMilliseconds(json.leapNotDetected)
           }, {
-            key: "Rundenzeit Hand im erlaubten Bereich",
+            key: i18n.t("statsHandWithArea"),
             value: timeFormatter.formatMilliseconds(json.leapInside)
           }, {
-            key: "Rundenzeit Hand außerhalb des erlaubten Bereichs",
+            key: i18n.t("statsHandOutsideArea"),
             value: timeFormatter.formatMilliseconds(json.leapOutside)
           }, {
-            key: "Rundenzeit Hand außerhalb links",
+            key: i18n.t("statsHandOutsideLeft"),
             value: timeFormatter.formatMilliseconds(json.leapOutsideLeft)
           }, {
-            key: "Rundenzeit Hand außerhalb rechts",
+            key: i18n.t("statsHandOutsideRight"),
             value: timeFormatter.formatMilliseconds(json.leapOutsideRight)
           }, {
-            key: "Rundenzeit Hand außerhalb oben",
+            key: i18n.t("statsHandOutsideAbove"),
             value: timeFormatter.formatMilliseconds(json.leapOutsideTop)
           }, {
-            key: "Rundenzeit Hand außerhalb unten",
+            key: i18n.t("statsHandOutsideBottom"),
             value: timeFormatter.formatMilliseconds(json.leapOutsideBottom)
           }, {
-            key: "Rundenzeit kein Finger sichtbar",
+            key: i18n.t("stats0Finger"),
             value: timeFormatter.formatMilliseconds(json.leapFingerCountTime[0])
           }, {
-            key: "Rundenzeit 1 Finger sichtbar",
+            key: i18n.t("stats1Finger"),
             value: timeFormatter.formatMilliseconds(json.leapFingerCountTime[1])
           }, {
-            key: "Rundenzeit 2 Finger sichtbar",
+            key: i18n.t("stats2Fingers"),
             value: timeFormatter.formatMilliseconds(json.leapFingerCountTime[2])
           }, {
-            key: "Rundenzeit 3 Finger sichtbar",
+            key: i18n.t("stats3Fingers"),
             value: timeFormatter.formatMilliseconds(json.leapFingerCountTime[3])
           }, {
-            key: "Rundenzeit 4 Finger sichtbar",
+            key: i18n.t("stats4Fingers"),
             value: timeFormatter.formatMilliseconds(json.leapFingerCountTime[4])
           }, {
-            key: "Rundenzeit 5 Finger sichtbar",
+            key: i18n.t("stats5Fingers"),
             value: timeFormatter.formatMilliseconds(json.leapFingerCountTime[5])
           }]
         };
@@ -291,31 +291,31 @@ define(["log", "backbone", "underscore", "gameConfig", "moment", "utils/timeForm
       getAdvancedStatKeyValues: function(json) {
         return {
           keyValues: [{
-            key: "% Treffergenauigkeit horizontal (x)",
+            key: i18n.t("statsAccuracyX"),
             value: Math.ceil(json.accuracyX * 100) + " %"
           }, {
-            key: "% Treffergenauigkeit vertikal (y)",
+            key: i18n.t("statsAccuracyY"),
             value: Math.ceil(json.accuracyY * 100) + " %"
           }, {
-            key: "Spezial-Objekte mit 0 Finger erwischt",
-            value: Math.ceil(json.specialFingerUsed[0]) + " Objekte"
+            key: i18n.t("statsFingersUsed0"),
+            value: Math.ceil(json.specialFingerUsed[0]) + " " + i18n.t("objects")
           }, {
-            key: "Spezial-Objekte mit 1 Finger erwischt",
-            value: Math.ceil(json.specialFingerUsed[1]) + " Objekte"
+            key: i18n.t("statsFingersUsed1"),
+            value: Math.ceil(json.specialFingerUsed[1]) + " " + i18n.t("objects")
           }, {
-            key: "Spezial-Objekte mit 2 Finger erwischt",
-            value: Math.ceil(json.specialFingerUsed[2]) + " Objekte"
+            key: i18n.t("statsFingersUsed2"),
+            value: Math.ceil(json.specialFingerUsed[2]) + " " + i18n.t("objects")
           }, {
-            key: "Spezial-Objekte mit 3 Finger erwischt",
-            value: Math.ceil(json.specialFingerUsed[3]) + " Objekte"
+            key: i18n.t("statsFingersUsed3"),
+            value: Math.ceil(json.specialFingerUsed[3]) + " " + i18n.t("objects")
           }, {
-            key: "Spezial-Objekte mit 4 Finger erwischt",
-            value: Math.ceil(json.specialFingerUsed[4]) + " Objekte"
+            key: i18n.t("statsFingersUsed4"),
+            value: Math.ceil(json.specialFingerUsed[4]) + " " + i18n.t("objects")
           }, {
-            key: "Spezial-Objekte mit 5 Finger erwischt",
-            value: Math.ceil(json.specialFingerUsed[5]) + " Objekte"
+            key: i18n.t("statsFingersUsed5"),
+            value: Math.ceil(json.specialFingerUsed[5]) + " " + i18n.t("objects")
           }, {
-            key: "Gesamtspielzeit",
+            key: i18n.t("statsGametime"),
             value: timeFormatter.formatMilliseconds(json.gameTime)
           }]
         };

@@ -49,16 +49,15 @@ define(["appConfig", "log", "loaders/preloader", "loaders/indicator",
         }
       }, function(t) {
 
-        // i18next finished, continue loading up application...
-        log.debug("i18n: current language: " + i18n.lng());
-        status.write(i18n.t("languageLoaded"));
-
         // register handlebars helper to add i18n to templates...
         Handlebars.registerHelper('i18n', function(i18n_key) {
           var result = i18n.t(i18n_key);
           return new Handlebars.SafeString(result);
         });
 
+        // i18next finished, continue loading up application...
+        log.debug("i18n: current language: " + i18n.lng());
+        status.write(i18n.t("languageLoaded"));
 
         // preloading assets....
         status.write(i18n.t("loadingAssets"));

@@ -1,12 +1,12 @@
 define(["backbone", "jquery", "log", "underscore",
     "Handlebars", "game/stats",
     "hbars!views/templates/statsTemplate",
-    "views/alertModal", "gameConfig"
+    "views/alertModal", "gameConfig", "i18n"
   ],
   function(Backbone, $, log, _,
     Handlebars, stats,
     statsTemplate,
-    alertModal, gameConfig) {
+    alertModal, gameConfig, i18n) {
 
     var StatsView = Backbone.View.extend({
       visible: false,
@@ -50,8 +50,8 @@ define(["backbone", "jquery", "log", "underscore",
       clearStorage: function(e) {
         stats.clearLocalStorage();
         alertModal.show({
-          head: "Statistiken gelöscht!",
-          text: "Alle lokalen Statistik-Daten wurden gelöscht.",
+          head: i18n.t("alertStatsDeletedHeader"),
+          text: i18n.t("alertStatsDeletedText"),
           autoDismiss: 2500
         });
       },
@@ -71,8 +71,10 @@ define(["backbone", "jquery", "log", "underscore",
           btn.button("reset");
         }, 1500);
         alertModal.show({
-          head: "Einstellungen wiederhergestellt!",
-          text: "Die Einstellungen von \"" + gameConfig.getFormattedValue("userName") + "\" sind nun aktiv.",
+          head: i18n.t("alertSettingsRestoredHeader"),
+          text: i18n.t("alertSettingsRestoredText", {
+            userName: gameConfig.getFormattedValue("userName")
+          }),
           autoDismiss: 2500
         });
       }
