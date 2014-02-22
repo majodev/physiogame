@@ -1,5 +1,5 @@
 Physiogame
-Copyright (c) 2013 Mario Ranftl (@majodev)
+Copyright (c) 2013-2014 Mario Ranftl (@majodev)
 
 ================================================================================
 Sourcecode licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007

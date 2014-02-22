@@ -1,5 +1,5 @@
 {
-  "languageLoaded": "Language was set to English!",
+  "languageLoaded": "English language package loaded.",
   "loadingAssets": "Loading assets",
   "init": "Initializing",
   "audioEnabled": "Play audio effects",
@@ -201,5 +201,7 @@
   "statsFingersUsed3": "count specialobjects hitted 3 fingers",
   "statsFingersUsed4": "count specialobjects hitted 4 fingers",
   "statsFingersUsed5": "count specialobjects hitted 5 fingers",
-  "statsGametime": "total playtime"
+  "statsGametime": "total playtime",
+  "creditsBy": "by",
+  "creditsText": ["-- Idea and execution --\n","Physiogame was developed as part of the practical part","of my master thesis for the degree programme ","information management at FH JOANNEUM, Graz.\n","In cooperation with the departments ","physiotherapy and occupational therapy.\n\n","-- Assets --\n","Balloons Vectors by Stuart Bainbridge","Creative Commons Attribution-Share Alike 3.0 License.\n","Alien sprites and explosion animation by PIXI.js team","MIT License\n","Music by The Open Game Art Bundle ","(from Stratkat and Epic Battle Fantasy III)","Creative Commons Zero License\n","Webfont Arvo by Anton Koovit","SIL Open Font License, 1.1\n","Icons Hand and Arrow by Dave Gandy (Font Awesome)","SIL Open Font License, 1.1\n\n","-- Libraries --\n","requirejs, almond, backbone, lodash\n","Modernizr, pixi, leapjs, keymaster, jquery, howler","webfontloader, loglevel, spinjs, polljs, bootstrap, ","text, handlebars, requirejs-handlebars, ","bootstrap-slider, Backbone.localStorage, csv","FileSaver, momentjs\n","http-server, chai, mocha, phantomjs, mocha-phantomjs","grunt-cli, grunt-contrib-watch, grunt-shell","grunt-contrib-copy, grunt-contrib-cssmin,","grunt-modernizr, grunt-contrib-uglify,","grunt-node-webkit-builder\n\n","-- Tools --\n","Sublime Text 2, node-webkit, Adobe CS6 Suite","Texture Packer, Audacity, cfxr, XLD, Otomata","ImageOptim, ImageAlpha\n\n","-- Copyright --\n","(c) 2013-2014 Mario Ranftl\n","All other assets and sourcecode of Physiogame","are by me and are published","under the following licenses.\n\n","-- License sourcecode --\n","GNU GENERAL PUBLIC LICENSE Version 3\n\n","-- License assets --\n","Attribution-ShareAlike 3.0 Unported\n\n\n\n\n\n\n\n","-- Thanks for supporting me --\n","@nischi","@jrburke","C.A.F.","Family Ranftl","NICI <3"]
 }

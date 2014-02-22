@@ -19,7 +19,7 @@ define(["appConfig", "log", "loaders/preloader", "loaders/indicator",
 
       indicator.enable();
 
-      status.write("... (language loading | Sprache wird geladen) ...");
+      status.write("Loading language... | Lade Sprache...");
 
       // i18next init...
       $.i18n.init({

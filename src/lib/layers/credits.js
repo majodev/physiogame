@@ -1,7 +1,6 @@
-define(["classes/Layer", "PIXI", "game/textures",
-    "text!layers/texts/creditTextGerman.txt"
+define(["classes/Layer", "PIXI", "game/textures", "i18n"
   ],
-  function(Layer, PIXI, textures, creditTextGerman) {
+  function(Layer, PIXI, textures, i18n) {
 
     var layer = new Layer({
       listeners: {
@@ -99,8 +98,7 @@ define(["classes/Layer", "PIXI", "game/textures",
     }
 
     function createCreditsText() {
-
-      creditsText = new PIXI.Text(creditTextGerman, {
+      creditsText = new PIXI.Text(i18n.t("creditsText"), {
         font: "bold 30px Arvo",
         fill: "#FFFFFF",
         align: "center",
@@ -122,7 +120,7 @@ define(["classes/Layer", "PIXI", "game/textures",
     }
 
     function createHeader() {
-      creditsHeader = new PIXI.Text("von\nMario Ranftl\n@majodev", {
+      creditsHeader = new PIXI.Text(i18n.t("creditsBy") + "\nMario Ranftl\n@majodev", {
         font: "bold 100px Arvo",
         fill: "#FFFFFF",
         align: "center",
@@ -189,7 +187,7 @@ define(["classes/Layer", "PIXI", "game/textures",
       } else {
         creditsScroller.alpha -= 0.005;
         if (creditsScroller.alpha <= 0) {
-          creditsScroller.position.y = layer.height + creditsHeader.height/2;
+          creditsScroller.position.y = layer.height + creditsHeader.height / 2;
           creditsScroller.alpha = 1;
         }
       }

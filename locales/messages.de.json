@@ -1,5 +1,5 @@
 {
-  "languageLoaded": "Sprache wurde auf Deutsch gesetzt!",
+  "languageLoaded": "Deutsche Sprachedateien geladen.",
   "loadingAssets": "Lade Assets",
   "init": "Initialisiere",
   "audioEnabled": "Audio-Effekte abspielen",
@@ -201,5 +201,7 @@
   "statsFingersUsed3": "Spezial-Objekte mit 3 Finger erwischt",
   "statsFingersUsed4": "Spezial-Objekte mit 4 Finger erwischt",
   "statsFingersUsed5": "Spezial-Objekte mit 5 Finger erwischt",
-  "statsGametime": "Gesamtspielzeit"
+  "statsGametime": "Gesamtspielzeit",
+  "creditsBy": "von",
+  "creditsText": ["-- Idee und Umsetzung --\n","Physiogame entstand im Rahmen des praktischen Teils","meiner Masterarbeit am Studiengang ","Informationsmanagement an der FH JOANNEUM, Graz.\n","Kooperation mit den Studiengängen ","Physiotherapie und Ergotherapie.\n\n","-- Assets --\n","Balloons Vectors by Stuart Bainbridge","Creative Commons Attribution-Share Alike 3.0 License.\n","Alien sprites and explosion animation by PIXI.js team","MIT License\n","Music by The Open Game Art Bundle ","(aus Stratkat und Epic Battle Fantasy III)","Creative Commons Zero License\n","Webfont Arvo by Anton Koovit","SIL Open Font License, 1.1\n","Icons Hand and Arrow by Dave Gandy (Font Awesome)","SIL Open Font License, 1.1\n\n","-- Libraries --\n","requirejs, almond, backbone, lodash\n","Modernizr, pixi, leapjs, keymaster, jquery, howler","webfontloader, loglevel, spinjs, polljs, bootstrap, ","text, handlebars, requirejs-handlebars, ","bootstrap-slider, Backbone.localStorage, csv","FileSaver, momentjs\n","http-server, chai, mocha, phantomjs, mocha-phantomjs","grunt-cli, grunt-contrib-watch, grunt-shell","grunt-contrib-copy, grunt-contrib-cssmin,","grunt-modernizr, grunt-contrib-uglify,","grunt-node-webkit-builder\n\n","-- Tools --\n","Sublime Text 2, node-webkit, Adobe CS6 Suite","Texture Packer, Audacity, cfxr, XLD, Otomata","ImageOptim, ImageAlpha\n\n","-- Copyright --\n","(c) 2013-2014 Mario Ranftl\n","Alle nicht genannten Assets und der Sourcecode wurden","von mir, Mario Ranftl (@majodev), erstellt und stehen","unter den nachfolgenden Lizenzen.\n\n","-- Lizenz Sourcecode --\n","GNU GENERAL PUBLIC LICENSE Version 3\n\n","-- Lizenz Assets --\n","Attribution-ShareAlike 3.0 Unported\n\n\n\n\n\n\n\n","-- Danke für die Unterstützung --\n","@nischi","@jrburke","C.A.F.","Familie Ranftl","NICI <3"]
 }

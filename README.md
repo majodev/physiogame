@@ -2,15 +2,16 @@
 
 ![Image](pics/physiogame_logo-min.png?raw=true)
 
-This is a master thesis project by me, Mario Ranftl (@majodev). It's a JS/HTML5 game and playable in browsers and node-webkit. The target is to create a funny and simple game, that's suited for therapeutic exercises. 
+This is a master thesis project by me, Mario Ranftl (@majodev). The goal was to create an application that's suited for conducting therapeutic exercises (and according to experts, it is!). It's a JS/HTML5 game and playable in browsers, but also runnable as standalone desktop application.
 
-The idea is to track the progress of users and provide statistics "Statistiken" that can be exported to csv and json. Furthermore the behaviour "Verhalten" of the game and its objects can be fully customized through the settings "Einstellungen" menu. Last but not least, playing via mouse/touchscreens is possible, however, it's the target to use Leap Motion as primary input device.
+Physiogame uses the Leap Motion controller as its primary input device (playing via mouse/touchscreens is also possible). It tracks the progress of its users and provides statistics that can be later exported to CSV (e.g. to import the stats in Microsoft Excel) and JSON. The behaviour, visuals, input of the game and its objects (normal and special) can be highly customized, hence there are maaaaaany parameters to modify the look and feel!
 
 <h2>Issues</h2>
-Attention: No internationalization! Only german texts for now.
+~~Attention: No i18n! Only german texts for now.~~
+Added i18n v1.1.0 Feb 23, 2014, Physiogame ships with German and English texts! :)
 
 <h2>Binaries</h2>
-<h3>(version 1.0.1, Oct 28, 2013)</h3>
+<h3>(version 1.1.0, Feb 23, 2014)</h3>
 * Windows: <a href="http://majodev.com/physiogame/physiogame_win.zip">win32</a>
 * Mac: <a href="http://majodev.com/physiogame/physiogame_mac.zip">32bit, 10.7+</a>
 * Linux: <a href="http://majodev.com/physiogame/physiogame_linux32.zip">32bit</a> / <a href="http://majodev.com/physiogame/physiogame_linux64.zip">64bit</a>
@@ -128,4 +129,4 @@ Assets: Attribution-ShareAlike 3.0 Unported
 
 Please see LICENSE.md for further information of 3rd party licenses (used assets and libs)
 
-(c) 2013 Mario Ranftl (<a href="http://www.majodev.com">majodev</a>).
+(c) 2013-2014 Mario Ranftl (<a href="http://www.majodev.com">majodev</a>).

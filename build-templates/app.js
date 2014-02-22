@@ -21,12 +21,12 @@
 
   if (canAudio && canRender && canFloat32Array && canStorage) {
     // allowed to continue with loading the application...
-    writeStatus("Mindestvoraussetzungen werden erfüllt!<br />Bitte warten...<br />");
+    writeStatus("Please wait... | Bitte warten...<br />");
   } else {
     // failed feature detection!
-    writeStatus(":(<br /><br />Ohje, dein Browser ist leider zu alt.<br />" +
-      "Bitte aktualisiere auf die neueste Version!<br /><br />" +
-      "<a href=\"http://www.google.at/intl/de/chrome/\">Empfohlener Browser: Google Chrome</a><br /><br />" +
+    writeStatus(":(<br /><br />Duh, your browser is too old. | Ohje, dein Browser ist leider zu alt.<br />" +
+      "Please update to the newest version | Bitte aktualisiere auf die neueste Version!<br /><br />" +
+      "<a href=\"http://www.google.at/intl/de/chrome/\">Recommended | Empfohlen: Google Chrome</a><br /><br />" +
       featureReport());
     // stop immetiately with further processing!
     return;
