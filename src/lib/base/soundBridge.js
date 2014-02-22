@@ -34,7 +34,8 @@ define(["log", "loaders/soundLoader", "gameConfig", "underscore"],
 
     function stopBackgroundMusic() {
       if (_.isUndefined(currentBGMusic) === false) {
-        stop(currentBGMusic);
+        //stop(currentBGMusic);
+        soundLoader.getSound(currentBGMusic).stop();
         currentBGMusic = undefined;
       }
     }
@@ -46,7 +47,8 @@ define(["log", "loaders/soundLoader", "gameConfig", "underscore"],
         if (newBGMusic === currentBGMusic) {
           // already playing dont do anything.
         } else {
-          stop(currentBGMusic);
+          //stop(currentBGMusic);
+          soundLoader.getSound(currentBGMusic).stop();
           playBGInternal(newBGMusic);
         }
       } else {
@@ -57,9 +59,14 @@ define(["log", "loaders/soundLoader", "gameConfig", "underscore"],
 
     function playBGInternal(newBGMusic) { // not public.
       if (audioBackgroundEnabled === true) {
-        play(newBGMusic);
+        //log.debug("Playing Background Audio...");
+        
+        //play(newBGMusic);
+        soundLoader.getSound(newBGMusic).play();
+
         currentBGMusic = newBGMusic;
       } else {
+        //log.debug("Ignored Playing Background Audio!");
         currentBGMusic = undefined;
       }
     }

@@ -26,27 +26,7 @@ define(["appConfig", "log", "loaders/preloader", "loaders/indicator",
         ns: "messages",
         lowerCaseLng: true,
         fallbackLng: "en",
-        customLoad: function(lng, ns, options, loadComplete) {
-          var url = window.location.origin + window.location.pathname + "locales/" + ns + "." + lng + ".json";
-          $.ajax({
-            url: url,
-            success: function(res) {
-              loadComplete(null, res);
-            },
-            error: function(err) {
-              if (err.status == 200) {
-                // file loaded but invalid json, stop waste time !
-                log.error("i18n: Invalid .json in locales " + url);
-              } else if (err.status == 404) {
-                // locale missing
-                log.error("i18n: Locale not found: " + url);
-              } else {
-                log.error("i18n: " + err.status + " when loading " + url);
-              }
-              loadComplete(err, null);
-            }
-          });
-        }
+        resGetPath: "locales/__ns__.__lng__.json"
       }, function(t) {
 
         // register handlebars helper to add i18n to templates...
