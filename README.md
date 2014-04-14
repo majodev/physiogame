@@ -12,11 +12,7 @@ Added i18n v1.1.0 Feb 23, 2014, Physiogame ships with German and English texts! 
 
 <h2>Binaries</h2>
 <h3>(version 1.1.0, Feb 23, 2014)</h3>
-* Windows: <a href="http://majodev.com/physiogame/physiogame_win.zip">win32</a>
-* Mac: <a href="http://majodev.com/physiogame/physiogame_mac.zip">32bit, 10.7+</a>
-* Linux: <a href="http://majodev.com/physiogame/physiogame_linux32.zip">32bit</a> / <a href="http://majodev.com/physiogame/physiogame_linux64.zip">64bit</a>
-* node-webkit: <a href="http://majodev.com/physiogame/physiogame.nw">nw container</a> and <a href="https://github.com/rogerwang/node-webkit">node-webkit runtime</a>
-* Web: <a href="http://majodev.com/physiogame/web">Browser version</a>
+All releases of Physiogame are here: <a href="https://github.com/majodev/physiogame/releases">GitHub releases</a>
 
 <h2>How does it look?</h2>
 
